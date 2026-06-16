@@ -63,7 +63,7 @@ async function prerenderAll() {
   RewriteEngine On
   RewriteBase /
 
-  # Force HTTPS + WWW in a single combined redirect (avoids double 301 chain)
+  # Force HTTPS + WWW (single combined redirect, avoids double 301 chain)
   RewriteCond %{HTTPS} off [OR]
   RewriteCond %{HTTP_HOST} !^www\\. [NC]
   RewriteCond %{HTTP_HOST} !^localhost [NC]
@@ -73,19 +73,13 @@ async function prerenderAll() {
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
 
-  # Remove trailing slash (redirect /foo/ -> /foo) except root
+  # Remove trailing slash → 301 to canonical (no-slash) – except root /
   RewriteCond %{REQUEST_URI} ^/(.+)/$
   RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-  # Force trailing slash on all non-file URLs (301 redirect)
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !/$
-  RewriteCond %{REQUEST_URI} !\\.[a-zA-Z0-9]{1,6}$
-  RewriteRule ^(.*)$ /$1/ [R=301,L]
-
-  # SSG: serve pre-rendered index.html for trailing-slash URLs
-  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}index.html -f
-  RewriteRule ^(.+/)$ $1index.html [L]
+  # SSG: internally serve /foo/index.html for /foo (no redirect, no slash)
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+  RewriteRule ^(.+)$ $1/index.html [L]
 
   # Root index
   RewriteCond %{DOCUMENT_ROOT}/index.html -f
@@ -220,8 +214,8 @@ FileETag None
 
 function injectIntoTemplate(template: string, appHtml: string, helmet: any, routePath: string): string {
   const domain = 'https://www.taxisparis-conventionnes.fr';
-  const withSlash = routePath === '/' ? '/' : (routePath.endsWith('/') ? routePath : `${routePath}/`);
-  const canonicalUrl = `${domain}${withSlash}`;
+  const cleanPath = routePath.replace(/\/+$/, '') || '/';
+  const canonicalUrl = cleanPath === '/' ? `${domain}/` : `${domain}${cleanPath}`;
 
   const titleTag = helmet?.title?.toString() || '<title>Taxi VSL Conventionné | Paris Île-de-France</title>';
   const metaTags = helmet?.meta?.toString() || '';
