@@ -417,15 +417,15 @@ export default function ReservationPage() {
                 </div>
               </SectionCard>
 
-              {/* 3 – Date & Heure */}
-              <SectionCard step={3} stepColor="bg-blue-600" icon={<Calendar size={16} className="text-blue-600" />} iconBg="bg-blue-50" title="Date & Heure">
+              {/* 3 – Date & Heure de prise en charge */}
+              <SectionCard step={3} stepColor="bg-blue-600" icon={<Calendar size={16} className="text-blue-600" />} iconBg="bg-blue-50" title="Date & Heure de prise en charge">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <FieldLabel>Date *</FieldLabel>
                     <TextInput id="date_rdv" name="date_rdv" type="date" value={formData.date_rdv} onChange={handleChange} required />
                   </div>
                   <div>
-                    <FieldLabel>Heure *</FieldLabel>
+                    <FieldLabel>Heure de prise en charge *</FieldLabel>
                     <TextInput id="heure_rdv" name="heure_rdv" type="time" value={formData.heure_rdv} onChange={handleChange} required />
                   </div>
                 </div>
