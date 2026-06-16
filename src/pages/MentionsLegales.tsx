@@ -6,7 +6,7 @@ export default function MentionsLegales() {
       <SEOHead
         title="Mentions Légales | Taxi VSL Île-de-France"
         description="Mentions légales de Taxi VSL Île-de-France. Informations sur l'éditeur, l'hébergement et les responsabilités."
-        canonical="https://www.taxisparis-conventionnes.fr/mentions-legales/"
+        canonical="https://www.taxisparis-conventionnes.fr/mentions-legales"
       />
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4 max-w-3xl">

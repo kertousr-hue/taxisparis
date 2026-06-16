@@ -298,7 +298,7 @@ export function generateJsonLD(department?: string) {
       '@type': ['LocalBusiness', 'MedicalBusiness'],
       '@id': `${baseUrl}/${deptSlug}/#service`,
       'name': `Taxi Conventionné CPAM ${deptData.name} (${department})`,
-      'url': `${baseUrl}/${deptSlug}/`,
+      'url': `${baseUrl}/${deptSlug}`,
       'telephone': PHONE_SCHEMA,
       'email': 'contact@taxisparis-conventionnes.fr',
       'openingHoursSpecification': {
@@ -346,7 +346,7 @@ export function generateBreadcrumbList(items: Array<{ name: string; url: string 
       '@type': 'ListItem',
       'position': index + 1,
       'name': item.name,
-      'item': `${baseUrl}${item.url.endsWith('/') ? item.url : item.url + '/'}`
+      'item': `${baseUrl}${item.url.endsWith('/') ? item.url.slice(0, -1) || '/' : item.url}`
     }))
   };
 }

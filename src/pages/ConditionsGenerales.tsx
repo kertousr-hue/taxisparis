@@ -6,7 +6,7 @@ export default function ConditionsGenerales() {
       <SEOHead
         title="Conditions Générales d'Utilisation | Taxi VSL Île-de-France"
         description="Conditions générales d'utilisation du site Taxi VSL Île-de-France. Accès au site, responsabilités et protection des données."
-        canonical="https://www.taxisparis-conventionnes.fr/conditions-generales/"
+        canonical="https://www.taxisparis-conventionnes.fr/conditions-generales"
       />
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4 max-w-3xl">
