@@ -63,49 +63,49 @@ export function getSitemapUrls(baseUrl: string): SitemapUrl[] {
       priority: 1.0
     },
     {
-      loc: `${base}/reservation-taxi-vsl/`,
+      loc: `${base}/reservation-taxi-vsl`,
       lastmod: today,
       changefreq: 'weekly',
       priority: 0.9
     },
     {
-      loc: `${base}/taxis-aeroports-parisiens/`,
+      loc: `${base}/taxis-aeroports-parisiens`,
       lastmod: today,
       changefreq: 'monthly',
       priority: 0.8
     },
     {
-      loc: `${base}/taxis-gares-parisiennes/`,
+      loc: `${base}/taxis-gares-parisiennes`,
       lastmod: today,
       changefreq: 'monthly',
       priority: 0.8
     },
     {
-      loc: `${base}/zones-desservies/`,
+      loc: `${base}/zones-desservies`,
       lastmod: today,
       changefreq: 'monthly',
       priority: 0.8
     },
     {
-      loc: `${base}/qui-sommes-nous/`,
+      loc: `${base}/qui-sommes-nous`,
       lastmod: today,
       changefreq: 'yearly',
       priority: 0.6
     },
     {
-      loc: `${base}/blog/`,
+      loc: `${base}/blog`,
       lastmod: today,
       changefreq: 'weekly',
       priority: 0.7
     },
     {
-      loc: `${base}/faq/`,
+      loc: `${base}/faq`,
       lastmod: today,
       changefreq: 'monthly',
       priority: 0.7
     },
     {
-      loc: `${base}/contact/`,
+      loc: `${base}/contact`,
       lastmod: today,
       changefreq: 'yearly',
       priority: 0.6
@@ -121,7 +121,7 @@ export function getSitemapUrls(baseUrl: string): SitemapUrl[] {
       .replace(/ /g, '-')}-${dept.code}`;
 
     urls.push({
-      loc: `${base}/${deptSlug}/`,
+      loc: `${base}/${deptSlug}`,
       lastmod: today,
       changefreq: 'weekly',
       priority: 0.9
@@ -136,7 +136,7 @@ export function getSitemapUrls(baseUrl: string): SitemapUrl[] {
         .replace(/ /g, '-');
 
       urls.push({
-        loc: `${base}/${deptSlug}/${citySlug}/`,
+        loc: `${base}/${deptSlug}/${citySlug}`,
         lastmod: today,
         changefreq: 'monthly',
         priority: 0.8

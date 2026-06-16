@@ -10,12 +10,12 @@ interface HeaderProps {
 }
 
 const menuItems = [
-  { id: '/',                         label: 'Accueil',      Icon: Home },
-  { id: '/reservation-taxi-vsl/',    label: 'Réservation',  Icon: CalendarCheck },
-  { id: '/zones-desservies/',        label: 'Zones',        Icon: MapPin },
-  { id: '/taxis-gares-parisiennes/', label: 'Gares',        Icon: TrainFront },
-  { id: '/qui-sommes-nous/',         label: 'À propos',     Icon: Users },
-  { id: '/blog/',                    label: 'Blog',         Icon: BookOpen },
+  { id: '/',                        label: 'Accueil',      Icon: Home },
+  { id: '/reservation-taxi-vsl',    label: 'Réservation',  Icon: CalendarCheck },
+  { id: '/zones-desservies',        label: 'Zones',        Icon: MapPin },
+  { id: '/taxis-gares-parisiennes', label: 'Gares',        Icon: TrainFront },
+  { id: '/qui-sommes-nous',         label: 'À propos',     Icon: Users },
+  { id: '/blog',                    label: 'Blog',         Icon: BookOpen },
 ];
 
 export default function Header({ onNavigate }: HeaderProps) {
@@ -112,7 +112,7 @@ export default function Header({ onNavigate }: HeaderProps) {
           {/* ── Mobile : réserver + appel + burger ─────────────────── */}
           <div className="md:hidden flex items-center gap-1.5">
             <Link
-              to="/reservation-taxi-vsl/"
+              to="/reservation-taxi-vsl"
               className="flex items-center gap-1 bg-white text-blue-600 font-bold text-xs border-2 border-blue-500 rounded-xl px-2.5 h-10 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap"
               aria-label="Réserver un taxi"
             >
@@ -190,3 +190,4 @@ export default function Header({ onNavigate }: HeaderProps) {
     </header>
   );
 }
+

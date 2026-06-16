@@ -92,7 +92,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="group w-full sm:w-auto bg-white text-blue-600 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95 min-h-[48px]"
                   aria-label="Réserver un taxi VSL maintenant"
                 >
@@ -334,7 +334,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
               <Link
-                to="/taxi-conventionne-paris-75/"
+                to="/taxi-conventionne-paris-75"
                 className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl hover:shadow-xl transition-all group"
               >
                 <MapPin className="mb-3 group-hover:scale-110 transition-transform" size={32} />
@@ -347,7 +347,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </Link>
 
               <Link
-                to="/taxi-conventionne-essonne-91/"
+                to="/taxi-conventionne-essonne-91"
                 className="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl hover:shadow-xl transition-all group"
               >
                 <MapPin className="mb-3 group-hover:scale-110 transition-transform" size={32} />
@@ -360,7 +360,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </Link>
 
               <Link
-                to="/taxi-conventionne-hauts-de-seine-92/"
+                to="/taxi-conventionne-hauts-de-seine-92"
                 className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl hover:shadow-xl transition-all group"
               >
                 <MapPin className="mb-3 group-hover:scale-110 transition-transform" size={32} />
@@ -373,7 +373,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </Link>
 
               <Link
-                to="/taxi-conventionne-seine-saint-denis-93/"
+                to="/taxi-conventionne-seine-saint-denis-93"
                 className="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-xl hover:shadow-xl transition-all group"
               >
                 <MapPin className="mb-3 group-hover:scale-110 transition-transform" size={32} />
@@ -386,7 +386,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </Link>
 
               <Link
-                to="/taxi-conventionne-val-de-marne-94/"
+                to="/taxi-conventionne-val-de-marne-94"
                 className="bg-gradient-to-br from-red-500 to-red-600 text-white p-6 rounded-xl hover:shadow-xl transition-all group"
               >
                 <MapPin className="mb-3 group-hover:scale-110 transition-transform" size={32} />
@@ -401,7 +401,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <div className="text-center mt-10">
               <Link
-                to="/zones-desservies/"
+                to="/zones-desservies"
                 className="inline-flex items-center gap-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
               >
                 <span>Voir toutes les villes desservies</span>
@@ -492,7 +492,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <div className="text-center mt-10">
               <Link
-                to="/faq/"
+                to="/faq"
                 className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 font-medium"
               >
                 <span>Voir toutes les questions</span>
@@ -515,7 +515,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="bg-white text-blue-500 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                 >
                   <span>Réserver en ligne</span>

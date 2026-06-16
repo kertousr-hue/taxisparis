@@ -40,11 +40,11 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
             <nav aria-label="Zones desservies">
               <ul className="space-y-1">
                 {[
-                  { code: '75', name: 'Paris', path: '/taxi-conventionne-paris-75/' },
-                  { code: '91', name: 'Essonne', path: '/taxi-conventionne-essonne-91/' },
-                  { code: '92', name: 'Hauts-de-Seine', path: '/taxi-conventionne-hauts-de-seine-92/' },
-                  { code: '93', name: 'Seine-Saint-Denis', path: '/taxi-conventionne-seine-saint-denis-93/' },
-                  { code: '94', name: 'Val-de-Marne', path: '/taxi-conventionne-val-de-marne-94/' },
+                  { code: '75', name: 'Paris', path: '/taxi-conventionne-paris-75' },
+                  { code: '91', name: 'Essonne', path: '/taxi-conventionne-essonne-91' },
+                  { code: '92', name: 'Hauts-de-Seine', path: '/taxi-conventionne-hauts-de-seine-92' },
+                  { code: '93', name: 'Seine-Saint-Denis', path: '/taxi-conventionne-seine-saint-denis-93' },
+                  { code: '94', name: 'Val-de-Marne', path: '/taxi-conventionne-val-de-marne-94' },
                 ].map((dept) => (
                   <li key={dept.code}>
                     <Link
@@ -66,7 +66,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
               <ul className="space-y-1">
                 <li>
                   <a
-                    href="/qui-sommes-nous/"
+                    href="/qui-sommes-nous"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Qui sommes-nous ?
@@ -74,7 +74,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/faq/"
+                    href="/faq"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     FAQ
@@ -82,7 +82,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/blog/"
+                    href="/blog"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Blog
@@ -90,7 +90,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/contact/"
+                    href="/contact"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Contact
@@ -98,7 +98,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/mentions-legales/"
+                    href="/mentions-legales"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Mentions Légales
@@ -106,7 +106,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/conditions-generales-de-vente/"
+                    href="/conditions-generales-de-vente"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Conditions Générales de Vente
@@ -114,7 +114,7 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
                 <li>
                   <a
-                    href="/conditions-generales/"
+                    href="/conditions-generales"
                     className="text-gray-400 hover:text-white transition-colors block py-1.5 px-1 min-h-[44px] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                   >
                     Conditions Générales

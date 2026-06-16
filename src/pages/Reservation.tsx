@@ -12,11 +12,11 @@ import SEOHead from '../components/SEOHead';
 import { Link } from 'react-router-dom';
 
 const DEPARTMENTS = [
-  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75/' },
-  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91/' },
-  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92/' },
-  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93/' },
-  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94/' },
+  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75' },
+  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91' },
+  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92' },
+  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93' },
+  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94' },
 ];
 
 const FAQ_ITEMS = [
@@ -277,7 +277,7 @@ export default function ReservationPage() {
         title="Réservation Taxi Conventionné VSL CPAM | Île-de-France 24/7"
         description="Réservez votre taxi conventionné ou VSL en ligne. Transport médical remboursé CPAM. Service 24/7 en Île-de-France (75, 91, 92, 93, 94)."
         keywords={["réservation taxi conventionné", "réserver VSL", "transport médical réservation", "taxi CPAM en ligne"]}
-        canonical="https://www.taxisparis-conventionnes.fr/reservation-taxi-vsl/"
+        canonical="https://www.taxisparis-conventionnes.fr/reservation-taxi-vsl"
         jsonLD={[webPageLD, faqLD, serviceLD]}
       />
 

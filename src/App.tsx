@@ -39,8 +39,8 @@ import { supabase } from './lib/supabase';
 function TrailingSlashRedirect() {
   const location = useLocation();
   const path = location.pathname;
-  if (!path.endsWith('/')) {
-    return <Navigate to={`${path}/${location.search}${location.hash}`} replace />;
+  if (path !== '/' && path.endsWith('/')) {
+    return <Navigate to={`${path.slice(0, -1)}${location.search}${location.hash}`} replace />;
   }
   return null;
 }
@@ -134,48 +134,48 @@ function AppContent() {
             <Route path="/admin/faq" element={<ProtectedRoute><FAQManager /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
-            {/* Service routes – with and without trailing slash */}
-            <Route path="/reservation-taxi-vsl" element={<Navigate to="/reservation-taxi-vsl/" replace />} />
-            <Route path="/reservation-taxi-vsl/" element={<Reservation />} />
-            <Route path="/zones-desservies" element={<Navigate to="/zones-desservies/" replace />} />
-            <Route path="/zones-desservies/" element={<Zones onNavigate={handleNavigate} />} />
-            <Route path="/taxis-aeroports-parisiens" element={<Navigate to="/taxis-aeroports-parisiens/" replace />} />
-            <Route path="/taxis-aeroports-parisiens/" element={<AirportTransfer />} />
-            <Route path="/taxis-gares-parisiennes" element={<Navigate to="/taxis-gares-parisiennes/" replace />} />
-            <Route path="/taxis-gares-parisiennes/" element={<StationTransfer />} />
-            <Route path="/qui-sommes-nous" element={<Navigate to="/qui-sommes-nous/" replace />} />
-            <Route path="/qui-sommes-nous/" element={<About />} />
-            <Route path="/blog" element={<Navigate to="/blog/" replace />} />
-            <Route path="/blog/" element={<Blog onNavigate={handleNavigate} />} />
+            {/* Service routes – canonical without trailing slash */}
+            <Route path="/reservation-taxi-vsl/" element={<Navigate to="/reservation-taxi-vsl" replace />} />
+            <Route path="/reservation-taxi-vsl" element={<Reservation />} />
+            <Route path="/zones-desservies/" element={<Navigate to="/zones-desservies" replace />} />
+            <Route path="/zones-desservies" element={<Zones onNavigate={handleNavigate} />} />
+            <Route path="/taxis-aeroports-parisiens/" element={<Navigate to="/taxis-aeroports-parisiens" replace />} />
+            <Route path="/taxis-aeroports-parisiens" element={<AirportTransfer />} />
+            <Route path="/taxis-gares-parisiennes/" element={<Navigate to="/taxis-gares-parisiennes" replace />} />
+            <Route path="/taxis-gares-parisiennes" element={<StationTransfer />} />
+            <Route path="/qui-sommes-nous/" element={<Navigate to="/qui-sommes-nous" replace />} />
+            <Route path="/qui-sommes-nous" element={<About />} />
+            <Route path="/blog/" element={<Navigate to="/blog" replace />} />
+            <Route path="/blog" element={<Blog onNavigate={handleNavigate} />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/faq" element={<Navigate to="/faq/" replace />} />
-            <Route path="/faq/" element={<FAQ />} />
-            <Route path="/contact" element={<Navigate to="/contact/" replace />} />
-            <Route path="/contact/" element={<Contact />} />
+            <Route path="/faq/" element={<Navigate to="/faq" replace />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/contact/" element={<Navigate to="/contact" replace />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Routes des Départements (SEO) */}
-            <Route path="/taxi-conventionne-paris-75" element={<Navigate to="/taxi-conventionne-paris-75/" replace />} />
-            <Route path="/taxi-conventionne-paris-75/" element={<Department department="75" onNavigate={handleNavigate} />} />
-            <Route path="/taxi-conventionne-essonne-91" element={<Navigate to="/taxi-conventionne-essonne-91/" replace />} />
-            <Route path="/taxi-conventionne-essonne-91/" element={<Department department="91" onNavigate={handleNavigate} />} />
-            <Route path="/taxi-conventionne-hauts-de-seine-92" element={<Navigate to="/taxi-conventionne-hauts-de-seine-92/" replace />} />
-            <Route path="/taxi-conventionne-hauts-de-seine-92/" element={<Department department="92" onNavigate={handleNavigate} />} />
-            <Route path="/taxi-conventionne-seine-saint-denis-93" element={<Navigate to="/taxi-conventionne-seine-saint-denis-93/" replace />} />
-            <Route path="/taxi-conventionne-seine-saint-denis-93/" element={<Department department="93" onNavigate={handleNavigate} />} />
-            <Route path="/taxi-conventionne-val-de-marne-94" element={<Navigate to="/taxi-conventionne-val-de-marne-94/" replace />} />
-            <Route path="/taxi-conventionne-val-de-marne-94/" element={<Department department="94" onNavigate={handleNavigate} />} />
+            <Route path="/taxi-conventionne-paris-75/" element={<Navigate to="/taxi-conventionne-paris-75" replace />} />
+            <Route path="/taxi-conventionne-paris-75" element={<Department department="75" onNavigate={handleNavigate} />} />
+            <Route path="/taxi-conventionne-essonne-91/" element={<Navigate to="/taxi-conventionne-essonne-91" replace />} />
+            <Route path="/taxi-conventionne-essonne-91" element={<Department department="91" onNavigate={handleNavigate} />} />
+            <Route path="/taxi-conventionne-hauts-de-seine-92/" element={<Navigate to="/taxi-conventionne-hauts-de-seine-92" replace />} />
+            <Route path="/taxi-conventionne-hauts-de-seine-92" element={<Department department="92" onNavigate={handleNavigate} />} />
+            <Route path="/taxi-conventionne-seine-saint-denis-93/" element={<Navigate to="/taxi-conventionne-seine-saint-denis-93" replace />} />
+            <Route path="/taxi-conventionne-seine-saint-denis-93" element={<Department department="93" onNavigate={handleNavigate} />} />
+            <Route path="/taxi-conventionne-val-de-marne-94/" element={<Navigate to="/taxi-conventionne-val-de-marne-94" replace />} />
+            <Route path="/taxi-conventionne-val-de-marne-94" element={<Department department="94" onNavigate={handleNavigate} />} />
 
             {/* ROUTE DYNAMIQUE SEO POUR LES VILLES */}
-            <Route path="/:departmentSlug/:citySlug/" element={<City />} />
-            <Route path="/:departmentSlug/:citySlug" element={<TrailingSlashRedirect />} />
+            <Route path="/:departmentSlug/:citySlug" element={<City />} />
+            <Route path="/:departmentSlug/:citySlug/" element={<TrailingSlashRedirect />} />
 
             {/* Pages légales */}
-            <Route path="/mentions-legales" element={<Navigate to="/mentions-legales/" replace />} />
-            <Route path="/mentions-legales/" element={<MentionsLegales />} />
-            <Route path="/conditions-generales-de-vente" element={<Navigate to="/conditions-generales-de-vente/" replace />} />
-            <Route path="/conditions-generales-de-vente/" element={<CGV />} />
-            <Route path="/conditions-generales" element={<Navigate to="/conditions-generales/" replace />} />
-            <Route path="/conditions-generales/" element={<ConditionsGenerales />} />
+            <Route path="/mentions-legales/" element={<Navigate to="/mentions-legales" replace />} />
+            <Route path="/mentions-legales" element={<MentionsLegales />} />
+            <Route path="/conditions-generales-de-vente/" element={<Navigate to="/conditions-generales-de-vente" replace />} />
+            <Route path="/conditions-generales-de-vente" element={<CGV />} />
+            <Route path="/conditions-generales/" element={<Navigate to="/conditions-generales" replace />} />
+            <Route path="/conditions-generales" element={<ConditionsGenerales />} />
 
             {/* Anciennes routes */}
             <Route path="/zones/:zone" element={<ZoneDetail zone="" onNavigate={handleNavigate} />} />

@@ -67,7 +67,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
     generateJsonLD(department),
     generateBreadcrumbList([
       { name: 'Accueil', url: '/' },
-      { name: `Taxi VSL ${deptData.name}`, url: `/${deptData.slug}/` }
+      { name: `Taxi VSL ${deptData.name}`, url: `/${deptData.slug}` }
     ])
   ];
 
@@ -200,7 +200,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                   {topCities.map((city, index) => (
                     <Link
                       key={index}
-                      to={`/${deptData.slug}/${city.slug}/`}
+                      to={`/${deptData.slug}/${city.slug}`}
                       className="flex items-center gap-2 bg-blue-50 hover:bg-blue-600 hover:text-white text-gray-700 px-4 py-3 rounded-lg transition-all border border-blue-200 hover:border-blue-600 group"
                     >
                       <MapPin size={14} className="flex-shrink-0 text-blue-600 group-hover:text-white" />
@@ -213,7 +213,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                     {remainingCities.map((city, index) => (
                       <Link
                         key={index}
-                        to={`/${deptData.slug}/${city.slug}/`}
+                        to={`/${deptData.slug}/${city.slug}`}
                         className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 text-gray-600 px-4 py-3 rounded-lg transition-all border border-gray-200 group"
                       >
                         <MapPin size={14} className="flex-shrink-0 text-gray-400 group-hover:text-blue-500" />
@@ -259,7 +259,6 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                       <Link
                         key={dept.code}
                         to={`/${dept.slug}`}
-                        className="inline-flex items-center gap-2 bg-white border-2 border-blue-600 text-blue-600 px-5 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition font-medium"
                       >
                         <ArrowRight size={16} />
                         {dept.name} ({dept.code})
@@ -317,7 +316,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link
-                    to="/reservation-taxi-vsl/"
+                    to="/reservation-taxi-vsl"
                     className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition inline-flex items-center gap-2"
                   >
                     <Calendar size={20} />

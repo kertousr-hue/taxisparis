@@ -64,12 +64,12 @@ export default function About() {
           'taxi médical agréé',
           'tiers payant transport médical',
         ]}
-        canonical="https://www.taxisparis-conventionnes.fr/qui-sommes-nous/"
+        canonical="https://www.taxisparis-conventionnes.fr/qui-sommes-nous"
         jsonLD={[
           generateJsonLD(),
           generateBreadcrumbList([
             { name: 'Accueil', url: '/' },
-            { name: 'Qui sommes-nous', url: '/qui-sommes-nous/' },
+            { name: 'Qui sommes-nous', url: '/qui-sommes-nous' },
           ]),
           faqLD,
         ]}
@@ -199,7 +199,7 @@ export default function About() {
                   Nous assurons vos déplacements médicaux à toute heure, y compris les urgences et les rendez-vous programmés très tôt le matin ou tard le soir. Notre centrale de réservation est joignable en permanence pour prendre en charge votre demande et affecter le chauffeur disponible le plus proche.
                 </p>
                 <p className="mt-3 text-gray-700 leading-relaxed">
-                  Pour réserver votre transport, utilisez notre <Link to="/reservation-taxi-vsl/" className="text-blue-600 hover:underline font-medium">formulaire de réservation en ligne</Link> ou appelez directement le <a href="tel:+33650366491" className="text-blue-600 hover:underline font-medium">06 50 36 64 91</a>. Nous intervenons dans les 5 départements de notre <Link to="/zones-desservies/" className="text-blue-600 hover:underline font-medium">zone d'intervention</Link> en Île-de-France.
+                  Pour réserver votre transport, utilisez notre <Link to="/reservation-taxi-vsl" className="text-blue-600 hover:underline font-medium">formulaire de réservation en ligne</Link> ou appelez directement le <a href="tel:+33650366491" className="text-blue-600 hover:underline font-medium">06 50 36 64 91</a>. Nous intervenons dans les 5 départements de notre <Link to="/zones-desservies" className="text-blue-600 hover:underline font-medium">zone d'intervention</Link> en Île-de-France.
                 </p>
               </div>
             </section>
@@ -250,12 +250,12 @@ export default function About() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
-                  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75/' },
-                  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91/' },
-                  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92/' },
-                  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93/' },
-                  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94/' },
-                  { label: 'Toutes les zones desservies', href: '/zones-desservies/' },
+                  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75' },
+                  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91' },
+                  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92' },
+                  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93' },
+                  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94' },
+                  { label: 'Toutes les zones desservies', href: '/zones-desservies' },
                 ].map(dep => (
                   <Link
                     key={dep.href}
@@ -311,7 +311,7 @@ export default function About() {
               <p className="text-blue-100 text-sm sm:text-base mb-6">Réservez en ligne ou appelez-nous directement. Disponible 24h/24 – 7j/7.</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   <CalendarCheck size={18} aria-hidden="true" />

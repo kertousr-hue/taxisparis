@@ -109,12 +109,12 @@ const jsonLDWebPage = {
   name: 'Zones desservies – Taxi VSL Conventionné CPAM Île-de-France',
   description:
     'Toutes les zones desservies par notre service de taxi conventionné et VSL en Île-de-France : Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94). Plus de 200 communes.',
-  url: 'https://www.taxisparis-conventionnes.fr/zones-desservies/',
+  url: 'https://www.taxisparis-conventionnes.fr/zones-desservies',
   breadcrumb: {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://www.taxisparis-conventionnes.fr/' },
-      { '@type': 'ListItem', position: 2, name: 'Zones desservies', item: 'https://www.taxisparis-conventionnes.fr/zones-desservies/' },
+      { '@type': 'ListItem', position: 2, name: 'Zones desservies', item: 'https://www.taxisparis-conventionnes.fr/zones-desservies' },
     ],
   },
 };
@@ -160,7 +160,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
           'taxi conventionné CPAM Île-de-France',
           'transport médical remboursé',
         ]}
-        canonical="https://www.taxisparis-conventionnes.fr/zones-desservies/"
+        canonical="https://www.taxisparis-conventionnes.fr/zones-desservies"
         jsonLD={[jsonLDWebPage, jsonLDFAQ, jsonLDMedical]}
       />
 
@@ -179,7 +179,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              to="/reservation-taxi-vsl/"
+              to="/reservation-taxi-vsl"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition shadow-lg"
             >
               Réserver maintenant
@@ -258,7 +258,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
 
                 {/* CTA */}
                 <Link
-                  to={`/${dept.slug}/`}
+                  to={`/${dept.slug}`}
                   className={`w-full flex items-center justify-center gap-2 text-white font-semibold text-sm px-4 py-3 rounded-xl transition ${dept.btnColor}`}
                   aria-label={`Voir les villes desservies en ${dept.name} (${dept.code})`}
                 >
@@ -343,7 +343,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
               {DEPARTMENTS.map((dept) => (
                 <Link
                   key={dept.code}
-                  to={`/${dept.slug}/`}
+                  to={`/${dept.slug}`}
                   className="flex items-center gap-3 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 hover:bg-blue-100 hover:border-blue-300 transition group"
                   aria-label={`Taxi conventionné ${dept.name} (${dept.code})`}
                 >
@@ -439,7 +439,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              to="/reservation-taxi-vsl/"
+              to="/reservation-taxi-vsl"
               className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-blue-700 transition shadow-md"
             >
               Faire une réservation

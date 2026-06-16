@@ -35,7 +35,7 @@ function generateLocalContent(city: any, department: any) {
   const seed = hash(city.slug + department.slug + city.postalCode)
   const hasStations = city.nearStations && city.nearStations.length > 0
   const hasAirports = city.nearAirports && city.nearAirports.length > 0
-  const hasHospitals = city.nearHospitals && city.nearHospitals.length > 0
+  const hasHospitals = city.nearHospitals && city.nearHospitals.filter((h: string) => h && h.trim()).length > 0
 
   const careTypes = [
     'consultations spécialisées',
@@ -162,7 +162,7 @@ ${organizationIntro}
 ${serviceType} assure :
 • ${benefits.join('\n• ')}
 
-Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals[0] : 'un établissement hospitalier'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
+Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter((h: string) => h && h.trim())[0] : 'un établissement hospitalier d'Île-de-France'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
 `
 
   const faq = [
@@ -196,7 +196,7 @@ Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals[0] : '
   ]
 
   const frequentTrips = hasHospitals
-    ? city.nearHospitals.slice(0, 4).map((hospital: string, idx: number) => ({
+    ? city.nearHospitals.filter((h: string) => h && h.trim()).slice(0, 4).map((hospital: string, idx: number) => ({
         from: city.name,
         to: hospital,
         description: pickStable(tripDescriptions, seed + idx + 100, 1)[0]
@@ -290,7 +290,7 @@ export default function CityPage() {
     return <div className="text-center py-20">Ville non trouvée</div>
   }
 
-  const baseUrl = `https://www.taxisparis-conventionnes.fr/${departmentSlug}/${citySlug}/`
+  const baseUrl = `https://www.taxisparis-conventionnes.fr/${departmentSlug}/${citySlug}`
 
   const seed = hash(city.slug + city.postalCode)
 
@@ -460,7 +460,7 @@ export default function CityPage() {
                 06 50 36 64 91
               </a>
               <Link
-                to="/reservation-taxi-vsl/"
+                to="/reservation-taxi-vsl"
                 className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center gap-2 transition w-full justify-center"
               >
                 <Calendar className="w-5 h-5" />
@@ -545,7 +545,7 @@ export default function CityPage() {
                 </p>
                 <div className="flex flex-wrap gap-3 text-sm">
                   <Link
-                    to="/taxis-aeroports-parisiens/"
+                    to="/taxis-aeroports-parisiens"
                     className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
                   >
                     <Plane className="w-4 h-4" />
@@ -553,7 +553,7 @@ export default function CityPage() {
                   </Link>
                   <span className="text-gray-300">|</span>
                   <Link
-                    to="/taxis-gares-parisiennes/"
+                    to="/taxis-gares-parisiennes"
                     className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
                   >
                     <Train className="w-4 h-4" />
@@ -561,7 +561,7 @@ export default function CityPage() {
                   </Link>
                   <span className="text-gray-300">|</span>
                   <Link
-                    to="/reservation-taxi-vsl/"
+                    to="/reservation-taxi-vsl"
                     className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
                   >
                     <Calendar className="w-4 h-4" />
@@ -571,7 +571,7 @@ export default function CityPage() {
               </div>
             </section>
 
-            {city.nearHospitals && city.nearHospitals.length > 0 && (
+            {city.nearHospitals && city.nearHospitals.filter((h: string) => h && h.trim()).length > 0 && (
               <section>
                 <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
                   <Building2 className="text-blue-600" />
@@ -581,7 +581,7 @@ export default function CityPage() {
                   Notre service de taxi conventionné à {city.name} vous conduit vers les principaux établissements hospitaliers de la région. Ces centres de santé sont régulièrement desservis par nos chauffeurs au départ de {city.name} :
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {city.nearHospitals.map((hospital: string, i: number) => (
+                  {city.nearHospitals.filter((h: string) => h && h.trim()).map((hospital: string, i: number) => (
                     <div key={i} className="border rounded-xl p-4 flex items-center gap-3 hover:border-blue-600 hover:bg-blue-50 transition">
                       <Stethoscope className="text-blue-500 w-5 h-5 flex-shrink-0" />
                       <span className="text-gray-700">{hospital}</span>
@@ -672,7 +672,7 @@ export default function CityPage() {
                   </span>
                 </a>
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="inline-flex items-center justify-center gap-2 bg-blue-800 hover:bg-blue-900 text-white px-8 py-4 rounded-xl font-bold transition shadow-lg hover:shadow-xl text-lg border-2 border-blue-300 w-full sm:w-auto"
                 >
                   <Calendar className="w-6 h-6" />
@@ -714,7 +714,7 @@ export default function CityPage() {
                     06 50 36 64 91
                   </a>
                   <Link
-                    to="/reservation-taxi-vsl/"
+                    to="/reservation-taxi-vsl"
                     className="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-xl font-semibold transition shadow-md hover:shadow-lg"
                   >
                     <Calendar className="w-5 h-5" />
@@ -736,7 +736,7 @@ export default function CityPage() {
                   {nearbyCities.map((neighbor: any) => (
                     <Link
                       key={neighbor.slug}
-                      to={`/${departmentSlug}/${neighbor.slug}/`}
+                      to={`/${departmentSlug}/${neighbor.slug}`}
                       className="bg-white border-2 border-gray-200 px-4 py-4 rounded-xl hover:border-blue-600 hover:shadow-lg transition group"
                     >
                       <div className="flex items-center justify-between">
@@ -761,7 +761,7 @@ export default function CityPage() {
                   {allNearbyCities.map((neighbor: any) => (
                     <Link
                       key={neighbor.slug}
-                      to={`/${departmentSlug}/${neighbor.slug}/`}
+                      to={`/${departmentSlug}/${neighbor.slug}`}
                       className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
                     >
                       {neighbor.name}
@@ -782,7 +782,7 @@ export default function CityPage() {
                       </p>
                     </div>
                     <Link
-                      to={`/${departmentSlug}/`}
+                      to={`/${departmentSlug}`}
                       className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition shadow-lg hover:shadow-xl whitespace-nowrap"
                     >
                       <MapPin className="w-5 h-5" />
@@ -799,7 +799,7 @@ export default function CityPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Link
-                  to="/taxis-gares-parisiennes/"
+                  to="/taxis-gares-parisiennes"
                   className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
                 >
                   <Train className="text-blue-600 w-6 h-6 mb-2" />
@@ -807,7 +807,7 @@ export default function CityPage() {
                   <p className="text-sm text-gray-600">Transferts vers toutes les gares de Paris</p>
                 </Link>
                 <Link
-                  to="/taxis-aeroports-parisiens/"
+                  to="/taxis-aeroports-parisiens"
                   className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
                 >
                   <Plane className="text-blue-600 w-6 h-6 mb-2" />
@@ -815,7 +815,7 @@ export default function CityPage() {
                   <p className="text-sm text-gray-600">CDG, Orly, Beauvais pour raisons médicales</p>
                 </Link>
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition bg-blue-50"
                 >
                   <Car className="text-blue-600 w-6 h-6 mb-2" />
@@ -823,7 +823,7 @@ export default function CityPage() {
                   <p className="text-sm text-gray-600">Réservation en ligne rapide et simple</p>
                 </Link>
                 <Link
-                  to="/faq/"
+                  to="/faq"
                   className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
                 >
                   <Shield className="text-blue-600 w-6 h-6 mb-2" />
@@ -853,7 +853,7 @@ export default function CityPage() {
                   06 50 36 64 91
                 </a>
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center gap-2 transition w-full justify-center"
                 >
                   <Calendar className="w-5 h-5" />
@@ -869,7 +869,7 @@ export default function CityPage() {
                 <ul className="space-y-2 text-sm text-gray-700">
                   <li>
                     <Link
-                      to={`/${departmentSlug}/`}
+                      to={`/${departmentSlug}`}
                       className="hover:text-blue-600 hover:underline flex items-center gap-2"
                     >
                       <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
@@ -878,7 +878,7 @@ export default function CityPage() {
                   </li>
                   <li>
                     <Link
-                      to="/zones-desservies/"
+                      to="/zones-desservies"
                       className="hover:text-blue-600 hover:underline flex items-center gap-2"
                     >
                       <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
@@ -887,7 +887,7 @@ export default function CityPage() {
                   </li>
                   <li>
                     <Link
-                      to="/taxis-aeroports-parisiens/"
+                      to="/taxis-aeroports-parisiens"
                       className="hover:text-blue-600 hover:underline flex items-center gap-2"
                     >
                       <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
@@ -896,7 +896,7 @@ export default function CityPage() {
                   </li>
                   <li>
                     <Link
-                      to="/taxis-gares-parisiennes/"
+                      to="/taxis-gares-parisiennes"
                       className="hover:text-blue-600 hover:underline flex items-center gap-2"
                     >
                       <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>

@@ -17,11 +17,11 @@ interface BlogPost {
 }
 
 const DEPARTMENTS = [
-  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75/' },
-  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91/' },
-  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92/' },
-  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93/' },
-  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94/' },
+  { label: 'Paris (75)', href: '/taxi-conventionne-paris-75' },
+  { label: 'Essonne (91)', href: '/taxi-conventionne-essonne-91' },
+  { label: 'Hauts-de-Seine (92)', href: '/taxi-conventionne-hauts-de-seine-92' },
+  { label: 'Seine-Saint-Denis (93)', href: '/taxi-conventionne-seine-saint-denis-93' },
+  { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94' },
 ];
 
 const FAQ_ITEMS = [
@@ -58,17 +58,17 @@ const jsonLDWebPage = {
   name: 'Blog Taxi VSL Conventionné CPAM Île-de-France',
   description:
     'Conseils pratiques, guides et actualités sur le transport médical en taxi conventionné et VSL en Île-de-France. Tout savoir sur la prise en charge CPAM, les remboursements et les démarches.',
-  url: 'https://www.taxisparis-conventionnes.fr/blog/',
+  url: 'https://www.taxisparis-conventionnes.fr/blog',
   publisher: {
     '@type': 'Organization',
     name: 'Taxis Paris Conventionnés',
-    url: 'https://www.taxisparis-conventionnes.fr/',
+    url: 'https://www.taxisparis-conventionnes.fr',
   },
   breadcrumb: {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://www.taxisparis-conventionnes.fr/' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.taxisparis-conventionnes.fr/blog/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.taxisparis-conventionnes.fr/blog' },
     ],
   },
 };
@@ -138,7 +138,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
           'prescription médicale transport',
           'taxi conventionné Île-de-France',
         ]}
-        canonical="https://www.taxisparis-conventionnes.fr/blog/"
+        canonical="https://www.taxisparis-conventionnes.fr/blog"
         jsonLD={[jsonLDWebPage, jsonLDFAQ, jsonLDMedical]}
       />
 
@@ -157,7 +157,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              to="/reservation-taxi-vsl/"
+              to="/reservation-taxi-vsl"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition shadow-lg"
             >
               Réserver maintenant
@@ -225,7 +225,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                       <p className="text-gray-600 mb-4 text-sm line-clamp-3">{post.excerpt}</p>
                     )}
                     <Link
-                      to={`/blog/${post.slug}/`}
+                      to={`/blog/${post.slug}`}
                       className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm hover:gap-3 transition-all"
                       aria-label={`Lire l'article : ${post.title}`}
                     >
@@ -409,7 +409,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              to="/reservation-taxi-vsl/"
+              to="/reservation-taxi-vsl"
               className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-blue-700 transition shadow-md"
             >
               Réserver maintenant
