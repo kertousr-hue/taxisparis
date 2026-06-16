@@ -162,12 +162,12 @@ ${organizationIntro}
 ${serviceType} assure :
 • ${benefits.join('\n• ')}
 
-Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter((h: string) => h && h.trim())[0] : 'un établissement hospitalier d'Île-de-France'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
+Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter((h: string) => h && h.trim())[0] : 'un établissement hospitalier d\'Île-de-France'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
 `
 
   const faq = [
     {
-      q: `Comment réserver un taxi conventionné à ${city.name} ?`,
+      q: \`Comment réserver un taxi conventionné à ${city.name} ?`,
       a: `Appelez-nous au 06 50 36 64 91 ou réservez en ligne sur notre formulaire. Munissez-vous de votre prescription médicale de transport (PMT) et de votre carte Vitale. Nous confirmons votre trajet sous quelques minutes.`
     },
     {
