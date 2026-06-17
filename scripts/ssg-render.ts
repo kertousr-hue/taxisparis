@@ -369,7 +369,7 @@ function injectIntoTemplate(template: string, appHtml: string, helmet: any, rout
     `  ${metaTags}\n  ${linkTags}\n  ${canonicalTag}\n  ${scriptTags}\n  </head>`
   );
 
-  html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${appHtml}</div>`);
 
   return html;
 }
@@ -391,7 +391,7 @@ function render404(template: string): string {
     `  <title>Page introuvable – 404 | Taxis Paris Conventionnés</title>\n  <meta name="robots" content="noindex, nofollow" />\n  </head>`
   );
 
-  html = html.replace('<div id="root"></div>', `<div id="root">${notFoundHtml}</div>`);
+  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${notFoundHtml}</div>`);
 
   return html;
 }
