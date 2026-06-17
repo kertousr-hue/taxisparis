@@ -3,6 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { build } from 'vite';
 import { getAllRoutes } from './routes.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,10 +37,14 @@ async function buildSSR() {
 
 function stripHelmetTags(html: string): string {
   return html
-    .replace(/<title[^>]*data-rh[^>]*>[^<]*<\/title>/gi, '')
+    .replace(/<title[^>]*data-rh[^>]*>[\s\S]*?<\/title>/gi, '')
     .replace(/<meta[^>]+data-rh[^>]*\/?>/gi, '')
     .replace(/<link[^>]+data-rh[^>]*\/?>/gi, '')
     .replace(/<script[^>]+data-rh[^>]*>[\s\S]*?<\/script>/gi, '');
+}
+
+function stripDataRh(str: string): string {
+  return str.replace(/\s+data-rh="[^"]*"/g, '');
 }
 
 async function prerenderAll() {
@@ -187,7 +193,8 @@ FileETag None
   for (let i = 0; i < routes.length; i++) {
     const route = routes[i];
     try {
-      const { html: appHtml, helmet } = render(route.path);
+      const renderPath = route.path === '/' ? '/' : route.path.replace(/\/+$/, '');
+      const { html: appHtml, helmet } = render(renderPath);
 
       const fullHtml = injectIntoTemplate(template, appHtml, helmet, route.path);
 
@@ -227,24 +234,139 @@ FileETag None
   console.log('🧹 Dossier SSR temporaire nettoyé');
 }
 
+interface RouteMeta {
+  title: string;
+  description: string;
+}
+
+function getRouteMeta(routePath: string): RouteMeta {
+  const cleanPath = routePath.replace(/\/+$/, '');
+  const staticMeta: Record<string, RouteMeta> = {
+    '/': {
+      title: 'Taxi Conventionné CPAM & VSL Paris Île-de-France | Réservation 24h/24',
+      description: 'Taxi conventionné et VSL agréés CPAM en Île-de-France. Transport médical remboursé 24h/24 dans le 75, 91, 92, 93 et 94. Réservation rapide.',
+    },
+    '/reservation-taxi-vsl': {
+      title: 'Réservation Taxi Conventionné VSL CPAM | Île-de-France 24/7',
+      description: 'Réservez votre taxi conventionné ou VSL en ligne. Transport médical remboursé CPAM. Service 24/7 en Île-de-France (75, 91, 92, 93, 94).',
+    },
+    '/taxis-aeroports-parisiens': {
+      title: 'Taxi Conventionné Aéroports Paris – CDG, Orly, Beauvais | CPAM',
+      description: 'Transport médical conventionné vers les aéroports parisiens : Roissy-CDG, Orly et Beauvais. Prise en charge CPAM possible. Disponible 24h/24.',
+    },
+    '/taxis-gares-parisiennes': {
+      title: 'Taxi Conventionné Gares Paris – Gare du Nord, Lyon, Montparnasse…',
+      description: 'Transport médical vers toutes les gares parisiennes : Gare du Nord, Gare de Lyon, Montparnasse, Saint-Lazare. Service conventionné CPAM.',
+    },
+    '/zones-desservies': {
+      title: 'Zones desservies – Taxi Conventionné Île-de-France | Paris, 91, 92, 93, 94',
+      description: "Nos taxis conventionne\u0301s interviennent dans tout Paris et l\u2019I\u0302le-de-France : Essonne, Hauts-de-Seine, Seine-Saint-Denis, Val-de-Marne.",
+    },
+    '/qui-sommes-nous': {
+      title: 'Qui sommes-nous ? | Taxis Paris Conventionnés',
+      description: 'Découvrez notre équipe de transport médical conventionné en Île-de-France. Professionnels agréés CPAM pour vos trajets de santé.',
+    },
+    '/blog': {
+      title: 'Blog – Taxis Conventionnés Paris Île-de-France',
+      description: 'Actualités, conseils et informations sur le transport médical conventionné en Île-de-France.',
+    },
+    '/faq': {
+      title: 'FAQ – Questions fréquentes | Taxi Conventionné CPAM Île-de-France',
+      description: 'Toutes les réponses à vos questions sur le taxi conventionné, le VSL et la prise en charge CPAM en Île-de-France.',
+    },
+    '/contact': {
+      title: 'Contact – Taxi Conventionné Paris Île-de-France',
+      description: 'Contactez notre service de taxi conventionné et VSL en Île-de-France. Disponible 24h/24 pour vos transports médicaux.',
+    },
+    '/mentions-legales': {
+      title: 'Mentions légales | Taxis Paris Conventionnés',
+      description: 'Mentions légales du site Taxis Paris Conventionnés.',
+    },
+    '/conditions-generales-de-vente': {
+      title: 'Conditions générales de vente | Taxis Paris Conventionnés',
+      description: 'Conditions générales de vente du service de taxi conventionné et VSL en Île-de-France.',
+    },
+    '/conditions-generales': {
+      title: 'Conditions générales | Taxis Paris Conventionnés',
+      description: 'Conditions générales du service de taxi conventionné et VSL en Île-de-France.',
+    },
+  };
+
+  if (staticMeta[cleanPath]) return staticMeta[cleanPath];
+
+  const citiesData = require('../src/data/cities.json');
+  const parts = cleanPath.split('/').filter(Boolean);
+
+  if (parts.length === 1) {
+    const deptSlug = parts[0];
+    const dept = (citiesData as any).departments.find((d: any) => d.slug === deptSlug);
+    if (dept) {
+      const deptNum = dept.code;
+      return {
+        title: `Taxi Conventionné ${dept.name} (${deptNum}) | Transport Médical CPAM`,
+        description: `Taxi conventionné et VSL agréé CPAM en ${dept.name} (${deptNum}). Transport médical remboursé 24h/24 pour tous vos rendez-vous médicaux.`,
+      };
+    }
+  }
+
+  if (parts.length === 2) {
+    const deptSlug = parts[0];
+    const citySlug = parts[1];
+    const dept = (citiesData as any).departments.find((d: any) => d.slug === deptSlug);
+    const city = dept?.cities.find((c: any) => c.slug === citySlug);
+    if (city) {
+      return {
+        title: `Taxi Conventionné ${city.name} (${city.postalCode}) | CPAM | Transport Médical 24h/24`,
+        description: `Taxi conventionné et VSL à ${city.name} (${city.postalCode}). Transport médical remboursé CPAM 24h/24 en Île-de-France. Réservation rapide.`,
+      };
+    }
+  }
+
+  return {
+    title: 'Taxi Conventionné CPAM & VSL Paris Île-de-France | Réservation 24h/24',
+    description: 'Taxi conventionné et VSL agréés CPAM en Île-de-France. Transport médical remboursé 24h/24.',
+  };
+}
+
 function injectIntoTemplate(template: string, appHtml: string, helmet: any, routePath: string): string {
   const domain = 'https://www.taxisparis-conventionnes.fr';
   const withSlash = routePath === '/' ? '/' : (routePath.endsWith('/') ? routePath : `${routePath}/`);
   const canonicalUrl = `${domain}${withSlash}`;
 
-  const titleTag = helmet?.title?.toString() || '<title>Taxi VSL Conventionné | Paris Île-de-France</title>';
-  const metaTags = helmet?.meta?.toString() || '';
-  const linkTags = helmet?.link?.toString() || '';
-  const scriptTags = helmet?.script?.toString() || '';
+  const helmetTitle = stripDataRh(helmet?.title?.toString() || '');
+  const helmetMeta = stripDataRh(helmet?.meta?.toString() || '');
+  const helmetLink = stripDataRh(helmet?.link?.toString() || '');
+  const helmetScript = stripDataRh(helmet?.script?.toString() || '');
+
+  const isHelmetTitleEmpty = !helmetTitle || helmetTitle === '<title></title>';
+  let titleTag: string;
+  let metaTags: string;
+  let linkTags: string;
+  let scriptTags: string;
+
+  if (isHelmetTitleEmpty) {
+    const meta = getRouteMeta(routePath);
+    titleTag = `<title>${meta.title}</title>`;
+    metaTags = `<meta name="description" content="${meta.description.replace(/"/g, '&quot;')}" />\n  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`;
+    linkTags = '';
+    scriptTags = '';
+  } else {
+    titleTag = helmetTitle;
+    metaTags = helmetMeta;
+    linkTags = helmetLink;
+    scriptTags = helmetScript;
+  }
 
   const hasCanonical = linkTags.includes('rel="canonical"');
   const canonicalTag = hasCanonical ? '' : `<link rel="canonical" href="${canonicalUrl}" />`;
 
   let html = template;
 
+  html = html.replace(/<title>[^<]*<\/title>/i, titleTag);
+
   html = html.replace(
     '</head>',
-    `  ${titleTag}\n  ${metaTags}\n  ${linkTags}\n  ${canonicalTag}\n  ${scriptTags}\n  </head>`
+    `  ${metaTags}\n  ${linkTags}\n  ${canonicalTag}\n  ${scriptTags}\n  </head>`
   );
 
   html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
