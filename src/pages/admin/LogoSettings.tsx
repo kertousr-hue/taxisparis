@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Save, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
 import MediaPicker from '../../components/admin/MediaPicker';
-import Toast, { ToastType } from '../../components/admin/Toast';
 
 export default function LogoSettings() {
   const [logoUrl, setLogoUrl] = useState('');
@@ -14,7 +13,6 @@ export default function LogoSettings() {
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [showHomeMediaPicker, setShowHomeMediaPicker] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
   useEffect(() => {
     fetchLogo();
@@ -54,9 +52,11 @@ export default function LogoSettings() {
   const handleSave = async () => {
     setSaving(true);
     try {
+      console.log('Sauvegarde des logos:', { logoUrl, homeLogoUrl });
+
       const settingsToUpdate = [
         { key: 'site_logo', value: logoUrl, description: 'URL du logo du site' },
-        { key: 'home_logo', value: homeLogoUrl, description: "URL du logo de la page d'accueil" }
+        { key: 'home_logo', value: homeLogoUrl, description: 'URL du logo de la page d\'accueil' }
       ];
 
       for (const setting of settingsToUpdate) {
@@ -66,26 +66,45 @@ export default function LogoSettings() {
           .eq('key', setting.key)
           .maybeSingle();
 
+        console.log(`Setting ${setting.key}:`, { existing, value: setting.value });
+
         if (existing) {
           const { error } = await supabase
             .from('site_settings')
-            .update({ value: setting.value, updated_at: new Date().toISOString() })
+            .update({
+              value: setting.value,
+              updated_at: new Date().toISOString(),
+            })
             .eq('key', setting.key);
-          if (error) throw error;
+          if (error) {
+            console.error(`Erreur update ${setting.key}:`, error);
+            throw error;
+          }
+          console.log(`${setting.key} mis à jour avec succès`);
         } else {
           const { error } = await supabase
             .from('site_settings')
-            .insert({ key: setting.key, value: setting.value, description: setting.description });
-          if (error) throw error;
+            .insert({
+              key: setting.key,
+              value: setting.value,
+              description: setting.description,
+            });
+          if (error) {
+            console.error(`Erreur insert ${setting.key}:`, error);
+            throw error;
+          }
+          console.log(`${setting.key} inséré avec succès`);
         }
       }
 
       setInitialLogoUrl(logoUrl);
       setInitialHomeLogoUrl(homeLogoUrl);
       setHasUnsavedChanges(false);
-      setToast({ message: "Logos enregistrés. Rechargez la page d'accueil pour voir les changements.", type: 'success' });
+      alert('Logos enregistrés avec succès ! Rechargez la page d\'accueil pour voir les changements.');
+      console.log('Sauvegarde terminée avec succès');
     } catch (error) {
-      setToast({ message: 'Erreur lors de la sauvegarde: ' + (error as Error).message, type: 'error' });
+      console.error('Erreur lors de la sauvegarde:', error);
+      alert('Erreur lors de la sauvegarde des logos: ' + (error as Error).message);
     } finally {
       setSaving(false);
     }
@@ -338,14 +357,6 @@ export default function LogoSettings() {
           onSelect={handleHomeMediaSelect}
           onClose={() => setShowHomeMediaPicker(false)}
           logoMode={true}
-        />
-      )}
-
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
         />
       )}
     </div>

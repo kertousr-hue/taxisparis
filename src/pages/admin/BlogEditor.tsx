@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Save, ArrowLeft, Eye, Image as ImageIcon, AlignLeft, Copy, Check } from 'lucide-react';
+import { Save, ArrowLeft, Eye, Image as ImageIcon, AlignLeft, Copy } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import MediaPicker from '../../components/admin/MediaPicker';
 import { supabase } from '../../lib/supabase';
@@ -9,7 +9,6 @@ export default function BlogEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaPickerTarget, setMediaPickerTarget] = useState<'featured' | 'content'>('content');
   const [formData, setFormData] = useState({
@@ -40,7 +39,7 @@ export default function BlogEditor() {
 
     try {
       const payload = { ...formData };
-      if (formData.published && !(payload as any).published_at) {
+      if (formData.published && !formData.published) {
         (payload as any).published_at = new Date().toISOString();
       }
 
@@ -272,12 +271,11 @@ export default function BlogEditor() {
                   type="button"
                   onClick={() => {
                     navigator.clipboard.writeText(formData.content);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
+                    alert('Contenu copié dans le presse-papier');
                   }}
                   className="flex items-center gap-1 px-2 py-1 text-xs text-blue-600 hover:text-blue-700"
                 >
-                  {copied ? <><Check size={12} /> Copié</> : <><Copy size={12} /> Copier</>}
+                  <Copy size={12} /> Copier
                 </button>
               </div>
             </div>

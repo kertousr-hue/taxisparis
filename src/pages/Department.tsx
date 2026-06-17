@@ -99,7 +99,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  to="/reservation-taxi-vsl"
+                  to="/reservation-taxi-vsl/"
                   className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-xl hover:shadow-2xl hover:scale-105 inline-flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95"
                 >
                   <Calendar size={20} aria-hidden="true" />

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { X, Search, Upload, Image as ImageIcon, Check, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { resizeImage, getImageInfo } from '../../utils/imageResize';
-import Toast, { ToastType } from './Toast';
 
 interface Media {
   id: string;
@@ -19,8 +18,6 @@ interface MediaPickerProps {
   logoMode?: boolean;
 }
 
-const BROKEN_IMG_SVG = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect fill="%23f3f4f6" width="200" height="200"/><text x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="14" font-family="sans-serif">Erreur</text></svg>`;
-
 export default function MediaPicker({ onSelect, onClose, logoMode = false }: MediaPickerProps) {
   const [media, setMedia] = useState<Media[]>([]);
   const [filteredMedia, setFilteredMedia] = useState<Media[]>([]);
@@ -33,7 +30,6 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [imageInfo, setImageInfo] = useState<{ width: number; height: number } | null>(null);
-  const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
   useEffect(() => {
     fetchMedia();
@@ -74,7 +70,8 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
         try {
           const info = await getImageInfo(file);
           setImageInfo(info);
-        } catch {
+        } catch (error) {
+          console.error('Error getting image info:', error);
           setImageInfo(null);
         }
       }
@@ -99,6 +96,9 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
           maintainAspectRatio: true,
         });
 
+        console.log(`Image redimensionnée: ${resized.width}x${resized.height}px`);
+        console.log(`Taille originale: ${(resized.originalSize / 1024).toFixed(2)}KB → Nouvelle taille: ${(resized.newSize / 1024).toFixed(2)}KB`);
+
         const ext = selectedFile.type === 'image/png' ? 'png' : 'jpg';
         fileToUpload = new File([resized.blob], `${selectedFile.name.split('.')[0]}.${ext}`, {
           type: resized.blob.type,
@@ -108,40 +108,56 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
 
       const fileExt = fileToUpload.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      console.log('Début upload du fichier:', fileName, 'Taille:', finalSize);
+
+      const { error: uploadError, data: uploadData } = await supabase.storage
         .from('media')
-        .upload(fileName, fileToUpload, {
+        .upload(filePath, fileToUpload, {
           cacheControl: '3600',
           upsert: false
         });
 
       if (uploadError) {
+        console.error('Erreur upload Storage:', uploadError);
         throw new Error(`Erreur upload: ${uploadError.message}`);
       }
 
+      console.log('Upload réussi:', uploadData);
+
       const { data: { publicUrl } } = supabase.storage
         .from('media')
-        .getPublicUrl(fileName);
+        .getPublicUrl(filePath);
 
-      const { error: insertError } = await supabase.from('media').insert([{
+      console.log('Public URL:', publicUrl);
+
+      const { data: insertData, error: insertError } = await supabase.from('media').insert([{
         filename: selectedFile.name,
         url: publicUrl,
         mime_type: fileToUpload.type,
         size: finalSize,
       }]).select();
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        console.error('Erreur insertion media:', insertError);
+        throw insertError;
+      }
+
+      console.log('Media inséré:', insertData);
 
       setSelectedFile(null);
       setImageInfo(null);
       setShowUpload(false);
       setSelectedUrl(publicUrl);
       await fetchMedia();
-      setToast({ message: logoMode ? 'Image optimisée et uploadée. Cliquez sur "Insérer le média".' : 'Fichier uploadé. Cliquez sur "Insérer le média".', type: 'success' });
+      alert(logoMode
+        ? `Image optimisée et uploadée avec succès!\n\nURL: ${publicUrl}\n\nCliquez sur l'image dans la galerie puis sur "Insérer le média".`
+        : `Fichier uploadé avec succès!\n\nURL: ${publicUrl}\n\nCliquez sur l'image dans la galerie puis sur "Insérer le média".`);
     } catch (error) {
+      console.error('Error uploading file:', error);
       const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
-      setToast({ message: `Erreur upload: ${errorMessage}`, type: 'error' });
+      alert(`Erreur lors de l'upload du fichier:\n\n${errorMessage}\n\nVérifiez la console (F12) pour plus de détails.`);
     } finally {
       setUploading(false);
     }
@@ -153,18 +169,10 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
 
     try {
       const filename = newMediaUrl.split('/').pop() || 'image';
-      const ext = filename.split('.').pop()?.toLowerCase();
-      const mimeMap: Record<string, string> = {
-        jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png',
-        gif: 'image/gif', webp: 'image/webp', svg: 'image/svg+xml',
-        pdf: 'application/pdf', mp4: 'video/mp4', webm: 'video/webm',
-      };
-      const mime_type = (ext && mimeMap[ext]) || 'image/jpeg';
-
       await supabase.from('media').insert([{
         filename,
         url: newMediaUrl,
-        mime_type,
+        mime_type: 'image',
         size: 0,
       }]);
 
@@ -172,9 +180,10 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
       setNewMediaUrl('');
       setShowUpload(false);
       await fetchMedia();
-      setToast({ message: 'Média ajouté. Cliquez sur "Insérer le média".', type: 'success' });
+      alert('Média ajouté avec succès! Cliquez sur "Insérer le média" pour l\'ajouter.');
     } catch (error) {
-      setToast({ message: "Erreur lors de l'ajout du média", type: 'error' });
+      console.error('Error adding media:', error);
+      alert('Erreur lors de l\'ajout du média');
     }
   };
 
@@ -238,7 +247,7 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Upload fichier
+                  📁 Upload fichier
                 </button>
                 <button
                   onClick={() => setUploadMode('url')}
@@ -248,7 +257,7 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  URL externe
+                  🔗 URL externe
                 </button>
               </div>
 
@@ -285,7 +294,7 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
                               <p><strong>Dimensions:</strong> {imageInfo.width}x{imageInfo.height}px</p>
                               {imageInfo.height > 100 && (
                                 <p className="text-xs mt-1">
-                                  L'image sera automatiquement redimensionnée à 100px de hauteur lors de l'upload
+                                  ⚠️ L'image sera automatiquement redimensionnée à 100px de hauteur lors de l'upload
                                 </p>
                               )}
                             </div>
@@ -367,7 +376,7 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
                       alt={item.filename}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.currentTarget.src = BROKEN_IMG_SVG;
+                        e.currentTarget.src = 'https://via.placeholder.com/200x200?text=Error';
                       }}
                     />
                     {selectedUrl === item.url && (
@@ -412,14 +421,6 @@ export default function MediaPicker({ onSelect, onClose, logoMode = false }: Med
           </div>
         </div>
       </div>
-
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
     </div>
   );
 }

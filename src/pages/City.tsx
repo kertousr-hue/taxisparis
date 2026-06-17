@@ -167,7 +167,7 @@ Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter
 
   const faq = [
     {
-      q: `Comment réserver un taxi conventionné à ${city.name} ?`,
+      q: \`Comment réserver un taxi conventionné à ${city.name} ?`,
       a: `Appelez-nous au 06 50 36 64 91 ou réservez en ligne sur notre formulaire. Munissez-vous de votre prescription médicale de transport (PMT) et de votre carte Vitale. Nous confirmons votre trajet sous quelques minutes.`
     },
     {
@@ -471,13 +471,13 @@ export default function CityPage() {
             <section>
               <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-6">
                 <p className="text-sm text-gray-700">
-                  <Link to={`/${departmentSlug}`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
+                  <Link to={`/${departmentSlug}/`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
                     {department.name}
                   </Link>
                   {' '}&gt;{' '}
                   <span className="text-gray-900 font-semibold">{city.name}</span>
                   {' '}&bull;{' '}
-                  <Link to="/zones-desservies" className="text-blue-600 hover:text-blue-800 hover:underline">
+                  <Link to="/zones-desservies/" className="text-blue-600 hover:text-blue-800 hover:underline">
                     Toutes nos zones
                   </Link>
                 </p>
@@ -503,15 +503,15 @@ export default function CityPage() {
               <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
                 <p className="text-sm text-gray-700">
                   Notre service de taxi conventionné couvre l'ensemble du{' '}
-                  <Link to={`/${departmentSlug}`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
+                  <Link to={`/${departmentSlug}/`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
                     {department.name}
                   </Link>
                   {' '}et toute{' '}
-                  <Link to="/zones-desservies" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
+                  <Link to="/zones-desservies/" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
                     l'Île-de-France
                   </Link>
                   .{' '}
-                  <Link to="/reservation-taxi-vsl" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
+                  <Link to="/reservation-taxi-vsl/" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
                     Réservez votre transport médical
                   </Link>
                   {' '}en quelques clics.

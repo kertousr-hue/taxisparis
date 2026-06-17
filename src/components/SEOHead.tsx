@@ -36,11 +36,11 @@ export default function SEOHead({
 }: SEOHeadProps) {
   const location = useLocation();
 
-  // Canonical: no trailing slash except root
+  // Normalize path: ensure exactly one trailing slash, except for root which stays "/"
   const rawPath = location.pathname.replace(/\/+$/, '') || '';
-  const normalizedPath = rawPath === '' ? '/' : rawPath;
+  const normalizedPath = rawPath === '' ? '/' : `${rawPath}/`;
   const canonicalUrl = canonical
-    ? canonical.replace(/\/+$/, '') || '/'
+    ? (canonical.endsWith('/') ? canonical : `${canonical}/`)
     : `${CANONICAL_DOMAIN}${normalizedPath}`;
 
   const safeTitle = cleanSeoText(title);
