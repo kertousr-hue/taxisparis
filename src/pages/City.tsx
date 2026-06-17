@@ -167,7 +167,7 @@ Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter
 
   const faq = [
     {
-      q: \`Comment réserver un taxi conventionné à ${city.name} ?`,
+      q: `Comment réserver un taxi conventionné à ${city.name} ?`,
       a: `Appelez-nous au 06 50 36 64 91 ou réservez en ligne sur notre formulaire. Munissez-vous de votre prescription médicale de transport (PMT) et de votre carte Vitale. Nous confirmons votre trajet sous quelques minutes.`
     },
     {
