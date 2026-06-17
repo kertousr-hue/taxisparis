@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync, readdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -54,4 +54,9 @@ const robots = `User-agent: *\nAllow: /\n\nSitemap: ${BASE_URL}/sitemap.xml\n`;
 writeFileSync(resolve(OUTPUT_DIR, 'robots.txt'), robots, 'utf-8');
 console.log('robots.txt generated');
 
+console.log('SITEMAP PATH:', resolve(OUTPUT_DIR, 'sitemap.xml'));
+console.log('ROBOTS PATH:', resolve(OUTPUT_DIR, 'robots.txt'));
+console.log('SITEMAP EXISTS:', existsSync(resolve(OUTPUT_DIR, 'sitemap.xml')));
+console.log('ROBOTS EXISTS:', existsSync(resolve(OUTPUT_DIR, 'robots.txt')));
+console.log('DIST-SSG FILES:', readdirSync(OUTPUT_DIR));
 console.log('Build configuration complete.');
