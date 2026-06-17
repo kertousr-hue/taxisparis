@@ -33,6 +33,14 @@ async function buildSSR() {
   console.log('✅ Build SSR terminé');
 }
 
+function stripHelmetTags(html: string): string {
+  return html
+    .replace(/<title[^>]*data-rh[^>]*>[^<]*<\/title>/gi, '')
+    .replace(/<meta[^>]+data-rh[^>]*\/?>/gi, '')
+    .replace(/<link[^>]+data-rh[^>]*\/?>/gi, '')
+    .replace(/<script[^>]+data-rh[^>]*>[\s\S]*?<\/script>/gi, '');
+}
+
 async function prerenderAll() {
   console.log('\n🚀 Démarrage du SSG avec ReactDOMServer...\n');
 
@@ -49,7 +57,8 @@ async function prerenderAll() {
 
   const { render } = await import(serverEntryPath);
 
-  const template = fs.readFileSync(path.join(DIST_CLIENT, 'index.html'), 'utf-8');
+  const rawTemplate = fs.readFileSync(path.join(DIST_CLIENT, 'index.html'), 'utf-8');
+  const template = stripHelmetTags(rawTemplate);
 
   if (fs.existsSync(DIST_DIR)) {
     fs.rmSync(DIST_DIR, { recursive: true, force: true });
