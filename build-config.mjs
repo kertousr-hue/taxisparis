@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync, existsSync, readdirSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync, readdirSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -44,6 +44,8 @@ function buildSitemap() {
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>`;
 }
+
+mkdirSync(OUTPUT_DIR, { recursive: true });
 
 const sitemap = buildSitemap();
 writeFileSync(resolve(OUTPUT_DIR, 'sitemap.xml'), sitemap, 'utf-8');

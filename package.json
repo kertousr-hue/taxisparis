@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node build-config.mjs",
-    "build:ssg": "vite build && node build-config.mjs && tsx scripts/ssg-render.ts",
-    "build:ssg:puppeteer": "vite build && node build-config.mjs && tsx scripts/ssg-crawl.ts",
+    "build:ssg": "vite build && tsx scripts/ssg-render.ts && node build-config.mjs",
+    "build:ssg:puppeteer": "vite build && tsx scripts/ssg-crawl.ts && node build-config.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
