@@ -157,7 +157,6 @@ export default function ReservationPage() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [coordsDepart, setCoordsDepart] = useState<{ lat: number; lng: number } | null>(null);
   const [coordsArrivee, setCoordsArrivee] = useState<{ lat: number; lng: number } | null>(null);
-  const [debugInfo, setDebugInfo] = useState<{ url: string; method: string; status: number; statusText: string; body: string } | null>(null);
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
 
@@ -255,15 +254,12 @@ export default function ReservationPage() {
         body: JSON.stringify(emailData),
       });
       const rawBody = await resp.text();
-      setDebugInfo({ url: fetchUrl, method: 'POST', status: resp.status, statusText: resp.statusText, body: rawBody });
       if (!resp.ok) {
         let errMsg = `Erreur HTTP ${resp.status}`;
         try {
           const errBody = JSON.parse(rawBody);
-          console.error('Edge function error:', resp.status, errBody);
           errMsg = errBody.error || errBody.message || errMsg;
         } catch {
-          console.error('Edge function error (non-JSON):', resp.status, rawBody);
           if (rawBody) errMsg = rawBody;
         }
         throw new Error(errMsg);
@@ -343,18 +339,6 @@ export default function ReservationPage() {
                   <p className="font-bold text-green-800 text-sm">Réservation envoyée !</p>
                   <p className="text-green-700 text-xs mt-0.5">Nous vous contacterons rapidement pour confirmer votre transport.</p>
                 </div>
-              </div>
-            )}
-
-            {/* ── DEBUG PANEL (temporaire) ── */}
-            {debugInfo && (
-              <div className="mb-4 p-4 bg-gray-900 text-green-400 rounded-2xl font-mono text-xs overflow-auto">
-                <p className="font-bold text-yellow-300 mb-2">DEBUG FETCH</p>
-                <p><span className="text-gray-400">URL :</span> {debugInfo.url}</p>
-                <p><span className="text-gray-400">Méthode :</span> {debugInfo.method}</p>
-                <p><span className="text-gray-400">Status :</span> <span className={debugInfo.status === 200 ? 'text-green-400' : 'text-red-400'}>{debugInfo.status} {debugInfo.statusText}</span></p>
-                <p className="mt-2"><span className="text-gray-400">Body :</span></p>
-                <pre className="mt-1 whitespace-pre-wrap text-white">{debugInfo.body}</pre>
               </div>
             )}
 
