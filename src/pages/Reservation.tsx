@@ -250,7 +250,19 @@ export default function ReservationPage() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}` },
         body: JSON.stringify(emailData),
       });
-      if (!resp.ok) throw new Error("Erreur lors de l'envoi");
+      if (!resp.ok) {
+        let errMsg = `Erreur HTTP ${resp.status}`;
+        try {
+          const errBody = await resp.json();
+          console.error('Edge function error:', resp.status, errBody);
+          errMsg = errBody.error || errBody.message || errMsg;
+        } catch {
+          const text = await resp.text().catch(() => '');
+          console.error('Edge function error (non-JSON):', resp.status, text);
+          if (text) errMsg = text;
+        }
+        throw new Error(errMsg);
+      }
 
       setSubmitSuccess(true);
       setFormData({ nom: '', prenom: '', telephone: '', email: '', adresse_depart: '', adresse_arrivee: '', date_rdv: '', heure_rdv: '', informations_supplementaires: '' });
