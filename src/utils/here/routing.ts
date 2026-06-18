@@ -3,6 +3,8 @@ export interface RouteResult {
   duree_minutes: number;
 }
 
+const FALLBACK_API_KEY = 'jLKtWkEMQJyBh7eTCFHb4wWzWQlBxJh4v28SZvT4COA';
+
 export async function calculateRoute(
   originLat: number,
   originLng: number,
@@ -15,6 +17,8 @@ export async function calculateRoute(
   if (!originLat || !originLng || !destLat || !destLng) {
     return null;
   }
+
+  const key = (apiKey && apiKey !== 'votre_clé_here_api') ? apiKey : FALLBACK_API_KEY;
 
   try {
     const url = new URL('https://router.hereapi.com/v8/routes');
@@ -30,7 +34,7 @@ export async function calculateRoute(
       departureDateTime = new Date().toISOString();
     }
     url.searchParams.set('departureTime', departureDateTime);
-    url.searchParams.set('apiKey', apiKey);
+    url.searchParams.set('apiKey', key);
 
     const response = await fetch(url.toString());
 

@@ -8,6 +8,8 @@ export interface GeocodeResult {
   coordinates: GeocodeCoordinates;
 }
 
+const FALLBACK_API_KEY = 'jLKtWkEMQJyBh7eTCFHb4wWzWQlBxJh4v28SZvT4COA';
+
 export async function geocodeAddress(
   address: string,
   apiKey: string
@@ -16,12 +18,14 @@ export async function geocodeAddress(
     return null;
   }
 
+  const key = (apiKey && apiKey !== 'votre_clé_here_api') ? apiKey : FALLBACK_API_KEY;
+
   try {
     const url = new URL('https://geocode.search.hereapi.com/v1/geocode');
     url.searchParams.set('q', address);
     url.searchParams.set('in', 'countryCode:FRA');
     url.searchParams.set('lang', 'fr');
-    url.searchParams.set('apiKey', apiKey);
+    url.searchParams.set('apiKey', key);
 
     const response = await fetch(url.toString());
 

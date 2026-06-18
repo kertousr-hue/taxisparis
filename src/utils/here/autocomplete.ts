@@ -12,6 +12,8 @@ export interface HereAutocompleteSuggestion {
 
 const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '60', '28'];
 
+const FALLBACK_API_KEY = 'jLKtWkEMQJyBh7eTCFHb4wWzWQlBxJh4v28SZvT4COA';
+
 export async function fetchHereAutocomplete(
   query: string,
   apiKey: string
@@ -20,10 +22,7 @@ export async function fetchHereAutocomplete(
     return [];
   }
 
-  if (!apiKey || apiKey === 'votre_clé_here_api') {
-    console.error('HERE Maps API key is missing or not configured. Please set VITE_HERE_API_KEY in .env file');
-    return [];
-  }
+  const key = (apiKey && apiKey !== 'votre_clé_here_api') ? apiKey : FALLBACK_API_KEY;
 
   try {
     const bbox = '0.8000,47.9000,4.2000,50.1000';
@@ -33,7 +32,7 @@ export async function fetchHereAutocomplete(
     url.searchParams.set('lang', 'fr');
     url.searchParams.append('in', 'countryCode:FRA');
     url.searchParams.append('in', `bbox:${bbox}`);
-    url.searchParams.set('apiKey', apiKey);
+    url.searchParams.set('apiKey', key);
 
     const response = await fetch(url.toString());
 
