@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
+const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.jpg';
+
 interface SEOHeadProps {
   title: string;
   description: string;
@@ -9,6 +11,7 @@ interface SEOHeadProps {
   robots?: string;
   canonical?: string;
   jsonLD?: any | any[];
+  ogImage?: string;
 }
 
 function cleanSeoText(input: string): string {
@@ -32,7 +35,8 @@ export default function SEOHead({
   author = 'Taxi Conventionné',
   robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   canonical,
-  jsonLD
+  jsonLD,
+  ogImage = DEFAULT_OG_IMAGE,
 }: SEOHeadProps) {
   const location = useLocation();
 
@@ -79,11 +83,16 @@ export default function SEOHead({
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="fr_FR" />
       <meta property="og:site_name" content="Taxis Paris Conventionnés" />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={safeTitle} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={safeTitle} />
       <meta name="twitter:description" content={safeDescription} />
+      <meta name="twitter:image" content={ogImage} />
 
       {jsonLDArray.map((schema, index) => (
         <script key={`jsonld-${index}`} type="application/ld+json">
