@@ -5,7 +5,7 @@ import {
   ChevronDown, ChevronUp, AlertCircle, Armchair, RefreshCw,
   ClipboardList, FileText, ArrowRight,
 } from 'lucide-react';
-import { type Reservation } from '../lib/supabase';
+import { type Reservation, supabase } from '../lib/supabase';
 import AutocompleteInput from '../components/AutocompleteInput';
 import { calculateRoute } from '../utils/here';
 import SEOHead from '../components/SEOHead';
@@ -246,10 +246,12 @@ export default function ReservationPage() {
         type_trajet: 'vsl',
       };
 
-      const fetchUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-reservation-email`;
+      const supabaseUrl = (supabase as any).supabaseUrl || import.meta.env.VITE_SUPABASE_URL || 'https://qwsgtmzpirrbnmcbdvue.supabase.co';
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3c2d0bXpwaXJyYm5tY2JkdnVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNDUzMjQsImV4cCI6MjA5NTgyMTMyNH0.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
+      const fetchUrl = `${supabaseUrl}/functions/v1/send-reservation-email`;
       const resp = await fetch(fetchUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${supabaseKey}` },
         body: JSON.stringify(emailData),
       });
       const rawBody = await resp.text();
