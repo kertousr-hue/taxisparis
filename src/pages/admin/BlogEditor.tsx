@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Save, ArrowLeft, Eye, Image as ImageIcon, AlignLeft, Copy } from 'lucide-react';
+import { Save, ArrowLeft, Eye, Image as ImageIcon, AlignLeft, Copy, Sparkles, Loader2, X } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import MediaPicker from '../../components/admin/MediaPicker';
 import { supabase } from '../../lib/supabase';
+
+const SUPABASE_URL = 'https://qwsgtmzpirrbnmcbdvue.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3c2d0bXpwaXJyYm5tY2JkdnVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNDUzMjQsImV4cCI6MjA5NTgyMTMyNH0.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
 
 export default function BlogEditor() {
   const { id } = useParams();
@@ -11,6 +14,10 @@ export default function BlogEditor() {
   const [loading, setLoading] = useState(false);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaPickerTarget, setMediaPickerTarget] = useState<'featured' | 'content'>('content');
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+  const [showAiPanel, setShowAiPanel] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -31,6 +38,52 @@ export default function BlogEditor() {
   const fetchPost = async () => {
     const { data } = await supabase.from('blog_posts').select('*').eq('id', id).single();
     if (data) setFormData(data);
+  };
+
+  const handleGenerateAI = async () => {
+    if (!aiPrompt.trim()) {
+      setAiError('Veuillez saisir un sujet pour l\'article.');
+      return;
+    }
+    setAiLoading(true);
+    setAiError('');
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token || SUPABASE_ANON_KEY;
+
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/generate-article`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ prompt: aiPrompt.trim() }),
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok || !data.success) {
+        throw new Error(data.error || `Erreur ${resp.status}`);
+      }
+
+      const { article } = data;
+      setFormData(prev => ({
+        ...prev,
+        title: article.title || prev.title,
+        slug: article.slug || prev.slug,
+        excerpt: article.excerpt || prev.excerpt,
+        content: article.content || prev.content,
+        meta_description: article.meta_description || prev.meta_description,
+        meta_keywords: article.meta_keywords || prev.meta_keywords,
+      }));
+      setShowAiPanel(false);
+      setAiPrompt('');
+    } catch (err: any) {
+      setAiError(err.message || 'Une erreur est survenue lors de la génération.');
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,9 +120,109 @@ export default function BlogEditor() {
           Retour au blog
         </button>
 
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
-          {id === 'new' ? 'Nouvel article' : 'Modifier l\'article'}
-        </h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">
+            {id === 'new' ? 'Nouvel article' : 'Modifier l\'article'}
+          </h1>
+          <button
+            type="button"
+            onClick={() => { setShowAiPanel(true); setAiError(''); }}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 text-white rounded-xl hover:from-violet-700 hover:to-blue-700 transition-all shadow-md hover:shadow-lg font-semibold text-sm"
+          >
+            <Sparkles size={16} />
+            Générer avec l'IA
+          </button>
+        </div>
+
+        {/* ── AI Generation Panel ── */}
+        {showAiPanel && (
+          <div className="bg-gradient-to-br from-violet-50 to-blue-50 border border-violet-200 rounded-2xl p-6 mb-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-violet-600 to-blue-600 rounded-lg flex items-center justify-center">
+                  <Sparkles size={16} className="text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-gray-800 text-base">Génération automatique par IA</h2>
+                  <p className="text-xs text-gray-500">Article SEO de 1500 à 2500 mots généré automatiquement</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setShowAiPanel(false); setAiError(''); }}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Sujet de l'article *
+              </label>
+              <input
+                type="text"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && !aiLoading && handleGenerateAI()}
+                placeholder="Ex: Hôpital Beaujon Clichy, Dialyse à Évry, Transport VSL pour chimiothérapie..."
+                className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+                disabled={aiLoading}
+              />
+              <p className="text-xs text-gray-400 mt-1.5">
+                Soyez précis : nom de l'hôpital, ville, spécialité médicale, type de transport...
+              </p>
+            </div>
+
+            {aiError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-start gap-2">
+                <X size={14} className="flex-shrink-0 mt-0.5 text-red-500" />
+                {aiError}
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleGenerateAI}
+                disabled={aiLoading || !aiPrompt.trim()}
+                className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 text-white rounded-xl hover:from-violet-700 hover:to-blue-700 transition-all font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+              >
+                {aiLoading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Génération en cours… (30-60 sec)
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={16} />
+                    Générer l'article
+                  </>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setShowAiPanel(false); setAiError(''); }}
+                className="px-5 py-2.5 border border-gray-200 text-gray-600 rounded-xl hover:bg-gray-50 transition text-sm"
+                disabled={aiLoading}
+              >
+                Annuler
+              </button>
+            </div>
+
+            {aiLoading && (
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-xl">
+                <div className="flex items-center gap-2 text-sm text-blue-700">
+                  <Loader2 size={14} className="animate-spin flex-shrink-0" />
+                  <span>L'IA rédige votre article SEO optimisé… Tous les champs seront remplis automatiquement.</span>
+                </div>
+                <div className="mt-2 h-1.5 bg-blue-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-violet-500 to-blue-500 rounded-full animate-pulse w-3/4" />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="bg-white rounded-xl shadow-lg p-8">
