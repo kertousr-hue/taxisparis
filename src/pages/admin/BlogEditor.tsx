@@ -15,6 +15,10 @@ export default function BlogEditor() {
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaPickerTarget, setMediaPickerTarget] = useState<'featured' | 'content'>('content');
   const [aiPrompt, setAiPrompt] = useState('');
+  const [aiTypeArticle, setAiTypeArticle] = useState('hopital');
+  const [aiNomEtablissement, setAiNomEtablissement] = useState('');
+  const [aiVille, setAiVille] = useState('');
+  const [aiDepartement, setAiDepartement] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState('');
   const [showAiPanel, setShowAiPanel] = useState(false);
@@ -41,8 +45,8 @@ export default function BlogEditor() {
   };
 
   const handleGenerateAI = async () => {
-    if (!aiPrompt.trim()) {
-      setAiError('Veuillez saisir un sujet pour l\'article.');
+    if (!aiNomEtablissement.trim() && !aiPrompt.trim()) {
+      setAiError('Veuillez saisir au minimum le nom de l\'établissement ou un sujet.');
       return;
     }
     setAiLoading(true);
@@ -58,7 +62,13 @@ export default function BlogEditor() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ prompt: aiPrompt.trim() }),
+        body: JSON.stringify({
+          prompt: aiPrompt.trim() || aiNomEtablissement.trim(),
+          typeArticle: aiTypeArticle,
+          nomEtablissement: aiNomEtablissement.trim(),
+          ville: aiVille.trim(),
+          departement: aiDepartement.trim(),
+        }),
       });
 
       const data = await resp.json();
@@ -144,7 +154,7 @@ export default function BlogEditor() {
                 </div>
                 <div>
                   <h2 className="font-bold text-gray-800 text-base">Génération automatique par IA</h2>
-                  <p className="text-xs text-gray-500">Article SEO de 1500 à 2500 mots généré automatiquement</p>
+                  <p className="text-xs text-gray-500">Article SEO 1500-2500 mots — min. 8 H2, 10 H3, FAQ, transport CPAM</p>
                 </div>
               </div>
               <button
@@ -156,21 +166,97 @@ export default function BlogEditor() {
               </button>
             </div>
 
+            {/* Type d'article */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Sujet de l'article *
+                Type d'article *
+              </label>
+              <select
+                value={aiTypeArticle}
+                onChange={(e) => setAiTypeArticle(e.target.value)}
+                disabled={aiLoading}
+                className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+              >
+                <option value="hopital">Hôpital public</option>
+                <option value="clinique">Clinique privée</option>
+                <option value="centre_medical">Centre médical / Cabinet</option>
+                <option value="centre_dialyse">Centre de dialyse</option>
+                <option value="centre_cancerologie">Centre de cancérologie / radiothérapie</option>
+                <option value="ehpad">EHPAD / Maison de retraite</option>
+                <option value="transport_medical">Transport médical (motif ou trajet)</option>
+                <option value="autre">Autre établissement de santé</option>
+              </select>
+            </div>
+
+            {/* Nom établissement + Ville + Département */}
+            <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Nom de l'établissement *
+                </label>
+                <input
+                  type="text"
+                  value={aiNomEtablissement}
+                  onChange={(e) => setAiNomEtablissement(e.target.value)}
+                  placeholder="Ex: Hôpital Beaujon"
+                  className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+                  disabled={aiLoading}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Ville *
+                </label>
+                <input
+                  type="text"
+                  value={aiVille}
+                  onChange={(e) => setAiVille(e.target.value)}
+                  placeholder="Ex: Clichy"
+                  className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+                  disabled={aiLoading}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Département
+                </label>
+                <input
+                  type="text"
+                  value={aiDepartement}
+                  onChange={(e) => setAiDepartement(e.target.value)}
+                  placeholder="Ex: Hauts-de-Seine (92)"
+                  className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+                  disabled={aiLoading}
+                />
+              </div>
+            </div>
+
+            {/* Informations complémentaires */}
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Informations complémentaires
+                <span className="font-normal text-gray-400 ml-1">(spécialités, contexte, mots-clés...)</span>
               </label>
               <input
                 type="text"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && !aiLoading && handleGenerateAI()}
-                placeholder="Ex: Hôpital Beaujon Clichy, Dialyse à Évry, Transport VSL pour chimiothérapie..."
+                placeholder="Ex: spécialisé en gastro-entérologie et hépatologie, CHU de référence..."
                 className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                 disabled={aiLoading}
               />
               <p className="text-xs text-gray-400 mt-1.5">
-                Soyez précis : nom de l'hôpital, ville, spécialité médicale, type de transport...
+                Optionnel — précisez les spécialités, le contexte médical ou les mots-clés à intégrer
+              </p>
+            </div>
+
+            {/* Info box */}
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-xl">
+              <p className="text-xs text-blue-700 font-medium">
+                L'IA va générer un article centré sur <strong>{aiNomEtablissement || '…'}</strong>
+                {aiVille ? <> à <strong>{aiVille}</strong></> : null}
+                {aiDepartement ? <> ({aiDepartement})</> : null}
+                {' '}avec min. 8 H2, 10 H3, une FAQ SEO et une section transport CPAM.
               </p>
             </div>
 
@@ -185,7 +271,7 @@ export default function BlogEditor() {
               <button
                 type="button"
                 onClick={handleGenerateAI}
-                disabled={aiLoading || !aiPrompt.trim()}
+                disabled={aiLoading || (!aiNomEtablissement.trim() && !aiPrompt.trim())}
                 className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 text-white rounded-xl hover:from-violet-700 hover:to-blue-700 transition-all font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
               >
                 {aiLoading ? (
