@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
   Menu, X, Phone, Mail,
-  Home, CalendarCheck, MapPin, TrainFront, Users, BookOpen, ArrowRight,
+  Home, CalendarCheck, MapPin, TrainFront, Users, BookOpen, ArrowRight, Car,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -52,19 +52,30 @@ export default function Header({ onNavigate }: HeaderProps) {
 
       {/* ── Main bar ──────────────────────────────────────────────── */}
       <div className="container mx-auto px-3 sm:px-4">
-        <div className="flex items-center justify-between h-14 sm:h-18 gap-2 sm:gap-3">
+        <div className="flex items-center justify-between h-16 sm:h-[72px] gap-2 sm:gap-3">
 
           {/* Logo */}
           <Link
             to="/"
-            className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
-            aria-label="Retour à l'accueil"
+            className="group flex-shrink-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            aria-label="Taxis Paris Conventionnés - retour à l'accueil"
           >
-            <img
-              src="/taxi-logopng.png"
-              alt=""
-              className="h-9 sm:h-13 w-auto"
-            />
+            <div className="flex items-center gap-2 rounded-2xl border border-blue-100 bg-white px-2.5 py-1.5 shadow-sm transition-all duration-200 group-hover:border-blue-300 group-hover:shadow-md sm:gap-3 sm:px-3">
+              <div className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-md sm:h-12 sm:w-12">
+                <Car size={24} strokeWidth={2.5} aria-hidden="true" />
+                <span className="absolute -right-1 -top-1 rounded-full bg-yellow-400 px-1.5 py-0.5 text-[9px] font-black leading-none text-blue-950 shadow-sm">
+                  VSL
+                </span>
+              </div>
+              <div className="min-w-0 leading-tight">
+                <span className="block whitespace-nowrap text-sm font-black tracking-tight text-blue-950 sm:text-base lg:text-lg">
+                  Taxis Paris
+                </span>
+                <span className="block whitespace-nowrap text-[10px] font-bold uppercase tracking-wide text-blue-600 sm:text-[11px]">
+                  Conventionnés CPAM
+                </span>
+              </div>
+            </div>
           </Link>
 
           {/* ── Desktop nav ────────────────────────────────────────── */}
@@ -190,4 +201,3 @@ export default function Header({ onNavigate }: HeaderProps) {
     </header>
   );
 }
-
