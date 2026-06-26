@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
-const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.jpg';
+const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.svg';
 const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
 
 interface SEOHeadProps {
@@ -21,7 +21,7 @@ function cleanSeoText(input: string): string {
     .replace(/\b(navette|navettes)\b/gi, '')
     .replace(/\b(liaison|liaisons)\b/gi, '')
     .replace(/\s{2,}/g, ' ')
-    .replace(/\s+([:;,.\-!?\)])/g, '$1')
+    .replace(/\s+([:;,.!?\)])/g, '$1')
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
     .trim();
@@ -64,6 +64,7 @@ export default function SEOHead({
     : '';
 
   const safeKeywords = keywordsString ? cleanSeoText(keywordsString) : '';
+  const ogImageType = ogImage.endsWith('.svg') ? 'image/svg+xml' : 'image/jpeg';
 
   const jsonLDArray = jsonLD
     ? Array.isArray(jsonLD)
@@ -91,6 +92,7 @@ export default function SEOHead({
       <meta property="og:locale" content="fr_FR" />
       <meta property="og:site_name" content="Taxis Paris Conventionnés" />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:type" content={ogImageType} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={safeTitle} />
@@ -100,6 +102,7 @@ export default function SEOHead({
       <meta name="twitter:title" content={safeTitle} />
       <meta name="twitter:description" content={safeDescription} />
       <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={safeTitle} />
 
       {jsonLDArray.map((schema, index) => (
         <script key={`jsonld-${index}`} type="application/ld+json">
