@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.svg';
 const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
 const MAX_META_DESCRIPTION_LENGTH = 180;
-const MAX_SEO_TITLE_LENGTH = 65;
+const MAX_SEO_TITLE_LENGTH = 60;
 
 interface SEOHeadProps {
   title: string;
@@ -62,7 +62,7 @@ function limitSeoTitle(input: string): string {
 
   const candidate = title.slice(0, MAX_SEO_TITLE_LENGTH + 1);
   const lastSpace = candidate.lastIndexOf(' ');
-  const cutIndex = lastSpace >= 50 ? lastSpace : MAX_SEO_TITLE_LENGTH;
+  const cutIndex = lastSpace >= 45 ? lastSpace : MAX_SEO_TITLE_LENGTH;
 
   return title.slice(0, cutIndex).replace(/[\s,;:|.-]+$/g, '').trim();
 }
