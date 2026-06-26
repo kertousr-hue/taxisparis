@@ -6,6 +6,21 @@
 
   "redirects": [
     {
+      "source": "/reservation-taxi-vsl/",
+      "destination": "/reservation-taxi-vsl",
+      "permanent": true
+    },
+    {
+      "source": "/taxi-conventionne-hauts-de-seine-92/",
+      "destination": "/taxi-conventionne-hauts-de-seine-92",
+      "permanent": true
+    },
+    {
+      "source": "/taxi-conventionne-hauts-de-seine-92/levallois-perret/",
+      "destination": "/taxi-conventionne-hauts-de-seine-92/levallois-perret",
+      "permanent": true
+    },
+    {
       "source": "/:path((?!.*\\..*).+)/",
       "destination": "/:path*",
       "permanent": true
