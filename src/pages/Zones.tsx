@@ -13,11 +13,17 @@ const DEPARTMENTS = [
     name: 'Paris',
     slug: 'taxi-conventionne-paris-75',
     description: 'Tous les arrondissements de Paris intramuros, du 1er au 20e.',
-    color: 'bg-blue-100 text-blue-600 border-blue-200',
-    circleColor: 'border-blue-300',
-    dotColor: 'bg-blue-400',
-    btnColor: 'bg-blue-600 hover:bg-blue-700',
-    cities: ['Paris'],
+    sector: '20 arrondissements',
+    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    btnColor: 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-300',
+    hex: '#2563eb',
+    tint: '#dbeafe',
+    mapPoints: '70,29 88,32 103,47 99,70 82,90 58,84 46,64 51,41',
+    routePath: 'M58 82 C69 68 77 55 89 34',
+    labels: [
+      { name: 'Paris', x: 72, y: 61 },
+      { name: 'Bercy', x: 88, y: 72 },
+    ],
     villesCount: '20+',
     hopitauxCount: '35+',
   },
@@ -26,11 +32,18 @@ const DEPARTMENTS = [
     name: 'Essonne',
     slug: 'taxi-conventionne-essonne-91',
     description: 'Évry-Courcouronnes, Corbeil-Essonnes, Massy, Palaiseau et 50+ villes.',
-    color: 'bg-green-100 text-green-600 border-green-200',
-    circleColor: 'border-green-300',
-    dotColor: 'bg-green-400',
-    btnColor: 'bg-green-600 hover:bg-green-700',
-    cities: ['Evry', 'Palaiseau', 'Etampes'],
+    sector: 'Secteur sud',
+    badgeClass: 'bg-green-50 text-green-700 border-green-200',
+    btnColor: 'bg-green-600 hover:bg-green-700 focus:ring-green-300',
+    hex: '#16a34a',
+    tint: '#dcfce7',
+    mapPoints: '57,18 88,14 116,31 130,62 112,96 74,110 42,88 35,51',
+    routePath: 'M51 85 C68 70 88 56 112 35',
+    labels: [
+      { name: 'Évry', x: 86, y: 59 },
+      { name: 'Palaiseau', x: 55, y: 39 },
+      { name: 'Étampes', x: 96, y: 90 },
+    ],
     villesCount: '40+',
     hopitauxCount: '25+',
   },
@@ -39,11 +52,18 @@ const DEPARTMENTS = [
     name: 'Hauts-de-Seine',
     slug: 'taxi-conventionne-hauts-de-seine-92',
     description: 'Nanterre, Boulogne-Billancourt, Courbevoie, Neuilly-sur-Seine et plus.',
-    color: 'bg-amber-100 text-amber-600 border-amber-200',
-    circleColor: 'border-amber-300',
-    dotColor: 'bg-amber-400',
-    btnColor: 'bg-amber-600 hover:bg-amber-700',
-    cities: ['Nanterre', 'Boulogne-B.', 'Antony'],
+    sector: 'Secteur ouest',
+    badgeClass: 'bg-amber-50 text-amber-700 border-amber-200',
+    btnColor: 'bg-amber-600 hover:bg-amber-700 focus:ring-amber-300',
+    hex: '#d97706',
+    tint: '#fef3c7',
+    mapPoints: '68,16 86,30 78,49 94,67 75,104 51,89 43,58 51,27',
+    routePath: 'M52 84 C63 66 69 47 80 29',
+    labels: [
+      { name: 'Nanterre', x: 63, y: 44 },
+      { name: 'Boulogne', x: 59, y: 78 },
+      { name: 'Antony', x: 82, y: 95 },
+    ],
     villesCount: '35+',
     hopitauxCount: '20+',
   },
@@ -52,11 +72,18 @@ const DEPARTMENTS = [
     name: 'Seine-Saint-Denis',
     slug: 'taxi-conventionne-seine-saint-denis-93',
     description: 'Bobigny, Saint-Denis, Montreuil, Aulnay-sous-Bois et plus.',
-    color: 'bg-rose-100 text-rose-600 border-rose-200',
-    circleColor: 'border-rose-300',
-    dotColor: 'bg-rose-400',
-    btnColor: 'bg-rose-600 hover:bg-rose-700',
-    cities: ['Saint-Denis', 'Bobigny', 'Montreuil'],
+    sector: 'Secteur nord-est',
+    badgeClass: 'bg-rose-50 text-rose-700 border-rose-200',
+    btnColor: 'bg-rose-600 hover:bg-rose-700 focus:ring-rose-300',
+    hex: '#e11d48',
+    tint: '#ffe4e6',
+    mapPoints: '44,25 78,13 110,28 121,57 101,85 63,94 34,68',
+    routePath: 'M44 68 C64 58 78 45 108 30',
+    labels: [
+      { name: 'Saint-Denis', x: 65, y: 38 },
+      { name: 'Bobigny', x: 82, y: 58 },
+      { name: 'Montreuil', x: 95, y: 78 },
+    ],
     villesCount: '30+',
     hopitauxCount: '15+',
   },
@@ -65,15 +92,87 @@ const DEPARTMENTS = [
     name: 'Val-de-Marne',
     slug: 'taxi-conventionne-val-de-marne-94',
     description: 'Créteil, Vitry-sur-Seine, Champigny-sur-Marne et 40+ villes.',
-    color: 'bg-rose-100 text-rose-600 border-rose-200',
-    circleColor: 'border-rose-300',
-    dotColor: 'bg-rose-400',
-    btnColor: 'bg-rose-600 hover:bg-rose-700',
-    cities: ['Creteil', 'Ivry-s-Seine', 'Vitry-s-Seine'],
+    sector: 'Secteur sud-est',
+    badgeClass: 'bg-rose-50 text-rose-700 border-rose-200',
+    btnColor: 'bg-rose-600 hover:bg-rose-700 focus:ring-rose-300',
+    hex: '#e11d48',
+    tint: '#ffe4e6',
+    mapPoints: '52,18 84,13 112,34 108,69 82,96 48,88 31,56',
+    routePath: 'M43 82 C58 66 74 54 102 34',
+    labels: [
+      { name: 'Créteil', x: 82, y: 57 },
+      { name: 'Ivry', x: 54, y: 43 },
+      { name: 'Vitry', x: 65, y: 80 },
+    ],
     villesCount: '30+',
     hopitauxCount: '20+',
   },
 ];
+
+type DepartmentCard = (typeof DEPARTMENTS)[number];
+
+function DepartmentMiniMap({ department }: { department: DepartmentCard }) {
+  return (
+    <div className="mb-4 rounded-md border border-gray-100 bg-slate-50 p-2.5">
+      <svg
+        viewBox="0 0 160 128"
+        className="h-32 w-full"
+        role="img"
+        aria-label={`Carte simplifiée du département ${department.name}`}
+      >
+        <path
+          d="M31 23 C47 10 68 11 86 18 C103 10 128 18 140 36 C151 54 146 79 132 95 C116 114 91 118 69 110 C45 118 25 105 16 86 C7 65 12 40 31 23Z"
+          fill="#ffffff"
+          stroke="#e2e8f0"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M29 75 C49 64 62 70 78 58 C98 43 113 50 131 40"
+          fill="none"
+          stroke="#cbd5e1"
+          strokeWidth="1"
+          strokeDasharray="4 5"
+        />
+        <path
+          d="M39 31 C56 42 73 41 91 31 C109 22 123 27 137 39"
+          fill="none"
+          stroke="#e2e8f0"
+          strokeWidth="1"
+        />
+        <polygon
+          points={department.mapPoints}
+          fill={department.tint}
+          stroke={department.hex}
+          strokeWidth="2.25"
+          strokeLinejoin="round"
+        />
+        <path
+          d={department.routePath}
+          fill="none"
+          stroke={department.hex}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="5 4"
+          opacity="0.75"
+        />
+        {department.labels.map((label) => (
+          <g key={label.name}>
+            <circle cx={label.x} cy={label.y} r="3.25" fill={department.hex} stroke="#ffffff" strokeWidth="1.5" />
+            <text
+              x={label.x + 6}
+              y={label.y + 3}
+              fill="#475569"
+              fontSize="8.5"
+              fontWeight="600"
+            >
+              {label.name}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
 const FAQ_ITEMS = [
   {
@@ -199,73 +298,64 @@ export default function Zones({ onNavigate }: ZonesProps) {
       {/* ── Cartes départements ─────────────────────────────────────── */}
       <section className="py-12 bg-gray-50" aria-label="Départements couverts">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
-            Nos 5 départements d'intervention
-          </h2>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
+              Nos 5 départements d'intervention
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-gray-600">
+              Couverture CPAM en Île-de-France : réservation rapide, trajets réguliers et accès aux hôpitaux partenaires
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
             {DEPARTMENTS.map((dept) => (
-              <div
+              <article
                 key={dept.code}
-                className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-lg transition-shadow flex flex-col"
+                className="group flex flex-col rounded-lg border border-gray-200 border-t-4 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                style={{ borderTopColor: dept.hex }}
               >
-                {/* Header: badge + name */}
-                <div className="flex items-center gap-3 mb-4">
-                  <span className={`w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold border-2 ${dept.color}`}>
+                <div className="mb-4 flex items-start gap-3">
+                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${dept.badgeClass}`}>
                     {dept.code}
                   </span>
-                  <div>
-                    <h3 className="text-base font-bold text-gray-900 leading-tight">{dept.name}</h3>
-                    <p className="text-xs text-gray-400">Departement</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold leading-tight text-gray-900">{dept.name}</h3>
+                    <p className="text-xs text-gray-500">{dept.sector}</p>
                   </div>
                 </div>
 
-                {/* Circular map illustration */}
-                <div className="flex justify-center mb-4">
-                  <div className={`relative w-36 h-36 rounded-full border-2 ${dept.circleColor} flex items-center justify-center`}>
-                    <div className={`absolute w-28 h-28 rounded-full border ${dept.circleColor} opacity-50`}></div>
-                    {dept.cities.map((city, i) => {
-                      const positions = dept.cities.length === 1
-                        ? [{ top: '50%', left: '50%' }]
-                        : dept.cities.length === 3
-                        ? [{ top: '25%', left: '55%' }, { top: '55%', left: '25%' }, { top: '70%', left: '65%' }]
-                        : [{ top: '35%', left: '30%' }, { top: '55%', left: '60%' }];
-                      const pos = positions[i] || { top: '50%', left: '50%' };
-                      return (
-                        <div key={city} className="absolute flex items-center gap-1" style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}>
-                          <span className={`w-2 h-2 rounded-full ${dept.dotColor}`}></span>
-                          <span className="text-[9px] text-gray-500 font-medium whitespace-nowrap">{city}</span>
-                        </div>
-                      );
-                    })}
+                <DepartmentMiniMap department={dept} />
+
+                <div className="mb-5 flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Building2 size={14} className="text-gray-400" aria-hidden="true" />
+                    <span className="text-sm">
+                      <strong className="text-green-600">{dept.villesCount}</strong>{' '}
+                      <span className="text-gray-500">villes desservies</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CircleDot size={14} className="text-gray-400" aria-hidden="true" />
+                    <span className="text-sm">
+                      <strong className="text-green-600">{dept.hopitauxCount}</strong>{' '}
+                      <span className="text-gray-500">hôpitaux partenaires</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <BadgeCheck size={14} className="text-green-500" aria-hidden="true" />
+                    <span className="text-sm font-medium text-green-600">Conventionné CPAM</span>
                   </div>
                 </div>
 
-                {/* Stats */}
-                <div className="space-y-2 mb-5 flex-1">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={14} className="text-gray-400" />
-                    <span className="text-sm"><strong className="text-green-600">{dept.villesCount}</strong> <span className="text-gray-500">Villes desservies</span></span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CircleDot size={14} className="text-gray-400" />
-                    <span className="text-sm"><strong className="text-green-600">{dept.hopitauxCount}</strong> <span className="text-gray-500">Hopitaux partenaires</span></span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <BadgeCheck size={14} className="text-green-500" />
-                    <span className="text-sm text-green-600 font-medium">Conventionne CPAM</span>
-                  </div>
-                </div>
-
-                {/* CTA */}
                 <Link
                   to={`/${dept.slug}`}
-                  className={`w-full flex items-center justify-center gap-2 text-white font-semibold text-sm px-4 py-3 rounded-xl transition ${dept.btnColor}`}
+                  className={`mt-auto inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-white transition focus:outline-none focus:ring-4 ${dept.btnColor}`}
                   aria-label={`Voir les villes desservies en ${dept.name} (${dept.code})`}
                 >
-                  Voir les villes
-                  <ArrowRight size={16} aria-hidden="true" />
+                  {dept.code === '75' ? 'Voir Paris' : 'Voir les villes'}
+                  <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
-              </div>
+              </article>
             ))}
           </div>
         </div>
