@@ -24,6 +24,51 @@ const DEPARTMENTS = [
   { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94' },
 ];
 
+const STATIC_GUIDES = [
+  {
+    title: 'Comment obtenir un taxi conventionné remboursé par la CPAM ?',
+    excerpt:
+      'Les conditions à réunir, les documents à préparer et les situations les plus fréquentes pour bénéficier d’un transport médical pris en charge.',
+    href: '/reservation-taxi-vsl',
+    category: 'Guide CPAM',
+  },
+  {
+    title: 'Taxi conventionné ou VSL : quelle différence pour un patient assis ?',
+    excerpt:
+      'Comprendre les modes de transport médical non urgent, les cas d’usage et les démarches à effectuer avant un rendez-vous de soins.',
+    href: '/faq',
+    category: 'Transport médical',
+  },
+  {
+    title: 'Préparer un trajet régulier pour dialyse, chimiothérapie ou radiothérapie',
+    excerpt:
+      'Organisation des trajets récurrents, ordonnance de série, horaires hospitaliers et coordination avec le chauffeur conventionné.',
+    href: '/reservation-taxi-vsl',
+    category: 'Soins réguliers',
+  },
+  {
+    title: 'Zones desservies en taxi conventionné en Île-de-France',
+    excerpt:
+      'Paris, Essonne, Hauts-de-Seine, Seine-Saint-Denis et Val-de-Marne : retrouvez les départements et communes couverts.',
+    href: '/zones-desservies',
+    category: 'Zones',
+  },
+  {
+    title: 'Quels documents fournir avant un transport médical ?',
+    excerpt:
+      'Carte Vitale, prescription médicale de transport, attestation ALD ou CSS : les pièces utiles pour faciliter la prise en charge.',
+    href: '/faq',
+    category: 'Démarches',
+  },
+  {
+    title: 'Réserver un taxi médical tôt le matin ou le week-end',
+    excerpt:
+      'Conseils pour anticiper un rendez-vous hospitalier, une sortie d’établissement ou un trajet urgent en dehors des horaires classiques.',
+    href: '/contact',
+    category: 'Réservation',
+  },
+];
+
 const FAQ_ITEMS = [
   {
     question: 'Quelle est la différence entre un taxi conventionné et une ambulance ?',
@@ -33,22 +78,22 @@ const FAQ_ITEMS = [
   {
     question: 'Comment fonctionne le remboursement CPAM pour un taxi conventionné ?',
     answer:
-      "Avec une prescription médicale de transport (formulaire Cerfa S3138) signée par votre médecin, votre taxi conventionné est pris en charge par la CPAM à 65 % du tarif conventionné, et jusqu'à 100 % pour les patients en ALD, CMU-C ou maternité. Notre service pratique la tierce payante : vous n'avancez pas les frais, la CPAM nous règle directement.",
+      "Avec une prescription médicale de transport signée par votre médecin, votre taxi conventionné est pris en charge par la CPAM à 65 % du tarif conventionné, et jusqu'à 100 % selon votre situation. Notre service pratique le tiers payant quand les conditions sont réunies.",
   },
   {
-    question: 'Peut-on réserver un taxi conventionné pour un trajet régulier (dialyse, chimio) ?',
+    question: 'Peut-on réserver un taxi conventionné pour un trajet régulier ?',
     answer:
-      "Oui. Une ordonnance de série établie par votre médecin permet de couvrir plusieurs séances sans renouvellement à chaque trajet. Nous planifions vos trajets récurrents à l'avance, garantissant ponctualité et disponibilité pour vos séances de dialyse, chimiothérapie ou radiothérapie.",
+      "Oui. Une ordonnance de série peut couvrir plusieurs séances de dialyse, chimiothérapie ou radiothérapie. Nous planifions vos trajets récurrents à l'avance pour garantir ponctualité et disponibilité.",
   },
   {
     question: 'Le service de taxi VSL est-il disponible la nuit et les week-ends ?',
     answer:
-      "Notre service est disponible 24h/24, 7j/7, y compris les jours fériés. Que ce soit pour une hospitalisation programmée tôt le matin, une sortie d'hôpital le week-end ou un rendez-vous médical en soirée, nos chauffeurs conventionnés sont joignables au 06 50 36 64 91.",
+      "Notre service est disponible 24h/24, 7j/7, y compris les jours fériés selon les disponibilités. Pour une demande urgente, appelez le 06 50 36 64 91.",
   },
   {
     question: 'Quels documents dois-je préparer avant ma réservation ?',
     answer:
-      "Avant de réserver, munissez-vous de votre carte Vitale, de votre prescription médicale de transport (Cerfa S3138) et, si applicable, de votre attestation d'ALD ou CMU-C. Pour les transports en série, l'ordonnance de série suffit. Si vous n'avez pas encore la prescription, vous pouvez quand même réserver : votre médecin peut l'établir avant le jour du transport.",
+      "Munissez-vous de votre carte Vitale, de votre prescription médicale de transport et, si applicable, de votre attestation d'ALD, CSS ou mutuelle. Si vous n'avez pas encore la prescription, vous pouvez quand même nous contacter pour organiser le trajet.",
   },
 ];
 
@@ -57,7 +102,7 @@ const jsonLDWebPage = {
   '@type': 'Blog',
   name: 'Blog Taxi VSL Conventionné CPAM Île-de-France',
   description:
-    'Conseils pratiques, guides et actualités sur le transport médical en taxi conventionné et VSL en Île-de-France. Tout savoir sur la prise en charge CPAM, les remboursements et les démarches.',
+    'Conseils pratiques, guides et actualités sur le transport médical en taxi conventionné et VSL en Île-de-France.',
   url: 'https://www.taxisparis-conventionnes.fr/blog',
   publisher: {
     '@type': 'Organization',
@@ -71,6 +116,19 @@ const jsonLDWebPage = {
       { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.taxisparis-conventionnes.fr/blog' },
     ],
   },
+};
+
+const jsonLDItemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Guides transport médical taxi conventionné',
+  itemListElement: STATIC_GUIDES.map((guide, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `https://www.taxisparis-conventionnes.fr${guide.href}`,
+    name: guide.title,
+    description: guide.excerpt,
+  })),
 };
 
 const jsonLDFAQ = {
@@ -105,14 +163,17 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
   }, []);
 
   const fetchPosts = async () => {
-    const { data } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('published', true)
-      .order('published_at', { ascending: false });
+    try {
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
 
-    if (data) setPosts(data);
-    setLoading(false);
+      if (data) setPosts(data);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -123,6 +184,8 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
       year: 'numeric',
     });
   };
+
+  const hasPublishedPosts = posts.length > 0;
 
   return (
     <>
@@ -139,10 +202,9 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
           'taxi conventionné Île-de-France',
         ]}
         canonical="https://www.taxisparis-conventionnes.fr/blog"
-        jsonLD={[jsonLDWebPage, jsonLDFAQ, jsonLDMedical]}
+        jsonLD={[jsonLDWebPage, jsonLDItemList, jsonLDFAQ, jsonLDMedical]}
       />
 
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
@@ -174,21 +236,9 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      {/* ── Articles ─────────────────────────────────────────────────── */}
-      <section className="py-12 bg-gray-50" aria-label="Articles du blog">
+      <section className="py-12 bg-gray-50" aria-label="Articles et guides du blog">
         <div className="container mx-auto px-4">
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" role="status" aria-label="Chargement" />
-              <p className="text-gray-600 mt-4">Chargement des articles...</p>
-            </div>
-          ) : posts.length === 0 ? (
-            <div className="text-center py-12">
-              <BookOpen size={48} className="mx-auto text-gray-300 mb-4" aria-hidden="true" />
-              <p className="text-gray-600 text-lg font-medium">Aucun article publié pour le moment.</p>
-              <p className="text-gray-500 mt-2">Revenez bientôt pour découvrir nos nouveaux contenus !</p>
-            </div>
-          ) : (
+          {hasPublishedPosts ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {posts.map((post) => (
                 <article
@@ -236,77 +286,102 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                 </article>
               ))}
             </div>
+          ) : (
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-3">
+                  Guides pratiques taxi conventionné CPAM
+                </h2>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Les réponses essentielles pour préparer un transport médical remboursé en Île-de-France.
+                </p>
+                {loading && <p className="sr-only" aria-live="polite">Mise à jour des articles en cours</p>}
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {STATIC_GUIDES.map((guide) => (
+                  <article
+                    key={guide.title}
+                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
+                  >
+                    <div className="p-6">
+                      <span className="inline-flex text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-3">
+                        {guide.category}
+                      </span>
+                      <h3 className="text-lg font-bold text-gray-800 mb-3 leading-snug">
+                        {guide.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                        {guide.excerpt}
+                      </p>
+                      <Link
+                        to={guide.href}
+                        className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm hover:gap-3 transition-all"
+                      >
+                        Consulter le guide
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </section>
 
-      {/* ── Section SEO 700+ mots ─────────────────────────────────────── */}
       <section className="py-12 bg-white" aria-label="Guide du transport médical conventionné">
         <div className="container mx-auto px-4 max-w-4xl">
-
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
             Guide complet du transport médical en taxi conventionné
           </h2>
 
-          {/* H3.1 */}
           <div className="mb-8">
             <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
               <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
               Qu'est-ce qu'un taxi conventionné VSL CPAM ?
             </h3>
             <p className="text-gray-700 leading-relaxed mb-3">
-              Un <strong>taxi conventionné</strong> est un véhicule agréé par la Caisse Primaire d'Assurance Maladie (CPAM) pour assurer les transports médicaux non urgents. Il s'adresse aux patients dits « assis », c'est-à-dire autonomes dans leurs déplacements et n'ayant pas besoin d'une surveillance médicale pendant le trajet. Cette catégorie se distingue du VSL (Véhicule Sanitaire Léger), conduit par un auxiliaire ambulancier, et de l'ambulance, réservée aux situations d'urgence ou de grande dépendance.
+              Un <strong>taxi conventionné</strong> est un véhicule agréé par la Caisse Primaire d'Assurance Maladie (CPAM) pour assurer les transports médicaux non urgents. Il s'adresse aux patients dits « assis », capables de se déplacer sans assistance médicale particulière pendant le trajet.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Pour qu'un transport soit qualifié de « conventionné », le chauffeur doit être titulaire d'un agrément délivré par la CPAM et respecter un tarif conventionné fixé par la Sécurité sociale. Notre entreprise est conventionnée en Île-de-France et intervient sur Paris (75), l'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94), 24h/24, 7j/7.
+              Notre entreprise intervient sur Paris (75), l'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94), 24h/24, 7j/7, pour les consultations, soins réguliers, hospitalisations et sorties d'établissement.
             </p>
           </div>
 
-          {/* H3.2 */}
           <div className="mb-8">
             <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
               <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
               Conditions et démarches pour obtenir le remboursement CPAM
             </h3>
             <p className="text-gray-700 leading-relaxed mb-3">
-              Le remboursement de votre transport médical repose sur trois piliers : une <strong>prescription médicale de transport</strong> (formulaire Cerfa S3138) établie par votre médecin, un trajet vers un établissement de soin reconnu par l'Assurance Maladie, et une incapacité à utiliser les transports en commun justifiée médicalement. Sans prescription, le transport reste possible mais entièrement à votre charge.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Le taux de prise en charge est de 65 % du tarif conventionné pour la grande majorité des assurés. Ce taux monte à <strong>100 % pour les patients en Affection de Longue Durée (ALD)</strong>, les bénéficiaires de la Complémentaire Santé Solidaire (CSS), les femmes enceintes à partir du 6e mois, les victimes d'accident du travail et les enfants mineurs hospitalisés. La part restante (35 %) est généralement prise en charge par votre mutuelle complémentaire.
+              Le remboursement repose sur une <strong>prescription médicale de transport</strong>, un trajet lié à des soins reconnus par l'Assurance Maladie et une situation médicale justifiant le recours à un transport adapté.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Pour les transports répétitifs (dialyse, chimiothérapie, radiothérapie), votre médecin peut établir une <strong>ordonnance de série</strong> valable plusieurs mois, évitant le renouvellement à chaque séance. Il suffit de nous transmettre ce document une seule fois lors de votre première réservation.
+              Selon votre situation, la prise en charge peut atteindre 100 %, notamment en cas d'ALD, de maternité, d'accident du travail ou de soins répétés. Pour les transports en série, une ordonnance peut couvrir plusieurs séances.
             </p>
           </div>
 
-          {/* H3.3 */}
           <div className="mb-8">
             <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
               <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
               Types de transports médicaux pris en charge
             </h3>
             <p className="text-gray-700 leading-relaxed mb-3">
-              Notre service de taxi conventionné couvre l'ensemble des déplacements médicaux non urgents : consultations chez le médecin généraliste ou spécialiste, bilans biologiques et radiologiques, hospitalisations programmées et sorties d'établissement, séances de rééducation fonctionnelle, kinésithérapie, orthophonie et psychomotricité. Nous assurons également les <strong>transferts inter-hospitaliers</strong> entre établissements de santé d'Île-de-France.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Pour les patients en traitement lourd, nous proposons une prise en charge sur mesure : planification des séances de <strong>dialyse rénale</strong> (2 à 3 fois par semaine), accompagnement tout au long des cures de <strong>chimiothérapie et de radiothérapie</strong>, suivi des hospitalisations de jour. Nos chauffeurs sont formés à l'accueil des patients fragiles, âgés ou en situation de handicap moteur léger.
+              Notre service couvre les consultations, examens médicaux, hospitalisations programmées, sorties d'hôpital, séances de rééducation, dialyse, chimiothérapie, radiothérapie et transferts inter-hospitaliers en Île-de-France.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Les transports vers les aéroports de Roissy-Charles-de-Gaulle et d'Orly pour raison médicale (rapatriement sanitaire, traitement à l'étranger) sont également pris en charge sous conditions particulières. Contactez-nous pour étudier votre situation spécifique.
+              Les trajets vers les gares et aéroports peuvent aussi être organisés lorsqu'ils sont liés à un motif médical prescrit. Chaque demande est étudiée selon votre situation et vos documents de prise en charge.
             </p>
           </div>
 
-          {/* H3.4 — maillage interne vers les 5 départements */}
           <div className="mb-8">
             <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
               <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Pourquoi lire notre blog sur le taxi conventionné ?
+              Départements couverts
             </h3>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Ce blog a pour vocation d'informer les patients, leurs proches et les professionnels de santé sur tout ce qui touche au transport médical remboursé en Île-de-France. Vous y trouverez des guides pratiques sur les démarches CPAM, des comparatifs entre les modes de transport sanitaire, des conseils pour préparer votre prise en charge et des actualités réglementaires sur les remboursements.
-            </p>
             <p className="text-gray-700 leading-relaxed mb-5">
-              Nos chauffeurs interviennent dans les cinq départements suivants. Consultez la page de votre département pour connaître les villes desservies et les établissements hospitaliers à proximité de chez vous :
+              Nos chauffeurs interviennent dans les cinq départements suivants. Consultez la page de votre département pour connaître les villes desservies et les établissements hospitaliers proches.
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
               {DEPARTMENTS.map((dept) => (
@@ -327,32 +402,9 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
               ))}
             </div>
           </div>
-
-          {/* H3.5 */}
-          <div className="mb-4">
-            <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-              <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Conseils pratiques pour réserver votre taxi VSL
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Pour une réservation sans encombre, pensez à réunir vos documents avant de soumettre votre demande : carte Vitale, prescription médicale de transport (Cerfa S3138) et, le cas échéant, attestation d'ALD ou de CMU-C. Si vous bénéficiez d'une prise en charge à 100 %, indiquez-le lors de votre réservation afin que notre équipe prépare les documents de facturation directe avec la CPAM.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Réservez idéalement <strong>24 à 48 heures à l'avance</strong> pour les rendez-vous programmés, et au moins 72 heures pour les hospitalisations longue durée. Pour les transports récurrents, une seule réservation suffit : nous planifions l'ensemble des séances sur la durée de votre traitement.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Pour les situations urgentes ou non programmées, notre numéro est disponible 24h/24 au{' '}
-              <a href="tel:+33650366491" className="text-blue-600 font-semibold hover:underline">
-                06 50 36 64 91
-              </a>
-              . Nos chauffeurs s'adaptent aux imprévus et font leur possible pour intervenir dans les meilleurs délais, même en dehors des horaires habituels.
-            </p>
-          </div>
-
         </div>
       </section>
 
-      {/* ── FAQ accordéon ────────────────────────────────────────────── */}
       <section className="py-12 bg-gray-50" aria-label="Questions fréquentes">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
@@ -398,7 +450,6 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      {/* ── CTA final ────────────────────────────────────────────────── */}
       <section className="py-12 bg-white" aria-label="Réserver un transport médical">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
