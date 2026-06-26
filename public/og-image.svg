@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Taxis Paris Conventionnés - Taxi VSL CPAM Île-de-France">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b347d"/>
+      <stop offset="0.55" stop-color="#1d5fd7"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#eff6ff" stop-opacity="0.96"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M770 70c105-42 236-20 315 55 86 81 78 207-18 281-96 75-244 74-329-2-84-76-70-209 32-334Z" fill="none" stroke="#ffffff" stroke-opacity="0.18" stroke-width="3"/>
+  <path d="M845 38c119-25 240 34 270 131 30 98-42 196-161 221-118 24-239-34-269-132-30-97 42-196 160-220Z" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="3"/>
+  <path d="M96 548 295 72M362 548 561 72M628 548 827 72" stroke="#ffffff" stroke-opacity="0.18" stroke-width="2"/>
+
+  <g filter="url(#shadow)">
+    <rect x="82" y="92" width="1036" height="446" rx="34" fill="url(#card)"/>
+  </g>
+
+  <g transform="translate(126 132)">
+    <rect x="0" y="0" width="308" height="52" rx="26" fill="#dbeafe"/>
+    <text x="28" y="34" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1d4ed8">Taxi conventionné CPAM</text>
+
+    <text x="0" y="138" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="800" fill="#0f172a">Taxis Paris</text>
+    <text x="0" y="208" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="800" fill="#0f172a">Conventionnés</text>
+    <text x="0" y="266" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600" fill="#334155">Transport médical assis &amp; VSL</text>
+    <text x="0" y="310" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#475569">Paris, Essonne, Hauts-de-Seine, Seine-Saint-Denis, Val-de-Marne</text>
+
+    <g transform="translate(0 344)">
+      <rect x="0" y="0" width="154" height="48" rx="14" fill="#2563eb"/>
+      <text x="77" y="31" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#ffffff">24h/24</text>
+      <rect x="174" y="0" width="188" height="48" rx="14" fill="#16a34a"/>
+      <text x="268" y="31" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#ffffff">Conventionné CPAM</text>
+      <rect x="382" y="0" width="176" height="48" rx="14" fill="#0f172a"/>
+      <text x="470" y="31" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#ffffff">06 50 36 64 91</text>
+    </g>
+  </g>
+
+  <g transform="translate(770 160)">
+    <rect x="0" y="0" width="252" height="170" rx="28" fill="#ffffff" stroke="#bfdbfe" stroke-width="2"/>
+    <path d="M53 55c22-18 49-18 72-9 20-14 52-10 68 11 17 23 9 55-16 72-25 18-61 17-83-3-24 12-55 4-69-17-14-20-3-40 28-54Z" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <path d="M75 92 115 76 150 98 193 84" fill="none" stroke="#93c5fd" stroke-width="3"/>
+    <circle cx="112" cy="84" r="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="112" y="91" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#2563eb">75</text>
+    <circle cx="72" cy="113" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <text x="72" y="119" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16a34a">91</text>
+    <circle cx="156" cy="60" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+    <text x="156" y="66" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#d97706">92</text>
+    <circle cx="190" cy="105" r="16" fill="#ffe4e6" stroke="#e11d48" stroke-width="3"/>
+    <text x="190" y="111" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#e11d48">93</text>
+    <circle cx="145" cy="124" r="16" fill="#ffe4e6" stroke="#be123c" stroke-width="3"/>
+    <text x="145" y="130" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#be123c">94</text>
+  </g>
+</svg>
