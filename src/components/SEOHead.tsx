@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.jpg';
+const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
 
 interface SEOHeadProps {
   title: string;
@@ -26,7 +27,15 @@ function cleanSeoText(input: string): string {
     .trim();
 }
 
-const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
+function normalizeCanonicalPath(pathname: string): string {
+  const cleaned = pathname.replace(/\/+$/, '') || '/';
+  return cleaned === '/' ? '/' : cleaned;
+}
+
+function normalizeCanonicalUrl(url: string): string {
+  const cleaned = url.replace(/\/+$/, '');
+  return cleaned === CANONICAL_DOMAIN ? `${CANONICAL_DOMAIN}/` : cleaned;
+}
 
 export default function SEOHead({
   title,
@@ -40,12 +49,10 @@ export default function SEOHead({
 }: SEOHeadProps) {
   const location = useLocation();
 
-  // Normalize path: ensure exactly one trailing slash, except for root which stays "/"
-  const rawPath = location.pathname.replace(/\/+$/, '') || '';
-  const normalizedPath = rawPath === '' ? '/' : `${rawPath}/`;
+  const canonicalPath = normalizeCanonicalPath(location.pathname);
   const canonicalUrl = canonical
-    ? (canonical.endsWith('/') ? canonical : `${canonical}/`)
-    : `${CANONICAL_DOMAIN}${normalizedPath}`;
+    ? normalizeCanonicalUrl(canonical)
+    : `${CANONICAL_DOMAIN}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
   const safeTitle = cleanSeoText(title);
   const safeDescription = cleanSeoText(description);
@@ -73,10 +80,10 @@ export default function SEOHead({
       <meta name="robots" content={robots} />
       {safeKeywords && <meta name="keywords" content={safeKeywords} />}
 
-      {/* Canonical – single, authoritative URL for this page */}
+      {/* Canonical - single, authoritative URL for this page */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* Open Graph – og:url must match canonical */}
+      {/* Open Graph - og:url must match canonical */}
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={safeTitle} />
       <meta property="og:description" content={safeDescription} />
