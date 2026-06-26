@@ -59,6 +59,68 @@ function ScrollToTop() {
   return null;
 }
 
+function CanonicalPathRedirect() {
+  const navigate = useNavigate();
+  const { pathname, search, hash } = useLocation();
+
+  useEffect(() => {
+    if (pathname !== '/' && pathname.endsWith('/')) {
+      navigate(`${pathname.replace(/\/+$/g, '')}${search}${hash}`, { replace: true });
+    }
+  }, [pathname, search, hash, navigate]);
+
+  return null;
+}
+
+const CITY_ROUTE_PATTERN = /^\/taxi-conventionne-[^/]+\/[^/]+\/?$/;
+const REPEATED_SEO_SEGMENT = /([A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9'’ -]{2,70})(,\s+\1)+/gi;
+const SKIP_TEXT_TAGS = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'NOSCRIPT']);
+
+function normalizeRepeatedSeoSegments(value: string): string {
+  let cleaned = value;
+  let previous = '';
+
+  while (cleaned !== previous) {
+    previous = cleaned;
+    cleaned = cleaned.replace(REPEATED_SEO_SEGMENT, '$1');
+  }
+
+  return cleaned;
+}
+
+function cleanGeneratedSeoText(root: HTMLElement) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || SKIP_TEXT_TAGS.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return node.nodeValue?.includes(',') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    },
+  });
+  const nodes: Text[] = [];
+
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode as Text);
+  }
+
+  nodes.forEach((node) => {
+    const current = node.nodeValue || '';
+    const cleaned = normalizeRepeatedSeoSegments(current);
+    if (cleaned !== current) node.nodeValue = cleaned;
+  });
+}
+
+function CitySeoTextCleaner() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!CITY_ROUTE_PATTERN.test(pathname)) return;
+    const main = document.getElementById('main-content');
+    if (main) cleanGeneratedSeoText(main);
+  }, [pathname]);
+
+  return null;
+}
+
 function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -98,6 +160,8 @@ function AppContent() {
       <GoogleAnalytics measurementId={measurementId} />
       
       <ScrollToTop />
+      <CanonicalPathRedirect />
+      <CitySeoTextCleaner />
 
       <a href="#main-content" className="skip-to-main">
         Aller au contenu principal
