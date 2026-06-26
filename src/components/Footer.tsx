@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (page: string) => void;
@@ -122,21 +122,6 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
                 </li>
               </ul>
             </nav>
-
-            <div className="mt-6">
-              <h4 className="font-semibold mb-3 text-blue-400 text-base">Suivez-nous</h4>
-              <div className="flex gap-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 rounded p-2 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Suivez-nous sur Facebook">
-                  <Facebook size={20} aria-hidden="true" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 rounded p-2 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Suivez-nous sur Twitter">
-                  <Twitter size={20} aria-hidden="true" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 rounded p-2 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Suivez-nous sur LinkedIn">
-                  <Linkedin size={20} aria-hidden="true" />
-                </a>
-              </div>
-            </div>
           </div>
         </div>
 
