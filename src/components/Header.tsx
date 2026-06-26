@@ -67,11 +67,11 @@ export default function Header({ onNavigate }: HeaderProps) {
                   VSL
                 </span>
               </div>
-              <div className="min-w-0 leading-tight">
-                <span className="block whitespace-nowrap text-sm font-black tracking-tight text-blue-950 sm:text-base lg:text-lg">
+              <div className="hidden min-w-0 leading-tight sm:block">
+                <span className="block whitespace-nowrap text-base font-black tracking-tight text-blue-950 lg:text-lg">
                   Taxis Paris
                 </span>
-                <span className="block whitespace-nowrap text-[10px] font-bold uppercase tracking-wide text-blue-600 sm:text-[11px]">
+                <span className="block whitespace-nowrap text-[11px] font-bold uppercase tracking-wide text-blue-600">
                   Conventionnés CPAM
                 </span>
               </div>
@@ -80,7 +80,7 @@ export default function Header({ onNavigate }: HeaderProps) {
 
           {/* ── Desktop nav ────────────────────────────────────────── */}
           <nav
-            className="hidden md:flex items-center gap-1.5 lg:gap-2"
+            className="hidden lg:flex items-center gap-2"
             role="navigation"
             aria-label="Navigation principale"
           >
@@ -92,9 +92,9 @@ export default function Header({ onNavigate }: HeaderProps) {
                 aria-current={isActive(id) ? 'page' : undefined}
                 className={[
                   'inline-flex items-center gap-1.5',
-                  'font-bold text-sm lg:text-[0.9rem]',
+                  'font-bold text-[0.9rem]',
                   'border-2 rounded-xl',
-                  'px-3 lg:px-3.5 py-2',
+                  'px-3.5 py-2',
                   'whitespace-nowrap',
                   'transition-all duration-200',
                   'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1',
@@ -111,17 +111,17 @@ export default function Header({ onNavigate }: HeaderProps) {
             {/* CTA Réserver mis en valeur */}
             <a
               href="tel:+33650366491"
-              className="inline-flex items-center gap-1.5 ml-1 font-bold text-sm bg-blue-600 text-white border-2 border-blue-600 rounded-xl px-3 lg:px-3.5 py-2 whitespace-nowrap shadow-sm hover:bg-blue-700 hover:border-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+              className="inline-flex items-center gap-1.5 ml-1 font-bold text-sm bg-blue-600 text-white border-2 border-blue-600 rounded-xl px-3.5 py-2 whitespace-nowrap shadow-sm hover:bg-blue-700 hover:border-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
               aria-label="Appeler le 06 50 36 64 91"
             >
               <Phone size={14} aria-hidden="true" />
-              <span className="hidden lg:inline">06 50 36 64 91</span>
-              <span className="lg:hidden">Appeler</span>
+              <span className="hidden xl:inline">06 50 36 64 91</span>
+              <span className="xl:hidden">Appeler</span>
             </a>
           </nav>
 
-          {/* ── Mobile : réserver + appel + burger ─────────────────── */}
-          <div className="md:hidden flex items-center gap-1.5">
+          {/* ── Mobile/tablette : réserver + appel + burger ─────────── */}
+          <div className="lg:hidden flex items-center gap-1.5">
             <Link
               to="/reservation-taxi-vsl"
               className="flex items-center gap-1 bg-white text-blue-600 font-bold text-xs border-2 border-blue-500 rounded-xl px-2.5 h-10 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap"
@@ -154,7 +154,7 @@ export default function Header({ onNavigate }: HeaderProps) {
 
       {/* ── Mobile menu ───────────────────────────────────────────── */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-gray-50">
+        <div className="lg:hidden border-t border-gray-100 bg-gray-50">
           <nav
             id="mobile-menu"
             className="container mx-auto px-4 py-3 grid grid-cols-2 gap-2"
