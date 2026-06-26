@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
   Menu, X, Phone, Mail,
-  Home, CalendarCheck, MapPin, TrainFront, Users, BookOpen, ArrowRight, Car,
+  Home, CalendarCheck, MapPin, TrainFront, Users, BookOpen, ArrowRight,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -57,25 +57,18 @@ export default function Header({ onNavigate }: HeaderProps) {
           {/* Logo */}
           <Link
             to="/"
-            className="group flex-shrink-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="group flex h-12 w-[92px] flex-shrink-0 items-center rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:h-[58px] sm:w-[185px] lg:w-[220px]"
             aria-label="Taxis Paris Conventionnés - retour à l'accueil"
           >
-            <div className="flex items-center gap-2 rounded-2xl border border-blue-100 bg-white px-2.5 py-1.5 shadow-sm transition-all duration-200 group-hover:border-blue-300 group-hover:shadow-md sm:gap-3 sm:px-3">
-              <div className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-md sm:h-12 sm:w-12">
-                <Car size={24} strokeWidth={2.5} aria-hidden="true" />
-                <span className="absolute -right-1 -top-1 rounded-full bg-yellow-400 px-1.5 py-0.5 text-[9px] font-black leading-none text-blue-950 shadow-sm">
-                  VSL
-                </span>
-              </div>
-              <div className="hidden min-w-0 leading-tight sm:block">
-                <span className="block whitespace-nowrap text-base font-black tracking-tight text-blue-950 lg:text-lg">
-                  Taxis Paris
-                </span>
-                <span className="block whitespace-nowrap text-[11px] font-bold uppercase tracking-wide text-blue-600">
-                  Conventionnés CPAM
-                </span>
-              </div>
-            </div>
+            <img
+              src="/taxi-logo.svg"
+              alt="Taxis Paris Conventionnés Assurance Maladie"
+              width="320"
+              height="208"
+              className="h-full w-full rounded-xl bg-white object-contain p-1 shadow-sm ring-1 ring-blue-100 transition-all duration-200 group-hover:ring-blue-300 group-hover:shadow-md"
+              loading="eager"
+              decoding="async"
+            />
           </Link>
 
           {/* ── Desktop nav ────────────────────────────────────────── */}
