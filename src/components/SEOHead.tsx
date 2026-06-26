@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.svg';
 const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
+const MAX_META_DESCRIPTION_LENGTH = 180;
 
 interface SEOHeadProps {
   title: string;
@@ -25,6 +26,23 @@ function cleanSeoText(input: string): string {
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
     .trim();
+}
+
+function limitSeoDescription(input: string): string {
+  if (input.length <= MAX_META_DESCRIPTION_LENGTH) {
+    return input;
+  }
+
+  const candidate = input.slice(0, MAX_META_DESCRIPTION_LENGTH);
+  const sentenceEnd = Math.max(candidate.lastIndexOf('.'), candidate.lastIndexOf('!'), candidate.lastIndexOf('?'));
+
+  if (sentenceEnd >= 120) {
+    return candidate.slice(0, sentenceEnd + 1).trim();
+  }
+
+  const lastSpace = candidate.lastIndexOf(' ');
+  const cutIndex = lastSpace >= 120 ? lastSpace : MAX_META_DESCRIPTION_LENGTH;
+  return `${candidate.slice(0, cutIndex).replace(/[\s,;:.-]+$/g, '')}.`;
 }
 
 function normalizeCanonicalPath(pathname: string): string {
@@ -55,7 +73,7 @@ export default function SEOHead({
     : `${CANONICAL_DOMAIN}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
   const safeTitle = cleanSeoText(title);
-  const safeDescription = cleanSeoText(description);
+  const safeDescription = limitSeoDescription(cleanSeoText(description));
 
   const keywordsString = keywords
     ? Array.isArray(keywords)
