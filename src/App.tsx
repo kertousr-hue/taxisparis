@@ -153,6 +153,9 @@ function AppContent() {
     navigate(page);
   };
 
+  const isAdminPage = location.pathname.startsWith('/admin');
+  const isHomePage = location.pathname === '/';
+
   return (
     <>
       {/* CORRECTION ICI : On affiche le composant tout le temps */}
@@ -167,9 +170,9 @@ function AppContent() {
         Aller au contenu principal
       </a>
       
-      <div className={`min-h-screen bg-gray-50 flex flex-col ${location.pathname === '/' ? 'app-background-home' : ''}`}>
-        {!location.pathname.startsWith('/admin') && <Header onNavigate={handleNavigate} />}
-        <main id="main-content" className="flex-grow" role="main">
+      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'premium-public-shell'} ${isHomePage ? 'app-background-home' : ''}`}>
+        {!isAdminPage && <Header onNavigate={handleNavigate} />}
+        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'premium-public-main'}`} role="main">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Home onNavigate={handleNavigate} />} />
@@ -223,7 +226,7 @@ function AppContent() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-        {!location.pathname.startsWith('/admin') && <Footer onNavigate={handleNavigate} />}
+        {!isAdminPage && <Footer onNavigate={handleNavigate} />}
       </div>
     </>
   );
