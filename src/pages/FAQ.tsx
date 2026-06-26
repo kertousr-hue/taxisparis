@@ -216,7 +216,7 @@ export default function FAQ() {
                   </a>
 
                   <a
-                    href="tel:+33123456789"
+                    href="tel:+33650366491"
                     className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-200 border-2 border-white/30"
                   >
                     <Phone className="w-5 h-5" />
