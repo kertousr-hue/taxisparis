@@ -14,6 +14,7 @@ const DIST_DIR = path.join(__dirname, '..', 'dist-ssg');
 const DIST_CLIENT = path.join(__dirname, '..', 'dist');
 const DIST_SSR = path.join(__dirname, '..', 'dist-ssr');
 const DOMAIN = 'https://www.taxisparis-conventionnes.fr';
+const REPEATED_SEO_SEGMENT = /([A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9'’ -]{2,70})(,\s+\1)+/gi;
 
 async function buildSSR() {
   console.log('\nBuild SSR en cours...');
@@ -58,6 +59,18 @@ function normalizeRoutePath(routePath: string): string {
 function canonicalFor(routePath: string): string {
   const cleanPath = normalizeRoutePath(routePath);
   return cleanPath === '/' ? `${DOMAIN}/` : `${DOMAIN}${cleanPath}`;
+}
+
+function normalizeRepeatedSeoSegments(value: string): string {
+  let cleaned = value;
+  let previous = '';
+
+  while (cleaned !== previous) {
+    previous = cleaned;
+    cleaned = cleaned.replace(REPEATED_SEO_SEGMENT, '$1');
+  }
+
+  return cleaned;
 }
 
 async function prerenderAll() {
@@ -236,6 +249,7 @@ function injectIntoTemplate(template: string, appHtml: string, helmet: any, rout
   const helmetMeta = stripDataRh(helmet?.meta?.toString() || '');
   const helmetLink = stripDataRh(helmet?.link?.toString() || '');
   const helmetScript = stripDataRh(helmet?.script?.toString() || '');
+  const cleanAppHtml = normalizeRepeatedSeoSegments(appHtml);
 
   const isHelmetTitleEmpty = !helmetTitle || helmetTitle === '<title></title>';
   let titleTag: string;
@@ -271,7 +285,7 @@ function injectIntoTemplate(template: string, appHtml: string, helmet: any, rout
     `  ${hasTitleTag ? '' : `${titleTag}\n  `}${metaTags}\n  ${linkTags}\n  ${canonicalTag}\n  ${scriptTags}\n  </head>`
   );
 
-  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${appHtml}</div>`);
+  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${cleanAppHtml}</div>`);
 
   return html;
 }
