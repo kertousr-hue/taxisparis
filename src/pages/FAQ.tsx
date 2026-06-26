@@ -15,8 +15,74 @@ interface FAQByCategory {
   [category: string]: FAQItem[];
 }
 
+const DEFAULT_FAQ_ITEMS: FAQItem[] = [
+  {
+    id: 'default-reservation',
+    question: 'Comment réserver un taxi conventionné ou VSL ?',
+    answer:
+      'Vous pouvez réserver par téléphone au 06 50 36 64 91 ou via le formulaire en ligne. Préparez votre adresse de départ, votre destination médicale, la date du rendez-vous et, si vous l’avez déjà, votre prescription médicale de transport.',
+    category: 'Réservation',
+    display_order: 1,
+  },
+  {
+    id: 'default-documents',
+    question: 'Quels documents faut-il prévoir pour un transport remboursé CPAM ?',
+    answer:
+      'Pour une prise en charge par l’Assurance Maladie, il faut généralement une prescription médicale de transport, votre carte Vitale et, selon votre situation, une attestation ALD, CSS ou mutuelle. Sans prescription, le trajet reste possible mais peut ne pas être remboursé.',
+    category: 'Remboursement CPAM',
+    display_order: 2,
+  },
+  {
+    id: 'default-remboursement',
+    question: 'Le taxi conventionné est-il remboursé par la CPAM ?',
+    answer:
+      'Oui, lorsqu’un médecin prescrit un transport médical et que les conditions de prise en charge sont réunies. Le remboursement peut être partiel ou total selon votre situation : ALD, hospitalisation, soins réguliers, accident du travail, maternité ou autre motif médical reconnu.',
+    category: 'Remboursement CPAM',
+    display_order: 3,
+  },
+  {
+    id: 'default-dialyse-chimio',
+    question: 'Peut-on organiser des trajets réguliers pour dialyse ou chimiothérapie ?',
+    answer:
+      'Oui. Pour les soins répétés comme la dialyse, la chimiothérapie ou la radiothérapie, nous pouvons planifier des trajets récurrents afin de respecter vos horaires de séance et de simplifier vos démarches.',
+    category: 'Soins réguliers',
+    display_order: 4,
+  },
+  {
+    id: 'default-zones',
+    question: 'Quelles zones sont desservies en Île-de-France ?',
+    answer:
+      'Nous intervenons à Paris (75), en Essonne (91), dans les Hauts-de-Seine (92), en Seine-Saint-Denis (93) et dans le Val-de-Marne (94), avec des trajets vers les hôpitaux, cliniques, centres de soins, gares et aéroports pour raisons médicales.',
+    category: 'Zones desservies',
+    display_order: 5,
+  },
+  {
+    id: 'default-urgence',
+    question: 'Le service est-il disponible la nuit, le week-end et les jours fériés ?',
+    answer:
+      'Oui, le service est disponible 24h/24 et 7j/7 selon les disponibilités. Pour une demande urgente ou un trajet tôt le matin, appelez directement le 06 50 36 64 91 afin de confirmer rapidement la prise en charge.',
+    category: 'Disponibilité',
+    display_order: 6,
+  },
+];
+
+function groupFAQ(items: FAQItem[]): FAQByCategory {
+  return items.reduce<FAQByCategory>((groups, item) => {
+    const category = item.category || 'Général';
+    if (!groups[category]) groups[category] = [];
+    groups[category].push(item);
+    return groups;
+  }, {});
+}
+
+function stripHtml(input: string): string {
+  return input.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+const DEFAULT_FAQ_GROUPS = groupFAQ(DEFAULT_FAQ_ITEMS);
+
 export default function FAQ() {
-  const [faqItems, setFaqItems] = useState<FAQByCategory>({});
+  const [faqItems, setFaqItems] = useState<FAQByCategory>(DEFAULT_FAQ_GROUPS);
   const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
   const [loading, setLoading] = useState(true);
 
@@ -34,16 +100,9 @@ export default function FAQ() {
 
       if (error) throw error;
 
-      const groupedFAQ: FAQByCategory = {};
-      data?.forEach((item) => {
-        const category = item.category || 'Général';
-        if (!groupedFAQ[category]) {
-          groupedFAQ[category] = [];
-        }
-        groupedFAQ[category].push(item);
-      });
-
-      setFaqItems(groupedFAQ);
+      if (data && data.length > 0) {
+        setFaqItems(groupFAQ(data));
+      }
     } catch (error) {
       console.error('Erreur lors du chargement de la FAQ:', error);
     } finally {
@@ -66,21 +125,10 @@ export default function FAQ() {
       "name": item.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": item.answer
+        "text": stripHtml(item.answer)
       }
     }))
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent"></div>
-          <p className="mt-4 text-slate-600 font-medium">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -117,74 +165,64 @@ export default function FAQ() {
         </div>
 
         <div className="max-w-5xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-          {Object.keys(faqItems).length === 0 ? (
-            <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-100 rounded-full mb-6">
-                <HelpCircle className="w-10 h-10 text-slate-400" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                Aucune question disponible
-              </h2>
-              <p className="text-slate-600">
-                Les questions fréquentes seront bientôt disponibles.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-12">
-              {Object.entries(faqItems).map(([category, items], categoryIndex) => (
-                <div
-                  key={category}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${categoryIndex * 100}ms` }}
-                >
-                  <div className="mb-6">
-                    <h2 className="text-3xl font-bold text-slate-900 flex items-center">
-                      <span className="w-1.5 h-8 bg-gradient-to-b from-blue-600 to-cyan-600 rounded-full mr-4"></span>
-                      {category}
-                    </h2>
-                  </div>
+          <div className="space-y-12">
+            {Object.entries(faqItems).map(([category, items], categoryIndex) => (
+              <div
+                key={category}
+                className="animate-fade-in"
+                style={{ animationDelay: `${categoryIndex * 100}ms` }}
+              >
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-slate-900 flex items-center">
+                    <span className="w-1.5 h-8 bg-gradient-to-b from-blue-600 to-cyan-600 rounded-full mr-4"></span>
+                    {category}
+                  </h2>
+                </div>
 
-                  <div className="space-y-4">
-                    {items.map((item, index) => (
-                      <div
-                        key={item.id}
-                        className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 overflow-hidden"
-                        style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
+                <div className="space-y-4">
+                  {items.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 overflow-hidden"
+                      style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
+                    >
+                      <button
+                        onClick={() => toggleItem(item.id)}
+                        className="w-full px-6 py-5 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition-colors duration-200"
+                        aria-expanded={openItems[item.id]}
                       >
-                        <button
-                          onClick={() => toggleItem(item.id)}
-                          className="w-full px-6 py-5 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition-colors duration-200"
-                          aria-expanded={openItems[item.id]}
-                        >
-                          <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-slate-900 leading-relaxed group-hover:text-blue-600 transition-colors duration-200">
-                              {item.question}
-                            </h3>
-                          </div>
-                          <div className={`flex-shrink-0 mt-1 transform transition-transform duration-300 ${openItems[item.id] ? 'rotate-180' : ''}`}>
-                            <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
-                          </div>
-                        </button>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-slate-900 leading-relaxed group-hover:text-blue-600 transition-colors duration-200">
+                            {item.question}
+                          </h3>
+                        </div>
+                        <div className={`flex-shrink-0 mt-1 transform transition-transform duration-300 ${openItems[item.id] ? 'rotate-180' : ''}`}>
+                          <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
+                        </div>
+                      </button>
 
-                        <div
-                          className={`transition-all duration-300 ease-in-out ${
-                            openItems[item.id] ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-                          }`}
-                        >
-                          <div className="px-6 pb-6 pt-2">
-                            <div className="w-12 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full mb-4"></div>
-                            <div
-                              className="prose prose-slate max-w-none text-slate-700 leading-relaxed"
-                              dangerouslySetInnerHTML={{ __html: item.answer }}
-                            />
-                          </div>
+                      <div
+                        className={`transition-all duration-300 ease-in-out ${
+                          openItems[item.id] ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        <div className="px-6 pb-6 pt-2">
+                          <div className="w-12 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full mb-4"></div>
+                          <div
+                            className="prose prose-slate max-w-none text-slate-700 leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: item.answer }}
+                          />
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+
+          {loading && (
+            <p className="sr-only" aria-live="polite">Mise à jour de la FAQ en cours</p>
           )}
 
           <div className="mt-20 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl shadow-xl overflow-hidden">
