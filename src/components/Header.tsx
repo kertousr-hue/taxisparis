@@ -101,15 +101,14 @@ export default function Header({ onNavigate }: HeaderProps) {
               </Link>
             ))}
 
-            {/* CTA Réserver mis en valeur */}
+            {/* Numéro visible fond blanc */}
             <a
               href="tel:+33650366491"
-              className="inline-flex items-center gap-1.5 ml-1 font-bold text-sm bg-blue-600 text-white border-2 border-blue-600 rounded-xl px-3.5 py-2 whitespace-nowrap shadow-sm hover:bg-blue-700 hover:border-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+              className="premium-header-phone inline-flex items-center gap-2 ml-1 font-extrabold text-sm !bg-white !text-blue-700 !border-2 !border-blue-200 rounded-xl px-4 py-2 whitespace-nowrap shadow-sm hover:!bg-blue-50 hover:!text-blue-800 hover:!border-blue-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
               aria-label="Appeler le 06 50 36 64 91"
             >
-              <Phone size={14} aria-hidden="true" />
-              <span className="hidden xl:inline">06 50 36 64 91</span>
-              <span className="xl:hidden">Appeler</span>
+              <Phone size={15} aria-hidden="true" className="flex-shrink-0" />
+              06 50 36 64 91
             </a>
           </nav>
 
@@ -125,11 +124,12 @@ export default function Header({ onNavigate }: HeaderProps) {
             </Link>
             <a
               href="tel:+33650366491"
-              className="flex items-center gap-1 bg-blue-600 text-white font-bold text-xs rounded-xl px-2.5 h-10 hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap"
+              className="flex items-center gap-1 !bg-white !text-blue-700 font-extrabold text-xs !border-2 !border-blue-200 rounded-xl px-2.5 h-10 hover:!bg-blue-50 hover:!text-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap shadow-sm"
               aria-label="Appeler le 06 50 36 64 91"
             >
               <Phone size={13} aria-hidden="true" />
-              Appeler
+              <span className="hidden sm:inline">06 50 36 64 91</span>
+              <span className="sm:hidden">Appeler</span>
             </a>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-xl border-2 border-gray-200 text-gray-700 hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -181,12 +181,12 @@ export default function Header({ onNavigate }: HeaderProps) {
             {/* Bloc appel pleine largeur en bas du menu mobile */}
             <a
               href="tel:+33650366491"
-              className="col-span-2 flex items-center justify-center gap-2 font-bold text-sm bg-blue-600 text-white border-2 border-blue-600 rounded-xl px-3 py-3 min-h-[48px] shadow-md hover:bg-blue-700 transition-colors"
+              className="col-span-2 flex items-center justify-center gap-2 font-extrabold text-sm !bg-white !text-blue-700 !border-2 !border-blue-200 rounded-xl px-3 py-3 min-h-[48px] shadow-md hover:!bg-blue-50 hover:!text-blue-800 transition-colors"
               aria-label="Appeler le 06 50 36 64 91"
               onClick={() => setIsMenuOpen(false)}
             >
               <Phone size={16} aria-hidden="true" />
-              Appeler maintenant – 06 50 36 64 91
+              Appeler maintenant - 06 50 36 64 91
             </a>
           </nav>
         </div>
