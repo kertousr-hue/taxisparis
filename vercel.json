@@ -4,6 +4,14 @@
   "installCommand": "npm install",
   "framework": null,
 
+  "redirects": [
+    {
+      "source": "/:path((?!.*\\..*).+)/",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ],
+
   "rewrites": [
     {
       "source": "/((?!sitemap\\.xml$|robots\\.txt$|.*\\..*).*)",
