@@ -18,6 +18,65 @@ function normalizePath(path) {
   return `/${cleaned}`;
 }
 
+function normalizeInternalHref(href) {
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+    return href;
+  }
+
+  const isRootRelative = href.startsWith('/');
+  const isAbsoluteInternal = href.startsWith(`${BASE_URL}/`);
+
+  if (!isRootRelative && !isAbsoluteInternal) {
+    return href;
+  }
+
+  const url = new URL(href, BASE_URL);
+
+  if (url.origin !== BASE_URL) {
+    return href;
+  }
+
+  if (url.pathname !== '/' && url.pathname.endsWith('/') && !url.pathname.includes('.')) {
+    url.pathname = url.pathname.replace(/\/+$/g, '');
+  }
+
+  return isAbsoluteInternal ? url.toString() : `${url.pathname}${url.search}${url.hash}`;
+}
+
+function normalizeInternalLinks(html) {
+  return html.replace(/<a\b([^>]*?)\bhref=(["'])([^"']+)\2/gi, (match, beforeHref, quote, href) => {
+    const normalizedHref = normalizeInternalHref(href);
+    if (normalizedHref === href) return match;
+    return `<a${beforeHref}href=${quote}${normalizedHref}${quote}`;
+  });
+}
+
+function listHtmlFiles(directory) {
+  const entries = readdirSync(directory, { withFileTypes: true });
+  return entries.flatMap((entry) => {
+    const fullPath = resolve(directory, entry.name);
+    if (entry.isDirectory()) return listHtmlFiles(fullPath);
+    return entry.isFile() && entry.name.endsWith('.html') ? [fullPath] : [];
+  });
+}
+
+function normalizeGeneratedHtmlLinks() {
+  const htmlFiles = listHtmlFiles(OUTPUT_DIR);
+  let updatedCount = 0;
+
+  htmlFiles.forEach((filePath) => {
+    const html = readFileSync(filePath, 'utf-8');
+    const normalized = normalizeInternalLinks(html);
+
+    if (normalized !== html) {
+      writeFileSync(filePath, normalized, 'utf-8');
+      updatedCount++;
+    }
+  });
+
+  console.log(`internal links normalized - ${updatedCount}/${htmlFiles.length} HTML files updated`);
+}
+
 function buildSitemap() {
   const urls = [
     { path: '/', priority: 1.0, changefreq: 'daily' },
@@ -58,6 +117,7 @@ function buildSitemap() {
 }
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
+normalizeGeneratedHtmlLinks();
 
 const sitemap = buildSitemap();
 writeFileSync(resolve(OUTPUT_DIR, 'sitemap.xml'), sitemap, 'utf-8');
