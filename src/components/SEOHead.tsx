@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 const DEFAULT_OG_IMAGE = 'https://www.taxisparis-conventionnes.fr/og-image.svg';
 const CANONICAL_DOMAIN = 'https://www.taxisparis-conventionnes.fr';
 const MAX_META_DESCRIPTION_LENGTH = 180;
+const MAX_SEO_TITLE_LENGTH = 65;
 
 interface SEOHeadProps {
   title: string;
@@ -26,6 +27,44 @@ function cleanSeoText(input: string): string {
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
     .trim();
+}
+
+function limitSeoTitle(input: string): string {
+  const title = cleanSeoText(input)
+    .replace(/\s+\|\s+Transport médical 24h\/24$/i, '')
+    .replace(/\s+\|\s+Île-de-France 200\+ villes$/i, '')
+    .replace(/\s+\|\s+Paris et Île-de-France$/i, '')
+    .replace(/\s+\|\s+Service 24h\/24$/i, '')
+    .replace(/\s+\|\s+R[ée]servation 24h\/24$/i, '')
+    .replace(/\s+\|\s+Conseils transport médical Île-de-France$/i, ' | Conseils transport médical')
+    .replace(/\s+\|\s+CPAM\s+\|\s+24h\/24$/i, ' | CPAM')
+    .replace(/\s*-\s*24\/7$/i, '')
+    .trim();
+
+  if (title.length <= MAX_SEO_TITLE_LENGTH) {
+    return title;
+  }
+
+  const parts = title.split('|').map((part) => part.trim()).filter(Boolean);
+
+  if (parts.length > 1) {
+    const firstPart = parts[0];
+    const firstPartWithCpam = `${firstPart} | CPAM`;
+
+    if (/\bCPAM\b/i.test(title) && !/\bCPAM\b/i.test(firstPart) && firstPartWithCpam.length <= MAX_SEO_TITLE_LENGTH) {
+      return firstPartWithCpam;
+    }
+
+    if (firstPart.length <= MAX_SEO_TITLE_LENGTH) {
+      return firstPart;
+    }
+  }
+
+  const candidate = title.slice(0, MAX_SEO_TITLE_LENGTH + 1);
+  const lastSpace = candidate.lastIndexOf(' ');
+  const cutIndex = lastSpace >= 50 ? lastSpace : MAX_SEO_TITLE_LENGTH;
+
+  return title.slice(0, cutIndex).replace(/[\s,;:|.-]+$/g, '').trim();
 }
 
 function limitSeoDescription(input: string): string {
@@ -72,7 +111,7 @@ export default function SEOHead({
     ? normalizeCanonicalUrl(canonical)
     : `${CANONICAL_DOMAIN}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
-  const safeTitle = cleanSeoText(title);
+  const safeTitle = limitSeoTitle(title);
   const safeDescription = limitSeoDescription(cleanSeoText(description));
 
   const keywordsString = keywords
