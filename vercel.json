@@ -3,10 +3,15 @@
   "outputDirectory": "dist-ssg",
   "installCommand": "npm install",
   "framework": null,
+  "trailingSlash": true,
 
   "rewrites": [
     {
-      "source": "/((?!sitemap\\.xml$|robots\\.txt$|.*\\..*).*)",
+      "source": "/admin/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/:slug",
       "destination": "/index.html"
     }
   ],
