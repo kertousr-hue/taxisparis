@@ -15,29 +15,29 @@ const citiesData = JSON.parse(
 function normalizePath(path) {
   if (!path || path === '/') return '/';
   const cleaned = path.trim().replace(/^\/+|\/+$/g, '');
-  return `/${cleaned}/`;
+  return `/${cleaned}`;
 }
 
 function buildSitemap() {
   const urls = [
     { path: '/', priority: 1.0, changefreq: 'daily' },
-    { path: '/reservation-taxi-vsl/', priority: 0.9, changefreq: 'weekly' },
-    { path: '/taxis-aeroports-parisiens/', priority: 0.8, changefreq: 'weekly' },
-    { path: '/taxis-gares-parisiennes/', priority: 0.8, changefreq: 'weekly' },
-    { path: '/zones-desservies/', priority: 0.8, changefreq: 'weekly' },
-    { path: '/qui-sommes-nous/', priority: 0.7, changefreq: 'monthly' },
-    { path: '/blog/', priority: 0.8, changefreq: 'weekly' },
-    { path: '/faq/', priority: 0.7, changefreq: 'monthly' },
-    { path: '/contact/', priority: 0.7, changefreq: 'yearly' },
-    { path: '/mentions-legales/', priority: 0.3, changefreq: 'yearly' },
-    { path: '/conditions-generales-de-vente/', priority: 0.3, changefreq: 'yearly' },
-    { path: '/conditions-generales/', priority: 0.3, changefreq: 'yearly' },
+    { path: '/reservation-taxi-vsl', priority: 0.9, changefreq: 'weekly' },
+    { path: '/taxis-aeroports-parisiens', priority: 0.8, changefreq: 'weekly' },
+    { path: '/taxis-gares-parisiennes', priority: 0.8, changefreq: 'weekly' },
+    { path: '/zones-desservies', priority: 0.8, changefreq: 'weekly' },
+    { path: '/qui-sommes-nous', priority: 0.7, changefreq: 'monthly' },
+    { path: '/blog', priority: 0.8, changefreq: 'weekly' },
+    { path: '/faq', priority: 0.7, changefreq: 'monthly' },
+    { path: '/contact', priority: 0.7, changefreq: 'yearly' },
+    { path: '/mentions-legales', priority: 0.3, changefreq: 'yearly' },
+    { path: '/conditions-generales-de-vente', priority: 0.3, changefreq: 'yearly' },
+    { path: '/conditions-generales', priority: 0.3, changefreq: 'yearly' },
   ];
 
   citiesData.departments.forEach(dept => {
-    urls.push({ path: `/${dept.slug}/`, priority: 0.9, changefreq: 'weekly' });
+    urls.push({ path: `/${dept.slug}`, priority: 0.9, changefreq: 'weekly' });
     dept.cities.forEach(city => {
-      urls.push({ path: `/${dept.slug}/${city.slug}/`, priority: 0.8, changefreq: 'monthly' });
+      urls.push({ path: `/${dept.slug}/${city.slug}`, priority: 0.8, changefreq: 'monthly' });
     });
   });
 
