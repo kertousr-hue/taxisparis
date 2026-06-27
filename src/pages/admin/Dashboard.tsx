@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BookOpen, Calendar, Eye, Phone, Mail, MapPin, Clock, CheckCircle, XCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/admin/AdminLayout';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { supabase } from '../../lib/supabase';
 
 interface Reservation {
@@ -21,6 +22,7 @@ interface Reservation {
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { user } = useAdminAuth();
   const [stats, setStats] = useState({ blogPosts: 0, reservations: 0, reservationsToday: 0 });
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
@@ -169,6 +171,12 @@ export default function Dashboard() {
             <Eye size={16} /> Voir le site
           </a>
         </div>
+
+        {user && !user.authUserId && (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            Connexion admin locale active. Pour modifier ou supprimer les reservations en base, creez le meme compte dans Supabase Auth puis appliquez la migration RLS admin.
+          </div>
+        )}
 
         {/* Stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
