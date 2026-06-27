@@ -21,6 +21,30 @@ const DEPARTMENTS = [
 
 const SITE_URL = 'https://www.taxisparis-conventionnes.fr';
 const RESERVATION_URL = `${SITE_URL}/reservation-taxi-vsl`;
+const SEO_KEYWORDS = [
+  'réservation taxi conventionné',
+  'taxi conventionné CPAM',
+  'réserver VSL CPAM',
+  'taxi VSL Paris',
+  'taxi VSL Île-de-France',
+  'transport médical assis',
+  'transport médical CPAM',
+  'taxi hôpital Paris',
+  'taxi conventionné hôpital',
+  'bon de transport CPAM',
+  'prescription médicale transport',
+  'remboursement taxi conventionné',
+  'taxi conventionné ALD',
+  'transport dialyse',
+  'taxi chimiothérapie',
+  'taxi radiothérapie',
+  'taxi sortie hospitalisation',
+  'taxi conventionné 75',
+  'taxi conventionné 91',
+  'taxi conventionné 92',
+  'taxi conventionné 93',
+  'taxi conventionné 94',
+];
 
 const FAQ_ITEMS = [
   {
@@ -281,7 +305,7 @@ export default function ReservationPage() {
     }
   };
 
-  const reservationDescription = 'Réservez un taxi conventionné VSL CPAM en Île-de-France. Confirmation rapide 24h/24 pour consultations, dialyse, chimiothérapie, radiothérapie et hospitalisation.';
+  const reservationDescription = 'Réservez un taxi conventionné VSL CPAM en Île-de-France. Transport médical assis 24h/24 pour hôpital, dialyse, chimio, radio, ALD et bon de transport.';
   const webPageLD = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -289,6 +313,7 @@ export default function ReservationPage() {
     "description": reservationDescription,
     "url": RESERVATION_URL,
     "inLanguage": "fr-FR",
+    "keywords": SEO_KEYWORDS.join(', '),
     "isPartOf": { "@type": "WebSite", "name": "Taxis Paris Conventionnés", "url": `${SITE_URL}/` },
   };
   const breadcrumbLD = {
@@ -305,6 +330,7 @@ export default function ReservationPage() {
     "@type": "Service",
     "name": "Réservation de taxi conventionné VSL CPAM",
     "description": reservationDescription,
+    "keywords": SEO_KEYWORDS.join(', '),
     "serviceType": "Transport médical assis conventionné CPAM",
     "url": RESERVATION_URL,
     "telephone": "+33650366491",
@@ -329,7 +355,7 @@ export default function ReservationPage() {
       <SEOHead
         title="Réservation Taxi Conventionné VSL CPAM | 24h/24 IDF"
         description={reservationDescription}
-        keywords={["réservation taxi conventionné", "réserver VSL CPAM", "transport médical CPAM", "taxi conventionné Île-de-France", "taxi VSL en ligne"]}
+        keywords={SEO_KEYWORDS}
         canonical={RESERVATION_URL}
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
@@ -683,6 +709,12 @@ export default function ReservationPage() {
                       </li>
                     ))}
                   </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-800 mb-2">Recherches fréquentes couvertes</h3>
+                  <p>
+                    Le service répond aux demandes de <strong>taxi conventionné CPAM</strong>, <strong>taxi VSL Paris</strong>, <strong>transport médical assis</strong>, <strong>bon de transport CPAM</strong>, <strong>remboursement taxi conventionné</strong>, transport pour ALD, dialyse, chimiothérapie, radiothérapie, sortie d'hospitalisation et rendez-vous en hôpital ou clinique.
+                  </p>
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-800 mb-2">Zones couvertes autour de Paris</h3>
