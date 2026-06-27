@@ -25,12 +25,15 @@ export default function Dashboard() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [filter, setFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled'>('all');
+  const [adminError, setAdminError] = useState('');
+  const [adminNotice, setAdminNotice] = useState('');
+  const [isMutating, setIsMutating] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (showError = true) => {
     const today = new Date().toISOString().split('T')[0];
 
     const [postsCount, reservationsCount, todayCount, resData, postsData] = await Promise.all([
@@ -41,6 +44,11 @@ export default function Dashboard() {
       supabase.from('blog_posts').select('id, title, published, updated_at').order('updated_at', { ascending: false }).limit(5),
     ]);
 
+    const firstError = postsCount.error || reservationsCount.error || todayCount.error || resData.error || postsData.error;
+    if (firstError && showError) {
+      setAdminError('Impossible de charger toutes les donnees admin. Merci de verifier la connexion Supabase.');
+    }
+
     setStats({
       blogPosts: postsCount.count || 0,
       reservations: reservationsCount.count || 0,
@@ -50,16 +58,89 @@ export default function Dashboard() {
     setRecentPosts(postsData.data || []);
   };
 
+  const getReservationCount = async () => {
+    const { count, error } = await supabase
+      .from('reservations')
+      .select('id', { count: 'exact', head: true });
+
+    return { count: count || 0, error };
+  };
+
   const updateStatus = async (id: string, statut: string) => {
-    await supabase.from('reservations').update({ statut }).eq('id', id);
+    setAdminError('');
+    setAdminNotice('');
+    setIsMutating(true);
+
+    const { data, error } = await supabase
+      .from('reservations')
+      .update({ statut })
+      .eq('id', id)
+      .select('id, statut')
+      .maybeSingle();
+
+    if (error || !data) {
+      await fetchData(false);
+      setAdminError("Modification refusee par Supabase : la reservation n'a pas ete changee en base. Il faut autoriser l'action admin cote Supabase.");
+      setIsMutating(false);
+      return;
+    }
+
     setReservations(prev => prev.map(r => r.id === id ? { ...r, statut } : r));
+    setAdminNotice('Reservation mise a jour.');
+    setIsMutating(false);
+  };
+
+  const deleteReservation = async (id: string) => {
+    if (!window.confirm('Supprimer cette reservation ?')) return;
+
+    setAdminError('');
+    setAdminNotice('');
+    setIsMutating(true);
+
+    const { data, error } = await supabase
+      .from('reservations')
+      .delete()
+      .eq('id', id)
+      .select('id')
+      .maybeSingle();
+
+    await fetchData(false);
+
+    if (error || !data) {
+      setAdminError("Suppression refusee par Supabase : la reservation est toujours en base. Il faut autoriser l'action admin cote Supabase.");
+      setIsMutating(false);
+      return;
+    }
+
+    setAdminNotice('Reservation supprimee.');
+    setIsMutating(false);
   };
 
   const deleteAllReservations = async () => {
     if (!window.confirm('Supprimer TOUTES les reservations ? Cette action est irreversible.')) return;
-    await supabase.from('reservations').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+
+    setAdminError('');
+    setAdminNotice('');
+    setIsMutating(true);
+
+    const { error } = await supabase
+      .from('reservations')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000');
+
+    const { count, error: countError } = await getReservationCount();
+    await fetchData(false);
+
+    if (error || countError || count > 0) {
+      setAdminError(`Suppression non confirmee : ${count} reservation(s) sont encore presentes en base Supabase. Il faut autoriser la suppression admin cote Supabase.`);
+      setIsMutating(false);
+      return;
+    }
+
     setReservations([]);
     setStats(prev => ({ ...prev, reservations: 0, reservationsToday: 0 }));
+    setAdminNotice('Toutes les reservations ont ete supprimees.');
+    setIsMutating(false);
   };
 
   const filteredReservations = filter === 'all'
@@ -122,26 +203,36 @@ export default function Dashboard() {
 
         {/* Reservations section */}
         <div id="reservations" className="bg-white rounded-xl border border-gray-200">
-          <div className="p-5 border-b border-gray-100">
+          <div className="p-5 border-b border-gray-100 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <h2 className="text-lg font-bold text-gray-900">Reservations</h2>
               <div className="flex items-center gap-3">
                 <div className="flex gap-2">
                   {(['all', 'pending', 'confirmed', 'cancelled'] as const).map(f => (
-                    <button key={f} onClick={() => setFilter(f)}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-lg transition ${filter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                    <button key={f} onClick={() => setFilter(f)} disabled={isMutating}
+                      className={`px-3 py-1.5 text-xs font-medium rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed ${filter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
                       {f === 'all' ? 'Toutes' : f === 'pending' ? 'En attente' : f === 'confirmed' ? 'Confirmees' : 'Annulees'}
                     </button>
                   ))}
                 </div>
                 {reservations.length > 0 && (
-                  <button onClick={deleteAllReservations}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                  <button onClick={deleteAllReservations} disabled={isMutating}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition disabled:opacity-60 disabled:cursor-not-allowed">
                     <Trash2 size={13} /> Tout supprimer
                   </button>
                 )}
               </div>
             </div>
+            {adminError && (
+              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                {adminError}
+              </div>
+            )}
+            {adminNotice && (
+              <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+                {adminNotice}
+              </div>
+            )}
           </div>
 
           <div className="divide-y divide-gray-100 max-h-[600px] overflow-y-auto">
@@ -171,17 +262,21 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {r.statut !== 'confirmed' && (
-                        <button onClick={() => updateStatus(r.id, 'confirmed')}
-                          className="px-3 py-1.5 text-xs font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                        <button onClick={() => updateStatus(r.id, 'confirmed')} disabled={isMutating}
+                          className="px-3 py-1.5 text-xs font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-60 disabled:cursor-not-allowed">
                           Confirmer
                         </button>
                       )}
                       {r.statut !== 'cancelled' && (
-                        <button onClick={() => updateStatus(r.id, 'cancelled')}
-                          className="px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">
+                        <button onClick={() => updateStatus(r.id, 'cancelled')} disabled={isMutating}
+                          className="px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition disabled:opacity-60 disabled:cursor-not-allowed">
                           Annuler
                         </button>
                       )}
+                      <button onClick={() => deleteReservation(r.id)} disabled={isMutating}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-700 border border-red-200 rounded-lg hover:bg-red-50 transition disabled:opacity-60 disabled:cursor-not-allowed">
+                        <Trash2 size={12} /> Supprimer
+                      </button>
                     </div>
                   </div>
                 </div>
