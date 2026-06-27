@@ -120,20 +120,20 @@ function labelFromSlug(slug: string): string {
   return titleCase(slug.replace(/-/g, ' '));
 }
 
-function hasBreadcrumbSchema(schema: any): boolean {
+function hasSchemaType(schema: any, typeName: string): boolean {
   if (!schema) return false;
 
   if (Array.isArray(schema)) {
-    return schema.some(hasBreadcrumbSchema);
+    return schema.some((item) => hasSchemaType(item, typeName));
   }
 
   const schemaType = schema['@type'];
-  if (schemaType === 'BreadcrumbList' || (Array.isArray(schemaType) && schemaType.includes('BreadcrumbList'))) {
+  if (schemaType === typeName || (Array.isArray(schemaType) && schemaType.includes(typeName))) {
     return true;
   }
 
   if (Array.isArray(schema['@graph'])) {
-    return schema['@graph'].some(hasBreadcrumbSchema);
+    return schema['@graph'].some((item: any) => hasSchemaType(item, typeName));
   }
 
   return false;
@@ -164,6 +164,56 @@ function buildAutomaticBreadcrumb(pathname: string) {
           item: `${CANONICAL_DOMAIN}${segmentPath}`,
         };
       }),
+    ],
+  };
+}
+
+function buildAutomaticCityFAQ(pathname: string) {
+  const segments = normalizeCanonicalPath(pathname).split('/').filter(Boolean);
+
+  if (segments.length !== 2 || !segments[0].startsWith('taxi-conventionne-')) {
+    return null;
+  }
+
+  const cityName = labelFromSlug(segments[1]);
+  const departmentName = labelFromSlug(segments[0]);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `Comment réserver un taxi conventionné à ${cityName} ?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Vous pouvez réserver un taxi conventionné à ${cityName} par téléphone au 06 50 36 64 91 ou avec le formulaire de réservation en ligne. Préparez votre prescription médicale de transport et votre carte Vitale pour faciliter la prise en charge.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Le trajet est-il remboursé par la CPAM ?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Oui, le transport en taxi conventionné peut être remboursé par la CPAM sur prescription médicale. La prise en charge dépend de votre situation médicale, notamment ALD, maternité, accident du travail ou accord préalable.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `Quels transports médicaux proposez-vous depuis ${cityName} ?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Depuis ${cityName}, le service assure les trajets médicaux prescrits pour consultations, dialyse, chimiothérapie, radiothérapie, examens médicaux, hospitalisations programmées et sorties d'hôpital.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `Intervenez-vous dans ${departmentName} ?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Oui, le service intervient à ${cityName}, dans ${departmentName}, et vers les principaux hôpitaux et cliniques d'Île-de-France selon les disponibilités et l'horaire médical demandé.`,
+        },
+      },
     ],
   };
 }
@@ -203,13 +253,19 @@ export default function SEOHead({
       : [jsonLD].filter(Boolean)
     : [];
 
-  const automaticBreadcrumb = !hasBreadcrumbSchema(jsonLDArray)
+  const automaticBreadcrumb = !hasSchemaType(jsonLDArray, 'BreadcrumbList')
     ? buildAutomaticBreadcrumb(canonicalPath)
     : null;
 
-  const completeJsonLDArray = automaticBreadcrumb
-    ? [...jsonLDArray, automaticBreadcrumb]
-    : jsonLDArray;
+  const automaticCityFAQ = !hasSchemaType(jsonLDArray, 'FAQPage')
+    ? buildAutomaticCityFAQ(canonicalPath)
+    : null;
+
+  const completeJsonLDArray = [
+    ...jsonLDArray,
+    automaticBreadcrumb,
+    automaticCityFAQ,
+  ].filter(Boolean);
 
   return (
     <Helmet>
