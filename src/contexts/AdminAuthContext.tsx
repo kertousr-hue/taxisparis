@@ -104,6 +104,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const signIn = async (email: string, password: string) => {
     localStorage.removeItem(ADMIN_STORAGE_KEY);
     setUser(null);
+    await supabase.auth.signOut();
 
     const { data, error } = await supabase.rpc('admin_login', {
       p_email: email,
