@@ -32,7 +32,7 @@ GRANT SELECT, UPDATE, DELETE ON TABLE public.reservations TO authenticated;
 
 REVOKE ALL ON TABLE public.admin_users FROM anon;
 GRANT SELECT ON TABLE public.admin_users TO authenticated;
-GRANT EXECUTE ON FUNCTION public.admin_login(text, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_login(text, text) TO anon, authenticated;
 
 DROP POLICY IF EXISTS "Anyone can create reservations" ON public.reservations;
 DROP POLICY IF EXISTS "Authenticated users can view all reservations" ON public.reservations;
