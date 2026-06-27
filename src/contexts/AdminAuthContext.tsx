@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 
 interface AdminUser {
   id: string;
-  authUserId: string;
+  authUserId?: string;
   email: string;
   name: string;
   role: string;
@@ -65,6 +65,8 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
       if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
         setUser(buildSessionAdminUser(storedUser, authUser));
+      } else if (storedUser && !authUser) {
+        setUser(storedUser);
       } else {
         localStorage.removeItem(ADMIN_STORAGE_KEY);
         setUser(null);
@@ -79,6 +81,11 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
       if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
         setUser(buildSessionAdminUser(storedUser, authUser));
+        return;
+      }
+
+      if (storedUser && !authUser) {
+        setUser(storedUser);
         return;
       }
 
@@ -98,31 +105,27 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(ADMIN_STORAGE_KEY);
     setUser(null);
 
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (authError || !authData.user) {
-      throw new Error('Connexion admin refusee par Supabase Auth. Verifiez que ce compte existe dans Authentication > Users.');
-    }
-
     const { data, error } = await supabase.rpc('admin_login', {
       p_email: email,
       p_password: password,
     });
 
-    if (error || !data || data.length === 0) {
-      await supabase.auth.signOut();
-      throw new Error("Compte connecte, mais non autorise dans l'admin du site.");
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      throw new Error('Identifiants admin incorrects.');
     }
 
     const adminProfile = data[0] as Omit<AdminUser, 'authUserId'>;
+    const { data: authData } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
     const adminUser: AdminUser = {
       id: adminProfile.id,
-      authUserId: authData.user.id,
-      email: adminProfile.email || authData.user.email || email,
-      name: adminProfile.name || authData.user.email || 'Admin',
+      authUserId: authData.user?.id,
+      email: adminProfile.email || authData.user?.email || email,
+      name: adminProfile.name || authData.user?.email || 'Admin',
       role: adminProfile.role || 'admin',
     };
 
