@@ -19,26 +19,29 @@ const DEPARTMENTS = [
   { label: 'Val-de-Marne (94)', href: '/taxi-conventionne-val-de-marne-94' },
 ];
 
+const SITE_URL = 'https://www.taxisparis-conventionnes.fr';
+const RESERVATION_URL = `${SITE_URL}/reservation-taxi-vsl`;
+
 const FAQ_ITEMS = [
   {
     question: 'Comment réserver un taxi conventionné VSL ?',
-    answer: "Remplissez le formulaire ci-dessus avec vos coordonnées, vos adresses de départ et d'arrivée, la date et l'heure souhaitées. Vous recevrez une confirmation par téléphone dans les plus brefs délais.",
+    answer: "Remplissez le formulaire avec vos coordonnées, les adresses de départ et d'arrivée, la date et l'heure souhaitées. La demande est ensuite confirmée par téléphone pour valider le trajet médical.",
   },
   {
     question: 'Le transport est-il remboursé par la CPAM ?',
-    answer: "Oui, sous certaines conditions : vous devez disposer d'une prescription médicale de transport et votre état de santé doit justifier l'utilisation d'un taxi. La prise en charge peut atteindre 100 % pour les patients en ALD ou en CMU.",
+    answer: "Oui, si le transport est prescrit par un médecin et que votre situation ouvre droit à une prise en charge. Le remboursement peut être partiel ou total selon l'ALD, la CSS, l'accord préalable ou le motif médical.",
   },
   {
     question: 'Faut-il une prescription médicale ?',
-    answer: "Oui, une prescription médicale (formulaire Cerfa S3138) est obligatoire pour un remboursement CPAM. Sans prescription, le transport reste possible mais non remboursé.",
+    answer: "Oui, une prescription médicale de transport, souvent appelée bon de transport, est nécessaire pour une prise en charge CPAM. Sans prescription, le trajet reste possible mais il n'est pas remboursé par l'Assurance Maladie.",
   },
   {
     question: 'Quels départements sont couverts ?',
-    answer: "Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93) et Val-de-Marne (94). Nous assurons tous types de transports médicaux : consultations, dialyse, chimio, radio, hospitalisations.",
+    answer: "Le service couvre Paris (75), l'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94) pour les consultations, dialyses, chimiothérapies, radiothérapies et hospitalisations.",
   },
   {
     question: 'Quel est le délai de confirmation ?',
-    answer: "Nous vous contactons par téléphone dans les plus brefs délais. Réservez au minimum 24h à l'avance. Pour les urgences : 06 50 36 64 91.",
+    answer: "La demande en ligne est traitée rapidement. Pour un rendez-vous médical programmé, il est préférable de réserver au moins 24 heures à l'avance. Pour une réponse immédiate, appelez le 06 50 36 64 91.",
   },
 ];
 
@@ -278,20 +281,57 @@ export default function ReservationPage() {
     }
   };
 
-  const webPageLD = { "@context": "https://schema.org", "@type": "WebPage", "name": "Réservation Taxi Conventionné VSL CPAM | Île-de-France 24/7", "url": "https://www.taxisparis-conventionnes.fr/reservation-taxi-vsl/" };
+  const reservationDescription = 'Réservez un taxi conventionné VSL CPAM en Île-de-France. Confirmation rapide 24h/24 pour consultations, dialyse, chimiothérapie, radiothérapie et hospitalisation.';
+  const webPageLD = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Réservation Taxi Conventionné VSL CPAM | 24h/24 IDF",
+    "description": reservationDescription,
+    "url": RESERVATION_URL,
+    "inLanguage": "fr-FR",
+    "isPartOf": { "@type": "WebSite", "name": "Taxis Paris Conventionnés", "url": `${SITE_URL}/` },
+  };
+  const breadcrumbLD = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Réservation taxi conventionné VSL", "item": RESERVATION_URL },
+    ],
+  };
   const faqLD = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": FAQ_ITEMS.map(i => ({ "@type": "Question", "name": i.question, "acceptedAnswer": { "@type": "Answer", "text": i.answer } })) };
-  const serviceLD = { "@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Taxis Paris Conventionnés – Réservation VSL", "url": "https://www.taxisparis-conventionnes.fr/reservation-taxi-vsl/", "telephone": "+33650366491" };
+  const serviceLD = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Réservation de taxi conventionné VSL CPAM",
+    "description": reservationDescription,
+    "serviceType": "Transport médical assis conventionné CPAM",
+    "url": RESERVATION_URL,
+    "telephone": "+33650366491",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Taxis Paris Conventionnés",
+      "url": `${SITE_URL}/`,
+      "telephone": "+33650366491",
+    },
+    "areaServed": DEPARTMENTS.map(dep => ({ "@type": "AdministrativeArea", "name": dep.label })),
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": RESERVATION_URL,
+      "servicePhone": { "@type": "ContactPoint", "telephone": "+33650366491", "contactType": "Réservation" },
+    },
+  };
 
   const hasErrors = Object.keys(fieldErrors).length > 0 || !!error;
 
   return (
     <>
       <SEOHead
-        title="Réservation Taxi Conventionné VSL CPAM | Île-de-France 24/7"
-        description="Réservez votre taxi conventionné ou VSL en ligne. Transport médical remboursé CPAM. Service 24/7 en Île-de-France (75, 91, 92, 93, 94)."
-        keywords={["réservation taxi conventionné", "réserver VSL", "transport médical réservation", "taxi CPAM en ligne"]}
-        canonical="https://www.taxisparis-conventionnes.fr/reservation-taxi-vsl"
-        jsonLD={[webPageLD, faqLD, serviceLD]}
+        title="Réservation Taxi Conventionné VSL CPAM | 24h/24 IDF"
+        description={reservationDescription}
+        keywords={["réservation taxi conventionné", "réserver VSL CPAM", "transport médical CPAM", "taxi conventionné Île-de-France", "taxi VSL en ligne"]}
+        canonical={RESERVATION_URL}
+        jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
       {/* ── Sticky top bar ── */}
@@ -315,10 +355,10 @@ export default function ReservationPage() {
                 <Shield size={12} /> Transport remboursé CPAM
               </div>
               <h1 id="page-title" className="text-xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-2">
-                Réservation taxi conventionné VSL
+                Réservation taxi conventionné VSL CPAM
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 max-w-sm mx-auto">
-                Service 24h/24 – 7j/7 en Île-de-France (75, 91, 92, 93, 94)
+              <p className="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
+                Réservez votre taxi conventionné ou VSL pour un transport médical assis en Île-de-France. Service 24h/24 pour les rendez-vous médicaux, avec prise en charge CPAM possible sur prescription.
               </p>
               <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-xs">
                 <div className="flex items-center gap-1 text-yellow-500">
@@ -328,6 +368,24 @@ export default function ReservationPage() {
                 <div className="flex items-center gap-1 text-green-600">
                   <CheckCircle size={11} /><span className="text-gray-500">Chauffeurs agréés CPAM</span>
                 </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-5">
+              <div className="bg-white border border-blue-100 rounded-2xl p-3 text-center shadow-sm">
+                <Clock size={16} className="text-blue-600 mx-auto mb-1" />
+                <p className="text-xs font-bold text-gray-800">Confirmation rapide</p>
+                <p className="text-[11px] text-gray-500 mt-0.5">Demande traitée par téléphone</p>
+              </div>
+              <div className="bg-white border border-green-100 rounded-2xl p-3 text-center shadow-sm">
+                <Shield size={16} className="text-green-600 mx-auto mb-1" />
+                <p className="text-xs font-bold text-gray-800">Conventionné CPAM</p>
+                <p className="text-[11px] text-gray-500 mt-0.5">Sur prescription médicale</p>
+              </div>
+              <div className="bg-white border border-orange-100 rounded-2xl p-3 text-center shadow-sm">
+                <MapPin size={16} className="text-orange-600 mx-auto mb-1" />
+                <p className="text-xs font-bold text-gray-800">Paris et Île-de-France</p>
+                <p className="text-[11px] text-gray-500 mt-0.5">75, 91, 92, 93 et 94</p>
               </div>
             </div>
 
@@ -599,23 +657,38 @@ export default function ReservationPage() {
             {/* ── SEO content ── */}
             <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8 mb-8">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-5">
-                Taxi conventionné VSL en Île-de-France
+                Réserver un taxi conventionné VSL en Île-de-France
               </h2>
               <div className="space-y-5 text-gray-600 text-sm leading-relaxed">
+                <p>
+                  Cette page permet de demander une <strong>réservation de taxi conventionné VSL</strong> pour un transport médical assis vers un hôpital, une clinique, un cabinet médical ou un centre de soins. Le service intervient à Paris et dans les départements proches pour les trajets programmés, les sorties d'hospitalisation et les rendez-vous réguliers.
+                </p>
                 <div>
-                  <h3 className="font-bold text-gray-800 mb-2">Qu'est-ce qu'un taxi conventionné VSL ?</h3>
-                  <p>Un <strong>taxi conventionné</strong> est agréé par l'Assurance Maladie (CPAM) pour des transports médicaux remboursés. Il permet aux patients de se rendre à l'hôpital, en séance de dialyse, chimiothérapie ou radiothérapie, avec une prise en charge partielle ou totale.</p>
+                  <h3 className="font-bold text-gray-800 mb-2">Pour quels trajets médicaux ?</h3>
+                  <p>
+                    Les réservations concernent notamment les consultations spécialisées, la dialyse, la chimiothérapie, la radiothérapie, les hospitalisations de jour, les soins de suite et les contrôles médicaux. Chaque demande est vérifiée afin d'organiser un horaire de prise en charge cohérent avec votre rendez-vous.
+                  </p>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-800 mb-2">Conditions de remboursement</h3>
+                  <h3 className="font-bold text-gray-800 mb-2">Documents à préparer pour la prise en charge CPAM</h3>
                   <ul className="space-y-1.5">
-                    {["Prescription médicale de transport (Cerfa S3138)", "ALD, CSS (ex-CMU-C) ou incapacité justifiée", "Trajet lié à des soins pris en charge par la Sécu"].map((item, i) => (
+                    {[
+                      "Prescription médicale de transport ou bon de transport établi par le médecin",
+                      "Carte Vitale, attestation de droits ou justificatif CSS selon votre situation",
+                      "Coordonnées complètes du lieu de départ, du lieu d'arrivée et de l'heure du rendez-vous",
+                    ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <CheckCircle size={13} className="text-green-500 flex-shrink-0 mt-0.5" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-800 mb-2">Zones couvertes autour de Paris</h3>
+                  <p>
+                    Les demandes sont possibles sur Paris (75), l'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94). Les trajets peuvent être organisés vers les principaux hôpitaux d'Île-de-France, selon les disponibilités et l'horaire médical demandé.
+                  </p>
                 </div>
                 <nav aria-label="Départements desservis" className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {DEPARTMENTS.map(dep => (
@@ -634,7 +707,7 @@ export default function ReservationPage() {
               <div className="space-y-2">
                 {FAQ_ITEMS.map((item, i) => (
                   <div key={i} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)}
                       className="w-full flex items-center justify-between gap-3 px-4 py-3.5 text-left hover:bg-gray-50 transition-colors"
                       aria-expanded={openFaq === i}>
                       <span className="font-semibold text-gray-800 text-sm">{item.question}</span>
@@ -642,11 +715,9 @@ export default function ReservationPage() {
                         ? <ChevronUp size={15} className="text-blue-600 flex-shrink-0" />
                         : <ChevronDown size={15} className="text-gray-400 flex-shrink-0" />}
                     </button>
-                    {openFaq === i && (
-                      <div className="px-4 pb-4 text-gray-600 text-xs leading-relaxed border-t border-gray-100">
-                        <p className="mt-3">{item.answer}</p>
-                      </div>
-                    )}
+                    <div className={`px-4 pb-4 text-gray-600 text-xs leading-relaxed border-t border-gray-100 ${openFaq === i ? 'block' : 'hidden'}`}>
+                      <p className="mt-3">{item.answer}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -675,4 +746,3 @@ export default function ReservationPage() {
     </>
   );
 }
-
