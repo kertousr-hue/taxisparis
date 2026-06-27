@@ -94,6 +94,80 @@ function normalizeCanonicalUrl(url: string): string {
   return cleaned === CANONICAL_DOMAIN ? `${CANONICAL_DOMAIN}/` : cleaned;
 }
 
+function titleCase(value: string): string {
+  return value
+    .split(' ')
+    .filter(Boolean)
+    .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+    .join(' ');
+}
+
+function labelFromSlug(slug: string): string {
+  const departmentMatch = slug.match(/^taxi-conventionne-(.+)-(\d{2})$/);
+
+  if (departmentMatch) {
+    const departmentNames: Record<string, string> = {
+      paris: 'Paris',
+      essonne: 'Essonne',
+      'hauts-de-seine': 'Hauts-de-Seine',
+      'seine-saint-denis': 'Seine-Saint-Denis',
+      'val-de-marne': 'Val-de-Marne',
+    };
+    const departmentName = departmentNames[departmentMatch[1]] || titleCase(departmentMatch[1].replace(/-/g, ' '));
+    return `${departmentName} (${departmentMatch[2]})`;
+  }
+
+  return titleCase(slug.replace(/-/g, ' '));
+}
+
+function hasBreadcrumbSchema(schema: any): boolean {
+  if (!schema) return false;
+
+  if (Array.isArray(schema)) {
+    return schema.some(hasBreadcrumbSchema);
+  }
+
+  const schemaType = schema['@type'];
+  if (schemaType === 'BreadcrumbList' || (Array.isArray(schemaType) && schemaType.includes('BreadcrumbList'))) {
+    return true;
+  }
+
+  if (Array.isArray(schema['@graph'])) {
+    return schema['@graph'].some(hasBreadcrumbSchema);
+  }
+
+  return false;
+}
+
+function buildAutomaticBreadcrumb(pathname: string) {
+  const canonicalPath = normalizeCanonicalPath(pathname);
+  const segments = canonicalPath.split('/').filter(Boolean);
+
+  if (segments.length < 2) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Accueil',
+        item: `${CANONICAL_DOMAIN}/`,
+      },
+      ...segments.map((segment, index) => {
+        const segmentPath = `/${segments.slice(0, index + 1).join('/')}`;
+        return {
+          '@type': 'ListItem',
+          position: index + 2,
+          name: labelFromSlug(segment),
+          item: `${CANONICAL_DOMAIN}${segmentPath}`,
+        };
+      }),
+    ],
+  };
+}
+
 export default function SEOHead({
   title,
   description,
@@ -129,6 +203,14 @@ export default function SEOHead({
       : [jsonLD].filter(Boolean)
     : [];
 
+  const automaticBreadcrumb = !hasBreadcrumbSchema(jsonLDArray)
+    ? buildAutomaticBreadcrumb(canonicalPath)
+    : null;
+
+  const completeJsonLDArray = automaticBreadcrumb
+    ? [...jsonLDArray, automaticBreadcrumb]
+    : jsonLDArray;
+
   return (
     <Helmet>
       <title>{safeTitle}</title>
@@ -161,7 +243,7 @@ export default function SEOHead({
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:image:alt" content={safeTitle} />
 
-      {jsonLDArray.map((schema, index) => (
+      {completeJsonLDArray.map((schema, index) => (
         <script key={`jsonld-${index}`} type="application/ld+json">
           {JSON.stringify(schema)}
         </script>
