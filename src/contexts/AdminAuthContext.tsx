@@ -18,10 +18,15 @@ interface AdminAuthContextType {
 }
 
 const ADMIN_STORAGE_KEY = 'admin_user';
+const AUTH_ADMIN_EMAILS = ['kertous.r@gmail.com'];
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
 function normalizeEmail(email?: string | null) {
   return (email || '').trim().toLowerCase();
+}
+
+function isAllowedAuthAdmin(email?: string | null) {
+  return AUTH_ADMIN_EMAILS.includes(normalizeEmail(email));
 }
 
 function readStoredAdminUser() {
@@ -41,6 +46,16 @@ function buildSessionAdminUser(storedUser: AdminUser, authUser: SupabaseUser): A
     ...storedUser,
     authUserId: authUser.id,
     email: authUser.email || storedUser.email,
+  };
+}
+
+function buildAuthAdminUser(authUser: SupabaseUser): AdminUser {
+  return {
+    id: authUser.id,
+    authUserId: authUser.id,
+    email: authUser.email || AUTH_ADMIN_EMAILS[0],
+    name: 'Administrateur',
+    role: 'admin',
   };
 }
 
@@ -65,6 +80,10 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
       if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
         setUser(buildSessionAdminUser(storedUser, authUser));
+      } else if (authUser && isAllowedAuthAdmin(authUser.email)) {
+        const adminUser = buildAuthAdminUser(authUser);
+        setUser(adminUser);
+        localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
       } else if (storedUser && !authUser) {
         setUser(storedUser);
       } else {
@@ -81,6 +100,13 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
       if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
         setUser(buildSessionAdminUser(storedUser, authUser));
+        return;
+      }
+
+      if (authUser && isAllowedAuthAdmin(authUser.email)) {
+        const adminUser = buildAuthAdminUser(authUser);
+        setUser(adminUser);
+        localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
         return;
       }
 
@@ -106,6 +132,20 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     await supabase.auth.signOut();
 
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (!authError && authData.user && isAllowedAuthAdmin(authData.user.email)) {
+      const adminUser = buildAuthAdminUser(authData.user);
+      setUser(adminUser);
+      localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
+      return;
+    }
+
+    await supabase.auth.signOut();
+
     const { data, error } = await supabase.rpc('admin_login', {
       p_email: email,
       p_password: password,
@@ -117,16 +157,10 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     }
 
     const adminProfile = data[0] as Omit<AdminUser, 'authUserId'>;
-    const { data: authData } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
     const adminUser: AdminUser = {
       id: adminProfile.id,
-      authUserId: authData.user?.id,
-      email: adminProfile.email || authData.user?.email || email,
-      name: adminProfile.name || authData.user?.email || 'Admin',
+      email: adminProfile.email || email,
+      name: adminProfile.name || 'Admin',
       role: adminProfile.role || 'admin',
     };
 
