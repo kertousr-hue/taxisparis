@@ -154,7 +154,7 @@ export default function BlogEditor() {
                 </div>
                 <div>
                   <h2 className="font-bold text-gray-800 text-base">Génération automatique par IA</h2>
-                  <p className="text-xs text-gray-500">Article SEO 1500-2500 mots — min. 8 H2, 10 H3, FAQ, transport CPAM</p>
+                  <p className="text-xs text-gray-500">Article SEO 1500-2500 mots — min. 8 H2, 10 H3, FAQ — tout sujet</p>
                 </div>
               </div>
               <button
@@ -177,14 +177,28 @@ export default function BlogEditor() {
                 disabled={aiLoading}
                 className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
               >
-                <option value="hopital">Hôpital public</option>
-                <option value="clinique">Clinique privée</option>
-                <option value="centre_medical">Centre médical / Cabinet</option>
-                <option value="centre_dialyse">Centre de dialyse</option>
-                <option value="centre_cancerologie">Centre de cancérologie / radiothérapie</option>
-                <option value="ehpad">EHPAD / Maison de retraite</option>
-                <option value="transport_medical">Transport médical (motif ou trajet)</option>
-                <option value="autre">Autre établissement de santé</option>
+                <optgroup label="— Général —">
+                  <option value="general">Article général / Blog</option>
+                  <option value="guide">Guide pratique</option>
+                  <option value="comparatif">Comparatif</option>
+                  <option value="actualite">Actualité / News</option>
+                  <option value="conseils">Conseils &amp; astuces</option>
+                </optgroup>
+                <optgroup label="— Médical / Sanitaire —">
+                  <option value="hopital">Hôpital public</option>
+                  <option value="clinique">Clinique privée</option>
+                  <option value="centre_medical">Centre médical / Cabinet</option>
+                  <option value="centre_dialyse">Centre de dialyse</option>
+                  <option value="centre_cancerologie">Centre de cancérologie / radiothérapie</option>
+                  <option value="ehpad">EHPAD / Maison de retraite</option>
+                  <option value="transport_medical">Transport médical (motif ou trajet)</option>
+                </optgroup>
+                <optgroup label="— Local / Services —">
+                  <option value="ville">Guide de ville / quartier</option>
+                  <option value="service_local">Service local</option>
+                  <option value="commerce">Commerce / Entreprise</option>
+                  <option value="tourisme">Tourisme / Loisirs</option>
+                </optgroup>
               </select>
             </div>
 
@@ -192,13 +206,13 @@ export default function BlogEditor() {
             <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Nom de l'établissement *
+                  Sujet principal *
                 </label>
                 <input
                   type="text"
                   value={aiNomEtablissement}
                   onChange={(e) => setAiNomEtablissement(e.target.value)}
-                  placeholder="Ex: Hôpital Beaujon"
+                  placeholder="Ex: Hôpital Beaujon, Vélo électrique, Recette healthy..."
                   className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                   disabled={aiLoading}
                 />
@@ -241,7 +255,7 @@ export default function BlogEditor() {
                 type="text"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
-                placeholder="Ex: spécialisé en gastro-entérologie et hépatologie, CHU de référence..."
+                placeholder="Ex: spécialités, contexte, angle éditorial, mots-clés à intégrer..."
                 className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                 disabled={aiLoading}
               />
@@ -253,10 +267,10 @@ export default function BlogEditor() {
             {/* Info box */}
             <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-xl">
               <p className="text-xs text-blue-700 font-medium">
-                L'IA va générer un article centré sur <strong>{aiNomEtablissement || '…'}</strong>
+                L'IA va générer un article centré sur <strong>{aiNomEtablissement || aiPrompt || '…'}</strong>
                 {aiVille ? <> à <strong>{aiVille}</strong></> : null}
                 {aiDepartement ? <> ({aiDepartement})</> : null}
-                {' '}avec min. 8 H2, 10 H3, une FAQ SEO et une section transport CPAM.
+                {' '}— min. 8 H2, 10 H3, FAQ SEO{['hopital','clinique','centre_medical','centre_dialyse','centre_cancerologie','ehpad','transport_medical'].includes(aiTypeArticle) ? ', section transport CPAM' : ''}.
               </p>
             </div>
 
