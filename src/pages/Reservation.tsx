@@ -611,6 +611,14 @@ export default function ReservationPage() {
                     label="Pas d'ALD / CMU" sublabel="Sans dispositif particulier" required />
                 </div>
                 <ErrorMsg msg={fieldErrors.situation_ald} />
+                {situationALD === 'pas_ald' && (
+                  <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2.5">
+                    <AlertCircle size={15} className="text-amber-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-800 leading-relaxed">
+                      <strong>Avance des frais requise.</strong> Sans ALD ni CMU, vous devrez avancer <strong>45 %</strong> du montant du transport. La Sécurité sociale prend en charge <strong>55 %</strong> directement, et votre mutuelle remboursera les <strong>45 %</strong> restants (sous réserve de votre contrat).
+                    </p>
+                  </div>
+                )}
                 <p className="mt-3 text-xs text-gray-400 flex items-start gap-1.5">
                   <AlertCircle size={11} className="mt-0.5 flex-shrink-0" />
                   En cas de doute, consultez votre médecin traitant.
