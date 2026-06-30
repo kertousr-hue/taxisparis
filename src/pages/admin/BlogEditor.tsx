@@ -19,9 +19,21 @@ export default function BlogEditor() {
   const [aiNomEtablissement, setAiNomEtablissement] = useState('');
   const [aiVille, setAiVille] = useState('');
   const [aiDepartement, setAiDepartement] = useState('');
+  const [aiMotsCles, setAiMotsCles] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState('');
   const [showAiPanel, setShowAiPanel] = useState(false);
+
+  const MEDICAL_TYPES = new Set([
+    'hopital','clinique','centre_medical','cabinet_medical','centre_dialyse',
+    'centre_cancerologie','centre_radiotherapie','centre_reeducation','maternite',
+    'urgences','ehpad','maison_retraite','maison_sante',
+    'dialyse','chimiotherapie','radiotherapie','handicap','fauteuil_roulant',
+    'hospitalisation','ald','soins_reguliers','reeducation','consultation_specialisee',
+    'prescription_transport','bon_transport','remboursement_cpam','transport_conventionne',
+    'taxi_conventionne','vsl','ambulance','transport_assis','tiers_payant',
+    'hopitaux_ville','transport_ville','cpam_ville',
+  ]);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -46,7 +58,7 @@ export default function BlogEditor() {
 
   const handleGenerateAI = async () => {
     if (!aiNomEtablissement.trim() && !aiPrompt.trim()) {
-      setAiError('Veuillez saisir au minimum le nom de l\'établissement ou un sujet.');
+      setAiError('Veuillez saisir au minimum un sujet principal.');
       return;
     }
     setAiLoading(true);
@@ -68,6 +80,7 @@ export default function BlogEditor() {
           nomEtablissement: aiNomEtablissement.trim(),
           ville: aiVille.trim(),
           departement: aiDepartement.trim(),
+          motsCles: aiMotsCles.trim(),
         }),
       });
 
@@ -89,6 +102,7 @@ export default function BlogEditor() {
       }));
       setShowAiPanel(false);
       setAiPrompt('');
+      setAiMotsCles('');
     } catch (err: any) {
       setAiError(err.message || 'Une erreur est survenue lors de la génération.');
     } finally {
@@ -169,7 +183,7 @@ export default function BlogEditor() {
             {/* Type d'article */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Type d'article *
+                Catégorie *
               </label>
               <select
                 value={aiTypeArticle}
@@ -177,55 +191,127 @@ export default function BlogEditor() {
                 disabled={aiLoading}
                 className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
               >
-                <optgroup label="— Général —">
-                  <option value="general">Article général / Blog</option>
-                  <option value="guide">Guide pratique</option>
-                  <option value="comparatif">Comparatif</option>
-                  <option value="actualite">Actualité / News</option>
-                  <option value="conseils">Conseils &amp; astuces</option>
-                </optgroup>
-                <optgroup label="— Médical / Sanitaire —">
+                <optgroup label="🏥 Établissements de santé">
                   <option value="hopital">Hôpital public</option>
                   <option value="clinique">Clinique privée</option>
-                  <option value="centre_medical">Centre médical / Cabinet</option>
+                  <option value="centre_medical">Centre médical</option>
+                  <option value="cabinet_medical">Cabinet médical</option>
                   <option value="centre_dialyse">Centre de dialyse</option>
-                  <option value="centre_cancerologie">Centre de cancérologie / radiothérapie</option>
-                  <option value="ehpad">EHPAD / Maison de retraite</option>
-                  <option value="transport_medical">Transport médical (motif ou trajet)</option>
+                  <option value="centre_cancerologie">Centre de cancérologie</option>
+                  <option value="centre_radiotherapie">Centre de radiothérapie</option>
+                  <option value="centre_reeducation">Centre de rééducation</option>
+                  <option value="maternite">Maternité</option>
+                  <option value="urgences">Urgences</option>
+                  <option value="ehpad">EHPAD</option>
+                  <option value="maison_retraite">Maison de retraite</option>
+                  <option value="maison_sante">Maison de santé</option>
                 </optgroup>
-                <optgroup label="— Local / Services —">
-                  <option value="ville">Guide de ville / quartier</option>
-                  <option value="service_local">Service local</option>
-                  <option value="commerce">Commerce / Entreprise</option>
-                  <option value="tourisme">Tourisme / Loisirs</option>
+                <optgroup label="🩺 Pathologies &amp; situations médicales">
+                  <option value="dialyse">Dialyse</option>
+                  <option value="chimiotherapie">Chimiothérapie</option>
+                  <option value="radiotherapie">Radiothérapie</option>
+                  <option value="handicap">Handicap</option>
+                  <option value="fauteuil_roulant">Fauteuil roulant</option>
+                  <option value="hospitalisation">Hospitalisation</option>
+                  <option value="ald">ALD (Affection Longue Durée)</option>
+                  <option value="soins_reguliers">Soins réguliers</option>
+                  <option value="reeducation">Rééducation</option>
+                  <option value="consultation_specialisee">Consultation spécialisée</option>
+                </optgroup>
+                <optgroup label="📋 CPAM &amp; Transport médical">
+                  <option value="prescription_transport">Prescription médicale de transport</option>
+                  <option value="bon_transport">Bon de transport</option>
+                  <option value="remboursement_cpam">Remboursement CPAM</option>
+                  <option value="transport_conventionne">Transport conventionné</option>
+                  <option value="taxi_conventionne">Taxi conventionné</option>
+                  <option value="vsl">VSL (Véhicule Sanitaire Léger)</option>
+                  <option value="ambulance">Ambulance</option>
+                  <option value="transport_assis">Transport assis professionnalisé</option>
+                  <option value="tiers_payant">Tiers payant</option>
+                </optgroup>
+                <optgroup label="📖 Guides pratiques">
+                  <option value="guide_reservation">Comment réserver un taxi conventionné</option>
+                  <option value="guide_bon_transport">Comment obtenir un bon de transport</option>
+                  <option value="guide_remboursement">Comment être remboursé</option>
+                  <option value="guide_beneficiaires">Qui peut bénéficier du transport médical</option>
+                  <option value="guide_differences">Différences Taxi / VSL / Ambulance</option>
+                  <option value="guide_erreurs">Erreurs à éviter</option>
+                  <option value="guide_faq">Questions fréquentes patients</option>
+                </optgroup>
+                <optgroup label="📍 Villes &amp; Départements">
+                  <option value="taxi_ville">Taxi conventionné à [Ville]</option>
+                  <option value="transport_ville">Transport médical à [Ville]</option>
+                  <option value="cpam_ville">CPAM à [Ville]</option>
+                  <option value="hopitaux_ville">Hôpitaux à [Ville]</option>
+                  <option value="dept_75">Taxi conventionné Paris (75)</option>
+                  <option value="dept_77">Taxi conventionné Seine-et-Marne (77)</option>
+                  <option value="dept_78">Taxi conventionné Yvelines (78)</option>
+                  <option value="dept_91">Taxi conventionné Essonne (91)</option>
+                  <option value="dept_92">Taxi conventionné Hauts-de-Seine (92)</option>
+                  <option value="dept_93">Taxi conventionné Seine-Saint-Denis (93)</option>
+                  <option value="dept_94">Taxi conventionné Val-de-Marne (94)</option>
+                  <option value="dept_95">Taxi conventionné Val-d'Oise (95)</option>
+                </optgroup>
+                <optgroup label="⚖️ Comparatifs">
+                  <option value="compa_taxi_vsl">Taxi conventionné vs VSL</option>
+                  <option value="compa_taxi_ambulance">Taxi conventionné vs Ambulance</option>
+                  <option value="compa_taxi_perso">Taxi CPAM ou transport personnel</option>
+                  <option value="compa_hopital_clinique">Hôpital public vs Clinique privée</option>
+                </optgroup>
+                <optgroup label="📰 Actualités">
+                  <option value="actu_cpam">Réforme CPAM</option>
+                  <option value="actu_sante">Actualités santé</option>
+                  <option value="actu_remboursement">Nouveaux remboursements</option>
+                  <option value="actu_reglementation">Réglementation transport médical</option>
+                </optgroup>
+                <optgroup label="✏️ SEO libre">
+                  <option value="personnalise">Article personnalisé (sujet libre)</option>
                 </optgroup>
               </select>
             </div>
 
-            {/* Nom établissement + Ville + Département */}
-            <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
+            {/* Grille champs principaux */}
+            <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Sujet principal *
+                  Sujet principal / Nom *
                 </label>
                 <input
                   type="text"
                   value={aiNomEtablissement}
                   onChange={(e) => setAiNomEtablissement(e.target.value)}
-                  placeholder="Ex: Hôpital Beaujon, Vélo électrique, Recette healthy..."
+                  placeholder="Ex: Hôpital Lariboisière, Dialyse à Paris, Comment obtenir un bon de transport…"
                   className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                   disabled={aiLoading}
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Ville *
+                  Mots-clés SEO
+                  <span className="font-normal text-gray-400 ml-1">(optionnel)</span>
+                </label>
+                <input
+                  type="text"
+                  value={aiMotsCles}
+                  onChange={(e) => setAiMotsCles(e.target.value)}
+                  placeholder="Ex: taxi conventionné, remboursement CPAM, transport dialyse…"
+                  className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
+                  disabled={aiLoading}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Ville
+                  <span className="font-normal text-gray-400 ml-1">(optionnel)</span>
                 </label>
                 <input
                   type="text"
                   value={aiVille}
                   onChange={(e) => setAiVille(e.target.value)}
-                  placeholder="Ex: Clichy"
+                  placeholder="Ex: Paris, Créteil, Bobigny…"
                   className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                   disabled={aiLoading}
                 />
@@ -233,44 +319,43 @@ export default function BlogEditor() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Département
+                  <span className="font-normal text-gray-400 ml-1">(optionnel)</span>
                 </label>
                 <input
                   type="text"
                   value={aiDepartement}
                   onChange={(e) => setAiDepartement(e.target.value)}
-                  placeholder="Ex: Hauts-de-Seine (92)"
+                  placeholder="Ex: Val-de-Marne (94), Paris (75)…"
                   className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                   disabled={aiLoading}
                 />
               </div>
             </div>
 
-            {/* Informations complémentaires */}
+            {/* Contexte / angle éditorial */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Informations complémentaires
-                <span className="font-normal text-gray-400 ml-1">(spécialités, contexte, mots-clés...)</span>
+                Contexte / angle éditorial
+                <span className="font-normal text-gray-400 ml-1">(optionnel)</span>
               </label>
               <input
                 type="text"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
-                placeholder="Ex: spécialités, contexte, angle éditorial, mots-clés à intégrer..."
+                placeholder="Ex: public cible seniors, insister sur le remboursement, comparer avec VSL, ton rassurant…"
                 className="w-full px-4 py-3 border border-violet-200 rounded-xl focus:ring-2 focus:ring-violet-400 focus:border-transparent bg-white text-sm"
                 disabled={aiLoading}
               />
-              <p className="text-xs text-gray-400 mt-1.5">
-                Optionnel — précisez les spécialités, le contexte médical ou les mots-clés à intégrer
-              </p>
             </div>
 
-            {/* Info box */}
+            {/* Info box dynamique */}
             <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-xl">
               <p className="text-xs text-blue-700 font-medium">
                 L'IA va générer un article centré sur <strong>{aiNomEtablissement || aiPrompt || '…'}</strong>
                 {aiVille ? <> à <strong>{aiVille}</strong></> : null}
                 {aiDepartement ? <> ({aiDepartement})</> : null}
-                {' '}— min. 8 H2, 10 H3, FAQ SEO{['hopital','clinique','centre_medical','centre_dialyse','centre_cancerologie','ehpad','transport_medical'].includes(aiTypeArticle) ? ', section transport CPAM' : ''}.
+                {aiMotsCles ? <> · mots-clés : <em>{aiMotsCles}</em></> : null}
+                {' '}— min. 8 H2, 10 H3, FAQ SEO{MEDICAL_TYPES.has(aiTypeArticle) ? ', section transport CPAM' : ''}.
               </p>
             </div>
 
