@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-type SituationALD = 'ald_exonerante' | 'ald_non_exonerante' | 'cmu' | 'pas_ald';
+type SituationALD = 'ald_exonerante' | 'cmu' | 'pas_ald';
 type BonTransport = 'deja_etabli' | 'a_etablir' | 'sans_bon';
 
 type FieldErrors = {
@@ -602,9 +602,7 @@ export default function ReservationPage() {
                   <RadioPill name="situation_ald" value="ald_exonerante" checked={situationALD === 'ald_exonerante'}
                     onChange={() => { setSituationALD('ald_exonerante'); clearErr('situation_ald'); }}
                     label="ALD exonérante" sublabel="Prise en charge à 100 %" required />
-                  <RadioPill name="situation_ald" value="ald_non_exonerante" checked={situationALD === 'ald_non_exonerante'}
-                    onChange={() => { setSituationALD('ald_non_exonerante'); clearErr('situation_ald'); }}
-                    label="ALD non exonérante" sublabel="Prise en charge partielle" required />
+
                   <RadioPill name="situation_ald" value="cmu" checked={situationALD === 'cmu'}
                     onChange={() => { setSituationALD('cmu'); clearErr('situation_ald'); }}
                     label="CMU / CSS" sublabel="Complémentaire santé solidaire" required />
