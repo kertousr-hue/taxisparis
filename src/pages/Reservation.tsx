@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-type SituationALD = 'ald_exonerante' | 'cmu' | 'pas_ald';
+type SituationALD = 'ald_exonerante' | 'ald_non_exonerante' | 'cmu' | 'pas_ald';
 type BonTransport = 'deja_etabli' | 'a_etablir' | 'sans_bon';
 
 type FieldErrors = {
@@ -602,7 +602,9 @@ export default function ReservationPage() {
                   <RadioPill name="situation_ald" value="ald_exonerante" checked={situationALD === 'ald_exonerante'}
                     onChange={() => { setSituationALD('ald_exonerante'); clearErr('situation_ald'); }}
                     label="ALD exonérante" sublabel="Prise en charge à 100 %" required />
-
+                  <RadioPill name="situation_ald" value="ald_non_exonerante" checked={situationALD === 'ald_non_exonerante'}
+                    onChange={() => { setSituationALD('ald_non_exonerante'); clearErr('situation_ald'); }}
+                    label="ALD non exonérante" sublabel="Prise en charge partielle" required />
                   <RadioPill name="situation_ald" value="cmu" checked={situationALD === 'cmu'}
                     onChange={() => { setSituationALD('cmu'); clearErr('situation_ald'); }}
                     label="CMU / CSS" sublabel="Complémentaire santé solidaire" required />
@@ -611,14 +613,6 @@ export default function ReservationPage() {
                     label="Pas d'ALD / CMU" sublabel="Sans dispositif particulier" required />
                 </div>
                 <ErrorMsg msg={fieldErrors.situation_ald} />
-                {situationALD === 'pas_ald' && (
-                  <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2.5">
-                    <AlertCircle size={15} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-amber-800 leading-relaxed">
-                      <strong>Avance des frais requise.</strong> Sans ALD ni CMU, vous devrez avancer <strong>45 %</strong> du montant du transport. La Sécurité sociale prend en charge <strong>55 %</strong> directement, et votre mutuelle remboursera les <strong>45 %</strong> restants (sous réserve de votre contrat).
-                    </p>
-                  </div>
-                )}
                 <p className="mt-3 text-xs text-gray-400 flex items-start gap-1.5">
                   <AlertCircle size={11} className="mt-0.5 flex-shrink-0" />
                   En cas de doute, consultez votre médecin traitant.
