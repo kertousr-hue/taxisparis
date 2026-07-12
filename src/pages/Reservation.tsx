@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-type SituationALD = 'ald_exonerante' | 'ald_non_exonerante' | 'cmu' | 'pas_ald';
+type SituationALD = 'ald_exonerante' | 'cmu' | 'pas_ald';
 type BonTransport = 'deja_etabli' | 'a_etablir' | 'sans_bon';
 
 type FieldErrors = {
@@ -273,7 +273,7 @@ export default function ReservationPage() {
       };
 
       const supabaseUrl = (supabase as any).supabaseUrl || import.meta.env.VITE_SUPABASE_URL || 'https://qwsgtmzpirrbnmcbdvue.supabase.co';
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3c2d0bXpwaXJyYm5tY2JkdnVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNDUzMjQsImV4cCI6MjA5NTgyMTMyNH0.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYXNlIiwicmVmIjoicXdzZ3RtenBpcnJibm1jYmR2dWUiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4MDI0NTMyNCwiZXhwIjoyMDk1ODIxMzI0fQ.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
       const fetchUrl = `${supabaseUrl}/functions/v1/send-reservation-email`;
       const resp = await fetch(fetchUrl, {
         method: 'POST',
@@ -602,9 +602,6 @@ export default function ReservationPage() {
                   <RadioPill name="situation_ald" value="ald_exonerante" checked={situationALD === 'ald_exonerante'}
                     onChange={() => { setSituationALD('ald_exonerante'); clearErr('situation_ald'); }}
                     label="ALD exonérante" sublabel="Prise en charge à 100 %" required />
-                  <RadioPill name="situation_ald" value="ald_non_exonerante" checked={situationALD === 'ald_non_exonerante'}
-                    onChange={() => { setSituationALD('ald_non_exonerante'); clearErr('situation_ald'); }}
-                    label="ALD non exonérante" sublabel="Prise en charge partielle" required />
                   <RadioPill name="situation_ald" value="cmu" checked={situationALD === 'cmu'}
                     onChange={() => { setSituationALD('cmu'); clearErr('situation_ald'); }}
                     label="CMU / CSS" sublabel="Complémentaire santé solidaire" required />
@@ -612,6 +609,16 @@ export default function ReservationPage() {
                     onChange={() => { setSituationALD('pas_ald'); clearErr('situation_ald'); }}
                     label="Pas d'ALD / CMU" sublabel="Sans dispositif particulier" required />
                 </div>
+                {situationALD === 'pas_ald' && (
+                  <div role="status" aria-live="polite" className="mt-3 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-900">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-orange-500" />
+                      <p className="leading-relaxed">
+                        <strong>Avance des frais requise.</strong> Sans ALD ni CMU, vous devrez avancer <strong>45 %</strong> du montant du transport. La Sécurité sociale prend en charge <strong>55 %</strong>, et votre mutuelle peut rembourser les <strong>45 %</strong> restants selon votre contrat.
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <ErrorMsg msg={fieldErrors.situation_ald} />
                 <p className="mt-3 text-xs text-gray-400 flex items-start gap-1.5">
                   <AlertCircle size={11} className="mt-0.5 flex-shrink-0" />
