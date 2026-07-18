@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { build } from 'vite';
 import { getAllRoutes } from './routes.js';
 import { createRequire } from 'module';
@@ -87,7 +87,7 @@ async function prerenderAll() {
     throw new Error(`Fichier SSR introuvable: ${serverEntryPath}`);
   }
 
-  const { render } = await import(serverEntryPath);
+  const { render } = await import(pathToFileURL(serverEntryPath).href);
 
   const rawTemplate = fs.readFileSync(path.join(DIST_CLIENT, 'index.html'), 'utf-8');
   const template = stripHelmetTags(rawTemplate);
@@ -444,7 +444,7 @@ function escapeHtml(input: string): string {
     .replace(/>/g, '&gt;');
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   prerenderAll()
     .then(() => {
       console.log('\nSSG termine avec succes !');
@@ -456,3 +456,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       process.exit(1);
     });
 }
+

@@ -99,7 +99,7 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  to="/reservation-taxi-vsl/"
+                  to="/reservation-taxi-vsl"
                   className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-xl hover:shadow-2xl hover:scale-105 inline-flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95"
                 >
                   <Calendar size={20} aria-hidden="true" />
@@ -128,8 +128,8 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                   <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
                     <Shield className="text-blue-600" size={28} />
                   </div>
-                  <h3 className="font-bold text-gray-800 mb-1">Agréé CPAM</h3>
-                  <p className="text-sm text-gray-600">Transport 100% remboursé sur prescription</p>
+                  <h3 className="font-bold text-gray-800 mb-1">Conventionné CPAM</h3>
+                  <p className="text-sm text-gray-600">Prise en charge possible sur prescription médicale</p>
                 </div>
                 <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
                   <div className="bg-orange-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -153,13 +153,38 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                 </p>
               </div>
 
+              <section className="bg-white rounded-2xl shadow-lg p-8 mb-12 border border-gray-100" aria-labelledby="department-service-title">
+                <h2 id="department-service-title" className="text-2xl font-bold text-gray-800 mb-5">
+                  Transport médical conventionné CPAM {prep} {deptData.name}
+                </h2>
+                <div className="space-y-4 text-gray-700 leading-relaxed">
+                  {seo.content.split('\n\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+                <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
+                  <h3 className="font-bold text-gray-900 mb-2">Prise en charge par l’Assurance Maladie</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Un trajet en taxi conventionné est remboursé à 55 % du tarif conventionnel dans le cas général et à 100 % dans certaines situations, sous réserve de respecter les conditions de prise en charge. Une prescription médicale est nécessaire et une franchise peut s’appliquer.
+                  </p>
+                  <a
+                    href="https://www.ameli.fr/assure/remboursements/rembourse/frais-transport"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex font-semibold text-blue-700 hover:underline"
+                  >
+                    Vérifier les conditions officielles sur ameli.fr
+                  </a>
+                </div>
+              </section>
+
               <div className="grid md:grid-cols-2 gap-8 mb-12">
                 <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-shadow">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl">
                       <Stethoscope className="text-white" size={28} />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">Hôpitaux desservis</h2>
+                    <h2 className="text-2xl font-bold text-gray-800">Établissements fréquemment desservis</h2>
                   </div>
                   <ul className="space-y-3">
                     {seo.hospitals.map((hospital, index) => (
@@ -188,6 +213,27 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
                   </ul>
                 </div>
               </div>
+
+              <section className="bg-white rounded-2xl shadow-xl p-8 mb-12" aria-labelledby="department-access-title">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-xl">
+                    <MapPin className="text-white" size={28} />
+                  </div>
+                  <h2 id="department-access-title" className="text-2xl font-bold text-gray-800">
+                    {seo.accessTitle}
+                  </h2>
+                </div>
+                <ul className="grid gap-4 md:grid-cols-3">
+                  {seo.accessPoints.map((point, index) => (
+                    <li key={index} className="rounded-xl border border-orange-100 bg-orange-50 p-5 text-sm leading-relaxed text-gray-700">
+                      <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-orange-600 font-bold text-white">
+                        {index + 1}
+                      </span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </section>
 
               <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
                 <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
@@ -373,3 +419,4 @@ export default function DepartmentPage({ department, onNavigate }: DepartmentPag
     </div>
   );
 }
+
