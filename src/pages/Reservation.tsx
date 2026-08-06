@@ -439,11 +439,11 @@ export default function ReservationPage() {
 
             {/* ── Success ── */}
             {submitSuccess && (
-              <div role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
-                <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={18} />
+              <div role="alert" className="mb-4 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
+                <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={22} />
                 <div>
-                  <p className="font-bold text-green-800 text-sm">Réservation envoyée !</p>
-                  <p className="text-green-700 text-xs mt-0.5">Nous vous contacterons rapidement pour confirmer votre transport.</p>
+                  <p className="font-bold text-green-800 text-base">Réservation confirmée !</p>
+                  <p className="text-green-700 text-sm mt-1">Votre demande a bien été enregistrée. Vous recevrez une confirmation par SMS au numéro indiqué.</p>
                 </div>
               </div>
             )}
