@@ -103,34 +103,39 @@ Deno.serve(async (req: Request) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
-    const reservationData = {
-      nom: body.nom,
-      prenom: body.prenom,
-      telephone: body.telephone,
-      email: body.email,
-      adresse_depart: body.adresse_depart,
-      adresse_arrivee: body.adresse_arrivee,
-      distance_km: body.distance_km || null,
-      duree_min: body.duree_min || null,
-      date_rdv: body.date_rdv,
-      heure_rdv: body.heure_rdv,
-      nombre_passagers: body.nombre_passagers || null,
-      message: body.message || null,
-      type_trajet: body.type_trajet || "autre",
-      ald_cmu: body.ald_cmu || false,
-      prescription: body.prescription_medicale || false,
-      statut: "pending",
-    };
+    let insertedData: { id: string } = { id: body.reservation_id || crypto.randomUUID() };
 
-    const { data: insertedData, error: insertError } = await supabase
-      .from("reservations")
-      .insert(reservationData)
-      .select()
-      .single();
+    if (!body.reservation_id) {
+      const reservationData = {
+        nom: body.nom,
+        prenom: body.prenom,
+        telephone: body.telephone,
+        email: body.email,
+        adresse_depart: body.adresse_depart,
+        adresse_arrivee: body.adresse_arrivee,
+        distance_km: body.distance_km || null,
+        duree_min: body.duree_min || null,
+        date_rdv: body.date_rdv,
+        heure_rdv: body.heure_rdv,
+        nombre_passagers: body.nombre_passagers || null,
+        message: body.message || null,
+        type_trajet: body.type_trajet || "autre",
+        ald_cmu: body.ald_cmu || false,
+        prescription: body.prescription_medicale || false,
+        statut: "pending",
+      };
 
-    if (insertError) {
-      console.error("Database error:", insertError);
-      throw new Error(`Erreur base de données: ${insertError.message}`);
+      const { data, error: insertError } = await supabase
+        .from("reservations")
+        .insert(reservationData)
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error("Database error:", insertError);
+        throw new Error(`Erreur base de données: ${insertError.message}`);
+      }
+      insertedData = data;
     }
 
     /* ── parse extra fields from message ── */
