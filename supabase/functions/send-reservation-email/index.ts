@@ -121,7 +121,7 @@ Deno.serve(async (req: Request) => {
         message: body.message || null,
         type_trajet: body.type_trajet || "autre",
         ald_cmu: body.ald_cmu || false,
-        prescription: body.prescription_medicale || false,
+        prescription: body.prescription || false,
         statut: "pending",
       };
 

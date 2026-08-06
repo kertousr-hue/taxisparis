@@ -277,7 +277,6 @@ export default function ReservationPage() {
         message: messageStr,
         type_trajet: 'vsl',
         ald_cmu: situationALD !== 'pas_ald',
-        prescription_medicale: bonTransport === 'deja_etabli',
         prescription: bonTransport === 'deja_etabli',
         statut: 'pending',
       };
@@ -305,7 +304,7 @@ export default function ReservationPage() {
         adresse_depart: formData.adresse_depart, adresse_arrivee: formData.adresse_arrivee,
         date_rdv: formData.date_rdv, heure_rdv: formData.heure_rdv,
         ald_cmu: situationALD !== 'pas_ald',
-        prescription_medicale: bonTransport === 'deja_etabli',
+        prescription: bonTransport === 'deja_etabli',
         numero_vol: '', numero_train: '', nombre_passagers: 1, nombre_bagages: 0,
         distance_km: distance || 0, duree_min: durationMinutes || 0,
         message: messageStr,
