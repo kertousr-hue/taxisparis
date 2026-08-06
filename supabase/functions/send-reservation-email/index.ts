@@ -299,7 +299,7 @@ Deno.serve(async (req: Request) => {
     if (!resendResponse.ok) {
       const errorData = await resendResponse.text();
       console.error("Resend API error:", errorData);
-      throw new Error(`Erreur envoi email: ${resendResponse.status}`);
+      throw new Error(`Erreur envoi email: ${resendResponse.status} — ${errorData}`);
     }
 
     return new Response(
