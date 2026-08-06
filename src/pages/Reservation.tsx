@@ -203,6 +203,12 @@ export default function ReservationPage() {
     return () => clearTimeout(id);
   }, [coordsDepart, coordsArrivee, apiKey, formData.date_rdv, formData.heure_rdv]);
 
+  useEffect(() => {
+    if (submitSuccess) {
+      document.getElementById('reservation-success')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [submitSuccess]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -439,7 +445,7 @@ export default function ReservationPage() {
 
             {/* ── Success ── */}
             {submitSuccess && (
-              <div role="alert" className="mb-4 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
+              <div id="reservation-success" role="alert" className="mb-4 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
                 <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={22} />
                 <div>
                   <p className="font-bold text-green-800 text-base">Réservation confirmée !</p>
