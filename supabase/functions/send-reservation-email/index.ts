@@ -285,7 +285,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "onboarding@resend.dev",
-        to: "kertous.r@gmail.com",
+        to: "taxisecu75@gmail.com",
         subject: `🚖 Réservation #${reservationId} — ${dateFormatted} à ${heureFormatted} | ${body.prenom} ${body.nom}`,
         html: emailHtml,
       }),
