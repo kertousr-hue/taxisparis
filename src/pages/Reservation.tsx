@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Calendar, Clock, Phone, Mail, User, CheckCircle, Car,
   Gauge, Timer, MessageSquare, MapPin, Shield, Star,
@@ -180,28 +180,12 @@ export default function ReservationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState('');
-  const successRef = useRef<HTMLDivElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [coordsDepart, setCoordsDepart] = useState<{ lat: number; lng: number } | null>(null);
   const [coordsArrivee, setCoordsArrivee] = useState<{ lat: number; lng: number } | null>(null);
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
-
-  useLayoutEffect(() => {
-    if (!submitSuccess) return;
-    const el = successRef.current;
-    console.log('[scroll] useLayoutEffect fired, submitSuccess:', submitSuccess);
-    console.log('[scroll] successRef.current:', el);
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const top = rect.top + window.scrollY - 70;
-    const beforeY = window.scrollY;
-    console.log('[scroll] el rect:', rect, 'computed top:', top, 'scrollY before:', beforeY);
-    window.scrollTo({ top, behavior: 'auto' });
-    const afterY = window.scrollY;
-    console.log('[scroll] scrollY after:', afterY, 'delta:', afterY - beforeY);
-  }, [submitSuccess]);
 
   useEffect(() => {
     if (!coordsDepart || !coordsArrivee) return;
@@ -269,43 +253,42 @@ export default function ReservationPage() {
     setFieldErrors({});
 
     try {
-      const emailData = {
-        nom: formData.nom, prenom: formData.prenom,
-        telephone: formData.telephone, email: formData.email,
-        adresse_depart: formData.adresse_depart, adresse_arrivee: formData.adresse_arrivee,
-        date_rdv: formData.date_rdv, heure_rdv: formData.heure_rdv,
-        ald_cmu: situationALD !== 'pas_ald',
-        prescription_medicale: bonTransport === 'deja_etabli',
-        numero_vol: '', numero_train: '', nombre_passagers: 1, nombre_bagages: 0,
-        distance_km: distance || 0, duree_min: durationMinutes || 0,
-        message: [
-          `Fauteuil roulant: ${fauteuilRoulant ? 'Oui' : 'Non'}`,
-          `Type trajet: ${typeTrajet}`,
-          `Prise en charge: ${typePriseEnCharge}`,
-          `ALD: ${situationALD}`, `Bon transport: ${bonTransport}`,
-          formData.informations_supplementaires ? `Note: ${formData.informations_supplementaires}` : '',
-        ].filter(Boolean).join(' | '),
+      const messageStr = [
+        `Fauteuil roulant: ${fauteuilRoulant ? 'Oui' : 'Non'}`,
+        `Type trajet: ${typeTrajet}`,
+        `Prise en charge: ${typePriseEnCharge}`,
+        `ALD: ${situationALD}`, `Bon transport: ${bonTransport}`,
+        formData.informations_supplementaires ? `Note: ${formData.informations_supplementaires}` : '',
+      ].filter(Boolean).join(' | ');
+
+      const reservationRow = {
+        nom: formData.nom,
+        prenom: formData.prenom,
+        telephone: formData.telephone,
+        email: formData.email || '',
+        adresse_depart: formData.adresse_depart,
+        adresse_arrivee: formData.adresse_arrivee,
+        distance_km: distance || null,
+        duree_min: durationMinutes || null,
+        date_rdv: formData.date_rdv,
+        heure_rdv: formData.heure_rdv,
+        nombre_passagers: 1,
+        nombre_bagages: 0,
+        message: messageStr,
         type_trajet: 'vsl',
+        ald_cmu: situationALD !== 'pas_ald',
+        prescription: bonTransport === 'deja_etabli',
+        statut: 'pending',
       };
 
-      const supabaseUrl = (supabase as any).supabaseUrl || import.meta.env.VITE_SUPABASE_URL || 'https://qwsgtmzpirrbnmcbdvue.supabase.co';
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYXNlIiwicmVmIjoicXdzZ3RtenBpcnJibm1jYmR2dWUiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4MDI0NTMyNCwiZXhwIjoyMDk1ODIxMzI0fQ.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
-      const fetchUrl = `${supabaseUrl}/functions/v1/send-reservation-email`;
-      const resp = await fetch(fetchUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${supabaseKey}` },
-        body: JSON.stringify(emailData),
-      });
-      const rawBody = await resp.text();
-      if (!resp.ok) {
-        let errMsg = `Erreur HTTP ${resp.status}`;
-        try {
-          const errBody = JSON.parse(rawBody);
-          errMsg = errBody.error || errBody.message || errMsg;
-        } catch {
-          if (rawBody) errMsg = rawBody;
-        }
-        throw new Error(errMsg);
+      const { data: insertedData, error: insertError } = await supabase
+        .from('reservations')
+        .insert(reservationRow)
+        .select()
+        .single();
+
+      if (insertError || !insertedData) {
+        throw new Error(insertError?.message || 'Impossible d\'enregistrer la réservation.');
       }
 
       setSubmitSuccess(true);
@@ -314,6 +297,29 @@ export default function ReservationPage() {
       setFauteuilRoulant(null); setTypeTrajet(null);
       setTypePriseEnCharge(null); setSituationALD(null); setBonTransport(null);
       setTimeout(() => setSubmitSuccess(false), 7000);
+
+      const emailData = {
+        nom: formData.nom, prenom: formData.prenom,
+        telephone: formData.telephone, email: formData.email,
+        adresse_depart: formData.adresse_depart, adresse_arrivee: formData.adresse_arrivee,
+        date_rdv: formData.date_rdv, heure_rdv: formData.heure_rdv,
+        ald_cmu: situationALD !== 'pas_ald',
+        prescription: bonTransport === 'deja_etabli',
+        numero_vol: '', numero_train: '', nombre_passagers: 1, nombre_bagages: 0,
+        distance_km: distance || 0, duree_min: durationMinutes || 0,
+        message: messageStr,
+        type_trajet: 'vsl',
+        reservation_id: insertedData.id,
+      };
+
+      const supabaseUrl = (supabase as any).supabaseUrl || import.meta.env.VITE_SUPABASE_URL || 'https://qwsgtmzpirrbnmcbdvue.supabase.co';
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYXNlIiwicmVmIjoicXdzZ3RtenBpcnJibm1jYmR2dWUiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4MDI0NTMyNCwiZXhwIjoyMDk1ODIxMzI0fQ.RFb45xZjY3pDV4QWgr9-ASta84bX09fIcbv7ZZlY_mk';
+      const fetchUrl = `${supabaseUrl}/functions/v1/send-reservation-email`;
+      fetch(fetchUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${supabaseKey}` },
+        body: JSON.stringify(emailData),
+      }).catch(() => { /* email notification is best-effort */ });
     } catch (err: any) {
       setError(err.message || 'Une erreur est survenue. Veuillez réessayer.');
     } finally {
@@ -433,11 +439,11 @@ export default function ReservationPage() {
 
             {/* ── Success ── */}
             {submitSuccess && (
-              <div ref={successRef} role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
-                <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={18} />
+              <div role="alert" className="mb-4 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
+                <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={22} />
                 <div>
-                  <p className="font-bold text-green-800 text-sm">Réservation envoyée !</p>
-                  <p className="text-green-700 text-xs mt-0.5">Nous vous contacterons rapidement pour confirmer votre transport.</p>
+                  <p className="font-bold text-green-800 text-base">Réservation confirmée !</p>
+                  <p className="text-green-700 text-sm mt-1">Votre demande a bien été enregistrée. Vous recevrez une confirmation par SMS au numéro indiqué.</p>
                 </div>
               </div>
             )}

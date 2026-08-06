@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Train, MapPin, Calendar, Clock, Users, Luggage, Phone, Mail, CheckCircle, Gauge, Timer, Plane } from 'lucide-react';
+import { Brain as Train, MapPin, Calendar, Clock, Users, Luggage, Phone, Mail, CheckCircle, Gauge, Timer, Plane } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AutocompleteInput from '../components/AutocompleteInput';
 import { calculateRoute } from '../utils/here';
@@ -91,37 +91,34 @@ export default function StationTransfer() {
     setError('');
 
     try {
-      const emailData = {
+      const reservationRow = {
         nom: formData.nom,
         prenom: formData.prenom,
         telephone: formData.telephone,
-        email: formData.email,
+        email: formData.email || '',
         adresse_depart: formData.adresse_depart,
         adresse_arrivee: formData.adresse_arrivee,
+        distance_km: distance || null,
+        duree_min: durationMinutes || null,
         date_rdv: formData.date_trajet,
         heure_rdv: formData.heure_trajet,
-        nombre_passagers: formData.nombre_passagers,
-        nombre_bagages: formData.nombre_bagages,
-        numero_vol: '',
-        numero_train: formData.numero_train || '',
-        distance_km: distance || 0,
-        duree_min: durationMinutes || 0,
-        message: formData.informations_supplementaires || '',
+        nombre_passagers: formData.nombre_passagers || null,
+        nombre_bagages: formData.nombre_bagages || null,
+        numero_vol: null,
+        numero_train: formData.numero_train || null,
+        message: formData.informations_supplementaires || null,
         type_trajet: 'gare',
+        statut: 'pending',
       };
 
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-reservation-email`;
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify(emailData),
-      });
+      const { data: insertedData, error: insertError } = await supabase
+        .from('reservations')
+        .insert(reservationRow)
+        .select()
+        .single();
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi de la réservation');
+      if (insertError || !insertedData) {
+        throw new Error(insertError?.message || 'Impossible d\'enregistrer la réservation.');
       }
 
       setSubmitSuccess(true);
@@ -145,6 +142,36 @@ export default function StationTransfer() {
       setDurationMinutes(null);
 
       setTimeout(() => setSubmitSuccess(false), 5000);
+
+      const emailData = {
+        nom: formData.nom,
+        prenom: formData.prenom,
+        telephone: formData.telephone,
+        email: formData.email,
+        adresse_depart: formData.adresse_depart,
+        adresse_arrivee: formData.adresse_arrivee,
+        date_rdv: formData.date_trajet,
+        heure_rdv: formData.heure_trajet,
+        nombre_passagers: formData.nombre_passagers,
+        nombre_bagages: formData.nombre_bagages,
+        numero_vol: '',
+        numero_train: formData.numero_train || '',
+        distance_km: distance || 0,
+        duree_min: durationMinutes || 0,
+        message: formData.informations_supplementaires || '',
+        type_trajet: 'gare',
+        reservation_id: insertedData.id,
+      };
+
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-reservation-email`;
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(emailData),
+      }).catch(() => { /* email notification is best-effort */ });
     } catch (err) {
       console.error('Error submitting station transfer:', err);
       setError('Une erreur est survenue. Veuillez réessayer.');
