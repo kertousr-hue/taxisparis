@@ -277,7 +277,7 @@ Deno.serve(async (req: Request) => {
 </body>
 </html>`;
 
-    const resendResponse = await fetch("https://api.resend.com/emails", {
+    const adminResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${resendApiKey}`,
@@ -291,10 +291,85 @@ Deno.serve(async (req: Request) => {
       }),
     });
 
-    if (!resendResponse.ok) {
-      const errorData = await resendResponse.text();
-      console.error("Resend API error:", errorData);
-      throw new Error(`Erreur envoi email: ${resendResponse.status}`);
+    if (!adminResponse.ok) {
+      const errorData = await adminResponse.text();
+      console.error("Resend API error (admin):", errorData);
+      throw new Error(`Erreur envoi email: ${adminResponse.status}`);
+    }
+
+    /* ── confirmation email to client (best-effort) ── */
+    if (body.email) {
+      const clientHtml = `<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:'Segoe UI',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
+  <tr><td align="center">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;">
+      <tr>
+        <td style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 60%,#0ea5e9 100%);border-radius:14px 14px 0 0;padding:32px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:6px;">✅</div>
+          <h1 style="margin:0;font-size:22px;font-weight:800;color:#fff;">Réservation confirmée !</h1>
+          <p style="margin:6px 0 0;font-size:13px;color:#bfdbfe;">Taxi VSL Conventionné – Île-de-France</p>
+          <div style="margin-top:14px;display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 18px;">
+            <span style="font-size:13px;color:#fff;font-weight:700;">Réf. #${reservationId}</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#0f172a;padding:13px 24px;text-align:center;">
+          <span style="font-size:14px;color:#94a3b8;">📅 Rendez-vous le </span>
+          <span style="font-size:15px;color:#fff;font-weight:800;">${dateFormatted}</span>
+          <span style="font-size:14px;color:#94a3b8;"> à </span>
+          <span style="font-size:15px;color:#38bdf8;font-weight:800;">${heureFormatted}</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#f8fafc;padding:24px;">
+          <p style="margin:0 0 16px;font-size:15px;color:#1e293b;line-height:1.6;">Bonjour ${body.prenom},</p>
+          <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.6;">Nous avons bien reçu votre demande de réservation. Notre équipe vous contactera rapidement au <strong>${body.telephone}</strong> pour confirmer votre transport.</p>
+          <div style="margin:20px 0;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+            <p style="margin:0 0 8px;font-size:13px;color:#64748b;font-weight:600;">Départ</p>
+            <p style="margin:0 0 12px;font-size:14px;color:#1e293b;font-weight:600;">📍 ${body.adresse_depart}</p>
+            <p style="margin:0 0 8px;font-size:13px;color:#64748b;font-weight:600;">Arrivée</p>
+            <p style="margin:0;font-size:14px;color:#1e293b;font-weight:600;">📍 ${body.adresse_arrivee}</p>
+          </div>
+          <p style="margin:0;font-size:14px;color:#334155;line-height:1.6;">Pour toute question, contactez-nous au <a href="tel:+33650366491" style="color:#2563eb;text-decoration:none;font-weight:600;">06 50 36 64 91</a>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#0f172a;border-radius:0 0 14px 14px;padding:18px 24px;text-align:center;">
+          <p style="margin:0 0 4px;font-size:13px;color:#94a3b8;font-weight:600;">Taxis Paris Conventionnés</p>
+          <p style="margin:0;font-size:12px;color:#475569;">
+            <a href="mailto:contact@taxisparis-conventionnes.fr" style="color:#38bdf8;text-decoration:none;">contact@taxisparis-conventionnes.fr</a>
+            &nbsp;·&nbsp;
+            <a href="tel:+33650366491" style="color:#38bdf8;text-decoration:none;">06 50 36 64 91</a>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "onboarding@resend.dev",
+            to: body.email,
+            subject: `✅ Confirmation réservation #${reservationId} — ${dateFormatted} à ${heureFormatted}`,
+            html: clientHtml,
+          }),
+        });
+      } catch (clientErr) {
+        console.error("Client email send failed:", clientErr);
+      }
     }
 
     return new Response(
