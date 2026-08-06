@@ -205,7 +205,16 @@ export default function ReservationPage() {
 
   useEffect(() => {
     if (submitSuccess) {
-      document.getElementById('reservation-success')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      console.log("submitSuccess =", submitSuccess);
+      const el = document.getElementById('reservation-success');
+      console.log("success element =", el);
+      console.log("scrollY avant =", window.scrollY);
+      console.log("getBoundingClientRect =", el?.getBoundingClientRect());
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      requestAnimationFrame(() => {
+        console.log("scrollY après =", window.scrollY);
+        console.log("getBoundingClientRect après =", el?.getBoundingClientRect());
+      });
     }
   }, [submitSuccess]);
 
