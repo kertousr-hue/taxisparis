@@ -204,18 +204,15 @@ export default function ReservationPage() {
   }, [coordsDepart, coordsArrivee, apiKey, formData.date_rdv, formData.heure_rdv]);
 
   useEffect(() => {
-    if (submitSuccess) {
-      console.log("submitSuccess =", submitSuccess);
+    if (!submitSuccess) return;
+    const id = setTimeout(() => {
       const el = document.getElementById('reservation-success');
-      console.log("success element =", el);
-      console.log("scrollY avant =", window.scrollY);
-      console.log("getBoundingClientRect =", el?.getBoundingClientRect());
-      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      requestAnimationFrame(() => {
-        console.log("scrollY après =", window.scrollY);
-        console.log("getBoundingClientRect après =", el?.getBoundingClientRect());
-      });
-    }
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+    }, 150);
+    return () => clearTimeout(id);
   }, [submitSuccess]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
