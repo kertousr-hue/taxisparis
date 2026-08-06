@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   Calendar, Clock, Phone, Mail, User, CheckCircle, Car,
   Gauge, Timer, MessageSquare, MapPin, Shield, Star,
@@ -188,14 +188,19 @@ export default function ReservationPage() {
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!submitSuccess) return;
     const el = successRef.current;
+    console.log('[scroll] useLayoutEffect fired, submitSuccess:', submitSuccess);
     console.log('[scroll] successRef.current:', el);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 70;
-    console.log('[scroll] scrolling to:', top);
-    window.scrollTo({ top, behavior: 'smooth' });
+    const rect = el.getBoundingClientRect();
+    const top = rect.top + window.scrollY - 70;
+    const beforeY = window.scrollY;
+    console.log('[scroll] el rect:', rect, 'computed top:', top, 'scrollY before:', beforeY);
+    window.scrollTo({ top, behavior: 'auto' });
+    const afterY = window.scrollY;
+    console.log('[scroll] scrollY after:', afterY, 'delta:', afterY - beforeY);
   }, [submitSuccess]);
 
   useEffect(() => {
