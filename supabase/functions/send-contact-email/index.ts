@@ -85,7 +85,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "contact@taxisparis-conventionnes.fr",
-        to: "kertous.r@gmail.com",
+        to: "taxisecu75@gmail.com",
         subject: "Nouveau Message de Contact - Taxis Paris Conventionnés",
         html: emailHtml,
         reply_to: body.email,

@@ -253,7 +253,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "contact@taxisparis-conventionnes.fr",
-        to: "kertous.r@gmail.com",
+        to: "taxisecu75@gmail.com",
         subject: emailSubject,
         html: emailHtml,
       }),
