@@ -1,4 +1,4 @@
-import { Plane, Train, Euro, Clock, MapPin, Phone } from 'lucide-react';
+import { Plane, Brain as Train, Euro, Clock, MapPin, Phone } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
 interface StationsProps {

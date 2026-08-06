@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Trash2, Copy, ExternalLink, Search, Filter, Grid, List, Image as ImageIcon, Download, CheckSquare, Square } from 'lucide-react';
+import { Trash2, Copy, ExternalLink, Search, Filter, Grid2x2 as Grid, List, Image as ImageIcon, Download, CheckSquare, Square } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import DragDropUpload from '../../components/admin/DragDropUpload';
 import LoadingSkeleton from '../../components/admin/LoadingSkeleton';
