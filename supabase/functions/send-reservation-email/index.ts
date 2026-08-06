@@ -284,8 +284,8 @@ Deno.serve(async (req: Request) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "onboarding@resend.dev",
-        to: "taxisecu75@gmail.com",
+        from: "contact@taxisparis-conventionnes.fr",
+        to: "kertous.r@gmail.com",
         subject: `🚖 Réservation #${reservationId} — ${dateFormatted} à ${heureFormatted} | ${body.prenom} ${body.nom}`,
         html: emailHtml,
       }),
