@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Calendar, Clock, Phone, Mail, User, CheckCircle, Car,
   Gauge, Timer, MessageSquare, MapPin, Shield, Star,
@@ -179,6 +179,7 @@ export default function ReservationPage() {
   const [isCalculating, setIsCalculating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState('');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -186,6 +187,14 @@ export default function ReservationPage() {
   const [coordsArrivee, setCoordsArrivee] = useState<{ lat: number; lng: number } | null>(null);
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
+
+  useEffect(() => {
+    if (!submitSuccess) return;
+    successRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  }, [submitSuccess]);
 
   useEffect(() => {
     if (!coordsDepart || !coordsArrivee) return;
@@ -417,7 +426,7 @@ export default function ReservationPage() {
 
             {/* ── Success ── */}
             {submitSuccess && (
-              <div role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
+              <div ref={successRef} role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
                 <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={18} />
                 <div>
                   <p className="font-bold text-green-800 text-sm">Réservation envoyée !</p>
