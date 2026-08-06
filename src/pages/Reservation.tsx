@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Calendar, Clock, Phone, Mail, User, CheckCircle, Car,
   Gauge, Timer, MessageSquare, MapPin, Shield, Star,
@@ -180,6 +180,7 @@ export default function ReservationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState('');
+  const successRef = useRef<HTMLDivElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [coordsDepart, setCoordsDepart] = useState<{ lat: number; lng: number } | null>(null);
@@ -187,17 +188,15 @@ export default function ReservationPage() {
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
 
-  const scrollToSuccess = (el: HTMLDivElement | null) => {
+  useEffect(() => {
+    if (!submitSuccess) return;
+    const el = successRef.current;
+    console.log('[scroll] successRef.current:', el);
     if (!el) return;
-    console.log('[scroll] successRef element:', el);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const top = el.getBoundingClientRect().top + window.scrollY - 70;
-        console.log('[scroll] scrolling to:', top);
-        window.scrollTo({ top, behavior: 'smooth' });
-      });
-    });
-  };
+    const top = el.getBoundingClientRect().top + window.scrollY - 70;
+    console.log('[scroll] scrolling to:', top);
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, [submitSuccess]);
 
   useEffect(() => {
     if (!coordsDepart || !coordsArrivee) return;
@@ -429,7 +428,7 @@ export default function ReservationPage() {
 
             {/* ── Success ── */}
             {submitSuccess && (
-              <div ref={scrollToSuccess} role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
+              <div ref={successRef} role="alert" className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
                 <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={18} />
                 <div>
                   <p className="font-bold text-green-800 text-sm">Réservation envoyée !</p>
