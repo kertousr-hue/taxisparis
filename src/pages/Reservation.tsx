@@ -190,13 +190,15 @@ export default function ReservationPage() {
 
   useEffect(() => {
     if (!submitSuccess) return;
-    const el = successRef.current;
-    if (!el) return;
-    const id = setTimeout(() => {
-      const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }, 120);
-    return () => clearTimeout(id);
+    const raf1 = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        successRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    });
+    return () => cancelAnimationFrame(raf1);
   }, [submitSuccess]);
 
   useEffect(() => {
