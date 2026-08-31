@@ -8,8 +8,6 @@ export interface GeocodeResult {
   coordinates: GeocodeCoordinates;
 }
 
-const FALLBACK_API_KEY = 'jLKtWkEMQJyBh7eTCFHb4wWzWQlBxJh4v28SZvT4COA';
-
 export async function geocodeAddress(
   address: string,
   apiKey: string
@@ -18,7 +16,11 @@ export async function geocodeAddress(
     return null;
   }
 
-  const key = (apiKey && apiKey !== 'votre_clé_here_api') ? apiKey : FALLBACK_API_KEY;
+  const key = apiKey?.trim();
+  if (!key || key === 'votre_clé_here_api') {
+    console.error('HERE API key missing for geocoding');
+    return null;
+  }
 
   try {
     const url = new URL('https://geocode.search.hereapi.com/v1/geocode');
