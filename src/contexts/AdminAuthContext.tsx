@@ -44,8 +44,10 @@ function readStoredAdminUser() {
 function buildSessionAdminUser(storedUser: AdminUser, authUser: SupabaseUser): AdminUser {
   return {
     ...storedUser,
+    id: authUser.id,
     authUserId: authUser.id,
     email: authUser.email || storedUser.email,
+    role: 'admin',
   };
 }
 
@@ -71,52 +73,33 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true;
 
+    const applySession = (authUser?: SupabaseUser | null) => {
+      if (!authUser || !isAllowedAuthAdmin(authUser.email)) {
+        localStorage.removeItem(ADMIN_STORAGE_KEY);
+        setUser(null);
+        return;
+      }
+
+      const storedUser = readStoredAdminUser();
+      const adminUser = sessionMatchesStoredAdmin(storedUser, authUser) && storedUser
+        ? buildSessionAdminUser(storedUser, authUser)
+        : buildAuthAdminUser(authUser);
+
+      setUser(adminUser);
+      localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
+    };
+
     const syncSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (!isMounted) return;
 
-      const storedUser = readStoredAdminUser();
-      const authUser = data.session?.user;
-
-      if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
-        setUser(buildSessionAdminUser(storedUser, authUser));
-      } else if (authUser && isAllowedAuthAdmin(authUser.email)) {
-        const adminUser = buildAuthAdminUser(authUser);
-        setUser(adminUser);
-        localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
-      } else if (storedUser && !authUser) {
-        setUser(storedUser);
-      } else {
-        localStorage.removeItem(ADMIN_STORAGE_KEY);
-        setUser(null);
-      }
-
+      applySession(data.session?.user);
       setLoading(false);
     };
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const storedUser = readStoredAdminUser();
-      const authUser = session?.user;
-
-      if (sessionMatchesStoredAdmin(storedUser, authUser) && storedUser && authUser) {
-        setUser(buildSessionAdminUser(storedUser, authUser));
-        return;
-      }
-
-      if (authUser && isAllowedAuthAdmin(authUser.email)) {
-        const adminUser = buildAuthAdminUser(authUser);
-        setUser(adminUser);
-        localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
-        return;
-      }
-
-      if (storedUser && !authUser) {
-        setUser(storedUser);
-        return;
-      }
-
-      localStorage.removeItem(ADMIN_STORAGE_KEY);
-      setUser(null);
+      if (!isMounted) return;
+      applySession(session?.user);
     });
 
     syncSession();
@@ -132,38 +115,17 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     await supabase.auth.signOut();
 
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (!authError && authData.user && isAllowedAuthAdmin(authData.user.email)) {
-      const adminUser = buildAuthAdminUser(authData.user);
-      setUser(adminUser);
-      localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
-      return;
-    }
-
-    await supabase.auth.signOut();
-
-    const { data, error } = await supabase.rpc('admin_login', {
-      p_email: email,
-      p_password: password,
-    });
-
-    if (error) throw error;
-    if (!data || data.length === 0) {
+    if (error || !data.user || !isAllowedAuthAdmin(data.user.email)) {
+      await supabase.auth.signOut();
       throw new Error('Identifiants admin incorrects.');
     }
 
-    const adminProfile = data[0] as Omit<AdminUser, 'authUserId'>;
-    const adminUser: AdminUser = {
-      id: adminProfile.id,
-      email: adminProfile.email || email,
-      name: adminProfile.name || 'Admin',
-      role: adminProfile.role || 'admin',
-    };
-
+    const adminUser = buildAuthAdminUser(data.user);
     setUser(adminUser);
     localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(adminUser));
   };
