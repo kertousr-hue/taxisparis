@@ -12,8 +12,6 @@ export interface HereAutocompleteSuggestion {
 
 const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '60', '28'];
 
-const FALLBACK_API_KEY = 'jLKtWkEMQJyBh7eTCFHb4wWzWQlBxJh4v28SZvT4COA';
-
 export async function fetchHereAutocomplete(
   query: string,
   apiKey: string
@@ -22,7 +20,11 @@ export async function fetchHereAutocomplete(
     return [];
   }
 
-  const key = (apiKey && apiKey !== 'votre_clé_here_api') ? apiKey : FALLBACK_API_KEY;
+  const key = apiKey?.trim();
+  if (!key || key === 'votre_clé_here_api') {
+    console.error('HERE API key missing for autocomplete');
+    return [];
+  }
 
   try {
     const bbox = '0.8000,47.9000,4.2000,50.1000';
