@@ -15,6 +15,8 @@ export interface HereAutocompleteSuggestion {
 }
 
 const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '60', '28'];
+const GEOAPIFY_AUTOCOMPLETE_URL =
+  'https://qwsgtmzpirrbnmcbdvue.supabase.co/functions/v1/geoapify-autocomplete';
 
 export async function fetchHereAutocomplete(
   query: string,
@@ -26,11 +28,11 @@ export async function fetchHereAutocomplete(
 
   try {
     const params = new URLSearchParams({ q: query, limit: '5' });
-    const response = await fetch(`/api/geoapify-autocomplete?${params.toString()}`);
+    const response = await fetch(`${GEOAPIFY_AUTOCOMPLETE_URL}?${params.toString()}`);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Geoapify autocomplete proxy error:', response.status, response.statusText, errorText);
+      console.error('Geoapify Supabase autocomplete error:', response.status, response.statusText, errorText);
       return [];
     }
 
@@ -74,7 +76,7 @@ export async function fetchHereAutocomplete(
         };
       });
   } catch (error) {
-    console.error('Error fetching Geoapify autocomplete:', error);
+    console.error('Error fetching Geoapify autocomplete from Supabase:', error);
     return [];
   }
 }
