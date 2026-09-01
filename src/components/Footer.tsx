@@ -127,6 +127,17 @@ export default function Footer({ onNavigate }: FooterProps = {}) {
 
         <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-gray-400">
           <p>&copy; {new Date().getFullYear()} Taxi VSL Île-de-France. Tous droits réservés.</p>
+          <p className="mt-2">
+            Recherche d’adresses :{' '}
+            <a
+              href="https://www.geoapify.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-white underline underline-offset-2"
+            >
+              Powered by Geoapify
+            </a>
+          </p>
         </div>
       </div>
     </footer>
