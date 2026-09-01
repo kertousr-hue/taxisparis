@@ -1,4 +1,4 @@
-const VALID_DEPARTMENTS = new Set(['75', '77', '78', '91', '92', '93', '94', '95', '60', '28']);
+const VALID_DEPARTMENTS = new Set(['75', '77', '78', '91', '92', '93', '94', '95', '45', '28', '60']);
 const ALLOWED_ORIGINS = new Set([
   'https://www.taxisparis-conventionnes.fr',
   'https://taxisparis-conventionnes.fr',
@@ -70,10 +70,7 @@ Deno.serve(async (req: Request) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('[GEOAPIFY] Autocomplete failed', response.status, errorText.slice(0, 300));
-      return json({
-        error: 'Geoapify autocomplete unavailable',
-        geoapify_status: response.status,
-      }, 502, origin);
+      return json({ error: 'Geoapify autocomplete unavailable', geoapify_status: response.status }, 502, origin);
     }
 
     const data = await response.json();
@@ -97,15 +94,12 @@ Deno.serve(async (req: Request) => {
             postalCode,
             city,
           },
-          position: {
-            lat: item.lat,
-            lng: item.lon,
-          },
+          position: { lat: item.lat, lng: item.lon },
         };
       })
       .filter((item: any) => {
-        const postalCode = item.address.postalCode;
-        if (!postalCode) return true;
+        const postalCode = String(item.address.postalCode || '');
+        if (!/^\d{5}$/.test(postalCode)) return false;
         return VALID_DEPARTMENTS.has(postalCode.substring(0, 2));
       })
       .slice(0, limit);
