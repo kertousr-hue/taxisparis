@@ -33,7 +33,7 @@ export default async function handler(req: any, res: any) {
 
   const rawQ = Array.isArray(req.query?.q) ? req.query.q[0] : req.query?.q;
   const q = typeof rawQ === 'string' ? rawQ.trim() : '';
-  if (q.length < 3) return res.status(200).json({ items: [] });
+  if (q.length < 3) return res.status(200).json({ items: [], provider: 'geoapify' });
 
   const key = getGeoapifyKey();
   if (!key) {
@@ -43,16 +43,16 @@ export default async function handler(req: any, res: any) {
 
   const limitRaw = Array.isArray(req.query?.limit) ? req.query.limit[0] : req.query?.limit;
   const limit = Math.min(Math.max(Number(limitRaw) || 5, 1), 10);
+  const upstreamLimit = 20;
 
-  // On demande un peu plus de résultats en amont, puis on conserve uniquement
-  // les départements desservis, afin d'éviter une liste vide après filtrage.
-  const upstreamLimit = Math.min(Math.max(limit * 2, 8), 20);
   const url = new URL('https://api.geoapify.com/v1/geocode/autocomplete');
   url.searchParams.set('text', q);
   url.searchParams.set('format', 'json');
   url.searchParams.set('lang', 'fr');
   url.searchParams.set('limit', String(upstreamLimit));
-  url.searchParams.set('filter', 'rect:0.8000,47.9000,4.2000,50.1000');
+  // Recherche dans toute la France pour ne pas éliminer une adresse pendant la saisie.
+  // La proximité de Paris sert uniquement à classer les résultats les plus pertinents.
+  url.searchParams.set('filter', 'countrycode:fr');
   url.searchParams.set('bias', 'proximity:2.3522,48.8566');
   url.searchParams.set('apiKey', key);
 
@@ -62,7 +62,7 @@ export default async function handler(req: any, res: any) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('[GEOAPIFY] Autocomplete failed', response.status, errorText.slice(0, 300));
-      return res.status(response.status).json({
+      return res.status(502).json({
         error: 'Geoapify autocomplete unavailable',
         geoapify_status: response.status,
       });
@@ -71,17 +71,12 @@ export default async function handler(req: any, res: any) {
     const data: any = await response.json();
     const results = Array.isArray(data?.results) ? data.results : [];
 
-    const items = results
+    const normalized = results
       .filter((item: any) => Number.isFinite(item?.lat) && Number.isFinite(item?.lon))
-      .filter((item: any) => {
-        const postalCode = String(item?.postcode || '');
-        if (!postalCode) return true;
-        return VALID_DEPARTMENTS.includes(postalCode.substring(0, 2));
-      })
-      .slice(0, limit)
       .map((item: any, index: number) => {
         const label = item.formatted || [item.address_line1, item.address_line2].filter(Boolean).join(', ') || q;
         const title = item.address_line1 || item.name || item.street || label;
+        const postalCode = String(item.postcode || label.match(/\b(\d{5})\b/)?.[1] || '');
         return {
           id: item.place_id || `${item.lat},${item.lon},${index}`,
           title,
@@ -89,13 +84,21 @@ export default async function handler(req: any, res: any) {
           address: {
             label,
             countryCode: String(item.country_code || 'fr').toUpperCase(),
-            postalCode: item.postcode || '',
+            postalCode,
             city: item.city || item.town || item.village || item.municipality || '',
           },
           position: { lat: item.lat, lng: item.lon },
         };
       });
 
+    // Priorité aux départements habituellement desservis, sans bloquer complètement
+    // une adresse française valide si Geoapify ne renvoie pas encore le code postal.
+    const preferred = normalized.filter((item: any) => {
+      const postalCode = item.address.postalCode;
+      return !postalCode || VALID_DEPARTMENTS.includes(postalCode.substring(0, 2));
+    });
+
+    const items = (preferred.length > 0 ? preferred : normalized).slice(0, limit);
     return res.status(200).json({ items, provider: 'geoapify' });
   } catch (error) {
     console.error('[GEOAPIFY] Autocomplete proxy error', error);
