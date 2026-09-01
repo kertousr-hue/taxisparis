@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle, MapPin } from 'lucide-react';
-import { fetchHereAutocomplete, geocodeAddress, debounce, type HereAutocompleteSuggestion } from '../utils/here';
+import {
+  fetchGeoapifyAutocomplete,
+  debounce,
+  type GeoapifyAutocompleteSuggestion,
+} from '../utils/geoapify/autocomplete';
 
 interface AutocompleteInputProps {
   label: string;
@@ -19,16 +23,14 @@ export default function AutocompleteInput({
   value,
   placeholder,
   required = false,
-  apiKey,
   onAddressSelect,
   onInputChange,
   isValidated,
   hasError = false,
 }: AutocompleteInputProps) {
-  const [suggestions, setSuggestions] = useState<HereAutocompleteSuggestion[]>([]);
+  const [suggestions, setSuggestions] = useState<GeoapifyAutocompleteSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isGeocoding, setIsGeocoding] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -43,27 +45,24 @@ export default function AutocompleteInput({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const fetchSuggestions = useCallback(
-    async (query: string) => {
-      if (query.length < 3) {
-        setSuggestions([]);
-        setIsLoading(false);
-        return;
-      }
+  const fetchSuggestions = useCallback(async (query: string) => {
+    if (query.length < 3) {
+      setSuggestions([]);
+      setIsLoading(false);
+      return;
+    }
 
-      setIsLoading(true);
-      try {
-        const results = await fetchHereAutocomplete(query, apiKey);
-        setSuggestions(results);
-      } catch (error) {
-        console.error('Error fetching suggestions:', error);
-        setSuggestions([]);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [apiKey]
-  );
+    setIsLoading(true);
+    try {
+      const results = await fetchGeoapifyAutocomplete(query);
+      setSuggestions(results);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+      setSuggestions([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const debouncedFetchSuggestions = useCallback(
     debounce(fetchSuggestions, 300),
@@ -84,47 +83,17 @@ export default function AutocompleteInput({
     setShowSuggestions(true);
   };
 
-  const handleSuggestionClick = async (suggestion: HereAutocompleteSuggestion) => {
+  const handleSuggestionClick = (suggestion: GeoapifyAutocompleteSuggestion) => {
     setShowSuggestions(false);
 
-    // HERE Autosuggest fournit normalement déjà les coordonnées.
-    // On les réutilise directement pour éviter deux appels Geocoding par réservation.
-    if (
-      suggestion.position &&
-      Number.isFinite(suggestion.position.lat) &&
-      Number.isFinite(suggestion.position.lng)
-    ) {
-      onAddressSelect(
-        suggestion.address.label,
-        suggestion.position.lat,
-        suggestion.position.lng
-      );
-      setSuggestions([]);
-      return;
-    }
-
-    // Fallback rare si HERE ne renvoie pas de position pour une suggestion.
-    setIsGeocoding(true);
-    try {
-      const geocodeResult = await geocodeAddress(suggestion.address.label, apiKey);
-
-      if (geocodeResult) {
-        onAddressSelect(
-          geocodeResult.address,
-          geocodeResult.coordinates.lat,
-          geocodeResult.coordinates.lng
-        );
-        setSuggestions([]);
-      } else {
-        console.error('Failed to geocode address');
-        onInputChange(suggestion.address.label);
-      }
-    } catch (error) {
-      console.error('Error geocoding address:', error);
-      onInputChange(suggestion.address.label);
-    } finally {
-      setIsGeocoding(false);
-    }
+    // Geoapify fournit l'adresse et les coordonnées GPS.
+    // HERE n'est jamais utilisé pour la recherche ou le géocodage des adresses.
+    onAddressSelect(
+      suggestion.address.label,
+      suggestion.position.lat,
+      suggestion.position.lng
+    );
+    setSuggestions([]);
   };
 
   const handleFocus = () => {
@@ -154,27 +123,20 @@ export default function AutocompleteInput({
         aria-controls={`${inputId}-suggestions`}
         aria-expanded={showSuggestions && suggestions.length > 0}
         placeholder={placeholder}
-        disabled={isGeocoding}
         className={`w-full px-4 py-3 border rounded-xl text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
           isValidated
             ? 'border-green-400 bg-green-50 text-gray-800'
             : hasError
             ? 'border-red-400 bg-red-50'
             : 'border-gray-200 bg-gray-50 focus:bg-white'
-        } ${isGeocoding ? 'opacity-60 cursor-wait' : ''}`}
+        }`}
       />
       {isValidated && (
         <div role="status" aria-live="polite" className="mt-1.5 text-xs text-green-600 flex items-center gap-1 font-medium">
           <CheckCircle size={12} aria-hidden="true" /> Adresse valide
         </div>
       )}
-      {isGeocoding && (
-        <div role="status" aria-live="polite" className="mt-1.5 text-xs text-blue-600 flex items-center gap-1.5">
-          <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-          Vérification en cours…
-        </div>
-      )}
-      {showSuggestions && suggestions.length > 0 && !isGeocoding && (
+      {showSuggestions && suggestions.length > 0 && (
         <ul
           id={`${inputId}-suggestions`}
           role="listbox"
@@ -213,7 +175,7 @@ export default function AutocompleteInput({
       )}
       {showSuggestions && !isLoading && suggestions.length === 0 && value.length >= 3 && (
         <div className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-1.5 p-4 text-center text-sm text-gray-500">
-          Aucune suggestion — saisir l'adresse complète manuellement
+          Aucune suggestion dans la zone desservie
         </div>
       )}
     </div>
