@@ -14,7 +14,7 @@ export interface HereAutocompleteSuggestion {
   };
 }
 
-const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '60', '28'];
+const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '45', '28', '60'];
 const GEOAPIFY_AUTOCOMPLETE_URL =
   'https://qwsgtmzpirrbnmcbdvue.supabase.co/functions/v1/geoapify-autocomplete';
 
@@ -51,7 +51,7 @@ export async function fetchHereAutocomplete(
         const postalCodeMatch = label.match(/\b(\d{5})\b/);
         const foundPostalCode = postalCode || (postalCodeMatch ? postalCodeMatch[1] : '');
 
-        if (!foundPostalCode) return true;
+        if (!/^\d{5}$/.test(foundPostalCode)) return false;
 
         const department = foundPostalCode.substring(0, 2);
         return VALID_DEPARTMENTS.includes(department);
