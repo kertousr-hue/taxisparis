@@ -48,12 +48,13 @@ export default async function handler(req: any, res: any) {
 
   if (
     !validCoord(origin.lat, -90, 90) || !validCoord(origin.lng, -180, 180) ||
-    !validCoord(destination.lat, -90, 90) || !validCoord(destination.lng, -180, 180) ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(departureDate) ||
-    !/^\d{2}:\d{2}$/.test(departureTime)
+    !validCoord(destination.lat, -90, 90) || !validCoord(destination.lng, -180, 180)
   ) {
     return res.status(400).json({ error: 'Invalid route parameters' });
   }
+
+  const hasDepartureDate = /^\d{4}-\d{2}-\d{2}$/.test(departureDate);
+  const hasDepartureTime = /^\d{2}:\d{2}$/.test(departureTime);
 
   const key = getHereKey();
   if (!key) {
@@ -66,7 +67,13 @@ export default async function handler(req: any, res: any) {
   url.searchParams.set('origin', `${origin.lat},${origin.lng}`);
   url.searchParams.set('destination', `${destination.lat},${destination.lng}`);
   url.searchParams.set('return', 'summary');
-  url.searchParams.set('departureTime', `${departureDate}T${departureTime}:00`);
+
+  // Dès que départ + arrivée sont connus, HERE peut calculer distance et durée.
+  // Si la date ET l'heure sont ensuite renseignées, on recalcule avec ce départ précis.
+  if (hasDepartureDate && hasDepartureTime) {
+    url.searchParams.set('departureTime', `${departureDate}T${departureTime}:00`);
+  }
+
   url.searchParams.set('apiKey', key);
 
   try {
