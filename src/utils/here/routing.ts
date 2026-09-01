@@ -1,6 +1,6 @@
 export interface RouteResult {
-  distance_km: number;
-  duree_minutes: number;
+  distance_km: number | null;
+  duree_minutes: number | null;
 }
 
 export async function calculateRoute(
@@ -16,10 +16,11 @@ export async function calculateRoute(
     return null;
   }
 
-  // Ne lance aucun appel HERE tant que la date ET l'heure ne sont pas connues.
-  // Cela évite les calculs successifs coordonnées -> date -> heure.
+  // Aucun appel HERE tant que la date ET l'heure ne sont pas connues.
+  // On renvoie un résultat vide mais valide pour éviter les messages d'erreur
+  // des formulaires secondaires avant que l'utilisateur ait fini de renseigner le trajet.
   if (!departureDate || !departureTime) {
-    return null;
+    return { distance_km: null, duree_minutes: null };
   }
 
   try {
