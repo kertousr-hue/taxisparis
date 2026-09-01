@@ -28,6 +28,8 @@ const validPaths = new Set([...staticPaths, ...departmentPaths, ...cityPaths]);
 
 function shouldBypass(pathname: string) {
   return (
+    pathname === '/api' ||
+    pathname.startsWith('/api/') ||
     pathname.startsWith('/admin') ||
     pathname.startsWith('/blog/') ||
     pathname.startsWith('/zones/')
