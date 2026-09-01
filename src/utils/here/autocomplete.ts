@@ -26,11 +26,11 @@ export async function fetchHereAutocomplete(
 
   try {
     const params = new URLSearchParams({ q: query, limit: '5' });
-    const response = await fetch(`/api/here-autosuggest?${params.toString()}`);
+    const response = await fetch(`/api/geoapify-autocomplete?${params.toString()}`);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('HERE Autosuggest proxy error:', response.status, response.statusText, errorText);
+      console.error('Geoapify autocomplete proxy error:', response.status, response.statusText, errorText);
       return [];
     }
 
@@ -65,7 +65,7 @@ export async function fetchHereAutocomplete(
           title: item.title,
           address: {
             label: item.address.label,
-            countryCode: item.address.countryCode || 'FRA',
+            countryCode: item.address.countryCode || 'FR',
             postalCode,
             city: item.address.city,
           },
@@ -74,7 +74,7 @@ export async function fetchHereAutocomplete(
         };
       });
   } catch (error) {
-    console.error('Error fetching HERE autocomplete:', error);
+    console.error('Error fetching Geoapify autocomplete:', error);
     return [];
   }
 }
