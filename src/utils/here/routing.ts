@@ -16,13 +16,6 @@ export async function calculateRoute(
     return null;
   }
 
-  // Aucun appel HERE tant que la date ET l'heure ne sont pas connues.
-  // On renvoie un résultat vide mais valide pour éviter les messages d'erreur
-  // des formulaires secondaires avant que l'utilisateur ait fini de renseigner le trajet.
-  if (!departureDate || !departureTime) {
-    return { distance_km: null, duree_minutes: null };
-  }
-
   try {
     const response = await fetch('/api/here-route', {
       method: 'POST',
@@ -30,8 +23,8 @@ export async function calculateRoute(
       body: JSON.stringify({
         origin: { lat: originLat, lng: originLng },
         destination: { lat: destLat, lng: destLng },
-        departureDate,
-        departureTime,
+        departureDate: departureDate || '',
+        departureTime: departureTime || '',
       }),
     });
 
