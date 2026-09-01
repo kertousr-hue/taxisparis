@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node build-config.mjs",
-    "build:ssg": "vite build && tsx scripts/ssg-render.ts && node build-config.mjs",
-    "build:ssg:puppeteer": "vite build && tsx scripts/ssg-crawl.ts && node build-config.mjs",
+    "build": "cross-env VITE_HERE_API_KEY= vite build && node build-config.mjs",
+    "build:ssg": "cross-env VITE_HERE_API_KEY= vite build && tsx scripts/ssg-render.ts && node build-config.mjs",
+    "build:ssg:puppeteer": "cross-env VITE_HERE_API_KEY= vite build && tsx scripts/ssg-crawl.ts && node build-config.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"

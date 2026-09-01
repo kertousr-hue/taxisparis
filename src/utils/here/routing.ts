@@ -8,63 +8,45 @@ export async function calculateRoute(
   originLng: number,
   destLat: number,
   destLng: number,
-  apiKey: string,
+  _apiKey?: string,
   departureDate?: string,
   departureTime?: string
 ): Promise<RouteResult | null> {
-  if (!originLat || !originLng || !destLat || !destLng) {
+  if (![originLat, originLng, destLat, destLng].every(Number.isFinite)) {
     return null;
   }
 
-  const key = apiKey?.trim();
-  if (!key || key === 'votre_clé_here_api') {
-    console.error('HERE API key missing for routing');
+  // Ne lance aucun appel HERE tant que la date ET l'heure ne sont pas connues.
+  // Cela évite les calculs successifs coordonnées -> date -> heure.
+  if (!departureDate || !departureTime) {
     return null;
   }
 
   try {
-    const url = new URL('https://router.hereapi.com/v8/routes');
-    url.searchParams.set('transportMode', 'car');
-    url.searchParams.set('origin', `${originLat},${originLng}`);
-    url.searchParams.set('destination', `${destLat},${destLng}`);
-    url.searchParams.set('return', 'summary');
-
-    let departureDateTime: string;
-    if (departureDate && departureTime) {
-      departureDateTime = `${departureDate}T${departureTime}:00`;
-    } else {
-      departureDateTime = new Date().toISOString();
-    }
-    url.searchParams.set('departureTime', departureDateTime);
-    url.searchParams.set('apiKey', key);
-
-    const response = await fetch(url.toString());
+    const response = await fetch('/api/here-route', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        origin: { lat: originLat, lng: originLng },
+        destination: { lat: destLat, lng: destLng },
+        departureDate,
+        departureTime,
+      }),
+    });
 
     if (!response.ok) {
-      console.error('HERE Routing API error:', response.status, response.statusText);
+      console.error('HERE Routing proxy error:', response.status, response.statusText);
       return null;
     }
 
     const data = await response.json();
-
-    if (!data.routes || data.routes.length === 0) {
-      console.warn('No routes found');
+    if (!Number.isFinite(data?.distance_km) || !Number.isFinite(data?.duree_minutes)) {
       return null;
     }
 
-    const route = data.routes[0];
-    const section = route.sections[0];
-    const summary = section.summary;
-
-    const distanceMeters = summary.length;
-    const durationSeconds = summary.duration;
-
-    const distanceKm = parseFloat((distanceMeters / 1000).toFixed(2));
-    const durationMinutes = Math.round(durationSeconds / 60);
-
     return {
-      distance_km: distanceKm,
-      duree_minutes: durationMinutes,
+      distance_km: data.distance_km,
+      duree_minutes: data.duree_minutes,
     };
   } catch (error) {
     console.error('Error calculating route:', error);

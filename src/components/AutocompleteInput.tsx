@@ -85,9 +85,26 @@ export default function AutocompleteInput({
   };
 
   const handleSuggestionClick = async (suggestion: HereAutocompleteSuggestion) => {
-    setIsGeocoding(true);
     setShowSuggestions(false);
 
+    // HERE Autosuggest fournit normalement déjà les coordonnées.
+    // On les réutilise directement pour éviter deux appels Geocoding par réservation.
+    if (
+      suggestion.position &&
+      Number.isFinite(suggestion.position.lat) &&
+      Number.isFinite(suggestion.position.lng)
+    ) {
+      onAddressSelect(
+        suggestion.address.label,
+        suggestion.position.lat,
+        suggestion.position.lng
+      );
+      setSuggestions([]);
+      return;
+    }
+
+    // Fallback rare si HERE ne renvoie pas de position pour une suggestion.
+    setIsGeocoding(true);
     try {
       const geocodeResult = await geocodeAddress(suggestion.address.label, apiKey);
 

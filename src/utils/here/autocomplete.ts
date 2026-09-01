@@ -8,39 +8,29 @@ export interface HereAutocompleteSuggestion {
     city?: string;
   };
   resultType: string;
+  position?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 const VALID_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95', '60', '28'];
 
 export async function fetchHereAutocomplete(
   query: string,
-  apiKey: string
+  _apiKey?: string
 ): Promise<HereAutocompleteSuggestion[]> {
   if (!query || query.length < 3) {
     return [];
   }
 
-  const key = apiKey?.trim();
-  if (!key || key === 'votre_clé_here_api') {
-    console.error('HERE API key missing for autocomplete');
-    return [];
-  }
-
   try {
-    const bbox = '0.8000,47.9000,4.2000,50.1000';
-    const url = new URL('https://autosuggest.search.hereapi.com/v1/autosuggest');
-    url.searchParams.set('q', query);
-    url.searchParams.set('limit', '5');
-    url.searchParams.set('lang', 'fr');
-    url.searchParams.append('in', 'countryCode:FRA');
-    url.searchParams.append('in', `bbox:${bbox}`);
-    url.searchParams.set('apiKey', key);
-
-    const response = await fetch(url.toString());
+    const params = new URLSearchParams({ q: query, limit: '5' });
+    const response = await fetch(`/api/here-autosuggest?${params.toString()}`);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('HERE Autosuggest API error:', response.status, response.statusText, errorText);
+      console.error('HERE Autosuggest proxy error:', response.status, response.statusText, errorText);
       return [];
     }
 
@@ -50,26 +40,25 @@ export async function fetchHereAutocomplete(
       return [];
     }
 
-    const suggestions: HereAutocompleteSuggestion[] = data.items
+    return data.items
       .filter((item: any) => {
         if (!item.address) return false;
 
         const label = item.address.label || '';
         const postalCode = item.address.postalCode || '';
         const postalCodeMatch = label.match(/\b(\d{5})\b/);
-
         const foundPostalCode = postalCode || (postalCodeMatch ? postalCodeMatch[1] : '');
 
         if (!foundPostalCode) return true;
 
         const department = foundPostalCode.substring(0, 2);
-
         return VALID_DEPARTMENTS.includes(department);
       })
       .map((item: any) => {
         const label = item.address.label || '';
         const postalCodeMatch = label.match(/\b(\d{5})\b/);
         const postalCode = item.address.postalCode || (postalCodeMatch ? postalCodeMatch[1] : '');
+        const hasPosition = Number.isFinite(item.position?.lat) && Number.isFinite(item.position?.lng);
 
         return {
           id: item.id,
@@ -77,14 +66,13 @@ export async function fetchHereAutocomplete(
           address: {
             label: item.address.label,
             countryCode: item.address.countryCode || 'FRA',
-            postalCode: postalCode,
+            postalCode,
             city: item.address.city,
           },
           resultType: item.resultType,
+          ...(hasPosition ? { position: { lat: item.position.lat, lng: item.position.lng } } : {}),
         };
       });
-
-    return suggestions;
   } catch (error) {
     console.error('Error fetching HERE autocomplete:', error);
     return [];

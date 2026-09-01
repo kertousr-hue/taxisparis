@@ -10,48 +10,34 @@ export interface GeocodeResult {
 
 export async function geocodeAddress(
   address: string,
-  apiKey: string
+  _apiKey?: string
 ): Promise<GeocodeResult | null> {
   if (!address || address.trim().length === 0) {
     return null;
   }
 
-  const key = apiKey?.trim();
-  if (!key || key === 'votre_clé_here_api') {
-    console.error('HERE API key missing for geocoding');
-    return null;
-  }
-
   try {
-    const url = new URL('https://geocode.search.hereapi.com/v1/geocode');
-    url.searchParams.set('q', address);
-    url.searchParams.set('in', 'countryCode:FRA');
-    url.searchParams.set('lang', 'fr');
-    url.searchParams.set('apiKey', key);
-
-    const response = await fetch(url.toString());
+    const response = await fetch('/api/here-geocode', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address }),
+    });
 
     if (!response.ok) {
-      console.error('HERE Geocode API error:', response.status, response.statusText);
+      console.error('HERE Geocode proxy error:', response.status, response.statusText);
       return null;
     }
 
     const data = await response.json();
-
-    if (!data.items || data.items.length === 0) {
-      console.warn('No geocoding results found for:', address);
+    if (!data || !Number.isFinite(data.coordinates?.lat) || !Number.isFinite(data.coordinates?.lng)) {
       return null;
     }
 
-    const item = data.items[0];
-    const position = item.position;
-    const fullAddress = item.address?.label || address;
-
     return {
-      address: fullAddress,
+      address: data.address || address,
       coordinates: {
-        lat: position.lat,
-        lng: position.lng,
+        lat: data.coordinates.lat,
+        lng: data.coordinates.lng,
       },
     };
   } catch (error) {
