@@ -1,0 +1,1170 @@
+:root {
+  --taxinea-navy: #0b2d6b;
+  --taxinea-navy-deep: #061f50;
+  --taxinea-blue: #0d6efd;
+  --taxinea-cyan: #00d1c1;
+  --taxinea-cyan-bright: #13ead8;
+  --taxinea-pale: #e8f4ff;
+  --taxinea-bg: #f8fbff;
+  --taxinea-text: #0b2856;
+  --taxinea-muted: #566b86;
+  --taxinea-line: #d9e7f4;
+}
+
+/* ---------- Structure publique commune ---------- */
+.premium-public-shell {
+  background: var(--taxinea-bg) !important;
+  color: var(--taxinea-text);
+}
+
+.premium-public-main {
+  background: var(--taxinea-bg) !important;
+}
+
+.premium-public-main .container {
+  max-width: 1180px !important;
+}
+
+.premium-public-main input,
+.premium-public-main textarea,
+.premium-public-main select {
+  border: 1px solid #c9dced !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: 0 5px 14px rgba(11, 45, 107, 0.04);
+}
+
+.premium-public-main input:focus,
+.premium-public-main textarea:focus,
+.premium-public-main select:focus {
+  border-color: var(--taxinea-blue) !important;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1) !important;
+}
+
+/* Les pages publiques existantes gardent leur contenu/SEO mais adoptent la charte TAXINÉA. */
+.premium-public-main section[class*="bg-gradient-to-br"][class*="text-white"],
+.premium-public-main section[class*="min-h-[500px]"][class*="overflow-hidden"] {
+  background:
+    radial-gradient(circle at 83% 15%, rgba(0, 209, 193, 0.2), transparent 26%),
+    linear-gradient(120deg, var(--taxinea-navy-deep) 0%, var(--taxinea-navy) 58%, #086da4 100%) !important;
+}
+
+.premium-public-main a.bg-blue-600,
+.premium-public-main a.bg-blue-700,
+.premium-public-main a.bg-blue-800,
+.premium-public-main button.bg-blue-600,
+.premium-public-main button.bg-blue-700 {
+  background: linear-gradient(90deg, var(--taxinea-cyan) 0%, var(--taxinea-cyan-bright) 100%) !important;
+  color: var(--taxinea-navy-deep) !important;
+  border-color: transparent !important;
+  border-radius: 999px !important;
+  box-shadow: 0 12px 24px rgba(0, 209, 193, 0.22) !important;
+}
+
+.premium-public-main a.bg-blue-600:hover,
+.premium-public-main a.bg-blue-700:hover,
+.premium-public-main a.bg-blue-800:hover,
+.premium-public-main button.bg-blue-600:hover,
+.premium-public-main button.bg-blue-700:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.premium-public-main div.bg-white.rounded-xl,
+.premium-public-main div.bg-white.rounded-2xl,
+.premium-public-main article.bg-white,
+.premium-public-main div[class*="rounded-xl"][class*="shadow"],
+.premium-public-main div[class*="rounded-2xl"][class*="shadow"] {
+  border-color: var(--taxinea-line) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 34px rgba(11, 45, 107, 0.08) !important;
+}
+
+/* ---------- Header ---------- */
+.taxinea-header {
+  border-bottom: 1px solid #e1ebf4;
+  box-shadow: 0 8px 24px rgba(11, 45, 107, 0.08) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.premium-public-shell .taxinea-header.sticky > div:first-child {
+  display: none !important;
+}
+
+.taxinea-header-row {
+  height: 82px !important;
+}
+
+.taxinea-logo-link {
+  min-height: 0;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.taxinea-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.taxinea-brand-mark {
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(255,255,255,.38), transparent 22%),
+    linear-gradient(145deg, #0b397c 0%, #006ec9 52%, #00cbbd 100%);
+  box-shadow: 0 8px 18px rgba(11, 45, 107, 0.24);
+}
+
+.taxinea-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.taxinea-brand-copy strong {
+  color: var(--taxinea-navy);
+  font-size: 2rem;
+  letter-spacing: -0.045em;
+  font-weight: 900;
+}
+
+.taxinea-brand-copy small {
+  margin-top: 5px;
+  color: #00aeb0;
+  font-size: .64rem;
+  letter-spacing: .02em;
+  font-weight: 900;
+}
+
+.premium-public-shell .taxinea-header nav a.taxinea-nav-link,
+.taxinea-nav-link {
+  min-height: 42px !important;
+  min-width: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 0 0 !important;
+  color: #0c2a55 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: .93rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.premium-public-shell .taxinea-header nav a.taxinea-nav-link:hover,
+.taxinea-nav-link:hover {
+  color: var(--taxinea-blue) !important;
+  background: transparent !important;
+}
+
+.taxinea-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 99px;
+  background: var(--taxinea-blue);
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+
+.taxinea-nav-link:hover::after,
+.taxinea-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.taxinea-header-call {
+  min-height: 44px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0761c4 0%, #00c8c4 100%);
+  color: #fff !important;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0, 130, 190, .22);
+  text-decoration: none;
+}
+
+.taxinea-mobile-call,
+.taxinea-menu-button {
+  width: 42px;
+  height: 42px;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d5e4f1;
+  border-radius: 12px;
+  color: var(--taxinea-navy);
+  background: #fff;
+}
+
+.taxinea-mobile-menu {
+  background: rgba(255, 255, 255, .98);
+  border-top: 1px solid #e5eef6;
+  box-shadow: 0 20px 30px rgba(11, 45, 107, .1);
+}
+
+.premium-public-shell .taxinea-mobile-menu nav a.taxinea-mobile-nav-link,
+.taxinea-mobile-nav-link {
+  min-height: 46px !important;
+  display: flex;
+  align-items: center;
+  padding: 0 14px !important;
+  border: 1px solid #dce9f3 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: var(--taxinea-navy) !important;
+  box-shadow: none !important;
+  font-weight: 750;
+}
+
+.taxinea-mobile-nav-link.is-active {
+  border-color: #8bbcf5 !important;
+  background: #eef6ff !important;
+  color: var(--taxinea-blue) !important;
+}
+
+.taxinea-mobile-reserve,
+.taxinea-mobile-phone {
+  min-height: 48px !important;
+  border-radius: 999px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.taxinea-mobile-reserve {
+  background: linear-gradient(90deg, var(--taxinea-cyan), var(--taxinea-cyan-bright));
+  color: var(--taxinea-navy-deep) !important;
+}
+
+.taxinea-mobile-phone {
+  border: 1px solid #c9dced;
+  color: var(--taxinea-navy) !important;
+  background: #fff;
+}
+
+/* ---------- Accueil / Hero ---------- */
+.taxinea-home {
+  background: #fff;
+}
+
+.taxinea-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 520px;
+  color: #fff;
+  background: linear-gradient(112deg, #072756 0%, #0b3978 48%, #076e9d 100%);
+}
+
+.taxinea-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(0, 209, 193, .24), transparent 28%),
+    linear-gradient(90deg, rgba(5, 37, 84, .16), rgba(0, 96, 155, .05));
+  pointer-events: none;
+}
+
+.taxinea-hero-orbit {
+  position: absolute;
+  border: 26px solid rgba(86, 206, 244, .72);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.taxinea-hero-orbit-one {
+  width: 660px;
+  height: 660px;
+  right: -300px;
+  top: -190px;
+}
+
+.taxinea-hero-orbit-two {
+  width: 560px;
+  height: 560px;
+  right: -270px;
+  top: -140px;
+  border-color: rgba(255,255,255,.42);
+  border-width: 12px;
+}
+
+.taxinea-hero-grid {
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.taxinea-hero-copy {
+  padding: 54px 0 50px;
+  max-width: 650px;
+}
+
+.taxinea-eyebrow {
+  display: none;
+}
+
+.taxinea-hero h1 {
+  margin: 0;
+  max-width: none !important;
+  color: #fff;
+  font-size: clamp(2.45rem, 4.2vw, 4.05rem);
+  line-height: 1.04;
+  letter-spacing: -.04em !important;
+  font-weight: 900;
+  text-align: left;
+}
+
+.taxinea-hero h1 span {
+  color: #68e8ff;
+}
+
+.taxinea-hero-lead {
+  margin: 18px 0 0 !important;
+  max-width: 560px !important;
+  color: #fff !important;
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  line-height: 1.35;
+  font-weight: 450;
+}
+
+.taxinea-hero-features {
+  margin-top: 30px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.taxinea-hero-features > div {
+  min-width: 145px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 22px;
+  border-left: 1px solid rgba(255,255,255,.36);
+}
+
+.taxinea-hero-features > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.taxinea-hero-features svg {
+  flex: 0 0 auto;
+  color: #7cebf5;
+}
+
+.taxinea-hero-features span {
+  font-size: .86rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.taxinea-hero-actions {
+  margin-top: 30px;
+  max-width: 570px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.taxinea-primary-cta,
+.taxinea-secondary-cta {
+  min-height: 52px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: 850;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.taxinea-primary-cta {
+  background: linear-gradient(90deg, var(--taxinea-cyan), #10e5cf);
+  color: #06345f !important;
+  box-shadow: 0 14px 28px rgba(0, 209, 193, .25);
+}
+
+.taxinea-secondary-cta {
+  border: 2px solid rgba(255,255,255,.95);
+  color: #fff !important;
+  background: rgba(4, 34, 76, .12);
+}
+
+.taxinea-primary-cta:hover,
+.taxinea-secondary-cta:hover {
+  transform: translateY(-2px);
+}
+
+.taxinea-hero-visual {
+  position: relative;
+  min-height: 520px;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.taxinea-hero-image-frame {
+  position: absolute;
+  right: -86px;
+  bottom: 0;
+  width: 570px;
+  height: 470px;
+  overflow: hidden;
+  border-radius: 260px 0 0 0;
+  border-left: 8px solid rgba(70, 210, 255, .56);
+  box-shadow: -24px 0 60px rgba(1, 20, 54, .28);
+  background: #dff2fa;
+}
+
+.taxinea-hero-image-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5,38,86,.32) 0%, transparent 36%);
+  pointer-events: none;
+}
+
+.taxinea-hero-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.taxinea-vehicle-badge {
+  position: absolute;
+  left: 42%;
+  bottom: 22%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: rgba(4, 45, 92, .9);
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
+.taxinea-hospital-sign {
+  position: absolute;
+  z-index: 3;
+  top: 88px;
+  left: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #0c5395;
+  text-shadow: 0 2px 2px rgba(255,255,255,.6);
+}
+
+.taxinea-hospital-sign span {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #0d6efd;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 900;
+  box-shadow: 0 4px 10px rgba(0,0,0,.18);
+}
+
+.taxinea-hospital-sign strong {
+  margin-top: 4px;
+  font-size: .86rem;
+  font-weight: 900;
+}
+
+.taxinea-handwritten {
+  position: absolute;
+  z-index: 4;
+  top: 58px;
+  right: 2px;
+  margin: 0 !important;
+  max-width: none !important;
+  transform: rotate(-8deg);
+  color: #fff !important;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* ---------- Services ---------- */
+.taxinea-services-strip {
+  padding: 20px 0 12px;
+  background: #fff;
+}
+
+.taxinea-service-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.taxinea-service-card {
+  min-height: 120px;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  border: 1px solid #e1edf6;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  box-shadow: 0 8px 22px rgba(11,45,107,.07);
+}
+
+.taxinea-service-card svg {
+  color: #096ed9;
+}
+
+.taxinea-service-card strong {
+  color: #0a2a59;
+  font-size: .9rem;
+  line-height: 1.15;
+}
+
+.taxinea-service-caption {
+  margin: 14px 0 0;
+  text-align: center;
+  color: var(--taxinea-muted);
+  font-size: .94rem;
+}
+
+/* ---------- Pourquoi ---------- */
+.taxinea-why {
+  padding: 26px 0 34px;
+  background: #fff;
+}
+
+.taxinea-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.taxinea-section-title > span {
+  width: 48px;
+  height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00b8d0, #00dcc1);
+}
+
+.taxinea-section-title h2 {
+  margin: 0;
+  color: var(--taxinea-navy);
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  text-align: center;
+}
+
+.taxinea-reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 14px;
+}
+
+.taxinea-reason-card {
+  min-height: 176px;
+  padding: 20px 16px 18px;
+  text-align: center;
+  border: 1px solid #e0ebf4;
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(11,45,107,.08);
+}
+
+.taxinea-reason-icon {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(145deg, #0a78ec, #0e5fcf);
+  box-shadow: 0 7px 16px rgba(13,110,253,.2);
+}
+
+.taxinea-reason-card h3 {
+  margin: 0;
+  color: #092b59;
+  font-size: .98rem;
+  line-height: 1.2;
+  font-weight: 850;
+}
+
+.taxinea-reason-card p {
+  margin: 9px 0 0;
+  color: var(--taxinea-muted);
+  font-size: .84rem;
+  line-height: 1.35;
+}
+
+/* ---------- CTA ---------- */
+.taxinea-medical-cta {
+  padding: 0 0 26px;
+  background: #fff;
+}
+
+.taxinea-medical-cta-inner {
+  min-height: 184px;
+  padding: 30px 34px;
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  align-items: center;
+  gap: 28px;
+  overflow: hidden;
+  border-radius: 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 86% 40%, rgba(39,209,198,.26), transparent 28%),
+    linear-gradient(110deg, #082c63 0%, #0b3d78 62%, #085e82 100%);
+  box-shadow: 0 16px 34px rgba(7, 42, 91, .17);
+}
+
+.taxinea-medical-cta h2 {
+  margin: 0;
+  color: #10e8d3;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 900;
+}
+
+.taxinea-medical-cta p {
+  margin: 6px 0 0;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.taxinea-medical-cta-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.taxinea-medical-cta-actions .taxinea-primary-cta,
+.taxinea-medical-cta-actions .taxinea-secondary-cta {
+  min-height: 46px !important;
+  font-size: .94rem;
+}
+
+.taxinea-care-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: rgba(255,255,255,.9);
+}
+
+.taxinea-care-visual svg {
+  color: rgba(255,255,255,.45);
+}
+
+.taxinea-care-visual span {
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  transform: rotate(-5deg);
+}
+
+.taxinea-trust-row {
+  padding: 0 0 24px;
+  background: #fff;
+}
+
+.taxinea-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid #edf2f6;
+  border-bottom: 1px solid #edf2f6;
+}
+
+.taxinea-trust-grid > div {
+  min-height: 94px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-align: center;
+  color: #0a2c5c;
+}
+
+.taxinea-trust-grid > div + div {
+  border-left: 1px solid #e5edf4;
+}
+
+.taxinea-trust-grid svg {
+  color: #0c70db;
+}
+
+.taxinea-trust-grid strong {
+  font-size: .85rem;
+  line-height: 1.2;
+}
+
+/* ---------- Footer ---------- */
+.premium-public-shell footer.taxinea-footer,
+.taxinea-footer {
+  margin-top: 0 !important;
+  padding: 16px 0 12px;
+  background: linear-gradient(90deg, #082b62 0%, #06356f 62%, #07517d 100%) !important;
+  color: #fff;
+  border-top: 0;
+}
+
+.taxinea-footer-main {
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 230px 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+
+.taxinea-footer-brand {
+  min-height: 0 !important;
+  min-width: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.taxinea-footer-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #0967b7, #00c9bd);
+}
+
+.taxinea-footer-brand > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.taxinea-footer-brand strong {
+  font-size: 1.1rem;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.taxinea-footer-brand small {
+  margin-top: 3px;
+  color: #7eece9;
+  font-size: .49rem;
+  font-weight: 800;
+}
+
+.taxinea-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.premium-public-shell footer.taxinea-footer .taxinea-footer-nav a,
+.taxinea-footer-nav a {
+  min-height: 36px !important;
+  min-width: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255,255,255,.9) !important;
+  font-size: .76rem;
+  text-decoration: none;
+}
+
+.taxinea-footer-nav a:hover {
+  color: #72f0e6 !important;
+}
+
+.taxinea-footer-phone {
+  min-height: 40px !important;
+  min-width: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff !important;
+  font-size: .82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.taxinea-footer-bottom {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.16);
+  color: rgba(255,255,255,.66);
+  font-size: .67rem;
+}
+
+.taxinea-footer-bottom p {
+  margin: 0;
+}
+
+.taxinea-footer-bottom > div {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.taxinea-footer-bottom a {
+  min-height: 30px !important;
+  min-width: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255,255,255,.7) !important;
+  text-decoration: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .taxinea-brand-copy strong {
+    font-size: 1.75rem;
+  }
+
+  .taxinea-brand-copy small {
+    font-size: .57rem;
+  }
+
+  .taxinea-hero-grid {
+    grid-template-columns: 1fr .82fr;
+  }
+
+  .taxinea-hero-image-frame {
+    width: 520px;
+    right: -118px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .taxinea-header-row {
+    height: 72px !important;
+  }
+
+  .taxinea-brand-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .taxinea-brand-copy strong {
+    font-size: 1.55rem;
+  }
+
+  .taxinea-brand-copy small {
+    font-size: .51rem;
+  }
+
+  .taxinea-hero-grid {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .taxinea-hero-copy {
+    max-width: 680px;
+    padding: 42px 0 34px;
+  }
+
+  .taxinea-hero-visual {
+    min-height: 390px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
+  .taxinea-hero-image-frame {
+    right: 0;
+    width: 100%;
+    height: 390px;
+    border-radius: 90px 0 0 0;
+  }
+
+  .taxinea-hospital-sign {
+    top: 48px;
+    left: 10%;
+  }
+
+  .taxinea-handwritten {
+    top: 36px;
+    right: 8%;
+  }
+
+  .taxinea-service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .taxinea-reasons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .taxinea-footer-main {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .taxinea-footer-brand,
+  .taxinea-footer-phone {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .taxinea-header-row {
+    height: 68px !important;
+  }
+
+  .taxinea-brand {
+    gap: 8px;
+  }
+
+  .taxinea-brand-mark {
+    width: 43px;
+    height: 43px;
+  }
+
+  .taxinea-brand-mark svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .taxinea-brand-copy strong {
+    font-size: 1.35rem;
+  }
+
+  .taxinea-brand-copy small {
+    margin-top: 4px;
+    font-size: .43rem;
+  }
+
+  .taxinea-hero {
+    min-height: 0;
+  }
+
+  .taxinea-hero-copy {
+    padding: 30px 0 26px;
+  }
+
+  .taxinea-eyebrow {
+    display: block;
+    margin: 0 0 13px !important;
+    color: #95f4ec !important;
+    font-family: "Segoe Script", "Brush Script MT", cursive;
+    font-size: 1rem;
+  }
+
+  .taxinea-hero h1 {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 1.04 !important;
+  }
+
+  .taxinea-hero-lead {
+    margin-top: 14px !important;
+    font-size: 1.13rem;
+  }
+
+  .taxinea-hero-features {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .taxinea-hero-features > div {
+    min-width: 0;
+    padding: 10px !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+    border-radius: 12px;
+    background: rgba(255,255,255,.05);
+  }
+
+  .taxinea-hero-features > div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .taxinea-hero-actions {
+    margin-top: 20px;
+  }
+
+  .taxinea-primary-cta,
+  .taxinea-secondary-cta {
+    min-height: 50px !important;
+    border-radius: 14px;
+    font-size: .98rem;
+  }
+
+  .taxinea-hero-visual {
+    min-height: 315px;
+  }
+
+  .taxinea-hero-image-frame {
+    height: 315px;
+    border-left-width: 5px;
+    border-radius: 58px 0 0 0;
+  }
+
+  .taxinea-hospital-sign {
+    top: 28px;
+    left: 9%;
+  }
+
+  .taxinea-hospital-sign span {
+    width: 39px;
+    height: 39px;
+    font-size: 1.55rem;
+  }
+
+  .taxinea-hospital-sign strong {
+    font-size: .65rem;
+  }
+
+  .taxinea-handwritten {
+    top: 26px;
+    right: 5%;
+    font-size: 1.08rem;
+  }
+
+  .taxinea-service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .taxinea-service-card {
+    min-height: 105px;
+  }
+
+  .taxinea-service-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .taxinea-section-title {
+    gap: 10px;
+  }
+
+  .taxinea-section-title > span {
+    width: 30px;
+    height: 3px;
+  }
+
+  .taxinea-reasons-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .taxinea-reason-card {
+    min-height: 164px;
+    padding: 17px 10px;
+  }
+
+  .taxinea-reason-card h3 {
+    font-size: .9rem;
+  }
+
+  .taxinea-reason-card p {
+    font-size: .78rem;
+  }
+
+  .taxinea-medical-cta-inner {
+    padding: 24px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .taxinea-care-visual {
+    display: none;
+  }
+
+  .taxinea-medical-cta-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .taxinea-trust-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .taxinea-trust-grid > div {
+    min-height: 88px;
+    padding: 8px 5px;
+  }
+
+  .taxinea-trust-grid strong {
+    font-size: .72rem;
+  }
+
+  .taxinea-footer-nav {
+    gap: 10px 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .taxinea-brand-copy strong {
+    font-size: 1.23rem;
+  }
+
+  .taxinea-brand-copy small {
+    font-size: .39rem;
+  }
+
+  .taxinea-mobile-call,
+  .taxinea-menu-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .taxinea-reasons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .taxinea-reason-card {
+    min-height: 145px;
+  }
+}
