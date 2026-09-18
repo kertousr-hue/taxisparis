@@ -205,385 +205,470 @@ export default function StationTransfer() {
         canonical="https://www.taxisparis-conventionnes.fr/taxis-gares-parisiennes"
         jsonLD={jsonLD}
       />
-      <div className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
-              <Train className="text-green-600" size={40} />
-            </div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Transfert Gare et Aéroport
-            </h1>
-            <p className="text-lg text-gray-600">
-              Réservez votre transfert vers les gares et aéroports
-            </p>
-          </div>
 
-          {submitSuccess && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center gap-3">
-              <CheckCircle className="text-green-600" size={24} />
-              <div>
-                <p className="font-semibold text-green-800">Votre réservation a bien été envoyée.</p>
-                <p className="text-sm text-green-700">Nous vous contacterons rapidement.</p>
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+        <div className="container relative mx-auto px-4 py-14 sm:py-16 lg:py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.08fr_.92fr]">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
+                <Train size={17} aria-hidden="true" />
+                Gares parisiennes & aéroports
+              </div>
+              <h1 className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+                Transfert Gare & Aéroport à Paris
+              </h1>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
+                Réservez votre chauffeur pour un départ ou une arrivée en gare. Prise en charge 24h/24 et 7j/7, avec calcul de distance et de durée avant validation.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#reservation-gare"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50"
+                >
+                  Réserver maintenant
+                  <ArrowRightIcon />
+                </a>
+                <a
+                  href="tel:+33650366491"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700"
+                >
+                  <Phone size={18} aria-hidden="true" />
+                  06 50 36 64 91
+                </a>
+              </div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {[
+                  ['Gares parisiennes', 'Nord, Lyon, Montparnasse, Saint-Lazare'],
+                  ['Aéroports', 'CDG, Orly, Beauvais, Le Bourget'],
+                  ['Disponible 24/7', 'Départs tôt et arrivées tardives'],
+                ].map(([title, text]) => (
+                  <div key={title} className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+                    <p className="font-bold text-white">{title}</p>
+                    <p className="mt-1 text-xs leading-5 text-blue-100">{text}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <p className="text-red-800">{error}</p>
-            </div>
-          )}
-
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-              Forfaits Taxis Parisiens vers les Aéroports
-            </h2>
-            <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
-              Les tarifs forfaitaires réglementés pour les taxis parisiens varient selon la zone de départ (rive droite ou rive gauche de la Seine)
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div className="border-2 border-green-200 rounded-xl p-6 bg-green-50">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <MapPin className="text-green-600" size={24} />
-                  Rive Droite
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">Arrondissements: 1er, 2e, 3e, 4e, 8e, 9e, 10e, 11e, 12e, 16e, 17e, 18e, 19e, 20e</p>
-
-                <div className="space-y-3">
-                  <div className="bg-white rounded-lg p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Plane className="text-green-600" size={24} />
-                      <div>
-                        <p className="font-semibold text-gray-800">CDG</p>
-                        <p className="text-xs text-gray-500">Charles de Gaulle</p>
-                      </div>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600">56€</p>
+            <div className="rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur">
+              <div className="rounded-[1.6rem] bg-white p-6 text-slate-900 shadow-xl">
+                <div className="flex items-center justify-between gap-5">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Votre trajet</p>
+                    <h2 className="mt-2 text-2xl font-black tracking-tight">Du quai jusqu'à votre destination</h2>
                   </div>
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50">
+                    <Train className="text-blue-700" size={32} />
+                  </div>
+                </div>
 
-                  <div className="bg-white rounded-lg p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Plane className="text-green-600" size={24} />
-                      <div>
-                        <p className="font-semibold text-gray-800">Orly</p>
-                        <p className="text-xs text-gray-500">Aéroport d'Orly</p>
-                      </div>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600">45€</p>
+                <div className="my-6 flex items-center gap-3">
+                  <span className="h-3 w-3 rounded-full bg-blue-600" />
+                  <div className="h-px flex-1 bg-gradient-to-r from-blue-200 via-cyan-300 to-cyan-200" />
+                  <span className="h-3 w-3 rounded-full bg-cyan-600" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <Gauge className="mb-2 text-blue-600" size={22} />
+                    <p className="font-bold">Distance calculée</p>
+                    <p className="mt-1 text-xs text-slate-500">Itinéraire réel</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <Timer className="mb-2 text-cyan-600" size={22} />
+                    <p className="font-bold">Durée estimée</p>
+                    <p className="mt-1 text-xs text-slate-500">Selon le trajet</p>
                   </div>
                 </div>
               </div>
-
-              <div className="border-2 border-orange-200 rounded-xl p-6 bg-orange-50">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <MapPin className="text-orange-600" size={24} />
-                  Rive Gauche
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">Arrondissements: 5e, 6e, 7e, 13e, 14e, 15e</p>
-
-                <div className="space-y-3">
-                  <div className="bg-white rounded-lg p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Plane className="text-orange-600" size={24} />
-                      <div>
-                        <p className="font-semibold text-gray-800">CDG</p>
-                        <p className="text-xs text-gray-500">Charles de Gaulle</p>
-                      </div>
-                    </div>
-                    <p className="text-2xl font-bold text-orange-600">65€</p>
-                  </div>
-
-                  <div className="bg-white rounded-lg p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Plane className="text-orange-600" size={24} />
-                      <div>
-                        <p className="font-semibold text-gray-800">Orly</p>
-                        <p className="text-xs text-gray-500">Aéroport d'Orly</p>
-                      </div>
-                    </div>
-                    <p className="text-2xl font-bold text-orange-600">36€</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                <Plane className="text-gray-600" size={20} />
-                Autres destinations
-              </h4>
-              <div className="space-y-2 text-sm text-gray-600">
-                <p><strong>Beauvais-Tillé:</strong> Pas de forfait - Prix au compteur (environ 120-150€)</p>
-                <p><strong>Le Bourget:</strong> Pas de forfait - Prix au compteur</p>
-                <p className="mt-4 pt-4 border-t border-gray-300 text-xs">
-                  <strong>Note:</strong> Ces forfaits sont réglementés et incluent tous les frais. Les suppléments (bagages, 5e passager, etc.) restent applicables selon la réglementation en vigueur.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom *
-                </label>
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Prénom *
-                </label>
-                <input
-                  type="text"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Téléphone *
-                </label>
-                <input
-                  type="tel"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <AutocompleteInput
-                label="Adresse de départ"
-                value={formData.adresse_depart}
-                placeholder="Ex: Gare du Nord, Paris"
-                required
-                apiKey={apiKey}
-                onAddressSelect={(address, lat, lng) => {
-                  setFormData(prev => ({ ...prev, adresse_depart: address }));
-                  setCoordsDepart({ lat, lng });
-                }}
-                onInputChange={(value) => {
-                  setFormData(prev => ({ ...prev, adresse_depart: value }));
-                  setCoordsDepart(null);
-                }}
-                isValidated={coordsDepart !== null}
-              />
-
-              <AutocompleteInput
-                label="Adresse d'arrivée"
-                value={formData.adresse_arrivee}
-                placeholder="Ex: 25 Avenue des Champs-Élysées, Paris"
-                required
-                apiKey={apiKey}
-                onAddressSelect={(address, lat, lng) => {
-                  setFormData(prev => ({ ...prev, adresse_arrivee: address }));
-                  setCoordsArrivee({ lat, lng });
-                }}
-                onInputChange={(value) => {
-                  setFormData(prev => ({ ...prev, adresse_arrivee: value }));
-                  setCoordsArrivee(null);
-                }}
-                isValidated={coordsArrivee !== null}
-              />
-            </div>
-
-            {distance !== null && durationMinutes !== null && (
-              <div className="mb-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-orange-100 p-2 rounded-lg">
-                    <Gauge className="text-orange-600" size={20} />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800">Informations du trajet</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-5 border border-green-200 flex flex-col items-center text-center">
-                    <div className="bg-green-500 p-2 rounded-lg mb-2">
-                      <Gauge className="text-white" size={24} />
-                    </div>
-                    <p className="text-2xl font-bold text-gray-800 mb-1">{distance} km</p>
-                    <p className="text-xs text-gray-600">Distance réelle</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-5 border border-orange-200 flex flex-col items-center text-center">
-                    <div className="bg-orange-500 p-2 rounded-lg mb-2">
-                      <Timer className="text-white" size={24} />
-                    </div>
-                    <p className="text-2xl font-bold text-gray-800 mb-1">{durationMinutes} min</p>
-                    <p className="text-xs text-gray-600">Durée estimée</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {isCalculating && (
-              <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-center text-gray-600">
-                Calcul de l'itinéraire en cours...
-              </div>
-            )}
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="inline mr-2" size={16} />
-                  Date du trajet *
-                </label>
-                <input
-                  type="date"
-                  name="date_trajet"
-                  value={formData.date_trajet}
-                  onChange={handleChange}
-                  required
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Clock className="inline mr-2" size={16} />
-                  Heure de prise en charge *
-                </label>
-                <input
-                  type="time"
-                  name="heure_trajet"
-                  value={formData.heure_trajet}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Numéro de train
-              </label>
-              <input
-                type="text"
-                name="numero_train"
-                value={formData.numero_train}
-                onChange={handleChange}
-                placeholder="Ex: TGV 6123"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Users className="inline mr-2" size={16} />
-                  Nombre de passagers *
-                </label>
-                <input
-                  type="number"
-                  name="nombre_passagers"
-                  value={formData.nombre_passagers}
-                  onChange={handleChange}
-                  required
-                  min="1"
-                  max="8"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Luggage className="inline mr-2" size={16} />
-                  Nombre de bagages *
-                </label>
-                <input
-                  type="number"
-                  name="nombre_bagages"
-                  value={formData.nombre_bagages}
-                  onChange={handleChange}
-                  required
-                  min="0"
-                  max="10"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Informations supplémentaires
-              </label>
-              <textarea
-                name="informations_supplementaires"
-                value={formData.informations_supplementaires}
-                onChange={handleChange}
-                rows={4}
-                placeholder="Demandes particulières, besoins spéciaux..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? 'Envoi en cours...' : 'Confirmer la réservation'}
-            </button>
-          </form>
-
-          <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6">
-            <h3 className="font-semibold text-green-900 mb-3">Besoin d'aide ?</h3>
-            <p className="text-green-800 mb-4">
-              Notre équipe est disponible 24h/24 pour répondre à vos questions.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="tel:+33650366491"
-                className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
-              >
-                <Phone size={18} />
-                06 50 36 64 91
-              </a>
-              <a
-                href="mailto:contact@taxisparis-conventionnes.fr"
-                className="inline-flex items-center gap-2 border-2 border-green-600 text-green-600 px-6 py-2 rounded-lg hover:bg-green-600 hover:text-white transition"
-              >
-                <Mail size={18} />
-                Email
-              </a>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="bg-white py-12 sm:py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8 max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Tarifs aéroports</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                Forfaits taxis parisiens réglementés
+              </h2>
+              <p className="mt-3 leading-7 text-slate-600">
+                Les tarifs varient selon la zone de départ à Paris. Les forfaits ci-dessous restent clairement visibles sans prendre le dessus sur la réservation gare.
+              </p>
+            </div>
+
+            <div className="grid gap-5 lg:grid-cols-2">
+              <article className="rounded-[1.75rem] border border-emerald-200 bg-gradient-to-b from-emerald-50 to-white p-6 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="text-emerald-600" size={22} />
+                      <h3 className="text-xl font-black text-slate-900">Rive Droite</h3>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                      1er, 2e, 3e, 4e, 8e, 9e, 10e, 11e, 12e, 16e, 17e, 18e, 19e, 20e
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-700">FORFAITS</span>
+                </div>
+                <div className="mt-5 space-y-3">
+                  <FareRow label="CDG" sublabel="Charles de Gaulle" price="56€" tone="green" />
+                  <FareRow label="Orly" sublabel="Aéroport d'Orly" price="45€" tone="green" />
+                </div>
+              </article>
+
+              <article className="rounded-[1.75rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-6 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="text-orange-600" size={22} />
+                      <h3 className="text-xl font-black text-slate-900">Rive Gauche</h3>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                      5e, 6e, 7e, 13e, 14e, 15e
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-black text-orange-700">FORFAITS</span>
+                </div>
+                <div className="mt-5 space-y-3">
+                  <FareRow label="CDG" sublabel="Charles de Gaulle" price="65€" tone="orange" />
+                  <FareRow label="Orly" sublabel="Aéroport d'Orly" price="36€" tone="orange" />
+                </div>
+              </article>
+            </div>
+
+            <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <div className="flex items-start gap-3">
+                <Plane className="mt-0.5 shrink-0 text-slate-500" size={20} />
+                <div className="text-sm leading-6 text-slate-600">
+                  <p><strong className="text-slate-800">Beauvais-Tillé :</strong> prix au compteur (environ 120–150 €).</p>
+                  <p><strong className="text-slate-800">Le Bourget :</strong> prix au compteur.</p>
+                  <p className="mt-2 text-xs text-slate-500">
+                    Les suppléments prévus par la réglementation peuvent s'appliquer.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reservation-gare" className="bg-slate-50 py-12 sm:py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_340px] lg:items-start">
+            <form onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/50 sm:p-8">
+              <div className="mb-8">
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Réserver votre trajet</p>
+                <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">Informations de réservation</h2>
+                <p className="mt-2 text-sm leading-6 text-slate-500">
+                  Renseignez votre trajet. La distance et la durée seront calculées automatiquement après validation des deux adresses.
+                </p>
+              </div>
+
+              {submitSuccess && (
+                <div className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                  <CheckCircle className="mt-0.5 shrink-0 text-emerald-600" size={22} />
+                  <div>
+                    <p className="font-bold text-emerald-900">Votre réservation a bien été envoyée.</p>
+                    <p className="mt-1 text-sm text-emerald-700">Nous vous contacterons rapidement.</p>
+                  </div>
+                </div>
+              )}
+
+              {error && (
+                <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-800">
+                  {error}
+                </div>
+              )}
+
+              <FormStep number="1" title="Vos coordonnées">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label="Nom *">
+                    <input type="text" name="nom" value={formData.nom} onChange={handleChange} required className={inputClass} />
+                  </Field>
+                  <Field label="Prénom *">
+                    <input type="text" name="prenom" value={formData.prenom} onChange={handleChange} required className={inputClass} />
+                  </Field>
+                  <Field label="Téléphone *">
+                    <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} required className={inputClass} />
+                  </Field>
+                  <Field label="Email *">
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className={inputClass} />
+                  </Field>
+                </div>
+              </FormStep>
+
+              <FormStep number="2" title="Votre trajet">
+                <div className="space-y-4">
+                  <AutocompleteInput
+                    label="Adresse de départ"
+                    value={formData.adresse_depart}
+                    placeholder="Ex : Gare du Nord, Paris"
+                    required
+                    apiKey={apiKey}
+                    onAddressSelect={(address, lat, lng) => {
+                      setFormData(prev => ({ ...prev, adresse_depart: address }));
+                      setCoordsDepart({ lat, lng });
+                    }}
+                    onInputChange={(value) => {
+                      setFormData(prev => ({ ...prev, adresse_depart: value }));
+                      setCoordsDepart(null);
+                    }}
+                    isValidated={coordsDepart !== null}
+                  />
+
+                  <AutocompleteInput
+                    label="Adresse d'arrivée"
+                    value={formData.adresse_arrivee}
+                    placeholder="Ex : 25 Avenue des Champs-Élysées, Paris"
+                    required
+                    apiKey={apiKey}
+                    onAddressSelect={(address, lat, lng) => {
+                      setFormData(prev => ({ ...prev, adresse_arrivee: address }));
+                      setCoordsArrivee({ lat, lng });
+                    }}
+                    onInputChange={(value) => {
+                      setFormData(prev => ({ ...prev, adresse_arrivee: value }));
+                      setCoordsArrivee(null);
+                    }}
+                    isValidated={coordsArrivee !== null}
+                  />
+                </div>
+
+                {isCalculating && (
+                  <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-4 text-center text-sm font-medium text-blue-700">
+                    Calcul de l'itinéraire en cours...
+                  </div>
+                )}
+
+                {distance !== null && durationMinutes !== null && (
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4 text-center">
+                      <Gauge className="mx-auto text-blue-600" size={24} />
+                      <p className="mt-2 text-2xl font-black text-slate-900">{distance} km</p>
+                      <p className="text-xs text-slate-500">Distance réelle</p>
+                    </div>
+                    <div className="rounded-2xl border border-cyan-100 bg-cyan-50 p-4 text-center">
+                      <Timer className="mx-auto text-cyan-600" size={24} />
+                      <p className="mt-2 text-2xl font-black text-slate-900">{durationMinutes} min</p>
+                      <p className="text-xs text-slate-500">Durée estimée</p>
+                    </div>
+                  </div>
+                )}
+              </FormStep>
+
+              <FormStep number="3" title="Date, heure et train">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label="Date du trajet *" icon={<Calendar size={15} />}>
+                    <input
+                      type="date"
+                      name="date_trajet"
+                      value={formData.date_trajet}
+                      onChange={handleChange}
+                      required
+                      min={new Date().toISOString().split('T')[0]}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Heure de prise en charge *" icon={<Clock size={15} />}>
+                    <input
+                      type="time"
+                      name="heure_trajet"
+                      value={formData.heure_trajet}
+                      onChange={handleChange}
+                      required
+                      className={inputClass}
+                    />
+                  </Field>
+                  <div className="sm:col-span-2">
+                    <Field label="Numéro de train">
+                      <input
+                        type="text"
+                        name="numero_train"
+                        value={formData.numero_train}
+                        onChange={handleChange}
+                        placeholder="Ex : TGV 6123"
+                        className={inputClass}
+                      />
+                    </Field>
+                  </div>
+                </div>
+              </FormStep>
+
+              <FormStep number="4" title="Passagers & bagages">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label="Nombre de passagers *" icon={<Users size={15} />}>
+                    <input
+                      type="number"
+                      name="nombre_passagers"
+                      value={formData.nombre_passagers}
+                      onChange={handleChange}
+                      required
+                      min="1"
+                      max="8"
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Nombre de bagages *" icon={<Luggage size={15} />}>
+                    <input
+                      type="number"
+                      name="nombre_bagages"
+                      value={formData.nombre_bagages}
+                      onChange={handleChange}
+                      required
+                      min="0"
+                      max="10"
+                      className={inputClass}
+                    />
+                  </Field>
+                  <div className="sm:col-span-2">
+                    <Field label="Informations supplémentaires">
+                      <textarea
+                        name="informations_supplementaires"
+                        value={formData.informations_supplementaires}
+                        onChange={handleChange}
+                        rows={4}
+                        placeholder="Demandes particulières, besoins spéciaux..."
+                        className={inputClass + ' min-h-[120px] resize-y'}
+                      />
+                    </Field>
+                  </div>
+                </div>
+              </FormStep>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-2 w-full rounded-2xl bg-gradient-to-r from-blue-700 to-cyan-600 px-5 py-4 font-black text-white shadow-lg shadow-blue-200 transition hover:from-blue-800 hover:to-cyan-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isSubmitting ? 'Envoi en cours...' : 'Confirmer la réservation'}
+              </button>
+            </form>
+
+            <aside className="space-y-5 lg:sticky lg:top-24">
+              <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/50">
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Avant de réserver</p>
+                <h3 className="mt-2 text-xl font-black tracking-tight text-slate-900">Tout est prévu pour simplifier votre trajet</h3>
+                <div className="mt-5 space-y-3">
+                  {[
+                    ['1', 'Adresses validées', 'Départ et arrivée avec autocomplétion'],
+                    ['2', 'Distance calculée', 'Kilomètres et durée estimée'],
+                    ['3', 'Confirmation', 'Enregistrement et notification après validation'],
+                  ].map(([number, title, text]) => (
+                    <div key={number} className="flex gap-3 rounded-2xl bg-slate-50 p-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-sm font-black text-blue-700">{number}</span>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900">{title}</p>
+                        <p className="mt-0.5 text-xs leading-5 text-slate-500">{text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-6">
+                <h3 className="font-black text-emerald-950">Besoin d'aide ?</h3>
+                <p className="mt-2 text-sm leading-6 text-emerald-800">
+                  Notre équipe est disponible 24h/24 pour répondre à vos questions.
+                </p>
+                <div className="mt-4 grid gap-2">
+                  <a href="tel:+33650366491" className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 font-bold text-white transition hover:bg-emerald-700">
+                    <Phone size={17} />
+                    06 50 36 64 91
+                  </a>
+                  <a href="mailto:contact@taxisparis-conventionnes.fr" className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-300 bg-white px-4 py-3 font-bold text-emerald-700 transition hover:bg-emerald-100">
+                    <Mail size={17} />
+                    Email
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
     </>
+  );
+}
+
+const inputClass =
+  'w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100';
+
+function FormStep({
+  number,
+  title,
+  children,
+}: {
+  number: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="mb-7 border-b border-slate-100 pb-7 last:mb-0 last:border-b-0">
+      <div className="mb-5 flex items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-sm font-black text-blue-700">{number}</span>
+        <h3 className="text-lg font-black text-slate-900">{title}</h3>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Field({
+  label,
+  icon,
+  children,
+}: {
+  label: string;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 flex items-center gap-1.5 text-sm font-bold text-slate-700">
+        {icon}
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function FareRow({
+  label,
+  sublabel,
+  price,
+  tone,
+}: {
+  label: string;
+  sublabel: string;
+  price: string;
+  tone: 'green' | 'orange';
+}) {
+  const accent = tone === 'green' ? 'text-emerald-600' : 'text-orange-600';
+
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-100 bg-white p-4">
+      <div className="flex items-center gap-3">
+        <Plane className={accent} size={22} />
+        <div>
+          <p className="font-bold text-slate-900">{label}</p>
+          <p className="text-xs text-slate-500">{sublabel}</p>
+        </div>
+      </div>
+      <p className={'text-2xl font-black ' + accent}>{price}</p>
+    </div>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
