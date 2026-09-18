@@ -10,7 +10,7 @@ export default function HomeExactFooter() {
         </Link>
         <nav aria-label="Navigation du pied de page">
           <Link to="/">Accueil</Link>
-          <a href="#services">Nos services</a>
+          <a href="/#services">Nos services</a>
           <Link to="/zones-desservies">Zones desservies</Link>
           <Link to="/qui-sommes-nous">À propos</Link>
           <Link to="/blog">Blog</Link>
