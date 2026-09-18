@@ -35,21 +35,25 @@ const services = [
     title: 'Consultations médicales',
     text: 'Médecins spécialistes et généralistes',
     image: 'https://www.lifelink-medical.com/storage/2026/04/zahnimplantate-mrt_2-1024x647.jpg',
+    alt: 'Consultation médicale',
   },
   {
     title: 'Hospitalisations',
     text: 'Entrées et sorties d’hôpital',
-    image: 'https://www.melstahospitals.com/images/facilities/facilities-hero.webp',
+    image: '/gustave-roussy.webp',
+    alt: 'Hôpital Gustave Roussy à Villejuif',
   },
   {
     title: 'Soins réguliers',
     text: 'Dialyse, chimiothérapie, radiothérapie…',
     image: 'https://www.promedour.com/cdn/shop/files/Care.png?v=1772415090&width=1536',
+    alt: 'Soins médicaux réguliers',
   },
   {
     title: 'Examens médicaux',
     text: 'IRM, scanner, analyses…',
     image: 'https://www.trinityhealthma.org/sites/default/files/cards/imaging-mri.jpg',
+    alt: 'Examen médical',
   },
 ];
 
@@ -93,11 +97,13 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
 
           <div className="exact-home-container exact-home-hero-inner">
             <div className="exact-home-hero-copy">
-              <p className="exact-home-eyebrow">Transport médical conventionné</p>
-              <h1>Vos rendez-vous médicaux en toute sérénité</h1>
+              <p className="exact-home-eyebrow">Taxi conventionné CPAM · 24h/24 · 7j/7</p>
+              <h1>Taxi Conventionné &amp; VSL à Paris et en Île-de-France</h1>
               <p>
-                À Paris et en Île-de-France, des chauffeurs conventionnés à vos côtés
-                pour tous vos trajets de santé.
+                Transport médical assis agréé Sécurité sociale pour tous les rendez-vous médicaux :
+                consultations, dialyse, chimiothérapie, radiothérapie et hospitalisations.
+                Intervention rapide sur Paris (75), Essonne (91), Hauts-de-Seine (92),
+                Seine-Saint-Denis (93) et Val-de-Marne (94).
               </p>
 
               <div className="exact-home-hero-benefits">
@@ -195,7 +201,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
             <div className="exact-home-service-grid">
               {services.map((service) => (
                 <article key={service.title}>
-                  <img src={service.image} alt="" loading="lazy" decoding="async" />
+                  <img src={service.image} alt={service.alt} loading="lazy" decoding="async" />
                   <div>
                     <h3>{service.title}</h3>
                     <p>{service.text}</p>
