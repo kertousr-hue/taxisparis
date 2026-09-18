@@ -430,16 +430,29 @@ export default function CityPage() {
       />
 
       <div className="bg-white">
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-              {h1Text}
-            </h1>
-            <h2 className="text-2xl text-blue-100">
-              Transport médical remboursé CPAM | Dialyse, Chimio, Hospitalisation
-            </h2>
+        <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+          <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+            <div>
+              <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-500 sm:text-sm">
+                <Link to={'/' + departmentSlug} className="hover:text-blue-700">{department.name}</Link><span>/</span><span className="text-slate-800">{city.name}</span>
+              </div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm"><ShieldCheck size={16} /> Taxi conventionné CPAM</div>
+              <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">{h1Text}</h1>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Transport médical remboursé CPAM · Dialyse, chimiothérapie, hospitalisation et consultations depuis {city.name}.</p>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <Link to="/reservation-taxi-vsl" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]"><Calendar size={18} /> Réserver en ligne</Link>
+                <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={18} /> 06 50 36 64 91</a>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+                <img src="/image.png" alt={'Taxi conventionné à ' + city.name} className="h-[350px] w-full rounded-[1.6rem] object-cover sm:h-[420px]" />
+                <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur"><p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">{department.name}</p><p className="mt-1 text-lg font-black">{city.name} · {city.postalCode}</p></div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
         <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-10">
