@@ -389,18 +389,7 @@ export default function ReservationPage() {
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
-      {/* ── Sticky top bar ── */}
-      <div className="sticky top-0 z-40 bg-blue-700 text-white py-2.5 shadow-md">
-        <div className="container mx-auto px-4 flex items-center justify-between gap-3 text-sm">
-          <span className="font-medium hidden sm:block">Confirmation rapide par téléphone</span>
-          <a href="tel:+33650366491"
-            className="flex items-center gap-2 bg-white text-blue-700 font-bold px-4 py-1.5 rounded-full hover:bg-blue-50 transition-colors text-xs sm:text-sm mx-auto sm:mx-0">
-            <Phone size={14} /> 06 50 36 64 91
-          </a>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-b from-blue-50 via-white to-gray-50 min-h-screen">
+      <div className="refonte-reservation bg-gradient-to-b from-blue-50 via-white to-gray-50 min-h-screen">
         <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-10">
           <div className="max-w-2xl mx-auto">
 
