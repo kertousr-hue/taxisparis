@@ -2,6 +2,8 @@ import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import HomeHeaderV4 from './components/HomeHeaderV4';
+import HomeFooterV4 from './components/HomeFooterV4';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import Home from './pages/Home';
 import Reservation from './pages/Reservation';
@@ -170,9 +172,9 @@ function AppContent() {
         Aller au contenu principal
       </a>
       
-      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'premium-public-shell'} ${isHomePage ? 'app-background-home' : ''}`}>
-        {!isAdminPage && <Header onNavigate={handleNavigate} />}
-        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'premium-public-main'}`} role="main">
+      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : isHomePage ? 'v4-shell' : 'premium-public-shell'}`}>
+        {!isAdminPage && (isHomePage ? <HomeHeaderV4 /> : <Header onNavigate={handleNavigate} />)}
+        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : isHomePage ? 'v4-main' : 'premium-public-main'}`} role="main">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Home onNavigate={handleNavigate} />} />
@@ -226,7 +228,7 @@ function AppContent() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-        {!isAdminPage && <Footer onNavigate={handleNavigate} />}
+        {!isAdminPage && (isHomePage ? <HomeFooterV4 /> : <Footer onNavigate={handleNavigate} />)}
       </div>
     </>
   );
