@@ -479,7 +479,7 @@ export default function CityPage() {
         <section className="city-maquette-summary">
           <div className="maquette-container city-maquette-summary-grid">
             <article><span className="maquette-round-icon"><MapPin size={19} /></span><div><strong>Depuis {city.name}</strong><span>Prise en charge à votre domicile</span></div></article>
-            <article><span className="maquette-round-icon"><Hospital size={19} /></span><div><strong>Vers votre établissement médical</strong><span>Paris et toute l’Île-de-France</span></div></article>
+            <article><span className="maquette-round-icon"><Building2 size={19} /></span><div><strong>Vers votre établissement médical</strong><span>Paris et toute l’Île-de-France</span></div></article>
             <article><span className="maquette-round-icon"><Users size={19} /></span><div><strong>Un accompagnement humain</strong><span>Des chauffeurs à votre écoute</span></div></article>
           </div>
         </section>
