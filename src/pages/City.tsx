@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Phone, MapPin, ShieldCheck, Stethoscope, Activity, Building2, Clock, CreditCard, Shield, Car, Brain as Train, Plane, Users, Calendar } from 'lucide-react'
+import { Phone, MapPin, ShieldCheck, Stethoscope, Activity, Building2, Clock, CreditCard, Shield, Car, Brain as Train, Plane, Users, Calendar, CheckCircle2, ArrowRight } from 'lucide-react'
 import citiesData from '../data/cities.json'
 import SEOHead from '../components/SEOHead'
 
@@ -429,17 +429,60 @@ export default function CityPage() {
         jsonLD={jsonLD}
       />
 
-      <div className="bg-white">
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-              {h1Text}
-            </h1>
-            <h2 className="text-2xl text-blue-100">
-              Transport médical remboursé CPAM | Dialyse, Chimio, Hospitalisation
-            </h2>
+      <div className="city-maquette bg-white">
+        <section className="city-maquette-hero">
+          <div className="maquette-container city-maquette-hero-grid">
+            <div className="city-maquette-copy">
+              <nav className="maquette-breadcrumb" aria-label="Fil d’Ariane">
+                <Link to="/">Accueil</Link>
+                <span>›</span>
+                <Link to={`/${departmentSlug}`}>{department.name}</Link>
+                <span>›</span>
+                <strong>{city.name}</strong>
+              </nav>
+
+              <h1>{h1Text}</h1>
+              <p className="city-maquette-intro">
+                Un transport médical fiable depuis {city.name} vers tous les hôpitaux de Paris et d’Île-de-France.
+              </p>
+
+              <ul className="city-maquette-points">
+                <li><CheckCircle2 size={17} /> Prise en charge à domicile</li>
+                <li><CheckCircle2 size={17} /> Chauffeurs conventionnés CPAM</li>
+                <li><CheckCircle2 size={17} /> Toutes distances médicales</li>
+                <li><CheckCircle2 size={17} /> Service 24h/24 · 7j/7</li>
+              </ul>
+
+              <div className="maquette-hero-actions">
+                <Link to="/reservation-taxi-vsl" className="maquette-primary-cta">
+                  Réserver depuis {city.name} <ArrowRight size={17} />
+                </Link>
+                <a href="tel:+33650366491" className="maquette-call-cta">
+                  <Phone size={17} /> 06 50 36 64 91
+                </a>
+              </div>
+            </div>
+
+            <div className="city-maquette-visual" aria-label={`Repère local de ${city.name}`}>
+              <div className="city-maquette-greenery" aria-hidden="true" />
+              <div className="city-maquette-sign">
+                <span>{city.name.toUpperCase()}</span>
+              </div>
+              <div className="city-maquette-note">
+                <span>Proche de vous</span>
+                <strong>pour aller plus loin</strong>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <section className="city-maquette-summary">
+          <div className="maquette-container city-maquette-summary-grid">
+            <article><span className="maquette-round-icon"><MapPin size={19} /></span><div><strong>Depuis {city.name}</strong><span>Prise en charge à votre domicile</span></div></article>
+            <article><span className="maquette-round-icon"><Building2 size={19} /></span><div><strong>Vers votre établissement médical</strong><span>Paris et toute l’Île-de-France</span></div></article>
+            <article><span className="maquette-round-icon"><Users size={19} /></span><div><strong>Un accompagnement humain</strong><span>Des chauffeurs à votre écoute</span></div></article>
+          </div>
+        </section>
 
         <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-10">

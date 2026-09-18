@@ -167,6 +167,10 @@ function getRouteMeta(routePath: string): RouteMeta {
       title: 'Reservation Taxi Conventionne VSL CPAM | Ile-de-France 24/7',
       description: 'Reservez votre taxi conventionne ou VSL en ligne. Transport medical rembourse CPAM. Service 24/7 en Ile-de-France (75, 91, 92, 93, 94).',
     },
+    '/services-transport-medical': {
+      title: 'Services de transport medical | Taxi Conventionne CPAM Paris IDF',
+      description: 'Consultations, dialyse, chimiotherapie, examens et hospitalisations en taxi conventionne CPAM a Paris et en Ile-de-France.',
+    },
     '/taxis-aeroports-parisiens': {
       title: 'Taxi Conventionne Aeroports Paris - CDG, Orly, Beauvais | CPAM',
       description: 'Transport medical conventionne vers les aeroports parisiens : Roissy-CDG, Orly et Beauvais. Prise en charge CPAM possible. Disponible 24h/24.',
