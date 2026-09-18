@@ -35,7 +35,7 @@ export default function HomeExactHeader() {
           <nav className="exact-home-desktop-nav" aria-label="Navigation principale">
             {navItems.map((item) => (
               item.path.startsWith('/#')
-                ? <a key={item.path} href={item.path.slice(1)}>{item.label}</a>
+                ? <a key={item.path} href={item.path}>{item.label}</a>
                 : <Link key={item.path} to={item.path}>{item.label}</Link>
             ))}
           </nav>
