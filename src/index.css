@@ -720,3 +720,94 @@ input[type="month"] {
   .home2-footer-actions{grid-column:auto;grid-template-columns:1fr}
   .home2-footer-bottom .home2-container{padding-block:10px;flex-direction:column;align-items:flex-start}
 }
+
+
+/* ===== MAQUETTE 2 — FIDELITE VISUELLE ===== */
+.home2-hero-photo{background:#d9e4e9}
+.home2-hero-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.home2-hero-photo-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,45,77,.30),rgba(6,45,77,0) 38%),linear-gradient(0deg,rgba(6,31,50,.42),transparent 42%);z-index:1}
+.home2-eiffel-mark{position:absolute;left:17%;top:9%;z-index:2;color:rgba(255,255,255,.82);font:900 80px/1 Georgia,serif;transform:scaleX(.45);text-shadow:0 3px 10px rgba(0,0,0,.18)}
+.home2-script-note{z-index:3}
+
+.home2-reservation{grid-template-columns:1fr;padding:15px 18px 17px}
+.home2-reservation-heading{display:block}
+.home2-reservation-heading h2{font-size:22px;line-height:1.1}
+.home2-reservation-heading p{font-size:10px;margin-top:3px}
+.home2-booking-tabs{margin-top:12px}
+.home2-booking-tabs span{font-size:9px;padding:7px 18px}
+.home2-booking-fields{grid-template-columns:1.12fr 1.25fr 1fr 54px;gap:9px;margin-top:10px}
+.home2-booking-fields>div{min-height:54px;padding:0 13px}
+.home2-booking-fields>div>span{font-size:10px}
+.home2-booking-fields small{font-size:8px}
+.home2-booking-fields>a{width:54px;min-width:54px;height:54px}
+
+.home2-reassurance{background:#f6faff}
+.home2-reassurance article{justify-content:center;min-height:94px;text-align:center;gap:9px}
+.home2-reassurance article>span{width:42px;height:42px;flex-basis:42px}
+.home2-reassurance strong{max-width:150px;font-size:11px;line-height:1.25}
+
+.home2-human{padding:0;background:#fff}
+.home2-human-grid{gap:0;min-height:300px}
+.home2-human-photo{min-height:300px;border:0;border-radius:0;background:#eef3f5}
+.home2-human-photo::after{display:none}
+.home2-human-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.home2-human-copy{display:flex;flex-direction:column;justify-content:center;padding:35px 46px;background:linear-gradient(90deg,#fff 0%,#fbfdff 100%)}
+.home2-human-copy h2{font-size:clamp(2.05rem,3.2vw,2.85rem)}
+.home2-human-copy>p:not(.home2-section-kicker){font-size:12px;max-width:480px}
+.home2-testimonial{margin-top:14px;padding:13px 16px;border-radius:9px;background:#f3f8fc;color:var(--h2-navy)}
+.home2-testimonial p{margin:0;font:italic 12px/1.45 Georgia,serif}
+.home2-testimonial small{display:block;margin-top:5px;color:#728391;font-size:8px}
+
+.home2-commitments{padding:34px 0 42px}
+.home2-section-heading h2{font-size:28px}
+.home2-commitment-grid{gap:8px;margin-top:18px}
+.home2-commitment-grid article{min-height:115px;padding:14px 12px}
+.home2-commitment-grid article>span{width:42px;height:42px}
+.home2-commitment-grid h3{margin-top:8px;font-size:14px}
+.home2-commitment-grid p{margin-top:1px;font-size:9px}
+
+.home2-services{padding:22px 0 26px;background:#fff;border:0}
+.home2-service-grid{gap:8px;margin-top:15px}
+.home2-service-grid article{position:relative;display:grid;grid-template-rows:70px 1fr;min-height:135px;padding:0;overflow:hidden;text-align:left;border:1px solid #dce5ea;border-radius:8px}
+.home2-service-grid article>img{width:100%;height:70px;object-fit:cover}
+.home2-service-grid article>div{padding:10px 12px 12px}
+.home2-service-grid strong{display:block;margin:0;color:var(--h2-navy);font:700 12px/1.2 Georgia,serif}
+.home2-service-grid span{display:block;margin-top:2px;color:#6e8292;font-size:8px}
+.home2-service-grid article>svg{position:absolute;right:10px;bottom:10px;width:24px;height:24px;padding:6px;border-radius:50%;background:#eaf4fb;color:#1a5d8e}
+
+.home2-final{padding:18px 0 26px;background:#f7fafc}
+.home2-final-card{position:relative;grid-template-columns:260px 1fr auto;overflow:hidden;padding:0;min-height:92px}
+.home2-final-visual{height:92px;border-radius:0;background:#dbe6eb;overflow:hidden}
+.home2-final-visual>img{width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.home2-final-copy{padding:14px 0}
+.home2-final-copy h2{margin:0;font-size:23px}
+.home2-final-copy p{margin-top:3px;color:#6d7f8d;font-size:9px;font-weight:500;letter-spacing:0;text-transform:none}
+.home2-final-actions{padding-right:78px}
+.home2-final-script{position:absolute;right:15px;top:12px;margin:0;transform:rotate(-6deg);color:#0f4673;font:italic 12px/1.15 "Segoe Script","Bradley Hand",cursive}
+
+.home2-footer{border-top:0}
+
+@media(max-width:960px){
+  .home2-human{padding:0}
+  .home2-human-copy{padding:30px 24px}
+  .home2-booking-fields{grid-template-columns:1fr 1fr}
+  .home2-booking-fields>a{width:100%}
+  .home2-final-card{grid-template-columns:190px 1fr}
+  .home2-final-script{display:none}
+  .home2-final-actions{padding:0 16px 14px}
+}
+@media(max-width:640px){
+  .home2-reservation-heading h2{font-size:18px}
+  .home2-booking-tabs{overflow:auto}
+  .home2-booking-tabs span{padding:7px 12px}
+  .home2-booking-fields{grid-template-columns:1fr}
+  .home2-reassurance article{justify-content:flex-start;text-align:left}
+  .home2-human-grid{grid-template-columns:1fr}
+  .home2-human-photo{min-height:240px}
+  .home2-human-copy{padding:28px 10px 34px}
+  .home2-commitment-grid,.home2-service-grid{grid-template-columns:1fr 1fr}
+  .home2-final-card{grid-template-columns:1fr}
+  .home2-final-visual{height:130px}
+  .home2-final-copy{padding:14px 16px 0}
+  .home2-final-actions{padding:0 16px 16px}
+}
