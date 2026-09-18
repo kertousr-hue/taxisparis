@@ -1,0 +1,25 @@
+name: Home maquette 2 build
+
+on:
+  push:
+    branches:
+      - maquette2-accueil-premium
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Production SSG build
+        run: npm run build:ssg
