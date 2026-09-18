@@ -7,6 +7,7 @@ const navItems = [
   { path: '/#services', label: 'Nos services' },
   { path: '/zones-desservies', label: 'Zones desservies' },
   { path: '/qui-sommes-nous', label: 'À propos' },
+  { path: '/blog', label: 'Blog' },
   { path: '/faq', label: 'FAQ' },
   { path: '/contact', label: 'Contact' },
 ];
@@ -28,7 +29,7 @@ export default function HomeExactHeader() {
       <div className="exact-home-nav">
         <div className="exact-home-container exact-home-nav-inner">
           <Link to="/" className="exact-home-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+            <img src="/taxis-logo-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
           </Link>
 
           <nav className="exact-home-desktop-nav" aria-label="Navigation principale">
