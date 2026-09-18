@@ -445,7 +445,7 @@ export default function ReservationPage() {
               </div>
             )}
 
-            {{/* ══════════ FORM ══════════ */}
+            {/* ══════════ FORM ══════════ */}
             <form id="formulaire-reservation" onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" aria-labelledby="page-title">
 
               {/* 1 – Coordonnées */}
