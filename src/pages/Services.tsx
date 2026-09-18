@@ -4,7 +4,7 @@ import {
   ArrowRight,
   CalendarDays,
   HeartHandshake,
-  Hospital,
+  Building2,
   Microscope,
   Phone,
   ShieldCheck,
@@ -17,7 +17,7 @@ const services = [
   { icon: Stethoscope, title: 'Consultation médicale', text: 'Tous vos rendez-vous spécialisés, examens et suivis médicaux.' },
   { icon: Activity, title: 'Dialyse', text: 'Des trajets réguliers organisés avec ponctualité et sérénité.' },
   { icon: HeartHandshake, title: 'Chimiothérapie', text: 'Un accompagnement humain pour chaque séance de traitement.' },
-  { icon: Hospital, title: 'Hospitalisation', text: 'Entrées, sorties et transferts entre établissements de santé.' },
+  { icon: Building2, title: 'Hospitalisation', text: 'Entrées, sorties et transferts entre établissements de santé.' },
   { icon: Microscope, title: 'Examens médicaux', text: 'IRM, scanner, analyses, radiologie et autres examens prescrits.' },
   { icon: ShieldCheck, title: 'Transport conventionné CPAM', text: 'Selon prescription médicale et conditions de prise en charge.' },
 ];
@@ -73,7 +73,7 @@ export default function Services() {
             <article><span className="maquette-round-icon"><ShieldCheck size={20} /></span><div><strong>Conventionné CPAM</strong><span>Transport médical agréé</span></div></article>
             <article><span className="maquette-round-icon"><CalendarDays size={20} /></span><div><strong>Réservation simple</strong><span>En ligne ou par téléphone</span></div></article>
             <article><span className="maquette-round-icon"><Users size={20} /></span><div><strong>Accompagnement humain</strong><span>Une équipe à votre écoute</span></div></article>
-            <article><span className="maquette-round-icon"><Hospital size={20} /></span><div><strong>Établissements de santé</strong><span>Paris et toute l’Île-de-France</span></div></article>
+            <article><span className="maquette-round-icon"><Building2 size={20} /></span><div><strong>Établissements de santé</strong><span>Paris et toute l’Île-de-France</span></div></article>
           </div>
         </section>
 
