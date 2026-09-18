@@ -175,50 +175,54 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute -inset-5 rounded-[2.5rem] bg-white/10 blur-2xl" aria-hidden="true" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.09] p-6 shadow-[0_30px_80px_rgba(15,23,42,.24)] backdrop-blur-md sm:p-7">
-              <div className="flex items-start justify-between gap-5">
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-200">Zone desservie</p>
-                  <p className="mt-2 text-3xl font-black text-white">{deptData.name}</p>
-                  <p className="mt-1 text-sm text-blue-100">Département {department}</p>
-                </div>
-                <span
-                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-3xl text-2xl font-black text-white shadow-lg"
-                  style={{ background: accent.primary }}
-                >
-                  {department}
-                </span>
+          <div className="department-maquette-map-card">
+            <div className="department-maquette-map-heading">
+              <div>
+                <p>Territoire desservi</p>
+                <strong>{deptData.name} ({department})</strong>
               </div>
+              <span>{deptData.cities.length} villes</span>
+            </div>
 
-              <div className="mt-7 rounded-3xl bg-white p-5 text-slate-900 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: accent.soft, color: accent.primary }}>
-                    <Navigation size={21} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-black">Transport médical de proximité</p>
-                    <p className="text-xs text-slate-500">Depuis votre domicile vers vos soins</p>
-                  </div>
-                </div>
-
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-2xl font-black text-slate-950">{deptData.cities.length}</p>
-                    <p className="mt-1 text-xs font-bold text-slate-500">villes / secteurs</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-2xl font-black text-slate-950">24/7</p>
-                    <p className="mt-1 text-xs font-bold text-slate-500">disponibilité</p>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex items-center gap-2 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800">
-                  <CheckCircle size={17} aria-hidden="true" />
-                  Taxi conventionné CPAM
-                </div>
+            <div className="department-maquette-map-visual">
+              <svg viewBox="0 0 360 300" role="img" aria-label={`Carte stylisée de ${deptData.name}`}>
+                <defs>
+                  <linearGradient id={`dept-fill-${department}`} x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#dbeaf4" />
+                    <stop offset="100%" stopColor="#b9d3e5" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M95 35 C132 16 196 24 236 53 C274 80 306 124 294 168 C284 205 252 225 230 260 C200 282 147 274 112 252 C80 233 59 199 66 161 C50 127 62 77 95 35Z"
+                  fill={`url(#dept-fill-${department})`}
+                  stroke="#6e9dbf"
+                  strokeWidth="3"
+                />
+                <path d="M102 78 C135 108 169 91 201 117 C225 139 245 157 274 160" fill="none" stroke="#ffffff" strokeWidth="2" opacity=".75" />
+                <path d="M83 173 C126 160 154 181 192 158 C222 140 247 122 279 111" fill="none" stroke="#ffffff" strokeWidth="2" opacity=".7" />
+                <path d="M128 44 C144 77 161 110 151 144 C143 175 149 211 178 255" fill="none" stroke="#ffffff" strokeWidth="2" opacity=".7" />
+                <text x="180" y="157" textAnchor="middle" fill="#0c3a60" fontSize="48" fontWeight="800">{department}</text>
+                {deptData.cities.slice(0, 6).map((city, index) => {
+                  const points = [
+                    [112, 83], [236, 83], [96, 160], [256, 165], [135, 224], [226, 225],
+                  ];
+                  const [x, y] = points[index] || [180, 235];
+                  return (
+                    <g key={city.slug}>
+                      <circle cx={x} cy={y} r="5" fill="#0b416c" stroke="#ffffff" strokeWidth="3" />
+                    </g>
+                  );
+                })}
+              </svg>
+              <div className="department-maquette-map-note">
+                <span>Un territoire</span>
+                <strong>mieux connecté à la santé</strong>
               </div>
+            </div>
+
+            <div className="department-maquette-map-footer">
+              <span><Navigation size={16} /> Prise en charge à domicile</span>
+              <span><CheckCircle size={16} /> Conventionné CPAM</span>
             </div>
           </div>
         </div>
