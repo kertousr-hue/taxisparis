@@ -72,6 +72,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
         <section className="home2-hero">
           <div className="home2-container home2-hero-grid">
             <div className="home2-hero-copy">
+              <div className="home2-premium-label"><span /> Service de transport médical premium</div>
               <p className="home2-eyebrow">Transport médical conventionné</p>
               <h1>Vos rendez-vous médicaux<br />en toute sérénité</h1>
               <p className="home2-hero-lead">
@@ -95,9 +96,16 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
                 </a>
               </div>
               <p className="home2-availability"><Clock size={14} /> Disponible 24h/24 · 7j/7</p>
+
+              <div className="home2-hero-proof">
+                <div><strong>24/7</strong><span>Disponibilité</span></div>
+                <div><strong>5</strong><span>Départements</span></div>
+                <div><strong>193+</strong><span>Villes desservies</span></div>
+              </div>
             </div>
 
             <div className="home2-hero-photo">
+              <div className="home2-photo-badge"><ShieldCheck size={15} /><span>Conventionné CPAM</span></div>
               <img
                 src="https://www.rideinbliss.com/sablony/rideinbliss3/imagesrib/2026/senior/senior-transportation-big.jpg"
                 alt="Chauffeur accompagnant une personne âgée"
@@ -246,6 +254,11 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
             <p className="home2-final-script">Votre santé<br />Notre route</p>
           </div>
         </section>
+
+        <div className="home2-mobile-quickbar" aria-label="Actions rapides">
+          <a href="tel:+33650366491"><Phone size={17} /> Appeler</a>
+          <Link to="/reservation-taxi-vsl"><CalendarDays size={17} /> Réserver</Link>
+        </div>
       </div>
     </>
   );
