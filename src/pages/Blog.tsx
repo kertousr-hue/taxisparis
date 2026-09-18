@@ -205,277 +205,377 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         jsonLD={[jsonLDWebPage, jsonLDItemList, jsonLDFAQ, jsonLDMedical]}
       />
 
-      <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
-            <BookOpen size={14} aria-hidden="true" />
-            Guides & conseils transport médical
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Blog Taxi VSL Conventionné<br className="hidden sm:block" /> en Île-de-France
-          </h1>
-          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8">
-            Tout savoir sur le transport médical remboursé CPAM : démarches, remboursements, zones desservies et conseils pratiques
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Link
-              to="/reservation-taxi-vsl"
-              className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition shadow-lg"
-            >
-              Réserver maintenant
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-            <a
-              href="tel:+33650366491"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 border-2 border-white text-white font-bold px-6 py-3 rounded-xl hover:bg-white hover:text-blue-600 transition"
-            >
-              <Phone size={16} aria-hidden="true" />
-              06 50 36 64 91
-            </a>
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <div className="container relative mx-auto px-4 py-14 text-center sm:py-16 lg:py-20">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
+              <BookOpen size={16} aria-hidden="true" />
+              Guides & conseils transport médical
+            </div>
+            <h1 className="text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+              Blog Taxi VSL Conventionné
+              <span className="block">en Île-de-France</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-blue-100 sm:text-lg">
+              Comprendre le transport médical remboursé CPAM, préparer vos démarches et trouver rapidement les informations utiles avant votre trajet.
+            </p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link
+                to="/reservation-taxi-vsl"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50"
+              >
+                Réserver maintenant
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+              <a
+                href="tel:+33650366491"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700"
+              >
+                <Phone size={17} aria-hidden="true" />
+                06 50 36 64 91
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50" aria-label="Articles et guides du blog">
+      <section className="bg-slate-50 py-12 sm:py-16" aria-label="Article à la une">
         <div className="container mx-auto px-4">
-          {hasPublishedPosts ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {posts.map((post) => (
-                <article
-                  key={post.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group"
-                >
-                  {post.featured_image_url && (
-                    <div className="h-48 overflow-hidden bg-gray-100">
-                      <img
-                        src={post.featured_image_url}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        loading="lazy"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-7">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">À la une</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                Le guide à lire avant votre prochain trajet
+              </h2>
+            </div>
+
+            {hasPublishedPosts ? (
+              <article className="grid overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/50 lg:grid-cols-[1.05fr_.95fr]">
+                <div className="min-h-[280px] bg-gradient-to-br from-blue-100 to-cyan-100 lg:min-h-[360px]">
+                  {posts[0].featured_image_url ? (
+                    <img
+                      src={posts[0].featured_image_url}
+                      alt={posts[0].title}
+                      className="h-full w-full object-cover"
+                      loading="eager"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="flex h-full min-h-[280px] items-center justify-center">
+                      <BookOpen className="text-blue-500" size={72} />
                     </div>
                   )}
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
-                        Article
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">ARTICLE</span>
+                    {posts[0].published_at && (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                        <Calendar size={14} aria-hidden="true" />
+                        <time dateTime={posts[0].published_at}>{formatDate(posts[0].published_at)}</time>
                       </span>
-                      {post.published_at && (
-                        <div className="flex items-center gap-1 text-gray-500 text-xs">
-                          <Calendar size={13} aria-hidden="true" />
-                          <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>
-                        </div>
-                      )}
-                    </div>
-                    <h2 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition leading-snug">
-                      {post.title}
-                    </h2>
-                    {post.excerpt && (
-                      <p className="text-gray-600 mb-4 text-sm line-clamp-3">{post.excerpt}</p>
                     )}
-                    <Link
-                      to={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm hover:gap-3 transition-all"
-                      aria-label={`Lire l'article : ${post.title}`}
-                    >
-                      Lire la suite
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
                   </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-3">
-                  Guides pratiques taxi conventionné CPAM
-                </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Les réponses essentielles pour préparer un transport médical remboursé en Île-de-France.
-                </p>
-                {loading && <p className="sr-only" aria-live="polite">Mise à jour des articles en cours</p>}
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {STATIC_GUIDES.map((guide) => (
-                  <article
-                    key={guide.title}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
+                  <h3 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl">
+                    {posts[0].title}
+                  </h3>
+                  {posts[0].excerpt && (
+                    <p className="mt-4 leading-7 text-slate-600">{posts[0].excerpt}</p>
+                  )}
+                  <Link
+                    to={'/blog/' + posts[0].slug}
+                    className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-blue-700 px-5 py-3 font-bold text-white transition hover:bg-blue-800"
                   >
-                    <div className="p-6">
-                      <span className="inline-flex text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-3">
-                        {guide.category}
-                      </span>
-                      <h3 className="text-lg font-bold text-gray-800 mb-3 leading-snug">
-                        {guide.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                        {guide.excerpt}
-                      </p>
+                    Lire l'article
+                    <ArrowRight size={17} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+            ) : (
+              <article className="grid overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/50 lg:grid-cols-[.9fr_1.1fr]">
+                <div className="flex min-h-[280px] items-center justify-center bg-gradient-to-br from-blue-700 to-cyan-600">
+                  <BookOpen className="text-white" size={86} />
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                  <span className="w-fit rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
+                    {STATIC_GUIDES[0].category}
+                  </span>
+                  <h3 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl">
+                    {STATIC_GUIDES[0].title}
+                  </h3>
+                  <p className="mt-4 leading-7 text-slate-600">{STATIC_GUIDES[0].excerpt}</p>
+                  <Link
+                    to={STATIC_GUIDES[0].href}
+                    className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-blue-700 px-5 py-3 font-bold text-white transition hover:bg-blue-800"
+                  >
+                    Consulter le guide
+                    <ArrowRight size={17} aria-hidden="true" />
+                  </Link>
+                  {loading && <p className="sr-only" aria-live="polite">Mise à jour des articles en cours</p>}
+                </div>
+              </article>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-12 sm:py-16" aria-label="Articles et guides du blog">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Guides pratiques</p>
+                <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                  Conseils pour vos transports médicaux
+                </h2>
+                <p className="mt-3 max-w-2xl leading-7 text-slate-600">
+                  Des réponses concrètes sur la CPAM, les prescriptions, les soins réguliers et les zones desservies.
+                </p>
+              </div>
+            </div>
+
+            {hasPublishedPosts && posts.length > 1 ? (
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {posts.slice(1).map((post) => (
+                  <article key={post.id} className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                    {post.featured_image_url ? (
+                      <div className="h-48 overflow-hidden bg-slate-100">
+                        <img
+                          src={post.featured_image_url}
+                          alt={post.title}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex h-40 items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50">
+                        <BookOpen className="text-blue-400" size={42} />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black text-blue-700">ARTICLE</span>
+                        {post.published_at && (
+                          <span className="inline-flex items-center gap-1 text-[11px] text-slate-500">
+                            <Calendar size={12} />
+                            {formatDate(post.published_at)}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="mt-4 text-lg font-black leading-snug text-slate-900">{post.title}</h3>
+                      {post.excerpt && <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{post.excerpt}</p>}
                       <Link
-                        to={guide.href}
-                        className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm hover:gap-3 transition-all"
+                        to={'/blog/' + post.slug}
+                        className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 transition group-hover:gap-2.5"
+                        aria-label={'Lire l article : ' + post.title}
                       >
-                        Consulter le guide
-                        <ArrowRight size={16} aria-hidden="true" />
+                        Lire la suite
+                        <ArrowRight size={15} />
                       </Link>
                     </div>
                   </article>
                 ))}
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {STATIC_GUIDES.slice(1).map((guide) => (
+                  <article key={guide.title} className="group rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                    <span className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black text-blue-700">
+                      {guide.category}
+                    </span>
+                    <h3 className="mt-4 text-lg font-black leading-snug text-slate-900">{guide.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-600">{guide.excerpt}</p>
+                    <Link
+                      to={guide.href}
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 transition group-hover:gap-2.5"
+                    >
+                      Consulter le guide
+                      <ArrowRight size={15} />
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
-      <section className="py-12 bg-white" aria-label="Guide du transport médical conventionné">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
-            Guide complet du transport médical en taxi conventionné
-          </h2>
+      <section className="bg-slate-50 py-12 sm:py-16" aria-label="Guide du transport médical conventionné">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
+            <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Guide complet</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">
+                Transport médical en taxi conventionné
+              </h2>
 
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-              <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Qu'est-ce qu'un taxi conventionné VSL CPAM ?
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Un <strong>taxi conventionné</strong> est un véhicule agréé par la Caisse Primaire d'Assurance Maladie (CPAM) pour assurer les transports médicaux non urgents. Il s'adresse aux patients dits « assis », capables de se déplacer sans assistance médicale particulière pendant le trajet.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Notre entreprise intervient sur Paris (75), l'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94), 24h/24, 7j/7, pour les consultations, soins réguliers, hospitalisations et sorties d'établissement.
-            </p>
-          </div>
+              <GuideSection
+                title="Qu'est-ce qu'un taxi conventionné VSL CPAM ?"
+                text={
+                  <>
+                    Un <strong>taxi conventionné</strong> est un véhicule agréé par la Caisse Primaire d'Assurance Maladie pour assurer certains transports médicaux non urgents. Il convient aux patients pouvant voyager assis sans surveillance médicale particulière.
+                  </>
+                }
+              />
+              <GuideSection
+                title="Conditions et démarches pour le remboursement CPAM"
+                text={
+                  <>
+                    Le remboursement repose notamment sur une <strong>prescription médicale de transport</strong> et sur les conditions définies par l'Assurance Maladie. Selon la situation, une prise en charge renforcée ou le tiers payant peuvent s'appliquer.
+                  </>
+                }
+              />
+              <GuideSection
+                title="Types de transports médicaux"
+                text={
+                  <>
+                    Consultations, examens, hospitalisations, sorties d'établissement, rééducation, dialyse, chimiothérapie et radiothérapie peuvent nécessiter un transport adapté selon la prescription.
+                  </>
+                }
+              />
+            </article>
 
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-              <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Conditions et démarches pour obtenir le remboursement CPAM
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Le remboursement repose sur une <strong>prescription médicale de transport</strong>, un trajet lié à des soins reconnus par l'Assurance Maladie et une situation médicale justifiant le recours à un transport adapté.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Selon votre situation, la prise en charge peut atteindre 100 %, notamment en cas d'ALD, de maternité, d'accident du travail ou de soins répétés. Pour les transports en série, une ordonnance peut couvrir plusieurs séances.
-            </p>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-              <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Types de transports médicaux pris en charge
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Notre service couvre les consultations, examens médicaux, hospitalisations programmées, sorties d'hôpital, séances de rééducation, dialyse, chimiothérapie, radiothérapie et transferts inter-hospitaliers en Île-de-France.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Les trajets vers les gares et aéroports peuvent aussi être organisés lorsqu'ils sont liés à un motif médical prescrit. Chaque demande est étudiée selon votre situation et vos documents de prise en charge.
-            </p>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-              <CheckCircle size={20} className="text-blue-500 flex-shrink-0" aria-hidden="true" />
-              Départements couverts
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-5">
-              Nos chauffeurs interviennent dans les cinq départements suivants. Consultez la page de votre département pour connaître les villes desservies et les établissements hospitaliers proches.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {DEPARTMENTS.map((dept) => (
+            <aside className="space-y-5 lg:sticky lg:top-24">
+              <div className="rounded-[1.75rem] bg-gradient-to-br from-blue-800 to-cyan-700 p-6 text-white shadow-xl">
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-100">Besoin d'un trajet ?</p>
+                <h3 className="mt-2 text-2xl font-black tracking-tight">Réservez en quelques minutes</h3>
+                <p className="mt-3 text-sm leading-6 text-blue-100">
+                  Service disponible 24h/24, 7j/7 selon les disponibilités.
+                </p>
                 <Link
-                  key={dept.label}
-                  to={dept.href}
-                  className="flex items-center gap-3 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 hover:bg-blue-100 hover:border-blue-300 transition group"
-                  aria-label={`Taxi conventionné ${dept.label}`}
+                  to="/reservation-taxi-vsl"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-bold text-blue-700 transition hover:bg-blue-50"
                 >
-                  <span className="flex-shrink-0 w-9 h-9 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
-                    {dept.label.match(/\d+/)?.[0]}
-                  </span>
-                  <span className="font-semibold text-gray-800 text-sm group-hover:text-blue-700 transition">
-                    Taxi conventionné {dept.label}
-                  </span>
-                  <ArrowRight size={14} className="ml-auto text-blue-400 group-hover:translate-x-1 transition" aria-hidden="true" />
+                  Réserver maintenant
+                  <ArrowRight size={16} />
                 </Link>
-              ))}
+              </div>
+
+              <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6">
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Zones desservies</p>
+                <div className="mt-4 space-y-2">
+                  {DEPARTMENTS.map((dept) => (
+                    <Link
+                      key={dept.label}
+                      to={dept.href}
+                      className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50"
+                    >
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-700 text-xs font-black text-white">
+                        {dept.label.match(/\d+/)?.[0]}
+                      </span>
+                      <span className="text-sm font-bold text-slate-800">{dept.label}</span>
+                      <ArrowRight className="ml-auto text-blue-500" size={14} />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-12 sm:py-16" aria-label="Questions fréquentes">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-8 text-center">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">FAQ</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Questions fréquentes</h2>
+            </div>
+
+            <div className="space-y-3">
+              {FAQ_ITEMS.map((item, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div key={item.question} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <button
+                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                      aria-expanded={isOpen}
+                      aria-controls={'blog-faq-answer-' + index}
+                      id={'blog-faq-question-' + index}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      type="button"
+                    >
+                      <span className="pr-2 font-bold text-slate-900">{item.question}</span>
+                      <span className="shrink-0 text-blue-700" aria-hidden="true">
+                        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                      </span>
+                    </button>
+                    <div
+                      id={'blog-faq-answer-' + index}
+                      role="region"
+                      aria-labelledby={'blog-faq-question-' + index}
+                      hidden={!isOpen}
+                    >
+                      <p className="border-t border-slate-100 px-5 pb-5 pt-4 text-sm leading-7 text-slate-600 sm:text-base">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50" aria-label="Questions fréquentes">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
-            Questions fréquentes
-          </h2>
-          <div className="space-y-3">
-            {FAQ_ITEMS.map((item, index) => {
-              const isOpen = openFaq === index;
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
-                >
-                  <button
-                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
-                    aria-expanded={isOpen}
-                    aria-controls={`blog-faq-answer-${index}`}
-                    id={`blog-faq-question-${index}`}
-                    onClick={() => setOpenFaq(isOpen ? null : index)}
-                    type="button"
-                  >
-                    <span className="font-semibold text-gray-800 text-sm sm:text-base pr-2">
-                      {item.question}
-                    </span>
-                    <span className="flex-shrink-0 text-blue-600" aria-hidden="true">
-                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                    </span>
-                  </button>
-                  <div
-                    id={`blog-faq-answer-${index}`}
-                    role="region"
-                    aria-labelledby={`blog-faq-question-${index}`}
-                    hidden={!isOpen}
-                  >
-                    <p className="px-5 pb-5 text-gray-700 leading-relaxed text-sm sm:text-base border-t border-gray-100 pt-3">
-                      {item.answer}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-white" aria-label="Réserver un transport médical">
-        <div className="container mx-auto px-4 max-w-2xl text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">
-            Besoin d'un transport médical remboursé ?
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Réservez votre taxi conventionné VSL en quelques minutes. Disponible 24h/24, 7j/7 dans toute l'Île-de-France.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Link
-              to="/reservation-taxi-vsl"
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-blue-700 transition shadow-md"
-            >
-              Réserver maintenant
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-            <a
-              href="tel:+33650366491"
-              className="inline-flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 font-bold px-8 py-3.5 rounded-xl hover:bg-blue-600 hover:text-white transition"
-            >
-              <Phone size={16} aria-hidden="true" />
-              Appeler maintenant
-            </a>
+      <section className="bg-slate-950 py-12 text-white sm:py-16" aria-label="Réserver un transport médical">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-black tracking-tight sm:text-4xl">
+              Besoin d'un transport médical remboursé ?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-300">
+              Réservez votre taxi conventionné en quelques minutes pour vos rendez-vous à Paris et en Île-de-France.
+            </p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link
+                to="/reservation-taxi-vsl"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 font-bold text-white transition hover:bg-blue-500"
+              >
+                Réserver maintenant
+                <ArrowRight size={17} />
+              </Link>
+              <a
+                href="tel:+33650366491"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-7 py-3.5 font-bold text-white transition hover:bg-slate-800"
+              >
+                <Phone size={17} />
+                Appeler maintenant
+              </a>
+            </div>
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+function GuideSection({
+  title,
+  text,
+}: {
+  title: string;
+  text: React.ReactNode;
+}) {
+  return (
+    <section className="mt-7 border-t border-slate-100 pt-7 first:border-t-0 first:pt-0">
+      <h3 className="flex items-start gap-2 text-xl font-black text-slate-900">
+        <CheckCircle className="mt-0.5 shrink-0 text-blue-600" size={21} />
+        {title}
+      </h3>
+      <p className="mt-3 leading-7 text-slate-600">{text}</p>
+    </section>
   );
 }
