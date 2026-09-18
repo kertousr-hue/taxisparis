@@ -6,7 +6,7 @@ import {
   Car,
   Clock3,
   HeartHandshake,
-  Hospital,
+  Building2,
   MapPin,
   Microscope,
   Phone,
@@ -81,7 +81,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
             <div className="maquette-hero-visual" aria-label="Illustration transport médical">
               <div className="maquette-city-skyline" aria-hidden="true">
                 <span className="maquette-eiffel">♜</span>
-                <span className="maquette-hospital"><Hospital size={42} /></span>
+                <span className="maquette-hospital"><Building2 size={42} /></span>
               </div>
               <div className="maquette-human-card">
                 <div className="maquette-human-icon"><Users size={32} /></div>
@@ -103,7 +103,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
               <div className="maquette-booking-title">Votre prochain rendez-vous médical ?</div>
               <div className="maquette-booking-field"><CalendarDays size={16} /><span>Date du trajet</span></div>
               <div className="maquette-booking-field"><MapPin size={16} /><span>Adresse de départ</span></div>
-              <div className="maquette-booking-field"><Hospital size={16} /><span>Destination (hôpital, clinique…)</span></div>
+              <div className="maquette-booking-field"><Building2 size={16} /><span>Destination (hôpital, clinique…)</span></div>
               <Link to="/reservation-taxi-vsl" className="maquette-booking-next" aria-label="Réserver">
                 <ArrowRight size={19} />
               </Link>
@@ -131,7 +131,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
           <div className="maquette-container maquette-story-grid">
             <div className="maquette-story-visual">
               <div className="maquette-paris-shape">PARIS</div>
-              <div className="maquette-story-hospital"><Hospital size={54} /></div>
+              <div className="maquette-story-hospital"><Building2 size={54} /></div>
             </div>
             <div>
               <p className="maquette-script maquette-script-dark">Plus qu’un transport,</p>
