@@ -9,6 +9,7 @@ import Zones from './pages/Zones';
 import ZoneDetail from './pages/ZoneDetail';
 import Stations from './pages/Stations';
 import About from './pages/About';
+import Services from './pages/Services';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
@@ -170,9 +171,9 @@ function AppContent() {
         Aller au contenu principal
       </a>
       
-      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'premium-public-shell'} ${isHomePage ? 'app-background-home' : ''}`}>
+      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'maquette-public-shell'} ${isHomePage ? 'maquette-home-shell' : ''}`}>
         {!isAdminPage && <Header onNavigate={handleNavigate} />}
-        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'premium-public-main'}`} role="main">
+        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'maquette-public-main'}`} role="main">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Home onNavigate={handleNavigate} />} />
@@ -194,6 +195,7 @@ function AppContent() {
 
             {/* Service routes */}
             <Route path="/reservation-taxi-vsl" element={<Reservation />} />
+            <Route path="/services-transport-medical" element={<Services />} />
             <Route path="/zones-desservies" element={<Zones onNavigate={handleNavigate} />} />
             <Route path="/taxis-aeroports-parisiens" element={<AirportTransfer />} />
             <Route path="/taxis-gares-parisiennes" element={<StationTransfer />} />
