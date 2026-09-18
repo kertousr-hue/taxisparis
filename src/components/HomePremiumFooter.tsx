@@ -1,11 +1,12 @@
 import { HeartHandshake, MapPin, ShieldCheck, Users } from 'lucide-react';
+import PremiumBrandLogo from './PremiumBrandLogo';
 
 export default function HomePremiumFooter() {
   return (
     <footer className="home2-footer">
       <div className="home2-container home2-footer-strip">
         <div className="home2-footer-brand-compact">
-          <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+          <PremiumBrandLogo compact variant="light" className="home2-premium-logo home2-premium-logo--footer" />
         </div>
         <div><ShieldCheck size={17} /><span>Transport médical conventionné</span></div>
         <div><Users size={17} /><span>Chauffeurs professionnels</span></div>
