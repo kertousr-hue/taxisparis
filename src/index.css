@@ -1666,3 +1666,113 @@ input[type="month"] {
   .city-maquette-sign span { font-size: 15px; }
   .city-maquette-note { right: 28px; bottom: 40px; font-size: 13px; }
 }
+
+
+/* Department map card — match maquette panel 2 */
+.department-maquette-map-card {
+  overflow: hidden;
+  border: 1px solid #dce4e6;
+  border-radius: 12px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 20px 50px rgba(8,47,82,.10);
+}
+
+.department-maquette-map-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px 12px;
+}
+
+.department-maquette-map-heading p {
+  color: var(--tp-gold-dark) !important;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.department-maquette-map-heading strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--tp-ink);
+  font: 700 23px Georgia,"Times New Roman",serif;
+}
+
+.department-maquette-map-heading > span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f3efe5;
+  color: #806029;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.department-maquette-map-visual {
+  position: relative;
+  min-height: 315px;
+  display: grid;
+  place-items: center;
+  padding: 6px 22px 22px;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(180,138,66,.16), transparent 28%),
+    linear-gradient(145deg,#edf3f3,#f8f7f1);
+}
+
+.department-maquette-map-visual svg {
+  width: min(100%, 380px);
+  height: auto;
+  filter: drop-shadow(0 12px 18px rgba(8,47,82,.12));
+}
+
+.department-maquette-map-note {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  transform: rotate(-5deg);
+  text-align: center;
+  font-family: "Segoe Script","Bradley Hand",cursive;
+  color: var(--tp-navy);
+}
+
+.department-maquette-map-note span,
+.department-maquette-map-note strong { display: block; }
+
+.department-maquette-map-note span { font-size: 14px; }
+.department-maquette-map-note strong { font-size: 12px; }
+
+.department-maquette-map-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid #e3e8e9;
+}
+
+.department-maquette-map-footer span {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: #4f6272;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.department-maquette-map-footer span + span {
+  border-left: 1px solid #e3e8e9;
+}
+
+.department-maquette-map-footer svg { color: var(--tp-gold-dark); }
+
+@media (max-width: 639px) {
+  .department-maquette-map-heading strong { font-size: 20px; }
+  .department-maquette-map-visual { min-height: 270px; }
+  .department-maquette-map-footer { grid-template-columns: 1fr; }
+  .department-maquette-map-footer span + span {
+    border-left: 0;
+    border-top: 1px solid #e3e8e9;
+  }
+}
