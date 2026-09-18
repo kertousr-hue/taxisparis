@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aperçu Premium — Taxis Paris Conventionnés</title>
+<style>
+:root{--navy:#062b49;--navy2:#082f4f;--gold:#c9a352;--gold2:#efd18a;--cream:#fbfaf7;--ink:#0a2743;--line:#e9e2d6}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink)}
+a{text-decoration:none;color:inherit}.wrap{max-width:1180px;margin:auto;padding:0 22px}
+header{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;border-bottom:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.16)}
+.header-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{background:#fff;border-radius:8px;padding:5px 10px;height:56px;width:176px;object-fit:contain}
+nav{display:flex;gap:6px;font-size:14px;font-weight:700}.navlink{padding:11px 12px;border-radius:8px;color:rgba(255,255,255,.84)}.navlink:hover{background:rgba(255,255,255,.08)}
+.actions{display:flex;gap:9px}.call,.reserve{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:44px;padding:0 15px;font-weight:800;font-size:14px}.call{border:1px solid rgba(255,255,255,.22)}.reserve{background:var(--gold)}
+.hero{position:relative;min-height:610px;overflow:hidden;background:var(--navy);color:#fff}
+.hero-bg{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/kertousr-hue/taxisparis/main/src/assets/image.png') center/cover no-repeat;opacity:.58}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,32,55,.98) 0%,rgba(4,32,55,.92) 43%,rgba(4,32,55,.44) 72%,rgba(4,32,55,.2) 100%)}
+.hero-inner{position:relative;z-index:2;padding:76px 22px 150px;display:grid;grid-template-columns:1.08fr .92fr;gap:40px}.badge{display:inline-flex;padding:9px 14px;border-radius:999px;border:1px solid rgba(215,183,109,.5);background:rgba(215,183,109,.1);color:#f2d28a;font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;margin:0}.hero h1{font-size:62px;line-height:1.03;max-width:680px;margin-top:22px;font-weight:600}.hero p{font-size:18px;line-height:1.65;color:rgba(255,255,255,.86);max-width:620px}
+.proofs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}.proof{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border-radius:12px;padding:13px}.proof strong{display:block;font-size:13px}.proof span{font-size:11px;color:rgba(255,255,255,.65)}
+.hero-cta{display:flex;gap:12px;margin-top:25px}.hero-cta a{min-height:52px;padding:0 22px;border-radius:8px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}.hero-cta .primary{background:var(--gold)}.hero-cta .secondary{border:1px solid rgba(255,255,255,.35);background:rgba(6,43,73,.65)}
+.quote{display:flex;align-items:flex-end;justify-content:flex-end;text-align:right}.quote div{border-left:1px solid rgba(215,183,109,.6);padding-left:18px}.quote .big{font:italic 28px Georgia;color:#fff}.quote .small{font:italic 22px Georgia;color:var(--gold2)}
+.quick{position:relative;z-index:5;margin-top:-86px}.quick-card{background:#fff;border:1px solid #e7e0d2;border-radius:18px;box-shadow:0 20px 55px rgba(14,39,64,.16);padding:20px}.quick-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:14px}.quick-title{font:600 23px Georgia}.quick-sub{color:#6b7280;font-size:13px;margin-top:4px}.quick-label{font-size:11px;color:#a68136;text-transform:uppercase;letter-spacing:.15em;font-weight:800}.quick-grid{display:grid;grid-template-columns:.8fr 1.2fr 1.2fr auto;gap:10px}.field{border:1px solid #dfe3e8;background:#fcfbf8;border-radius:12px;padding:12px 14px}.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#64748b;font-weight:800}.field input{border:0;outline:0;background:transparent;width:100%;font-size:14px;padding-top:5px}.quick-btn{border:0;background:var(--gold);color:#fff;border-radius:12px;padding:0 25px;font-weight:800}
+.trust{padding:30px 22px 44px}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid #ebe5da;border-radius:16px;overflow:hidden}.trust-item{padding:20px;border-right:1px solid #eee8dc}.trust-item:last-child{border-right:0}.trust-item strong{display:block}.trust-item span{font-size:12px;color:#6b7280}
+.section{padding:66px 22px}.section.white{background:#fff}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#a68136;font-weight:800}.section h2{font-size:38px;margin-top:8px}.lead{color:#64748b;line-height:1.7;max-width:700px}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}.card{background:#fcfbf8;border:1px solid #ebe5da;border-radius:16px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,.03)}.icon{width:48px;height:48px;border-radius:13px;background:#fff8e9;border:1px solid #ead7ab;color:#b48835;display:flex;align-items:center;justify-content:center;font-size:22px}.card h3{font-size:21px;margin-top:17px}.card p{font-size:14px;line-height:1.65;color:#64748b}
+.human{display:grid;grid-template-columns:1.05fr .95fr;background:#fff;border:1px solid #e6ded0;border-radius:26px;overflow:hidden;box-shadow:0 20px 55px rgba(14,39,64,.08)}.human-photo{min-height:330px;background:linear-gradient(90deg,rgba(6,43,73,.72),rgba(6,43,73,.16)),url('https://raw.githubusercontent.com/kertousr-hue/taxisparis/main/src/assets/image.png') center/cover no-repeat;display:flex;align-items:flex-end;padding:35px;color:#fff}.human-copy{padding:42px;display:flex;align-items:center}.human-copy h2{font-size:34px}.human-copy p{line-height:1.75;color:#64748b}.human-copy a{display:inline-flex;margin-top:14px;background:var(--navy2);color:#fff;padding:13px 18px;border-radius:8px;font-weight:800}
+.zones{background:var(--navy);color:#fff}.zone-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:35px}.dept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.dept{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);border-radius:16px;padding:18px}.dept b{display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;background:#e6c67d;color:var(--navy);border-radius:12px}.dept h3{margin-top:16px;font-size:20px}.dept p{font-size:12px;color:rgba(255,255,255,.62)}
+.faq{display:grid;grid-template-columns:.72fr 1.28fr;gap:40px}.faq details{border:1px solid #e9e2d6;background:#fcfbf8;border-radius:12px;padding:16px 18px;margin-bottom:10px}.faq summary{cursor:pointer;font-weight:800}.faq details p{color:#64748b;line-height:1.6;font-size:14px}
+footer{background:#051f35;color:#fff;padding:38px 22px}.footer-line{display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-line img{background:#fff;border-radius:8px;padding:5px 10px;height:54px;width:170px}.footer-line p{color:rgba(255,255,255,.55);font-size:13px}.tagline{font:italic 19px Georgia;color:var(--gold2)}
+@media(max-width:900px){nav,.actions{display:none}.hero-inner{grid-template-columns:1fr;padding-top:54px}.quote{display:none}.hero h1{font-size:46px}.proofs{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr 1fr}.services{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr 1fr}.human,.zone-grid,.faq{grid-template-columns:1fr}.dept-grid{grid-template-columns:1fr 1fr}.header-inner:after{content:'☰';font-size:26px}}
+@media(max-width:580px){.hero{min-height:720px}.hero h1{font-size:40px}.hero-inner{padding-bottom:120px}.hero-cta{flex-direction:column}.quick{margin-top:-70px}.quick-grid{grid-template-columns:1fr}.quick-btn{min-height:54px}.quick-head{align-items:flex-start;gap:8px;flex-direction:column}.services,.trust-grid,.dept-grid{grid-template-columns:1fr}.trust-item{border-right:0;border-bottom:1px solid #eee8dc}.section{padding:48px 18px}.wrap{padding:0 16px}.human-copy{padding:28px}.section h2{font-size:32px}.footer-line{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<header><div class="wrap header-inner">
+  <img class="logo" src="https://raw.githubusercontent.com/kertousr-hue/taxisparis/main/public/taxi-logo.svg" alt="Taxis Paris Conventionnés">
+  <nav>
+    <a class="navlink" href="#">Accueil</a><a class="navlink" href="#services">Nos services</a><a class="navlink" href="#zones">Zones</a><a class="navlink" href="#apropos">À propos</a><a class="navlink" href="#faq">FAQ</a>
+  </nav>
+  <div class="actions"><a class="call" href="tel:+33650366491">☎ 06 50 36 64 91</a><a class="reserve" href="#reservation">Réserver</a></div>
+</div></header>
+
+<section class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="badge">✓ Taxi conventionné CPAM</span>
+      <h1>Taxi conventionné CPAM à Paris & en Île-de-France</h1>
+      <p>Vos rendez-vous médicaux, notre priorité. Un transport sûr, confortable et humain, organisé avec des chauffeurs conventionnés.</p>
+      <div class="proofs">
+        <div class="proof"><strong>Chauffeurs conventionnés</strong><span>24h/24 · 7j/7</span></div>
+        <div class="proof"><strong>Prise en charge</strong><span>CPAM selon situation</span></div>
+        <div class="proof"><strong>Établissements</strong><span>Paris & Île-de-France</span></div>
+      </div>
+      <div class="hero-cta"><a class="primary" href="#reservation">Réserver mon transport →</a><a class="secondary" href="tel:+33650366491">☎ 06 50 36 64 91</a></div>
+    </div>
+    <div class="quote"><div><div class="big">Plus qu’un transport,</div><div class="small">un accompagnement humain.</div></div></div>
+  </div>
+</section>
+
+<section class="quick" id="reservation"><div class="wrap"><div class="quick-card">
+  <div class="quick-head"><div><div class="quick-title">Votre prochain rendez-vous médical ?</div><div class="quick-sub">Préparez votre trajet en quelques instants.</div></div><div class="quick-label">Réservation rapide</div></div>
+  <div class="quick-grid">
+    <div class="field"><label>Date du trajet</label><input type="date"></div>
+    <div class="field"><label>Adresse de départ</label><input placeholder="Votre adresse"></div>
+    <div class="field"><label>Destination</label><input placeholder="Hôpital, clinique, cabinet…"></div>
+    <button class="quick-btn">Réserver →</button>
+  </div>
+</div></div></section>
+
+<section class="trust"><div class="wrap"><div class="trust-grid">
+  <div class="trust-item"><strong>✓ Conventionné CPAM</strong><span>Transport médical assis</span></div>
+  <div class="trust-item"><strong>▣ Tiers payant</strong><span>Selon votre situation</span></div>
+  <div class="trust-item"><strong>♟ Chauffeurs professionnels</strong><span>Ponctuels & bienveillants</span></div>
+  <div class="trust-item"><strong>⌖ Toute l’Île-de-France</strong><span>Paris et départements</span></div>
+</div></div></section>
+
+<section class="section white" id="services"><div class="wrap">
+  <div class="eyebrow">Nos services</div><h2>Nos services de transport médical</h2><p class="lead">Des solutions adaptées à vos besoins de santé, avec une organisation claire et rassurante.</p>
+  <div class="services">
+    <div class="card"><div class="icon">✚</div><h3>Consultation médicale</h3><p>Tous vos rendez-vous spécialisés.</p></div>
+    <div class="card"><div class="icon">◉</div><h3>Dialyse</h3><p>Trajets réguliers organisés.</p></div>
+    <div class="card"><div class="icon">♡</div><h3>Chimiothérapie</h3><p>Un accompagnement de confiance.</p></div>
+    <div class="card"><div class="icon">✦</div><h3>Radiothérapie</h3><p>Des trajets en toute sérénité.</p></div>
+    <div class="card"><div class="icon">H</div><h3>Hospitalisation</h3><p>À l’aller comme au retour.</p></div>
+    <div class="card"><div class="icon">⌁</div><h3>Examens médicaux</h3><p>IRM, scanner, analyses…</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="apropos"><div class="wrap"><div class="human">
+  <div class="human-photo"><h2>Plus qu’un transport,<br>un accompagnement humain</h2></div>
+  <div class="human-copy"><div><div class="eyebrow">Paris & Île-de-France</div><h2>Votre santé reste au centre du trajet</h2><p>Nous vous accompagnons avec attention vers vos consultations, traitements et hospitalisations. Notre priorité : vous offrir un trajet ponctuel, confortable et rassurant.</p><a href="#">Découvrir notre engagement →</a></div></div>
+</div></div></section>
+
+<section class="section zones" id="zones"><div class="wrap zone-grid">
+  <div><div class="eyebrow" style="color:#edcb80">Nos zones desservies</div><h2>Paris & Île-de-France</h2><p class="lead" style="color:rgba(255,255,255,.68)">Un service de proximité pour vos déplacements médicaux, avec des pages locales dédiées à chaque département.</p></div>
+  <div class="dept-grid">
+    <div class="dept"><b>75</b><h3>Paris</h3><p>Tous les arrondissements</p></div>
+    <div class="dept"><b>91</b><h3>Essonne</h3><p>50 villes</p></div>
+    <div class="dept"><b>92</b><h3>Hauts-de-Seine</h3><p>36 communes</p></div>
+    <div class="dept"><b>93</b><h3>Seine-Saint-Denis</h3><p>40 communes</p></div>
+    <div class="dept"><b>94</b><h3>Val-de-Marne</h3><p>47 communes</p></div>
+    <div class="dept"><b>⌖</b><h3>Carte des zones</h3><p>Voir toutes les villes</p></div>
+  </div>
+</div></section>
+
+<section class="section white" id="faq"><div class="wrap faq">
+  <div><div class="eyebrow">Questions fréquentes</div><h2>Avant votre réservation</h2><p class="lead">Les réponses essentielles sur le taxi conventionné, la CPAM et l’organisation de votre trajet.</p></div>
+  <div>
+    <details open><summary>Comment réserver un taxi conventionné ?</summary><p>Réservation en ligne ou par téléphone au 06 50 36 64 91.</p></details>
+    <details><summary>Puis-je bénéficier du tiers payant ?</summary><p>Selon votre situation et les conditions de prise en charge de l’Assurance Maladie.</p></details>
+    <details><summary>Quels documents dois-je prévoir ?</summary><p>Prescription médicale, carte Vitale et justificatifs nécessaires selon votre prise en charge.</p></details>
+    <details><summary>Le service fonctionne-t-il le week-end ?</summary><p>Oui, les transports peuvent être organisés 24h/24 et 7j/7.</p></details>
+  </div>
+</div></section>
+
+<footer><div class="wrap footer-line">
+  <img src="https://raw.githubusercontent.com/kertousr-hue/taxisparis/main/public/taxi-logo.svg" alt="Taxis Paris Conventionnés">
+  <p>© 2026 Taxis Paris Conventionnés · Paris & Île-de-France · 24h/24 · 7j/7</p>
+  <div class="tagline">Transport médical, autrement.</div>
+</div></footer>
+</body></html>
