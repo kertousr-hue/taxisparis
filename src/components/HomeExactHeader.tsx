@@ -29,7 +29,7 @@ export default function HomeExactHeader() {
       <div className="exact-home-nav">
         <div className="exact-home-container exact-home-nav-inner">
           <Link to="/" className="exact-home-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/taxis-logo-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
+            <img src="/taxis-logo-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/taxi-logo.svg'; }} />
           </Link>
 
           <nav className="exact-home-desktop-nav" aria-label="Navigation principale">
@@ -62,7 +62,7 @@ export default function HomeExactHeader() {
           <nav className="exact-home-container">
             {navItems.map((item) => (
               item.path.startsWith('/#')
-                ? <a key={item.path} href={item.path.slice(1)} onClick={() => setOpen(false)}>{item.label}</a>
+                ? <a key={item.path} href={item.path} onClick={() => setOpen(false)}>{item.label}</a>
                 : <Link key={item.path} to={item.path} onClick={() => setOpen(false)}>{item.label}</Link>
             ))}
             <a href="tel:+33650366491" onClick={() => setOpen(false)}><Phone size={15} /> 06 50 36 64 91</a>
