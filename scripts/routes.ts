@@ -19,6 +19,7 @@ export function getAllRoutes(): RouteConfig[] {
 
   // Pages principales
   routes.push({ path: '/reservation-taxi-vsl', priority: 0.9 });
+  routes.push({ path: '/services-transport-medical', priority: 0.9 });
   routes.push({ path: '/taxis-aeroports-parisiens', priority: 0.8 });
   routes.push({ path: '/taxis-gares-parisiennes', priority: 0.8 });
   routes.push({ path: '/zones-desservies', priority: 0.8 });
