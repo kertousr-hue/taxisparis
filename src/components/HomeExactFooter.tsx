@@ -6,7 +6,7 @@ export default function HomeExactFooter() {
     <footer className="exact-home-footer">
       <div className="exact-home-container exact-home-footer-inner">
         <Link to="/" className="exact-home-footer-logo">
-          <img src="/taxis-logo-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/taxi-logo.svg'; }} />
+          <img src="/taxi-logo.svg" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
         </Link>
         <nav aria-label="Navigation du pied de page">
           <Link to="/">Accueil</Link>
