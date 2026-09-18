@@ -390,72 +390,25 @@ export default function ReservationPage() {
       />
 
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div className="container relative mx-auto px-4 py-14 sm:py-16 lg:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.08fr_.92fr]">
-            <div>
-              <h1 id="page-title" className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-                Réservation taxi conventionné VSL CPAM
-              </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
-                Organisez votre transport médical assis à Paris et en Île-de-France. Renseignez votre trajet et votre situation pour envoyer une demande complète à notre équipe.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a href="#formulaire-reservation" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50">
-                  Remplir le formulaire
-                  <ArrowRight size={18} aria-hidden="true" />
-                </a>
-                <a href="tel:+33650366491" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700">
-                  <Phone size={17} aria-hidden="true" />
-                  06 50 36 64 91
-                </a>
-              </div>
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
-                  <Clock className="mb-2 text-cyan-200" size={20} />
-                  <p className="font-bold text-white">Confirmation rapide</p>
-                  <p className="mt-1 text-xs leading-5 text-blue-100">Demande vérifiée par notre équipe</p>
-                </div>
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
-                  <Shield className="mb-2 text-cyan-200" size={20} />
-                  <p className="font-bold text-white">Conventionné CPAM</p>
-                  <p className="mt-1 text-xs leading-5 text-blue-100">Prise en charge selon votre situation</p>
-                </div>
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
-                  <MapPin className="mb-2 text-cyan-200" size={20} />
-                  <p className="font-bold text-white">Paris & Île-de-France</p>
-                  <p className="mt-1 text-xs leading-5 text-blue-100">75, 91, 92, 93 et 94</p>
-                </div>
-              </div>
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm"><Shield size={16} /> Réservation transport médical</div>
+            <h1 id="page-title" className="max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
+              Réservation taxi conventionné
+              <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">VSL CPAM</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Organisez votre transport médical assis à Paris et en Île-de-France grâce à un formulaire clair et guidé.</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="#formulaire-reservation" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]">Remplir le formulaire <ArrowRight size={18} /></a>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={17} /> 06 50 36 64 91</a>
             </div>
-
-            <div className="rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur">
-              <div className="rounded-[1.6rem] bg-white p-6 text-slate-900 shadow-xl">
-                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Votre demande</p>
-                <h2 className="mt-2 text-2xl font-black tracking-tight">Un formulaire clair, étape par étape</h2>
-                <div className="mt-5 space-y-3">
-                  {[
-                    ['1', 'Vos coordonnées', 'Pour pouvoir vous recontacter'],
-                    ['2', 'Votre trajet', 'Départ, arrivée, date et heure'],
-                    ['3', 'Votre situation', 'Mobilité, prise en charge et bon de transport'],
-                  ].map(([number, title, text]) => (
-                    <div key={number} className="flex gap-3 rounded-2xl bg-slate-50 p-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-sm font-black text-blue-700">{number}</span>
-                      <div>
-                        <p className="text-sm font-bold text-slate-900">{title}</p>
-                        <p className="mt-0.5 text-xs leading-5 text-slate-500">{text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt="Taxi conventionné pour transport médical" className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur"><p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Votre demande</p><p className="mt-1 text-lg font-black">Coordonnées, trajet et prise en charge en quelques étapes.</p></div>
             </div>
           </div>
         </div>
