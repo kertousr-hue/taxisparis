@@ -459,3 +459,261 @@ input[type="month"] {
     padding-bottom: 3rem !important;
   }
 }
+
+
+/* ===== MAQUETTE PREMIUM EXACTE — ACCUEIL 2026 ===== */
+:root{
+  --exact-navy:#073455;
+  --exact-navy-deep:#052a46;
+  --exact-blue:#0e5c9f;
+  --exact-gold:#c49345;
+  --exact-gold-dark:#a97931;
+  --exact-ice:#eef6fb;
+  --exact-line:#dce7ee;
+  --exact-muted:#6e7f8e;
+  --exact-paper:#ffffff;
+}
+
+.exact-home-shell{background:#fff;color:#092e4c}
+.exact-home-main{background:#fff}
+.exact-home-container{width:min(1180px,calc(100% - 34px));margin-inline:auto}
+
+/* header */
+.exact-home-header{position:sticky;top:0;z-index:90;background:#fff;box-shadow:0 7px 24px rgba(5,42,70,.08)}
+.exact-home-topbar{background:var(--exact-navy-deep);color:#fff}
+.exact-home-topbar-inner{min-height:29px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:center}
+.exact-home-topbar-inner span{display:flex;align-items:center;justify-content:center;gap:6px;font-size:9px;font-weight:700;white-space:nowrap}
+.exact-home-topbar-inner svg{color:#d8aa58}
+.exact-home-nav{background:#fff;border-bottom:1px solid #e7edf0}
+.exact-home-nav-inner{min-height:70px;display:flex;align-items:center;gap:22px}
+.exact-home-logo{display:flex;width:190px;flex:0 0 190px;align-items:center}
+.exact-home-logo img{width:100%;height:58px;object-fit:contain}
+.exact-home-desktop-nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.exact-home-desktop-nav a{display:inline-flex;min-height:38px;align-items:center;padding:0 9px;color:#183c58;font-size:10px;font-weight:800}
+.exact-home-desktop-nav a:hover{color:var(--exact-gold-dark)}
+.exact-home-nav-actions{display:flex;align-items:center;gap:9px}
+.exact-home-call,.exact-home-reserve{display:inline-flex;min-height:39px;align-items:center;justify-content:center;gap:7px;border-radius:18px;padding:0 15px;font-size:10px;font-weight:900}
+.exact-home-call{background:var(--exact-navy);color:#fff}
+.exact-home-reserve{background:linear-gradient(180deg,#d0a04f,#b98436);color:#fff;box-shadow:0 6px 18px rgba(177,124,46,.22)}
+.exact-home-menu{display:none;width:42px;height:42px;margin-left:auto;align-items:center;justify-content:center;border:1px solid #dfe7eb;border-radius:10px;background:#fff;color:var(--exact-navy)}
+.exact-home-mobile-panel{border-top:1px solid #e7edf0;background:#fff}
+.exact-home-mobile-panel nav{display:grid;gap:7px;padding-block:12px}
+.exact-home-mobile-panel a{display:flex;min-height:44px;align-items:center;justify-content:center;gap:7px;border-radius:9px;background:#f4f8fa;color:var(--exact-navy);font-size:11px;font-weight:850}
+
+/* hero */
+.exact-home-hero{position:relative;min-height:440px;overflow:visible;background:var(--exact-navy-deep)}
+.exact-home-hero-photo{position:absolute;inset:0 0 0 42%;overflow:hidden}
+.exact-home-hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.exact-home-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#082f50 0%,#082f50 37%,rgba(8,47,80,.95) 44%,rgba(8,47,80,.42) 62%,rgba(8,47,80,.05) 100%)}
+.exact-home-hero-inner{position:relative;z-index:3;min-height:440px;display:flex;align-items:center}
+.exact-home-hero-copy{width:49%;padding:46px 0 104px}
+.exact-home-eyebrow,.exact-home-section-kicker{margin:0;color:#d8a552;font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.exact-home-hero h1{max-width:520px;margin:11px 0 0;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.8rem,5vw,4.65rem);line-height:.98;letter-spacing:-.045em}
+.exact-home-hero-copy>p:not(.exact-home-eyebrow){max-width:530px;margin-top:14px;color:rgba(255,255,255,.9);font-size:14px;line-height:1.5}
+.exact-home-hero-benefits{display:grid;grid-template-columns:repeat(4,max-content);gap:18px;margin-top:24px}
+.exact-home-hero-benefits span{display:flex;align-items:center;gap:8px;color:#fff;font-size:9px;font-weight:800;line-height:1.25}
+.exact-home-hero-benefits svg{color:#d6a24b;flex:0 0 auto}
+.exact-home-script{position:absolute;right:18px;bottom:53px;margin:0;transform:rotate(-8deg);color:#fff;font:italic 16px/1.18 "Segoe Script","Bradley Hand",cursive;text-align:right;text-shadow:0 2px 6px rgba(0,0,0,.2)}
+.exact-home-script::after{content:"";display:block;width:74px;height:3px;margin:8px 0 0 auto;background:#c8953e;transform:skewX(-24deg)}
+
+.exact-home-booking-wrap{position:absolute;z-index:7;left:50%;bottom:-66px;transform:translateX(-50%)}
+.exact-home-booking-card{padding:15px 17px 17px;border:1px solid #d7e2e7;border-radius:9px;background:#fff;box-shadow:0 15px 36px rgba(7,52,85,.16)}
+.exact-home-booking-card h2{margin:0;color:var(--exact-navy);font:700 18px/1.1 Georgia,"Times New Roman",serif}
+.exact-home-tabs{display:grid;grid-template-columns:repeat(3,1fr);max-width:500px;margin-top:10px;border:1px solid #d6e1e7;border-radius:999px;overflow:hidden;background:#f5f8fa}
+.exact-home-tabs span{display:flex;min-height:30px;align-items:center;justify-content:center;padding:0 14px;color:#6b7f90;font-size:8px;font-weight:800}
+.exact-home-tabs .active{background:var(--exact-navy);color:#fff;border-radius:999px}
+.exact-home-booking-grid{display:grid;grid-template-columns:1fr 1.1fr .9fr auto;gap:8px;margin-top:10px}
+.exact-home-booking-grid>div{display:flex;min-height:52px;align-items:center;gap:9px;padding:0 11px;border:1px solid #d8e3e9;border-radius:6px;color:#185589}
+.exact-home-booking-grid>div span{color:#61798a;font-size:9px;font-weight:700}
+.exact-home-booking-grid small{display:block;margin-bottom:1px;color:#8fa0ac;font-size:7px;font-weight:700}
+.exact-home-booking-grid>a{display:flex;min-height:52px;align-items:center;justify-content:center;gap:8px;padding:0 18px;border-radius:6px;background:linear-gradient(180deg,#d3a34f,#b77e32);color:#fff;font-size:9px;font-weight:900;white-space:nowrap}
+
+/* reassurance */
+.exact-home-reassurance{padding:92px 0 16px;background:#fff}
+.exact-home-reassurance-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.exact-home-reassurance article{display:flex;min-height:68px;align-items:center;justify-content:center;gap:9px;border-right:1px solid #e6edf1}
+.exact-home-reassurance article:last-child{border-right:0}
+.exact-home-reassurance article>span{display:grid;width:34px;height:34px;place-items:center;color:#0b5d9f}
+.exact-home-reassurance strong{display:block;color:#17486f;font-size:9px}
+.exact-home-reassurance small{display:block;margin-top:1px;color:#6c8190;font-size:8px}
+
+/* human */
+.exact-home-human{display:grid;grid-template-columns:43% 1fr 160px;min-height:286px;background:#fff;border-top:1px solid #edf1f3}
+.exact-home-human-photo{position:relative;overflow:hidden}
+.exact-home-human-photo>img{width:100%;height:100%;object-fit:cover}
+.exact-home-human-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,rgba(255,255,255,.92) 100%)}
+.exact-home-human-review{position:absolute;left:30px;bottom:28px;z-index:2;width:210px;padding:14px;border-radius:6px;background:rgba(7,52,85,.88);color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.15)}
+.exact-home-human-review p{margin:0;font:italic 10px/1.5 Georgia,serif}
+.exact-home-human-review strong{display:block;margin-top:7px;font-size:8px}
+.exact-home-human-copy{display:flex;flex-direction:column;justify-content:center;padding:38px 36px 36px 22px}
+.exact-home-human-copy h2{max-width:540px;margin:5px 0 0;color:var(--exact-navy);font:700 clamp(2rem,3vw,2.8rem)/.98 Georgia,"Times New Roman",serif;letter-spacing:-.03em}
+.exact-home-human-copy>p:not(.exact-home-section-kicker){margin-top:10px;color:#687d8c;font-size:10px;line-height:1.55}
+.exact-home-human-list{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:13px}
+.exact-home-human-list span{display:flex;align-items:center;gap:7px;color:#274c67;font-size:9px;font-weight:750}
+.exact-home-human-list svg{color:#c28d3a}
+.exact-home-dark-btn{display:inline-flex;min-height:38px;width:max-content;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:0 15px;border-radius:5px;background:var(--exact-navy);color:#fff;font-size:9px;font-weight:850}
+.exact-home-cpam-card{align-self:center;justify-self:center;width:132px;padding:18px 11px;border-radius:8px;background:#f2f8fc;text-align:center;color:#0b4f86}
+.exact-home-cpam-icon{display:grid;width:46px;height:46px;margin:0 auto 9px;place-items:center;border-radius:50%;background:#fff;color:#0b5b99;box-shadow:0 6px 14px rgba(14,92,159,.08)}
+.exact-home-cpam-card strong{display:block;font-size:10px}
+.exact-home-cpam-card span{display:block;margin-top:6px;font-size:8px;line-height:1.35}
+.exact-home-cpam-card small{display:block;margin-top:10px;color:#6a7d8c;font-size:7px}
+
+/* services */
+.exact-home-services{padding:18px 0 18px;background:#fff}
+.exact-home-section-title{text-align:center}
+.exact-home-section-title h2{margin:0;color:var(--exact-navy);font:700 24px/1 Georgia,"Times New Roman",serif}
+.exact-home-section-title p{margin-top:5px;color:#7a8b97;font-size:9px}
+.exact-home-service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.exact-home-service-grid article{position:relative;overflow:hidden;border:1px solid #dfe7eb;border-radius:7px;background:#fff;box-shadow:0 5px 16px rgba(6,45,77,.05)}
+.exact-home-service-grid img{display:block;width:100%;height:84px;object-fit:cover}
+.exact-home-service-grid article>div{padding:10px 13px 12px}
+.exact-home-service-grid h3{margin:0;color:#17466e;font-size:10px;font-weight:900}
+.exact-home-service-grid p{margin:3px 0 0;color:#728590;font-size:8px;line-height:1.35}
+.exact-home-service-grid article>span{position:absolute;right:10px;bottom:10px;display:grid;width:28px;height:28px;place-items:center;border:1px solid #dbe4e8;border-radius:50%;background:#fff;color:#0d5897}
+
+/* process */
+.exact-home-process{background:linear-gradient(90deg,#08395f,#062b49);color:#fff}
+.exact-home-process-grid{display:grid;grid-template-columns:1.1fr repeat(3,1fr);align-items:center;min-height:98px}
+.exact-home-process-intro{padding-right:24px;border-right:1px solid rgba(255,255,255,.25)}
+.exact-home-process-intro h2{max-width:250px;margin:0;color:#fff;font:700 19px/1.05 Georgia,serif}
+.exact-home-process-intro p{margin-top:5px;color:rgba(255,255,255,.72);font-size:8px}
+.exact-home-process-step{display:grid;grid-template-columns:44px 27px 1fr;align-items:center;gap:8px;padding-left:22px}
+.exact-home-process-step>span{display:grid;width:38px;height:38px;place-items:center;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.06);font:700 13px Georgia,serif}
+.exact-home-process-step>svg{color:#fff}
+.exact-home-process-step strong{display:block;font-size:9px}
+.exact-home-process-step small{display:block;margin-top:1px;color:rgba(255,255,255,.75);font-size:7px;line-height:1.25}
+
+/* coverage */
+.exact-home-coverage{padding:16px 0;background:#fff}
+.exact-home-coverage-grid{display:grid;grid-template-columns:220px 1fr 1.25fr;gap:30px;align-items:center}
+.exact-home-map svg{width:100%;height:132px}
+.exact-home-coverage-copy h2{margin:3px 0 0;color:var(--exact-navy);font:700 23px/1 Georgia,serif}
+.exact-home-coverage-copy>p:not(.exact-home-section-kicker){margin-top:7px;max-width:360px;color:#6b7f8e;font-size:9px;line-height:1.45}
+.exact-home-gold-btn{display:inline-flex;min-height:36px;align-items:center;justify-content:center;gap:8px;margin-top:11px;padding:0 14px;border-radius:5px;background:linear-gradient(180deg,#cfa04f,#b67c31);color:#fff;font-size:8px;font-weight:850}
+.exact-home-zone-list{display:grid;grid-template-columns:1fr 1fr;gap:9px 22px;padding-left:24px;border-left:1px solid #dce5ea}
+.exact-home-zone-list span{display:flex;align-items:center;gap:7px;color:#244a68;font-size:9px}
+.exact-home-zone-list svg{color:#0e5b99}
+
+/* reviews */
+.exact-home-reviews{padding:8px 0 13px;background:#fff}
+.exact-home-reviews h2{text-align:center;color:var(--exact-navy);font:700 17px Georgia,serif}
+.exact-home-review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:9px}
+.exact-home-review-grid article{min-height:88px;padding:12px 18px;border:1px solid #e0e7eb;border-radius:7px;text-align:center;background:#fff}
+.exact-home-review-grid p{margin:0;color:#334f66;font:italic 9px/1.4 Georgia,serif}
+.exact-home-stars{margin-top:7px;color:#c98b27;font-size:12px;letter-spacing:1px}
+.exact-home-review-grid strong{display:block;margin-top:3px;color:#234963;font-size:8px}
+
+/* bottom CTA */
+.exact-home-bottom-cta{position:relative;overflow:hidden;background:linear-gradient(90deg,#062b49,#08395f);color:#fff}
+.exact-home-bottom-car{position:absolute;left:0;top:0;bottom:0;width:235px;overflow:hidden}
+.exact-home-bottom-car img{width:100%;height:100%;object-fit:cover}
+.exact-home-bottom-car::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 35%,#062b49 100%)}
+.exact-home-bottom-inner{min-height:92px;display:grid;grid-template-columns:240px 1fr auto 170px;align-items:center;gap:18px}
+.exact-home-bottom-copy h2{margin:0;color:#fff;font:700 15px Georgia,serif}
+.exact-home-bottom-copy p{margin-top:3px;color:rgba(255,255,255,.72);font-size:8px}
+.exact-home-bottom-actions{display:flex;gap:9px;justify-content:center}
+.exact-home-bottom-actions a{display:inline-flex;min-height:40px;align-items:center;justify-content:center;gap:8px;padding:0 15px;border-radius:5px;font-size:9px;font-weight:850}
+.exact-home-bottom-actions a:first-child{border:1px solid rgba(255,255,255,.6);color:#fff}
+.exact-home-bottom-actions a:last-child{background:linear-gradient(180deg,#cfa04f,#b67c31);color:#fff}
+.exact-home-bottom-script{margin:0;transform:rotate(-6deg);font:italic 11px/1.2 "Segoe Script","Bradley Hand",cursive;color:#fff;text-align:right}
+.exact-home-bottom-script::after{content:"";display:block;width:82px;height:2px;margin:8px 0 0 auto;background:#c8953e;transform:skewX(-22deg)}
+
+/* footer */
+.exact-home-footer{background:#fff;border-top:1px solid #e7edf0}
+.exact-home-footer-inner{min-height:84px;display:grid;grid-template-columns:200px 1fr 120px 160px;align-items:center;gap:20px}
+.exact-home-footer-logo img{width:175px;height:62px;object-fit:contain}
+.exact-home-footer nav{display:flex;align-items:center;justify-content:center;gap:22px}
+.exact-home-footer nav a{color:#274b67;font-size:8px;font-weight:750}
+.exact-home-footer-social{text-align:center}
+.exact-home-footer-social>span{display:block;color:#758793;font-size:7px}
+.exact-home-footer-social>div{display:flex;justify-content:center;gap:7px;margin-top:5px}
+.exact-home-footer-social>div span{display:grid;width:22px;height:22px;place-items:center;border-radius:50%;background:#0d568f;color:#fff}
+.exact-home-footer-copy{padding-left:18px;border-left:1px solid #dce4e8;color:#70828e;font-size:7px;line-height:1.5}
+
+/* motion */
+@media(hover:hover) and (pointer:fine){
+  .exact-home-reserve,.exact-home-booking-grid>a,.exact-home-gold-btn,.exact-home-dark-btn,.exact-home-bottom-actions a{transition:transform .18s ease,box-shadow .18s ease}
+  .exact-home-reserve:hover,.exact-home-booking-grid>a:hover,.exact-home-gold-btn:hover,.exact-home-dark-btn:hover,.exact-home-bottom-actions a:hover{transform:translateY(-1px);box-shadow:0 9px 20px rgba(5,42,70,.14)}
+  .exact-home-service-grid article{transition:transform .2s ease,box-shadow .2s ease}
+  .exact-home-service-grid article:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(5,42,70,.1)}
+}
+
+/* tablet */
+@media(max-width:1050px){
+  .exact-home-container{width:min(100% - 24px,1180px)}
+  .exact-home-topbar-inner{grid-template-columns:1fr 1fr}
+  .exact-home-topbar-inner span:nth-child(3),.exact-home-topbar-inner span:nth-child(4){display:none}
+  .exact-home-desktop-nav,.exact-home-nav-actions{display:none}
+  .exact-home-menu{display:inline-flex}
+  .exact-home-hero-photo{left:48%}
+  .exact-home-hero-copy{width:58%}
+  .exact-home-hero-benefits{grid-template-columns:repeat(2,max-content)}
+  .exact-home-booking-grid{grid-template-columns:1fr 1fr}
+  .exact-home-booking-grid>a{grid-column:1/-1}
+  .exact-home-reassurance{padding-top:120px}
+  .exact-home-human{grid-template-columns:1fr 1fr}
+  .exact-home-cpam-card{display:none}
+  .exact-home-service-grid{grid-template-columns:repeat(2,1fr)}
+  .exact-home-process-grid{grid-template-columns:1fr 1fr}
+  .exact-home-process-intro{border-right:0}
+  .exact-home-coverage-grid{grid-template-columns:180px 1fr}
+  .exact-home-zone-list{grid-column:1/-1;border-left:0;padding-left:0}
+  .exact-home-bottom-inner{grid-template-columns:220px 1fr auto}
+  .exact-home-bottom-script{display:none}
+  .exact-home-footer-inner{grid-template-columns:180px 1fr}
+  .exact-home-footer-social,.exact-home-footer-copy{display:none}
+}
+
+/* mobile */
+@media(max-width:680px){
+  .exact-home-container{width:min(100% - 18px,1180px)}
+  .exact-home-topbar-inner{grid-template-columns:1fr}
+  .exact-home-topbar-inner span:nth-child(2){display:none}
+  .exact-home-nav-inner{min-height:64px}
+  .exact-home-logo{width:150px;flex-basis:150px}
+  .exact-home-logo img{height:50px}
+
+  .exact-home-hero{min-height:auto;padding-bottom:18px}
+  .exact-home-hero-photo{position:relative;inset:auto;height:250px}
+  .exact-home-hero-photo img{object-position:center 38%}
+  .exact-home-hero-overlay{background:linear-gradient(180deg,#082f50 0%,#082f50 50%,rgba(8,47,80,.15) 88%,transparent 100%);height:430px}
+  .exact-home-hero-inner{min-height:390px;align-items:flex-start}
+  .exact-home-hero-copy{width:100%;padding:36px 8px 0}
+  .exact-home-hero h1{font-size:2.55rem}
+  .exact-home-hero-copy>p:not(.exact-home-eyebrow){font-size:12px}
+  .exact-home-hero-benefits{grid-template-columns:1fr 1fr;gap:10px}
+  .exact-home-script{display:none}
+  .exact-home-booking-wrap{position:relative;left:auto;bottom:auto;transform:none;margin-top:-46px}
+  .exact-home-booking-card{padding:14px}
+  .exact-home-booking-card h2{font-size:17px}
+  .exact-home-tabs{grid-template-columns:1fr}
+  .exact-home-tabs span:not(.active){display:none}
+  .exact-home-booking-grid{grid-template-columns:1fr}
+  .exact-home-booking-grid>a{grid-column:auto}
+
+  .exact-home-reassurance{padding-top:20px}
+  .exact-home-reassurance-grid{grid-template-columns:1fr 1fr}
+  .exact-home-reassurance article{justify-content:flex-start;border-right:0;border-bottom:1px solid #e6edf1}
+
+  .exact-home-human{grid-template-columns:1fr}
+  .exact-home-human-photo{min-height:240px}
+  .exact-home-human-copy{padding:28px 18px}
+  .exact-home-human-list{grid-template-columns:1fr}
+  .exact-home-service-grid{grid-template-columns:1fr}
+
+  .exact-home-process-grid{grid-template-columns:1fr;gap:0;padding-block:12px}
+  .exact-home-process-intro{padding:10px 0 14px}
+  .exact-home-process-step{padding:12px 0;border-top:1px solid rgba(255,255,255,.16)}
+
+  .exact-home-coverage-grid{grid-template-columns:1fr}
+  .exact-home-map{max-width:260px;margin:auto}
+  .exact-home-zone-list{grid-template-columns:1fr 1fr}
+
+  .exact-home-review-grid{grid-template-columns:1fr}
+  .exact-home-bottom-car{display:none}
+  .exact-home-bottom-inner{grid-template-columns:1fr;padding-block:18px}
+  .exact-home-bottom-actions{justify-content:flex-start;flex-direction:column}
+  .exact-home-bottom-actions a{width:100%}
+  .exact-home-footer-inner{grid-template-columns:1fr;justify-items:center;padding-block:14px}
+  .exact-home-footer nav{flex-wrap:wrap;gap:10px 16px}
+}
