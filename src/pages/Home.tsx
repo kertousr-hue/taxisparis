@@ -4,7 +4,6 @@ import {
   ArrowRight,
   CalendarDays,
   Car,
-  CheckCircle2,
   Clock3,
   HeartHandshake,
   Hospital,
