@@ -57,7 +57,7 @@ export default function Stations({ onNavigate }: StationsProps) {
         canonical="https://www.taxisparis-conventionnes.fr/taxis-gares-aeroports"
         jsonLD={jsonLD}
       />
-      <div className="py-12">
+      <div className="exact-subpage exact-stations-page py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
