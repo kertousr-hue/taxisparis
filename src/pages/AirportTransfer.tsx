@@ -205,21 +205,29 @@ export default function AirportTransfer() {
         canonical="https://www.taxisparis-conventionnes.fr/taxis-aeroports-parisiens"
         jsonLD={jsonLD}
       />
-      <div className="py-12 bg-gray-50">
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm"><Plane size={16} /> Transferts aéroports</div>
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">Taxi Aéroport <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">CDG, Orly & Beauvais</span></h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Réservez votre transfert vers les aéroports parisiens avec calcul de distance, durée et forfaits réglementés.</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="#reservation-aeroport" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]">Réserver maintenant</a>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={17} /> 06 50 36 64 91</a>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt="Taxi pour transfert aéroport" className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur"><p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Aéroports parisiens</p><p className="mt-1 text-lg font-black">CDG · Orly · Beauvais · Le Bourget</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="py-12 bg-slate-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-4">
-              <Plane className="text-blue-600" size={40} />
-            </div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Transfert Gare et Aéroport
-            </h1>
-            <p className="text-lg text-gray-600">
-              Réservez votre transfert vers les gares et aéroports
-            </p>
-          </div>
-
           {submitSuccess && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center gap-3">
               <CheckCircle className="text-green-600" size={24} />
@@ -325,7 +333,7 @@ export default function AirportTransfer() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
+          <form id="reservation-aeroport" onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8">
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
