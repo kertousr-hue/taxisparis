@@ -206,84 +206,25 @@ export default function StationTransfer() {
         jsonLD={jsonLD}
       />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-        <div className="container relative mx-auto px-4 py-14 sm:py-16 lg:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.08fr_.92fr]">
-            <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
-                <Train size={17} aria-hidden="true" />
-                Gares parisiennes & aéroports
-              </div>
-              <h1 className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-                Transfert Gare & Aéroport à Paris
-              </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
-                Réservez votre chauffeur pour un départ ou une arrivée en gare. Prise en charge 24h/24 et 7j/7, avec calcul de distance et de durée avant validation.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#reservation-gare"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50"
-                >
-                  Réserver maintenant
-                  <ArrowRightIcon />
-                </a>
-                <a
-                  href="tel:+33650366491"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700"
-                >
-                  <Phone size={18} aria-hidden="true" />
-                  06 50 36 64 91
-                </a>
-              </div>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {[
-                  ['Gares parisiennes', 'Nord, Lyon, Montparnasse, Saint-Lazare'],
-                  ['Aéroports', 'CDG, Orly, Beauvais, Le Bourget'],
-                  ['Disponible 24/7', 'Départs tôt et arrivées tardives'],
-                ].map(([title, text]) => (
-                  <div key={title} className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
-                    <p className="font-bold text-white">{title}</p>
-                    <p className="mt-1 text-xs leading-5 text-blue-100">{text}</p>
-                  </div>
-                ))}
-              </div>
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm"><Train size={16} /> Gares parisiennes & aéroports</div>
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
+              Transfert Gare & Aéroport
+              <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">à Paris</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Réservez votre chauffeur pour un départ ou une arrivée en gare ou à l'aéroport, avec calcul de distance et de durée.</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="#reservation-gare" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]">Réserver maintenant <ArrowRightIcon /></a>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={17} /> 06 50 36 64 91</a>
             </div>
-
-            <div className="rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur">
-              <div className="rounded-[1.6rem] bg-white p-6 text-slate-900 shadow-xl">
-                <div className="flex items-center justify-between gap-5">
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Votre trajet</p>
-                    <h2 className="mt-2 text-2xl font-black tracking-tight">Du quai jusqu'à votre destination</h2>
-                  </div>
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50">
-                    <Train className="text-blue-700" size={32} />
-                  </div>
-                </div>
-
-                <div className="my-6 flex items-center gap-3">
-                  <span className="h-3 w-3 rounded-full bg-blue-600" />
-                  <div className="h-px flex-1 bg-gradient-to-r from-blue-200 via-cyan-300 to-cyan-200" />
-                  <span className="h-3 w-3 rounded-full bg-cyan-600" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <Gauge className="mb-2 text-blue-600" size={22} />
-                    <p className="font-bold">Distance calculée</p>
-                    <p className="mt-1 text-xs text-slate-500">Itinéraire réel</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <Timer className="mb-2 text-cyan-600" size={22} />
-                    <p className="font-bold">Durée estimée</p>
-                    <p className="mt-1 text-xs text-slate-500">Selon le trajet</p>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt="Taxi conventionné pour gare et aéroport" className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur"><p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Votre trajet</p><p className="mt-1 text-lg font-black">Du quai jusqu'à votre destination.</p></div>
             </div>
           </div>
         </div>
