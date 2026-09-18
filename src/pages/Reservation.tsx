@@ -389,6 +389,8 @@ export default function ReservationPage() {
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
+      <div className="exact-subpage exact-reservation-page">
+
       {/* ── Sticky top bar ── */}
       <div className="sticky top-0 z-40 bg-blue-700 text-white py-2.5 shadow-md">
         <div className="container mx-auto px-4 flex items-center justify-between gap-3 text-sm">
@@ -810,6 +812,7 @@ export default function ReservationPage() {
 
           </div>
         </div>
+      </div>
       </div>
     </>
   );
