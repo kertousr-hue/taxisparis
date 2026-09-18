@@ -2010,3 +2010,243 @@ input[type="month"] {
   .exact-contact-bottom-inner{align-items:flex-start;flex-direction:column;padding:22px 18px}
   .exact-contact-bottom a{width:100%}
 }
+
+
+/* ===== HARMONISATION GLOBALE — TOUTES LES PAGES PUBLIQUES ===== */
+
+/* Logo exact, visible et lisible sur toutes les pages */
+.exact-home-nav-inner{min-height:102px!important}
+.exact-home-logo{width:250px!important;flex:0 0 250px!important}
+.exact-home-logo img{
+  width:230px!important;
+  height:96px!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  background:#fff!important;
+}
+.exact-home-footer-inner{min-height:102px!important}
+.exact-home-footer-logo img{
+  width:205px!important;
+  height:88px!important;
+  object-fit:contain!important;
+  background:#fff!important;
+}
+.exact-home-desktop-nav a{font-size:10px!important}
+
+/* Socle commun */
+.exact-subpage{
+  background:#fff!important;
+  color:#173e5c;
+}
+.exact-subpage h1,
+.exact-subpage h2{font-family:Georgia,"Times New Roman",serif!important}
+.exact-subpage .container,
+.exact-subpage .max-w-7xl,
+.exact-subpage .max-w-6xl{max-width:1180px!important}
+.exact-subpage .max-w-5xl{max-width:1040px!important}
+.exact-subpage .max-w-4xl{max-width:940px!important}
+.exact-subpage .bg-gray-50,
+.exact-subpage .bg-slate-50{background:#f5f9fc!important}
+.exact-subpage .text-blue-600,
+.exact-subpage .text-blue-700,
+.exact-subpage .text-blue-800,
+.exact-subpage .text-blue-900{color:#0e5c9f!important}
+.exact-subpage .bg-blue-50,
+.exact-subpage .bg-blue-100{background:#eef6fb!important}
+.exact-subpage .border-blue-100,
+.exact-subpage .border-blue-200,
+.exact-subpage .border-gray-100,
+.exact-subpage .border-gray-200,
+.exact-subpage .border-slate-200{border-color:#dce7ee!important}
+.exact-subpage .shadow-sm,
+.exact-subpage .shadow-md,
+.exact-subpage .shadow-lg,
+.exact-subpage .shadow-xl,
+.exact-subpage .shadow-2xl{box-shadow:0 12px 30px rgba(5,42,70,.07)!important}
+.exact-subpage .rounded-lg,
+.exact-subpage .rounded-xl,
+.exact-subpage .rounded-2xl,
+.exact-subpage .rounded-3xl{border-radius:10px!important}
+
+/* FAQ */
+.exact-faq-page{
+  background:#fff!important;
+}
+.exact-faq-page>div:first-child{
+  background:
+    radial-gradient(circle at 85% 18%,rgba(196,147,69,.2),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455 68%,#0b4d7d)!important;
+  color:#fff!important;
+}
+.exact-faq-page>div:first-child h1{color:#fff!important;font-size:clamp(2.7rem,5vw,4.6rem)!important;line-height:1!important}
+.exact-faq-page>div:first-child p{color:rgba(255,255,255,.78)!important}
+.exact-faq-page>div:first-child .bg-white\/10{background:rgba(255,255,255,.09)!important}
+.exact-faq-page>div:nth-child(2){max-width:940px!important;padding-top:58px!important;padding-bottom:64px!important}
+.exact-faq-page>div:nth-child(2) h2{color:#073455!important}
+.exact-faq-page button{border-radius:9px!important}
+.exact-faq-page [class*="bg-white"]{border-color:#dce7ee!important}
+
+/* Article de blog */
+.exact-blogpost-page{
+  padding-top:48px!important;
+  padding-bottom:64px!important;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(196,147,69,.05),transparent 24%),
+    linear-gradient(180deg,#f4f8fb,#fff 32%,#f7f9fa)!important;
+}
+.exact-blogpost-page>.container{max-width:980px!important}
+.exact-blogpost-page>div[class*="h-96"]{height:380px!important;border-radius:14px!important}
+.exact-blogpost-page>div.bg-white,
+.exact-blogpost-page .bg-white.rounded-2xl{
+  border:1px solid #dce7ee!important;
+  border-radius:14px!important;
+  box-shadow:0 16px 38px rgba(5,42,70,.08)!important;
+}
+.exact-blogpost-page h1{color:#073455!important;font-size:clamp(2.4rem,4.5vw,4rem)!important;line-height:1.04!important}
+.exact-blogpost-page p.border-l-4{border-left-color:#c49345!important;background:#fbf8f1;padding:14px 18px!important;border-radius:0 8px 8px 0}
+.exact-blogpost-page>div>.bg-gradient-to-br{
+  border-radius:14px!important;
+  background:
+    radial-gradient(circle at 84% 20%,rgba(196,147,69,.18),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455)!important;
+}
+
+/* Pages ville */
+.exact-city-page>div:first-child{
+  padding-top:58px!important;
+  padding-bottom:62px!important;
+  background:
+    radial-gradient(circle at 85% 18%,rgba(196,147,69,.18),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455 68%,#0b4d7d)!important;
+}
+.exact-city-page>div:first-child h1{color:#fff!important;font-size:clamp(2.7rem,5vw,4.6rem)!important;line-height:1!important}
+.exact-city-page>div:first-child h2{color:rgba(255,255,255,.76)!important}
+.exact-city-page>div:nth-child(2){max-width:1180px!important;gap:28px!important;padding-top:50px!important;padding-bottom:60px!important}
+.exact-city-page section,
+.exact-city-page aside>div{
+  border-color:#dce7ee!important;
+  border-radius:11px!important;
+}
+.exact-city-page .bg-blue-900,
+.exact-city-page .bg-blue-800,
+.exact-city-page .bg-blue-700{background:#073455!important}
+.exact-city-page .bg-blue-50{background:#eef6fb!important}
+.exact-city-page a[class*="bg-blue-"]{background:#073455!important;color:#fff!important}
+
+/* Transferts gare / aéroport */
+.exact-transfer-page{
+  padding-top:42px!important;
+  padding-bottom:64px!important;
+  background:
+    radial-gradient(circle at 85% 3%,rgba(196,147,69,.07),transparent 22%),
+    linear-gradient(180deg,#f2f7fa,#fff 28%,#f7f9fa)!important;
+}
+.exact-transfer-page>.container>.max-w-4xl>div.text-center:first-child{
+  padding:38px 24px!important;
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.2),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455 68%,#0b4d7d);
+  box-shadow:0 16px 36px rgba(5,42,70,.10);
+}
+.exact-transfer-page>.container>.max-w-4xl>div.text-center:first-child h1{color:#fff!important;font-size:clamp(2.5rem,4.5vw,4rem)!important}
+.exact-transfer-page>.container>.max-w-4xl>div.text-center:first-child p{color:rgba(255,255,255,.76)!important}
+.exact-transfer-page>.container>.max-w-4xl>div.text-center:first-child>div:first-child{background:rgba(255,255,255,.1)!important}
+.exact-transfer-page .bg-white{border:1px solid #dce7ee!important}
+.exact-transfer-page .bg-blue-600,
+.exact-transfer-page .bg-blue-700{background:#073455!important}
+.exact-transfer-page .bg-green-600,
+.exact-transfer-page .bg-green-700{background:#50796f!important}
+.exact-transfer-page button[type="submit"]{background:linear-gradient(180deg,#d2a04d,#b67c31)!important;color:#fff!important}
+
+/* Page Gares & Aéroports */
+.exact-stations-page{
+  padding-top:50px!important;
+  padding-bottom:66px!important;
+  background:#f6f9fb!important;
+}
+.exact-stations-page>.container>div.text-center:first-child{
+  padding:38px 24px;
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.2),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455 68%,#0b4d7d);
+  box-shadow:0 16px 36px rgba(5,42,70,.10);
+}
+.exact-stations-page>.container>div.text-center:first-child h1{color:#fff!important;font-size:clamp(2.5rem,4.5vw,4rem)!important}
+.exact-stations-page>.container>div.text-center:first-child p{color:rgba(255,255,255,.76)!important}
+.exact-stations-page section{margin-top:42px!important}
+.exact-stations-page section h2{color:#073455!important}
+.exact-stations-page .bg-gradient-to-br{background:linear-gradient(125deg,#052a46,#073455)!important}
+.exact-stations-page .bg-white{border:1px solid #dce7ee!important}
+
+/* Anciennes pages de zone */
+.exact-zone-detail-page{
+  padding-top:46px!important;
+  padding-bottom:64px!important;
+  background:#f6f9fb!important;
+}
+.exact-zone-detail-page>.container>.max-w-5xl>div.bg-gradient-to-br{
+  border-radius:14px!important;
+  background:
+    radial-gradient(circle at 84% 20%,rgba(196,147,69,.2),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455 68%,#0b4d7d)!important;
+}
+.exact-zone-detail-page h1{color:#fff!important}
+.exact-zone-detail-page .bg-white{border:1px solid #dce7ee!important}
+.exact-zone-detail-page a.bg-blue-600{background:#073455!important}
+
+/* Pages légales */
+.exact-legal-page{
+  padding-top:54px!important;
+  padding-bottom:68px!important;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(196,147,69,.045),transparent 22%),
+    #f6f9fb!important;
+}
+.exact-legal-page>.container{max-width:900px!important}
+.exact-legal-page>div>h1,
+.exact-legal-page h1{
+  color:#073455!important;
+  font-size:clamp(2.3rem,4vw,3.5rem)!important;
+  margin-bottom:26px!important;
+}
+.exact-legal-page .bg-white{
+  border:1px solid #dce7ee!important;
+  border-radius:14px!important;
+  padding:34px!important;
+  box-shadow:0 14px 32px rgba(5,42,70,.06)!important;
+}
+.exact-legal-page h2{color:#073455!important}
+
+/* 404 */
+.exact-404-page{
+  min-height:62vh!important;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(196,147,69,.09),transparent 30%),
+    linear-gradient(180deg,#f4f8fb,#fff)!important;
+}
+.exact-404-page p.text-8xl{color:#dfe8ed!important;font-family:Georgia,"Times New Roman",serif}
+.exact-404-page h1{color:#073455!important;font-size:32px!important}
+.exact-404-page a{
+  border-radius:8px!important;
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+  color:#fff!important;
+}
+
+/* Responsive global */
+@media(max-width:1050px){
+  .exact-home-nav-inner{min-height:82px!important}
+  .exact-home-logo{width:205px!important;flex-basis:205px!important}
+  .exact-home-logo img{width:190px!important;height:76px!important}
+}
+@media(max-width:680px){
+  .exact-home-nav-inner{min-height:70px!important}
+  .exact-home-logo{width:155px!important;flex-basis:155px!important}
+  .exact-home-logo img{width:150px!important;height:62px!important}
+  .exact-home-footer-logo img{width:165px!important;height:72px!important}
+  .exact-transfer-page>.container>.max-w-4xl>div.text-center:first-child,
+  .exact-stations-page>.container>div.text-center:first-child{padding:28px 16px!important}
+  .exact-city-page>div:first-child{padding-top:42px!important;padding-bottom:44px!important}
+  .exact-legal-page .bg-white{padding:22px!important}
+}
