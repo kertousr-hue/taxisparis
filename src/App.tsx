@@ -172,9 +172,9 @@ function AppContent() {
         Aller au contenu principal
       </a>
       
-      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'premium-public-shell'} ${isHomePage ? 'app-background-home' : ''}`}>
+      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : isHomePage ? 'exact-home-shell' : 'premium-public-shell'}`}>
         {!isAdminPage && (isHomePage ? <HomeExactHeader /> : <Header onNavigate={handleNavigate} />)}
-        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'premium-public-main'}`} role="main">
+        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : isHomePage ? 'exact-home-main' : 'premium-public-main'}`} role="main">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Home onNavigate={handleNavigate} />} />
