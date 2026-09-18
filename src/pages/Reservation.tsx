@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
   Calendar, Clock, Phone, Mail, User, CheckCircle, Car,
-  Gauge, Timer, MessageSquare, MapPin, Shield, Star,
+  Gauge, Timer, MessageSquare, MapPin, Shield,
   ChevronDown, ChevronUp, AlertCircle, Armchair, RefreshCw,
   ClipboardList, FileText, ArrowRight,
 } from 'lucide-react';
@@ -87,7 +87,7 @@ type FieldErrors = {
 
 function StepBadge({ n, color }: { n: number; color: string }) {
   return (
-    <span className={`flex-shrink-0 w-6 h-6 rounded-full ${color} text-white text-xs font-bold flex items-center justify-center`}>
+    <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl ${color} text-xs font-black text-white shadow-sm`}>
       {n}
     </span>
   );
@@ -98,22 +98,22 @@ function SectionCard({ step, stepColor, icon, iconBg, title, children }: {
   title: string; children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-      <div className={`flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-gray-100 rounded-t-2xl ${iconBg}`}>
+    <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg shadow-slate-200/40">
+      <div className={`flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6 ${iconBg}`}>
         <StepBadge n={step} color={stepColor} />
         <div className="flex items-center gap-2">
           {icon}
-          <h2 className="font-bold text-gray-800 text-sm sm:text-base">{title}</h2>
+          <h2 className="text-sm font-black text-slate-900 sm:text-base">{title}</h2>
         </div>
       </div>
-      <div className="px-4 sm:px-5 py-4 sm:py-5">{children}</div>
+      <div className="px-5 py-5 sm:px-6 sm:py-6">{children}</div>
     </div>
   );
 }
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">{children}</p>
+    <p className="mb-2 text-xs font-black uppercase tracking-[.08em] text-slate-500">{children}</p>
   );
 }
 
@@ -126,8 +126,8 @@ function TextInput({ id, name, type = 'text', value, onChange, required, placeho
     <input
       type={type} id={id} name={name} value={value ?? ''} onChange={onChange}
       required={required} placeholder={placeholder}
-      className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-        ${hasError ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50 focus:bg-white'}`}
+      className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-900 outline-none transition focus:ring-4
+        ${hasError ? 'border-red-400 bg-red-50 focus:ring-red-100' : 'border-slate-300 bg-white focus:border-blue-500 focus:ring-blue-100'}`}
     />
   );
 }
@@ -142,8 +142,8 @@ function RadioPill({ name, value, checked, onChange, label, sublabel, required }
   label: string; sublabel?: string; required?: boolean;
 }) {
   return (
-    <label className={`flex items-center gap-3 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all duration-150 select-none active:scale-[0.98]
-      ${checked ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-blue-200 hover:bg-blue-50/30'}`}>
+    <label className={`flex cursor-pointer select-none items-center gap-3 rounded-2xl border px-4 py-3.5 transition-all duration-150 active:scale-[0.99]
+      ${checked ? 'border-blue-400 bg-blue-50 shadow-sm' : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40'}`}>
       <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors
         ${checked ? 'border-blue-500 bg-blue-500' : 'border-gray-300 bg-white'}`}>
         {checked && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -389,92 +389,111 @@ export default function ReservationPage() {
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
-      {/* ── Sticky top bar ── */}
-      <div className="sticky top-0 z-40 bg-blue-700 text-white py-2.5 shadow-md">
-        <div className="container mx-auto px-4 flex items-center justify-between gap-3 text-sm">
-          <span className="font-medium hidden sm:block">Confirmation rapide par téléphone</span>
-          <a href="tel:+33650366491"
-            className="flex items-center gap-2 bg-white text-blue-700 font-bold px-4 py-1.5 rounded-full hover:bg-blue-50 transition-colors text-xs sm:text-sm mx-auto sm:mx-0">
-            <Phone size={14} /> 06 50 36 64 91
-          </a>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-b from-blue-50 via-white to-gray-50 min-h-screen">
-        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-10">
-          <div className="max-w-2xl mx-auto">
-
-            {/* ── Hero ── */}
-            <div className="text-center mb-6 sm:mb-8 px-1">
-              <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full mb-3 uppercase tracking-wide">
-                <Shield size={12} /> Transport remboursé CPAM
-              </div>
-              <h1 id="page-title" className="text-xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-2">
+      /* ── Hero ── */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <div className="container relative mx-auto px-4 py-14 sm:py-16 lg:py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.08fr_.92fr]">
+            <div>
+              <h1 id="page-title" className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
                 Réservation taxi conventionné VSL CPAM
               </h1>
-              <p className="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
-                Réservez votre taxi conventionné ou VSL pour un transport médical assis en Île-de-France. Service 24h/24 pour les rendez-vous médicaux, avec prise en charge CPAM possible sur prescription.
+              <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
+                Organisez votre transport médical assis à Paris et en Île-de-France. Renseignez votre trajet et votre situation pour envoyer une demande complète à notre équipe.
               </p>
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-xs">
-                <div className="flex items-center gap-1 text-yellow-500">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={11} className="fill-yellow-400" />)}
-                  <span className="text-gray-500 ml-1">Patients Île-de-France</span>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a href="#formulaire-reservation" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50">
+                  Remplir le formulaire
+                  <ArrowRight size={18} aria-hidden="true" />
+                </a>
+                <a href="tel:+33650366491" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700">
+                  <Phone size={17} aria-hidden="true" />
+                  06 50 36 64 91
+                </a>
+              </div>
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+                  <Clock className="mb-2 text-cyan-200" size={20} />
+                  <p className="font-bold text-white">Confirmation rapide</p>
+                  <p className="mt-1 text-xs leading-5 text-blue-100">Demande vérifiée par notre équipe</p>
                 </div>
-                <div className="flex items-center gap-1 text-green-600">
-                  <CheckCircle size={11} /><span className="text-gray-500">Chauffeurs agréés CPAM</span>
+                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+                  <Shield className="mb-2 text-cyan-200" size={20} />
+                  <p className="font-bold text-white">Conventionné CPAM</p>
+                  <p className="mt-1 text-xs leading-5 text-blue-100">Prise en charge selon votre situation</p>
+                </div>
+                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+                  <MapPin className="mb-2 text-cyan-200" size={20} />
+                  <p className="font-bold text-white">Paris & Île-de-France</p>
+                  <p className="mt-1 text-xs leading-5 text-blue-100">75, 91, 92, 93 et 94</p>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-5">
-              <div className="bg-white border border-blue-100 rounded-2xl p-3 text-center shadow-sm">
-                <Clock size={16} className="text-blue-600 mx-auto mb-1" />
-                <p className="text-xs font-bold text-gray-800">Confirmation rapide</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">Demande traitée par téléphone</p>
-              </div>
-              <div className="bg-white border border-green-100 rounded-2xl p-3 text-center shadow-sm">
-                <Shield size={16} className="text-green-600 mx-auto mb-1" />
-                <p className="text-xs font-bold text-gray-800">Conventionné CPAM</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">Sur prescription médicale</p>
-              </div>
-              <div className="bg-white border border-orange-100 rounded-2xl p-3 text-center shadow-sm">
-                <MapPin size={16} className="text-orange-600 mx-auto mb-1" />
-                <p className="text-xs font-bold text-gray-800">Paris et Île-de-France</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">75, 91, 92, 93 et 94</p>
+            <div className="rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur">
+              <div className="rounded-[1.6rem] bg-white p-6 text-slate-900 shadow-xl">
+                <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Votre demande</p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight">Un formulaire clair, étape par étape</h2>
+                <div className="mt-5 space-y-3">
+                  {[
+                    ['1', 'Vos coordonnées', 'Pour pouvoir vous recontacter'],
+                    ['2', 'Votre trajet', 'Départ, arrivée, date et heure'],
+                    ['3', 'Votre situation', 'Mobilité, prise en charge et bon de transport'],
+                  ].map(([number, title, text]) => (
+                    <div key={number} className="flex gap-3 rounded-2xl bg-slate-50 p-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-sm font-black text-blue-700">{number}</span>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900">{title}</p>
+                        <p className="mt-0.5 text-xs leading-5 text-slate-500">{text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* ── Success ── */}
+      <div className="min-h-screen bg-slate-50">
+        <div className="container mx-auto px-4 py-10 sm:py-14">
+          <div className="mx-auto max-w-4xl">
+
             {submitSuccess && (
-              <div id="reservation-success" role="alert" className="mb-4 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-start gap-3">
-                <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={22} />
+              <div id="reservation-success" role="alert" className="mb-5 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                <CheckCircle className="mt-0.5 shrink-0 text-emerald-600" size={22} />
                 <div>
-                  <p className="font-bold text-green-800 text-base">Réservation confirmée !</p>
-                  <p className="text-green-700 text-sm mt-1">Votre demande a bien été enregistrée. Vous recevrez une confirmation par SMS au numéro indiqué.</p>
+                  <p className="text-base font-black text-emerald-900">Réservation enregistrée</p>
+                  <p className="mt-1 text-sm text-emerald-700">Votre demande a bien été enregistrée. Vous recevrez une confirmation au numéro indiqué.</p>
                 </div>
               </div>
             )}
 
-            {/* ── Error summary ── */}
             {hasErrors && (
-              <div id="form-error-summary" role="alert" className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-2xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertCircle className="text-red-500 flex-shrink-0" size={16} />
-                  <p className="font-bold text-red-800 text-sm">Veuillez corriger les erreurs</p>
+              <div id="form-error-summary" role="alert" className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <AlertCircle className="shrink-0 text-red-500" size={16} />
+                  <p className="text-sm font-black text-red-900">Veuillez corriger les erreurs</p>
                 </div>
-                <ul className="space-y-1 ml-5">
+                <ul className="ml-5 space-y-1">
                   {Object.values(fieldErrors).filter(Boolean).map((msg, i) => (
-                    <li key={i} className="text-xs text-red-700 list-disc">{msg}</li>
+                    <li key={i} className="list-disc text-xs text-red-700">{msg}</li>
                   ))}
                   {error && !Object.keys(fieldErrors).length && (
-                    <li className="text-xs text-red-700 list-disc">{error}</li>
+                    <li className="list-disc text-xs text-red-700">{error}</li>
                   )}
                 </ul>
               </div>
             )}
 
-            {/* ══════════ FORM ══════════ */}
-            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" aria-labelledby="page-title">
+            {{/* ══════════ FORM ══════════ */}
+            <form id="formulaire-reservation" onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" aria-labelledby="page-title">
 
               {/* 1 – Coordonnées */}
               <SectionCard step={1} stepColor="bg-blue-600" icon={<User size={16} className="text-blue-600" />} iconBg="bg-blue-50" title="Vos coordonnées">
@@ -688,7 +707,7 @@ export default function ReservationPage() {
                   Tous les champs sont obligatoires
                 </p>
                 <button type="submit" disabled={isSubmitting}
-                  className="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white py-4 rounded-2xl font-bold text-base transition-all shadow-lg hover:shadow-xl disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-700 to-cyan-600 py-4 text-base font-black text-white shadow-lg shadow-blue-200 transition hover:from-blue-800 hover:to-cyan-700 hover:shadow-xl active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50">
                   {isSubmitting ? (
                     <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Envoi en cours…</>
                   ) : (
@@ -699,11 +718,11 @@ export default function ReservationPage() {
             </form>
 
             {/* ── Contact ── */}
-            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 sm:p-5 mb-8">
+            <div className="mb-8 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-5 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                  <p className="font-bold text-blue-900 text-sm">Besoin d'une réponse immédiate ?</p>
-                  <p className="text-blue-600 text-xs mt-0.5">Disponible 24h/24 – 7j/7</p>
+                  <p className="text-sm font-black text-emerald-950">Besoin d'une réponse immédiate ?</p>
+                  <p className="mt-1 text-xs text-emerald-700">Disponible 24h/24 – 7j/7</p>
                 </div>
                 <div className="flex gap-2">
                   <a href="tel:+33650366491" className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl hover:bg-blue-700 transition-colors text-xs sm:text-sm">
@@ -717,7 +736,7 @@ export default function ReservationPage() {
             </div>
 
             {/* ── SEO content ── */}
-            <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8 mb-8">
+            <section className="mb-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-5">
                 Réserver un taxi conventionné VSL en Île-de-France
               </h2>
@@ -792,7 +811,7 @@ export default function ReservationPage() {
             </section>
 
             {/* ── CTA final ── */}
-            <div className="bg-blue-700 text-white rounded-2xl p-5 sm:p-8 text-center">
+            <div className="rounded-[2rem] bg-slate-950 p-6 text-center text-white shadow-xl sm:p-10">
               <h2 className="text-lg sm:text-xl font-bold mb-1.5">Prêt à réserver ?</h2>
               <p className="text-blue-100 mb-4 text-xs sm:text-sm">Service 24h/24 – 7j/7 en Île-de-France.</p>
               <div className="flex flex-col sm:flex-row gap-2 justify-center">
