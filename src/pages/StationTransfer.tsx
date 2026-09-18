@@ -205,7 +205,7 @@ export default function StationTransfer() {
         canonical="https://www.taxisparis-conventionnes.fr/taxis-gares-parisiennes"
         jsonLD={jsonLD}
       />
-      <div className="py-12 bg-gray-50">
+      <div className="exact-subpage exact-transfer-page exact-station-page py-12 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
