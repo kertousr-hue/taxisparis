@@ -205,42 +205,32 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         jsonLD={[jsonLDWebPage, jsonLDItemList, jsonLDFAQ, jsonLDMedical]}
       />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div className="container relative mx-auto px-4 py-14 text-center sm:py-16 lg:py-20">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
-              <BookOpen size={16} aria-hidden="true" />
-              Guides & conseils transport médical
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm">
+              <BookOpen size={16} /> Guides & conseils transport médical
             </div>
-            <h1 className="text-4xl font-black leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
               Blog Taxi VSL Conventionné
-              <span className="block">en Île-de-France</span>
+              <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">en Île-de-France</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-blue-100 sm:text-lg">
-              Comprendre le transport médical remboursé CPAM, préparer vos démarches et trouver rapidement les informations utiles avant votre trajet.
+            <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              Comprendre le transport médical remboursé CPAM, préparer vos démarches et trouver les informations utiles avant votre trajet.
             </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link
-                to="/reservation-taxi-vsl"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-bold text-blue-700 shadow-xl transition hover:bg-blue-50"
-              >
-                Réserver maintenant
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <a
-                href="tel:+33650366491"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-700"
-              >
-                <Phone size={17} aria-hidden="true" />
-                06 50 36 64 91
-              </a>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link to="/reservation-taxi-vsl" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]">Réserver maintenant <ArrowRight size={18} /></Link>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={17} /> 06 50 36 64 91</a>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt="Taxi conventionné et transport médical" className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur">
+                <p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Guides pratiques</p>
+                <p className="mt-1 text-lg font-black">CPAM, prescription, soins réguliers et zones desservies.</p>
+              </div>
             </div>
           </div>
         </div>
