@@ -6,13 +6,14 @@ export default function HomeExactFooter() {
     <footer className="exact-home-footer">
       <div className="exact-home-container exact-home-footer-inner">
         <Link to="/" className="exact-home-footer-logo">
-          <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+          <img src="/taxis-logo-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
         </Link>
         <nav aria-label="Navigation du pied de page">
           <Link to="/">Accueil</Link>
           <a href="#services">Nos services</a>
           <Link to="/zones-desservies">Zones desservies</Link>
           <Link to="/qui-sommes-nous">À propos</Link>
+          <Link to="/blog">Blog</Link>
           <Link to="/faq">FAQ</Link>
           <Link to="/contact">Contact</Link>
         </nav>
