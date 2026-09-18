@@ -2,19 +2,16 @@ import { Link } from 'react-router-dom';
 import {
   Activity,
   ArrowRight,
-  Calendar,
+  Building2,
+  CalendarDays,
   Car,
-  CheckCircle,
-  ChevronDown,
+  CheckCircle2,
   Clock,
   FileText,
-  HeartPulse,
-  Hospital,
+  HeartHandshake,
   MapPin,
-  Microscope,
   Phone,
-  Shield,
-  Star,
+  ShieldCheck,
   Stethoscope,
   Users,
 } from 'lucide-react';
@@ -25,99 +22,52 @@ interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
-const benefits = [
-  {
-    icon: Car,
-    title: 'Taxi conventionné',
-    text: 'Transport médical assis agréé CPAM pour vos rendez-vous de santé.',
-  },
-  {
-    icon: FileText,
-    title: 'Prise en charge CPAM',
-    text: 'Tiers payant disponible selon votre situation et votre prescription.',
-  },
-  {
-    icon: Clock,
-    title: 'Disponible 24/7',
-    text: 'À votre service jour et nuit, week-ends et jours fériés inclus.',
-  },
-  {
-    icon: Users,
-    title: 'Chauffeurs formés',
-    text: 'Des professionnels ponctuels, attentifs et habitués aux trajets médicaux.',
-  },
+const reassurance = [
+  { icon: Clock, title: 'Disponible 24h/24', text: 'et 7j/7' },
+  { icon: Users, title: 'Chauffeurs formés', text: 'et bienveillants' },
+  { icon: Car, title: 'Véhicules confortables', text: 'et adaptés' },
+  { icon: ShieldCheck, title: 'Prise en charge', text: 'CPAM' },
+  { icon: MapPin, title: 'Dans toute', text: 'l’Île-de-France' },
 ];
 
 const services = [
   {
-    icon: Stethoscope,
     title: 'Consultations médicales',
-    text: 'Médecins, spécialistes, centres de santé et rendez-vous de suivi.',
+    text: 'Médecins spécialistes et généralistes',
+    image: 'https://www.lifelink-medical.com/storage/2026/04/zahnimplantate-mrt_2-1024x647.jpg',
   },
   {
-    icon: Activity,
-    title: 'Dialyse',
-    text: 'Des trajets réguliers organisés avec ponctualité et sérénité.',
-  },
-  {
-    icon: HeartPulse,
-    title: 'Chimiothérapie',
-    text: 'Un accompagnement confortable et adapté à vos séances de soins.',
-  },
-  {
-    icon: Star,
-    title: 'Radiothérapie',
-    text: 'Des déplacements récurrents assurés avec discrétion et fiabilité.',
-  },
-  {
-    icon: Hospital,
     title: 'Hospitalisations',
-    text: "Admissions, sorties d'hôpital et transferts entre établissements.",
+    text: 'Entrées et sorties d’hôpital',
+    image: 'https://www.melstahospitals.com/images/facilities/facilities-hero.webp',
   },
   {
-    icon: Microscope,
-    title: 'Examens & analyses',
-    text: 'Laboratoire, IRM, scanner, radiographie et autres examens médicaux.',
+    title: 'Soins réguliers',
+    text: 'Dialyse, chimiothérapie, radiothérapie…',
+    image: 'https://www.promedour.com/cdn/shop/files/Care.png?v=1772415090&width=1536',
+  },
+  {
+    title: 'Examens médicaux',
+    text: 'IRM, scanner, analyses…',
+    image: 'https://www.trinityhealthma.org/sites/default/files/cards/imaging-mri.jpg',
   },
 ];
 
-const trustItems = [
-  { icon: Shield, title: 'Agrément CPAM', text: 'Service conventionné et reconnu.' },
-  { icon: Clock, title: 'Ponctualité', text: 'Vos rendez-vous médicaux sont prioritaires.' },
-  { icon: Car, title: 'Véhicules confortables', text: 'Des taxis récents, propres et spacieux.' },
-  { icon: MapPin, title: 'Couverture complète', text: "Paris et une large partie de l'Île-de-France." },
-  { icon: Calendar, title: 'Réservation simple', text: 'En ligne ou par téléphone en quelques instants.' },
+const reviews = [
+  { quote: '“Chauffeur ponctuel et très professionnel. Un service au top !”', name: 'Jean M. – 92' },
+  { quote: '“Un accompagnement bienveillant et rassurant pour ma mère.”', name: 'Nadia R. – 75' },
+  { quote: '“Réservation simple, chauffeur très aimable. Je recommande vivement.”', name: 'Patrick L. – 91' },
 ];
 
-const departments = [
-  { code: '75', name: 'Paris', count: '20 arrondissements', path: '/taxi-conventionne-paris-75' },
-  { code: '91', name: 'Essonne', count: '50 villes', path: '/taxi-conventionne-essonne-91' },
-  { code: '92', name: 'Hauts-de-Seine', count: '36 communes', path: '/taxi-conventionne-hauts-de-seine-92' },
-  { code: '93', name: 'Seine-Saint-Denis', count: '40 communes', path: '/taxi-conventionne-seine-saint-denis-93' },
-  { code: '94', name: 'Val-de-Marne', count: '47 communes', path: '/taxi-conventionne-val-de-marne-94' },
-];
-
-const faqs = [
-  {
-    question: 'Comment réserver un taxi conventionné ?',
-    answer:
-      'Vous pouvez réserver en ligne via notre formulaire ou par téléphone au 06 50 36 64 91. Préparez les informations du trajet et de votre rendez-vous médical.',
-  },
-  {
-    question: 'Quels documents dois-je fournir ?',
-    answer:
-      "Selon votre prise en charge, prévoyez votre prescription médicale de transport, votre carte Vitale à jour et, si nécessaire, votre justificatif complémentaire.",
-  },
-  {
-    question: 'Le tiers payant est-il disponible ?',
-    answer:
-      "Oui, le tiers payant peut être proposé lorsque les conditions de prise en charge par l'Assurance Maladie sont réunies.",
-  },
-  {
-    question: 'Intervenez-vous le week-end et les jours fériés ?',
-    answer:
-      'Oui. Notre service de réservation et de transport est disponible 24h/24 et 7j/7, y compris les week-ends et jours fériés.',
-  },
+const zones = [
+  ['75', 'Paris'],
+  ['77', 'Seine-et-Marne'],
+  ['78', 'Yvelines'],
+  ['91', 'Essonne'],
+  ['92', 'Hauts-de-Seine'],
+  ['93', 'Seine-Saint-Denis'],
+  ['94', 'Val-de-Marne'],
+  ['95', 'Val-d’Oise'],
 ];
 
 export default function Home({ onNavigate: _onNavigate }: HomeProps) {
@@ -129,269 +79,224 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
         jsonLD={[generateJsonLD()]}
       />
 
-      <div className="home-redesign overflow-hidden bg-white text-slate-950">
-        <section className="relative border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_50%,#eef8ff_100%)]">
-          <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-cyan-200/30 blur-3xl" aria-hidden="true" />
-          <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" aria-hidden="true" />
+      <div className="exact-home-page">
+        <section className="exact-home-hero">
+          <div className="exact-home-hero-photo" aria-hidden="true">
+            <img
+              src="https://www.rideinbliss.com/sablony/rideinbliss3/imagesrib/2026/senior/senior-transportation-big.jpg"
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <div className="exact-home-hero-overlay" />
 
-          <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-16">
-            <div className="relative z-10">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/90 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-cyan-700 shadow-sm sm:text-sm">
-                <Shield size={16} aria-hidden="true" />
-                Transport médical assis à Paris et en Île-de-France
-              </div>
-
-              <h1 className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
-                Taxi conventionné &amp; VSL
-                <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">
-                  à Paris et en Île-de-France
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Vos déplacements médicaux en toute sérénité. Service de taxi conventionné par la CPAM,
-                disponible 24h/24 et 7j/7 à Paris et en Île-de-France. Prise en charge possible sur prescription médicale selon votre situation.
+          <div className="exact-home-container exact-home-hero-inner">
+            <div className="exact-home-hero-copy">
+              <p className="exact-home-eyebrow">Transport médical conventionné</p>
+              <h1>Vos rendez-vous médicaux en toute sérénité</h1>
+              <p>
+                À Paris et en Île-de-France, des chauffeurs conventionnés à vos côtés
+                pour tous vos trajets de santé.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  to="/reservation-taxi-vsl"
-                  className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 text-base font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,0.26)] transition hover:-translate-y-0.5 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-200"
-                >
-                  <Calendar size={19} aria-hidden="true" />
-                  Réserver maintenant
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-
-                <a
-                  href="tel:+33650366491"
-                  className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 text-base font-extrabold text-blue-900 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100"
-                  aria-label="Appeler le 06 50 36 64 91"
-                >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                    <Phone size={18} aria-hidden="true" />
-                  </span>
-                  <span className="text-left leading-tight">
-                    <span className="block text-xs font-bold uppercase tracking-wide text-slate-500">Appeler</span>
-                    <span className="block">06 50 36 64 91</span>
-                  </span>
-                </a>
-              </div>
-
-              <div className="mt-7 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
-                {[
-                  ['Agréé CPAM', 'Tiers payant'],
-                  ['24h/24 · 7j/7', 'Jours fériés inclus'],
-                  ['Paris & IDF', '193 villes desservies'],
-                ].map(([title, text]) => (
-                  <div key={title} className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm">
-                    <CheckCircle size={18} className="shrink-0 text-teal-500" aria-hidden="true" />
-                    <div>
-                      <p className="text-sm font-extrabold text-slate-900">{title}</p>
-                      <p className="text-xs text-slate-500">{text}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="exact-home-hero-benefits">
+                <span><ShieldCheck size={18} /> Conventionné<br />CPAM</span>
+                <span><CalendarDays size={18} /> Prise en charge<br />100% ou partielle</span>
+                <span><Car size={18} /> Chauffeurs<br />professionnels</span>
+                <span><MapPin size={18} /> Dans toute<br />l’Île-de-France</span>
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
-              <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/45 via-blue-200/15 to-transparent blur-2xl" aria-hidden="true" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-slate-900 via-blue-950 to-blue-800 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.22)] sm:p-7">
-                <div className="absolute inset-0 opacity-35" aria-hidden="true" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.2) 1px, transparent 0)', backgroundSize: '20px 20px' }} />
+            <p className="exact-home-script">Parce que<br />votre santé<br />compte</p>
+          </div>
 
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <div>
-                    <span className="inline-flex rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-cyan-100 ring-1 ring-white/15">Votre santé, notre priorité</span>
-                    <p className="mt-4 max-w-sm text-2xl font-black leading-tight text-white sm:text-3xl">
-                      Plus qu’un trajet,
-                      <span className="block text-cyan-300">un accompagnement rassurant.</span>
-                    </p>
-                  </div>
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-cyan-200 ring-1 ring-white/20">
-                    <HeartPulse size={29} aria-hidden="true" />
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-8 rounded-[1.75rem] border border-white/15 bg-white/10 p-5 backdrop-blur-md">
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">Taxi conventionné</p>
-                      <p className="mt-1 text-lg font-black text-white">Transport médical assis</p>
-                    </div>
-                    <span className="rounded-full bg-teal-400/15 px-3 py-1.5 text-xs font-bold text-teal-200 ring-1 ring-teal-300/20">CPAM</span>
-                  </div>
-
-                  <div className="mt-5 flex min-h-[190px] items-center justify-center rounded-3xl bg-gradient-to-br from-white/10 to-white/[0.03] p-6 ring-1 ring-white/10">
-                    <div className="relative w-full max-w-md">
-                      <div className="absolute left-1/2 top-0 h-28 w-48 -translate-x-1/2 rounded-t-[1.8rem] border-4 border-cyan-200/40 border-b-0 bg-white/[0.04]" aria-hidden="true" />
-                      <div className="relative flex items-end justify-center pt-10">
-                        <div className="absolute left-[17%] bottom-6 flex h-20 w-14 items-center justify-center rounded-t-xl bg-white/10 text-cyan-100 ring-1 ring-white/15">
-                          <Hospital size={30} aria-hidden="true" />
-                        </div>
-                        <div className="relative flex h-24 w-64 items-center justify-center rounded-[2.25rem_2.25rem_1.4rem_1.4rem] bg-gradient-to-b from-slate-100 to-slate-300 shadow-2xl">
-                          <div className="absolute -top-7 rounded-lg bg-white px-3 py-1 text-xs font-black tracking-wide text-blue-800 shadow">TAXI</div>
-                          <Car size={82} className="text-blue-950" strokeWidth={1.4} aria-hidden="true" />
-                          <span className="absolute -bottom-3 left-8 h-7 w-7 rounded-full border-[6px] border-slate-700 bg-slate-950" />
-                          <span className="absolute -bottom-3 right-8 h-7 w-7 rounded-full border-[6px] border-slate-700 bg-slate-950" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div className="exact-home-container exact-home-booking-wrap">
+            <div className="exact-home-booking-card">
+              <h2>Réservez votre transport médical</h2>
+              <div className="exact-home-tabs">
+                <span className="active">Trajet simple</span>
+                <span>Aller-retour</span>
+                <span>Rendez-vous réguliers</span>
               </div>
 
-              <div className="absolute -bottom-5 -left-2 hidden items-center gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-xl sm:flex">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600"><Shield size={20} /></span>
-                <div>
-                  <p className="text-xs font-bold text-slate-500">Prise en charge</p>
-                  <p className="text-sm font-black text-slate-900">CPAM & tiers payant</p>
-                </div>
+              <div className="exact-home-booking-grid">
+                <div><MapPin size={17} /><span><small>Adresse de départ</small>Votre adresse</span></div>
+                <div><MapPin size={17} /><span><small>Destination</small>Hôpital, clinique, cabinet…</span></div>
+                <div><CalendarDays size={17} /><span><small>Date du trajet</small>Choisir une date</span></div>
+                <Link to="/reservation-taxi-vsl">Réserver maintenant <ArrowRight size={17} /></Link>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="relative z-10 -mt-1 border-b border-slate-100 bg-white py-7 sm:py-9">
-          <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-            {benefits.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_10px_35px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(30,64,175,0.10)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 text-blue-700 ring-1 ring-blue-100">
-                  <Icon size={23} aria-hidden="true" />
-                </div>
-                <h2 className="mt-4 text-lg font-black text-slate-950">{title}</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+        <section className="exact-home-reassurance">
+          <div className="exact-home-container exact-home-reassurance-grid">
+            {reassurance.map(({ icon: Icon, title, text }) => (
+              <article key={title}>
+                <span><Icon size={20} /></span>
+                <div><strong>{title}</strong><small>{text}</small></div>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="bg-slate-50/70 py-14 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-cyan-600">Nos services</p>
-                <h2 className="mt-2 max-w-3xl text-3xl font-black tracking-[-0.03em] text-slate-950 sm:text-4xl">Des trajets pensés autour de vos soins</h2>
-                <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">Un accompagnement adapté à vos rendez-vous et traitements médicaux, ponctuels comme réguliers.</p>
-              </div>
-              <Link to="/reservation-taxi-vsl" className="inline-flex items-center gap-2 font-extrabold text-blue-700 hover:text-blue-900">
-                Réserver un transport <ArrowRight size={17} aria-hidden="true" />
-              </Link>
+        <section className="exact-home-human">
+          <div className="exact-home-human-photo">
+            <img
+              src="https://ber.berlin-airport.de/en/flying/airlines-ziele/inspiration-urlaub/dest-165-paris.thumb.800.480.png?ck=1761569582"
+              alt="Paris et la Tour Eiffel"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="exact-home-human-review">
+              <p>« Un service fiable, humain et rassurant. Merci pour votre professionnalisme. »</p>
+              <strong>Sophie D. – Paris</strong>
+            </div>
+          </div>
+
+          <div className="exact-home-human-copy">
+            <p className="exact-home-section-kicker">Un service à vos côtés</p>
+            <h2>Un accompagnement humain à chaque étape</h2>
+            <p>
+              Nous vous accompagnons avec bienveillance, de votre domicile jusqu’à votre
+              établissement de soin. Notre objectif : vous offrir un trajet simple, sécurisé et confortable.
+            </p>
+
+            <div className="exact-home-human-list">
+              <span><CheckCircle2 size={16} /> Trajets toutes distances</span>
+              <span><CheckCircle2 size={16} /> Ponctualité et discrétion</span>
+              <span><CheckCircle2 size={16} /> Aide à la montée et à l’installation</span>
+              <span><CheckCircle2 size={16} /> Chauffeurs expérimentés</span>
+              <span><CheckCircle2 size={16} /> Véhicules récents et adaptés</span>
+              <span><CheckCircle2 size={16} /> Une équipe à votre écoute</span>
             </div>
 
-            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map(({ icon: Icon, title, text }, index) => (
-                <article key={title} className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
-                  <span className="absolute right-5 top-4 text-5xl font-black text-slate-50">0{index + 1}</span>
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-lg shadow-blue-700/15">
-                    <Icon size={23} aria-hidden="true" />
+            <Link to="/qui-sommes-nous" className="exact-home-dark-btn">
+              Découvrir notre accompagnement <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <aside className="exact-home-cpam-card">
+            <div className="exact-home-cpam-icon"><ShieldCheck size={34} /></div>
+            <strong>Conventionné CPAM</strong>
+            <span>Transport médical pris en charge selon votre situation.</span>
+            <small>Sur prescription médicale</small>
+          </aside>
+        </section>
+
+        <section id="services" className="exact-home-services">
+          <div className="exact-home-container">
+            <div className="exact-home-section-title">
+              <h2>Vers tous les établissements de santé</h2>
+              <p>Hôpitaux, cliniques, cabinets médicaux et centres de soins en Île-de-France.</p>
+            </div>
+
+            <div className="exact-home-service-grid">
+              {services.map((service) => (
+                <article key={service.title}>
+                  <img src={service.image} alt="" loading="lazy" decoding="async" />
+                  <div>
+                    <h3>{service.title}</h3>
+                    <p>{service.text}</p>
                   </div>
-                  <h3 className="relative mt-5 text-xl font-black text-slate-950">{title}</h3>
-                  <p className="relative mt-2 text-sm leading-6 text-slate-600">{text}</p>
-                  <span className="relative mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                    Service disponible <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                  </span>
+                  <span><ArrowRight size={15} /></span>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-14 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-[2rem] border border-blue-100 bg-[linear-gradient(135deg,#f0f9ff_0%,#ffffff_50%,#effcf9_100%)] p-6 shadow-[0_22px_60px_rgba(15,23,42,0.07)] sm:p-9">
-              <div className="grid gap-4 lg:grid-cols-5">
-                {trustItems.map(({ icon: Icon, title, text }) => (
-                  <div key={title} className="rounded-2xl bg-white/80 p-5 ring-1 ring-slate-200/80 backdrop-blur-sm">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
-                      <Icon size={20} aria-hidden="true" />
-                    </div>
-                    <h3 className="mt-4 text-base font-black text-slate-950">{title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-slate-600">{text}</p>
-                  </div>
-                ))}
-              </div>
+        <section className="exact-home-process">
+          <div className="exact-home-container exact-home-process-grid">
+            <div className="exact-home-process-intro">
+              <h2>Une prise en charge simple et rapide</h2>
+              <p>En 3 étapes, votre trajet est organisé.</p>
+            </div>
+
+            <div className="exact-home-process-step">
+              <span>1</span>
+              <CalendarDays size={22} />
+              <div><strong>Réservez</strong><small>En ligne ou par téléphone</small></div>
+            </div>
+            <div className="exact-home-process-step">
+              <span>2</span>
+              <Car size={22} />
+              <div><strong>Nous organisons</strong><small>Votre trajet avec un chauffeur conventionné</small></div>
+            </div>
+            <div className="exact-home-process-step">
+              <span>3</span>
+              <HeartHandshake size={22} />
+              <div><strong>Vous voyagez</strong><small>En toute sérénité</small></div>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-slate-100 bg-slate-950 py-14 text-white sm:py-20">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-            <div>
-              <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-cyan-300">Notre zone d’intervention</p>
-              <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] sm:text-5xl">193 villes desservies en Île-de-France</h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-slate-300">Nous assurons vos déplacements médicaux à Paris et dans plusieurs départements d’Île-de-France avec un service de proximité.</p>
-              <Link to="/zones-desservies" className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 font-extrabold text-slate-950 transition hover:bg-cyan-50">
-                Voir toutes les villes desservies <ArrowRight size={17} aria-hidden="true" />
+        <section className="exact-home-coverage">
+          <div className="exact-home-container exact-home-coverage-grid">
+            <div className="exact-home-map" aria-label="Carte stylisée de l’Île-de-France">
+              <svg viewBox="0 0 240 160" role="img">
+                <path d="M41 31 78 18 112 28 137 16 179 31 203 59 198 95 172 123 131 145 94 135 61 145 32 119 20 82Z" fill="#e6f1f8" stroke="#bdd4e5" strokeWidth="2"/>
+                <path d="M101 55 131 50 149 65 145 91 122 102 97 91 88 70Z" fill="#d7e7f2" stroke="#bdd4e5" strokeWidth="1.5"/>
+                <path d="M103 76 120 67 136 77 130 95 111 99 98 89Z" fill="#c28f3f" opacity=".85"/>
+                {[
+                  [87,44,'95'],[170,62,'93'],[187,95,'77'],[160,112,'94'],
+                  [112,126,'91'],[68,105,'78'],[73,72,'92'],[117,86,'75']
+                ].map(([x,y,label]) => <text key={label} x={x as number} y={y as number} fontSize="10" fontWeight="700" fill="#0c3a63">{label}</text>)}
+              </svg>
+            </div>
+
+            <div className="exact-home-coverage-copy">
+              <p className="exact-home-section-kicker">Dans toute l’Île-de-France</p>
+              <h2>Notre zone de couverture</h2>
+              <p>Nous intervenons dans tous les départements d’Île-de-France et dans plus de 193 villes.</p>
+              <Link to="/zones-desservies" className="exact-home-gold-btn">
+                Voir toutes les villes desservies <ArrowRight size={16} />
               </Link>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {departments.map((department) => (
-                <Link key={department.code} to={department.path} className="group rounded-3xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm transition hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/[0.1]">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300 font-black text-slate-950">{department.code}</span>
-                    <ArrowRight size={18} className="text-cyan-200 transition group-hover:translate-x-1" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-black text-white">{department.name}</h3>
-                  <p className="mt-1 text-sm text-slate-300">{department.count}</p>
-                </Link>
-              ))}
-              <Link to="/zones-desservies" className="group flex min-h-[150px] items-center justify-center rounded-3xl border border-dashed border-cyan-300/40 bg-cyan-300/[0.08] p-5 text-center transition hover:bg-cyan-300/[0.12]">
-                <span>
-                  <MapPin className="mx-auto text-cyan-300" size={24} aria-hidden="true" />
-                  <span className="mt-3 block font-black text-white">Voir les 193 villes</span>
-                  <span className="mt-1 block text-sm text-slate-300">Liste complète des zones couvertes</span>
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white py-14 sm:py-20">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-8">
-            <div>
-              <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-cyan-600">FAQ</p>
-              <h2 className="mt-2 text-3xl font-black tracking-[-0.03em] text-slate-950 sm:text-4xl">Vos questions, nos réponses</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Retrouvez les réponses essentielles avant votre réservation de taxi conventionné.</p>
-              <Link to="/faq" className="mt-6 inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-extrabold text-blue-800 hover:bg-blue-100">
-                Voir toutes les questions <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-            </div>
-
-            <div className="space-y-3">
-              {faqs.map(({ question, answer }) => (
-                <details key={question} className="group rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm open:border-blue-200 open:shadow-md">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-slate-950">
-                    <span>{question}</span>
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-blue-700 transition group-open:rotate-180 group-open:bg-blue-50">
-                      <ChevronDown size={17} aria-hidden="true" />
-                    </span>
-                  </summary>
-                  <p className="mt-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600">{answer}</p>
-                </details>
+            <div className="exact-home-zone-list">
+              {zones.map(([code, name]) => (
+                <span key={code}><MapPin size={14} /> {name} ({code})</span>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8">
-          <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#064e8a_0%,#0756b6_48%,#0f9f9a_100%)] px-6 py-8 text-white shadow-[0_25px_70px_rgba(3,105,161,0.24)] sm:px-10 sm:py-10">
-            <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.15em] text-cyan-100">Disponible 24h/24 · 7j/7</p>
-                <h2 className="mt-2 text-3xl font-black tracking-[-0.03em] sm:text-4xl">Besoin d’un transport médical ?</h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-50 sm:text-base">Réservez dès maintenant votre taxi conventionné à Paris ou en Île-de-France. Notre équipe est à votre écoute pour organiser votre trajet.</p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:shrink-0">
-                <Link to="/reservation-taxi-vsl" className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 font-extrabold text-blue-800 shadow-lg transition hover:bg-blue-50">
-                  <Calendar size={18} aria-hidden="true" /> Réserver en ligne
-                </Link>
-                <a href="tel:+33650366491" className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-2xl bg-emerald-400 px-5 py-3 font-extrabold text-emerald-950 shadow-lg transition hover:bg-emerald-300">
-                  <Phone size={18} aria-hidden="true" /> 06 50 36 64 91
-                </a>
-              </div>
+        <section className="exact-home-reviews">
+          <div className="exact-home-container">
+            <h2>Ils nous font confiance</h2>
+            <div className="exact-home-review-grid">
+              {reviews.map((review) => (
+                <article key={review.name}>
+                  <p>{review.quote}</p>
+                  <div className="exact-home-stars">★★★★★</div>
+                  <strong>{review.name}</strong>
+                </article>
+              ))}
             </div>
+          </div>
+        </section>
+
+        <section className="exact-home-bottom-cta">
+          <div className="exact-home-bottom-car">
+            <img
+              src="https://www.ouistars.com/uploads/9745/Phoenix_09_Photorealistic_cinematic_hero_image_of_a_luxury_bla_2.jpg?locale=es"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div className="exact-home-container exact-home-bottom-inner">
+            <div className="exact-home-bottom-copy">
+              <h2>Besoin d’un transport médical ?</h2>
+              <p>Notre équipe est à votre écoute 24h/24 et 7j/7.</p>
+            </div>
+            <div className="exact-home-bottom-actions">
+              <a href="tel:+33650366491"><Phone size={17} /> 06 50 36 64 91</a>
+              <Link to="/reservation-taxi-vsl">Réserver en ligne <ArrowRight size={16} /></Link>
+            </div>
+            <p className="exact-home-bottom-script">Ensemble<br />vers une santé accessible</p>
           </div>
         </section>
       </div>
