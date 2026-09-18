@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, ChevronDown, ChevronUp, CheckCircle, Phone, Building2, CircleDot, BadgeCheck } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import citiesData from '../data/cities.json';
 
 interface ZonesProps {
   onNavigate?: (page: string) => void;
@@ -111,6 +112,18 @@ const DEPARTMENTS = [
 
 type DepartmentCard = (typeof DEPARTMENTS)[number];
 
+const CITY_DEPARTMENTS = citiesData.departments;
+const TOTAL_CITIES = CITY_DEPARTMENTS.reduce((total, department) => total + department.cities.length, 0);
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('fr-FR')
+    .trim();
+}
+
+
 function DepartmentMiniMap({ department }: { department: DepartmentCard }) {
   return (
     <div className="mb-4 rounded-md border border-gray-100 bg-slate-50 p-2.5">
@@ -188,7 +201,7 @@ const FAQ_ITEMS = [
   {
     question: 'Quelles villes d\'Île-de-France sont couvertes par votre service ?',
     answer:
-      'Nous desservons plus de 200 communes réparties sur 5 départements : Paris (75) avec tous ses arrondissements, l\'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94). Les transferts inter-hospitaliers entre ces départements sont également assurés 24h/24.',
+      'Nous desservons 193 villes et arrondissements réparties sur 5 départements : Paris (75) avec tous ses arrondissements, l\'Essonne (91), les Hauts-de-Seine (92), la Seine-Saint-Denis (93) et le Val-de-Marne (94). Les transferts inter-hospitaliers entre ces départements sont également assurés 24h/24.',
   },
   {
     question: 'Peut-on réserver un taxi conventionné pour une séance de dialyse ou chimiothérapie régulière ?',
@@ -207,7 +220,7 @@ const jsonLDWebPage = {
   '@type': 'WebPage',
   name: 'Zones desservies – Taxi VSL Conventionné CPAM Île-de-France',
   description:
-    'Toutes les zones desservies par notre service de taxi conventionné et VSL en Île-de-France : Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94). Plus de 200 communes.',
+    'Toutes les zones desservies par notre service de taxi conventionné et VSL en Île-de-France : Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94). 193 villes et arrondissements.',
   url: 'https://www.taxisparis-conventionnes.fr/zones-desservies',
   breadcrumb: {
     '@type': 'BreadcrumbList',
@@ -242,12 +255,37 @@ const jsonLDMedical = {
 
 export default function Zones({ onNavigate }: ZonesProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [cityQuery, setCityQuery] = useState('');
+  const [activeDepartment, setActiveDepartment] = useState('all');
+
+  const cityResults = useMemo(() => {
+    const normalizedQuery = normalizeSearch(cityQuery);
+
+    return CITY_DEPARTMENTS.flatMap((department) =>
+      department.cities.map((city) => ({
+        ...city,
+        departmentCode: department.code,
+        departmentName: department.name,
+        departmentSlug: department.slug,
+      })),
+    ).filter((city) => {
+      if (activeDepartment !== 'all' && city.departmentCode !== activeDepartment) {
+        return false;
+      }
+
+      if (!normalizedQuery) return true;
+
+      return normalizeSearch(
+        city.name + ' ' + city.postalCode + ' ' + city.departmentName + ' ' + city.departmentCode,
+      ).includes(normalizedQuery);
+    });
+  }, [activeDepartment, cityQuery]);
 
   return (
     <>
       <SEOHead
         title="Zones desservies Taxi VSL Conventionné CPAM | Île-de-France 200+ villes"
-        description="Taxi conventionné et VSL remboursé CPAM en Île-de-France : Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94). Plus de 200 communes. Disponible 24h/24."
+        description="Taxi conventionné et VSL remboursé CPAM en Île-de-France : Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94). 193 villes et arrondissements. Disponible 24h/24."
         keywords={[
           'zones taxi conventionné',
           'villes desservies VSL',
@@ -268,7 +306,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
             <MapPin size={14} aria-hidden="true" />
-            200+ communes desservies
+            193 villes desservies
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Zones desservies par notre service<br className="hidden sm:block" /> de taxi VSL conventionné
@@ -308,7 +346,10 @@ export default function Zones({ onNavigate }: ZonesProps) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
-            {DEPARTMENTS.map((dept) => (
+            {DEPARTMENTS.map((dept) => {
+              const cityCount = CITY_DEPARTMENTS.find((department) => department.code === dept.code)?.cities.length ?? 0;
+
+              return (
               <article
                 key={dept.code}
                 className="group flex flex-col rounded-lg border border-gray-200 border-t-4 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
@@ -330,7 +371,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
                   <div className="flex items-center gap-2">
                     <Building2 size={14} className="text-gray-400" aria-hidden="true" />
                     <span className="text-sm">
-                      <strong className="text-green-600">{dept.villesCount}</strong>{' '}
+                      <strong className="text-green-600">{cityCount}</strong>{' '}
                       <span className="text-gray-500">villes desservies</span>
                     </span>
                   </div>
@@ -356,7 +397,105 @@ export default function Zones({ onNavigate }: ZonesProps) {
                   <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </article>
-            ))}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-white py-12 sm:py-16" aria-label="Toutes les villes desservies">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-cyan-700">Toutes les villes desservies</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                193 villes et arrondissements réellement présents dans notre base
+              </h2>
+              <p className="mt-3 leading-7 text-slate-600">
+                Recherchez une commune, un arrondissement ou un code postal. Toutes les pages locales ci-dessous sont accessibles directement.
+              </p>
+            </div>
+
+            <div className="mt-7 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4 sm:p-5">
+              <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                <MapPin className="shrink-0 text-blue-600" size={19} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={cityQuery}
+                  onChange={(event) => setCityQuery(event.target.value)}
+                  placeholder="Rechercher une ville ou un code postal"
+                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400 sm:text-base"
+                  aria-label="Rechercher une ville desservie"
+                />
+                <span className="hidden text-xs font-bold text-slate-500 sm:inline">
+                  {cityResults.length} résultat{cityResults.length > 1 ? 's' : ''}
+                </span>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveDepartment('all')}
+                  className={
+                    activeDepartment === 'all'
+                      ? 'rounded-full bg-blue-700 px-4 py-2 text-xs font-bold text-white'
+                      : 'rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700'
+                  }
+                >
+                  Tous · {TOTAL_CITIES}
+                </button>
+                {CITY_DEPARTMENTS.map((department) => (
+                  <button
+                    key={department.code}
+                    type="button"
+                    onClick={() => setActiveDepartment(department.code)}
+                    className={
+                      activeDepartment === department.code
+                        ? 'rounded-full bg-blue-700 px-4 py-2 text-xs font-bold text-white'
+                        : 'rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700'
+                    }
+                  >
+                    {department.name} ({department.code}) · {department.cities.length}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {cityResults.length > 0 ? (
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {cityResults.map((city) => (
+                  <Link
+                    key={city.departmentCode + '-' + city.slug}
+                    to={'/' + city.departmentSlug + '/' + city.slug}
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md"
+                  >
+                    <span>
+                      <span className="block text-sm font-bold text-slate-900 group-hover:text-blue-800">
+                        {city.name}
+                      </span>
+                      <span className="mt-1 block text-xs text-slate-500">
+                        {city.postalCode} · {city.departmentName}
+                      </span>
+                    </span>
+                    <ArrowRight className="shrink-0 text-blue-500 transition group-hover:translate-x-1" size={15} aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+                <p className="font-bold text-slate-800">Aucune ville trouvée.</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCityQuery('');
+                    setActiveDepartment('all');
+                  }}
+                  className="mt-3 text-sm font-bold text-blue-700 hover:underline"
+                >
+                  Réinitialiser la recherche
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -459,7 +598,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
               Zone d'intervention et couverture géographique
             </h3>
             <p className="text-gray-700 leading-relaxed mb-3">
-              Notre zone d'intervention principale couvre les cinq départements de la petite couronne et de Paris. En pratique, cela représente plus de <strong>200 communes</strong>, des grandes agglomérations comme Boulogne-Billancourt, Nanterre ou Créteil jusqu'aux villes moyennes comme Palaiseau, Massy, Savigny-sur-Orge ou Champigny-sur-Marne. Les transferts entre hôpitaux ou cliniques situés dans des départements différents sont une spécialité de notre service.
+              Notre zone d'intervention principale couvre les cinq départements de la petite couronne et de Paris. En pratique, cela représente <strong>193 villes et arrondissements</strong>, des grandes agglomérations comme Boulogne-Billancourt, Nanterre ou Créteil jusqu'aux villes moyennes comme Palaiseau, Massy, Savigny-sur-Orge ou Champigny-sur-Marne. Les transferts entre hôpitaux ou cliniques situés dans des départements différents sont une spécialité de notre service.
             </p>
             <p className="text-gray-700 leading-relaxed mb-3">
               Pour les trajets hors Île-de-France (vers un centre hospitalier universitaire en province par exemple), nous étudions chaque demande au cas par cas. Certains transports longue distance peuvent être pris en charge par la CPAM sous conditions spécifiques, notamment pour les patients ne pouvant être soignés localement.
