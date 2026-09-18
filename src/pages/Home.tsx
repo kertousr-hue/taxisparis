@@ -22,9 +22,9 @@ interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
-const reassurance = [
+const trustItems = [
   { icon: ShieldCheck, title: 'Conventionné CPAM', text: 'Transport médical agréé' },
-  { icon: Car, title: 'Véhicules confortables', text: 'Propres, récents et adaptés' },
+  { icon: Car, title: 'Véhicules confortables', text: 'Adaptés à vos trajets' },
   { icon: FileText, title: 'Prise en charge CPAM', text: 'Selon prescription et situation' },
   { icon: MapPin, title: 'Toute l’Île-de-France', text: 'Paris et départements proches' },
 ];
@@ -32,7 +32,7 @@ const reassurance = [
 const commitments = [
   { icon: ShieldCheck, title: 'Sécurité', text: 'Une prise en charge sérieuse et ponctuelle.' },
   { icon: Car, title: 'Confort', text: 'Des véhicules adaptés à vos trajets médicaux.' },
-  { icon: Users, title: 'À votre écoute', text: 'Des chauffeurs attentionnés et bienveillants.' },
+  { icon: Users, title: 'Équipe à l’écoute', text: 'Des chauffeurs attentionnés et bienveillants.' },
   { icon: Clock, title: 'Disponibilité', text: 'Service organisé 24h/24 et 7j/7.' },
 ];
 
@@ -40,8 +40,8 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
   return (
     <>
       <SEOHead
-        title="Taxi conventionné CPAM Paris & Île-de-France | Réservation 24h/24"
-        description="Taxi conventionné CPAM à Paris et en Île-de-France. Transport médical assis pour consultations, dialyse, chimiothérapie, examens et hospitalisations. Réservation 24h/24 et 7j/7."
+        title="Taxi conventionne CPAM & VSL Paris Ile-de-France | Reservation 24h/24"
+        description="Taxi conventionne CPAM et VSL a Paris et en Ile-de-France (75, 91, 92, 93, 94). Transport medical assis sur prescription vers consultations, dialyse, chimiotherapie, radiotherapie et hospitalisations. Reservation 24h/24, 7j/7."
         jsonLD={[generateJsonLD()]}
       />
 
@@ -50,81 +50,85 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
           <div className="home2-container home2-hero-grid">
             <div className="home2-hero-copy">
               <p className="home2-eyebrow">Transport médical conventionné</p>
-              <h1>Vos rendez-vous médicaux<br />en toute sérénité</h1>
+              <h1>Taxi conventionné &amp; VSL<br />à Paris et en Île-de-France</h1>
               <p className="home2-hero-lead">
-                À Paris et en Île-de-France, des chauffeurs conventionnés vous accompagnent
-                pour tous vos trajets de santé avec ponctualité, confort et bienveillance.
+                Vos rendez-vous médicaux, notre priorité. Un transport sûr, confortable et humain,
+                avec des chauffeurs conventionnés à vos côtés pour tous vos trajets de santé.
               </p>
 
               <div className="home2-hero-points">
-                <span><ShieldCheck size={18} /> Conventionné CPAM</span>
-                <span><CheckCircle2 size={18} /> Prise en charge à domicile</span>
-                <span><Users size={18} /> Chauffeurs professionnels</span>
-                <span><HeartHandshake size={18} /> Accompagnement humain</span>
+                <span><ShieldCheck size={17} /> Conventionné CPAM</span>
+                <span><CheckCircle2 size={17} /> Prise en charge à domicile</span>
+                <span><Users size={17} /> Chauffeurs professionnels</span>
+                <span><HeartHandshake size={17} /> Accompagnement humain</span>
               </div>
 
               <div className="home2-hero-actions">
                 <Link to="/reservation-taxi-vsl" className="home2-primary-btn">
                   Réserver mon transport <ArrowRight size={17} />
                 </Link>
-                <a href="tel:+33650366491" className="home2-outline-btn">
+                <a href="tel:+33650366491" className="home2-hero-phone">
                   <Phone size={17} /> 06 50 36 64 91
                 </a>
               </div>
-
-              <div className="home2-availability">
-                <Clock size={15} /> Disponible 24h/24 · 7j/7
-              </div>
+              <p className="home2-availability"><Clock size={14} /> Disponible 24h/24 · 7j/7</p>
             </div>
 
-            <div className="home2-hero-visual" aria-label="Transport médical à Paris">
-              <div className="home2-visual-skyline" aria-hidden="true">
-                <span className="home2-tower">A</span>
-                <span className="home2-building"><Building2 size={56} /></span>
+            <div className="home2-hero-photo" aria-label="Chauffeur accompagnant une patiente">
+              <div className="home2-photo-paris" aria-hidden="true">
+                <span className="home2-photo-tower">A</span>
+                <span className="home2-photo-building"><Building2 size={50} /></span>
               </div>
-
-              <div className="home2-care-scene">
-                <div className="home2-care-people">
-                  <div className="home2-care-person home2-care-person-driver"><Users size={38} /></div>
-                  <div className="home2-care-person home2-care-person-passenger"><HeartHandshake size={34} /></div>
-                </div>
-
-                <div className="home2-car">
-                  <div className="home2-car-roof">TAXI</div>
-                  <Car size={152} strokeWidth={1.25} />
-                </div>
+              <div className="home2-photo-people" aria-hidden="true">
+                <span className="home2-driver"><Users size={36} /></span>
+                <span className="home2-patient"><HeartHandshake size={31} /></span>
               </div>
-
+              <div className="home2-photo-car" aria-hidden="true">
+                <span>TAXI</span>
+                <Car size={148} strokeWidth={1.25} />
+              </div>
               <p className="home2-script-note">Parce que votre santé compte</p>
             </div>
           </div>
 
-          <div className="home2-container">
-            <div className="home2-booking-card">
-              <div className="home2-booking-heading">
-                <p>Réservez votre transport médical</p>
-                <span>Simple, rapide et sécurisé</span>
+          <div className="home2-container home2-reservation-wrap">
+            <div className="home2-reservation">
+              <div className="home2-reservation-main">
+                <div className="home2-reservation-heading">
+                  <div>
+                    <h2>Réservez votre transport médical</h2>
+                    <p>Simple, rapide et sécurisé</p>
+                  </div>
+                  <div className="home2-booking-tabs">
+                    <span className="is-active">Trajet simple</span>
+                    <span>Aller-retour</span>
+                    <span>Rendez-vous régulier</span>
+                  </div>
+                </div>
+
+                <div className="home2-booking-fields">
+                  <div><MapPin size={16} /><span><small>Adresse de départ</small>Votre adresse</span></div>
+                  <div><Building2 size={16} /><span><small>Destination</small>Hôpital, clinique, cabinet…</span></div>
+                  <div><CalendarDays size={16} /><span><small>Date du trajet</small>Choisir une date</span></div>
+                  <Link to="/reservation-taxi-vsl" aria-label="Continuer vers la réservation"><ArrowRight size={20} /></Link>
+                </div>
               </div>
 
-              <div className="home2-booking-tabs">
-                <span className="is-active">Trajet simple</span>
-                <span>Aller-retour</span>
-                <span>Rendez-vous régulier</span>
-              </div>
-
-              <div className="home2-booking-fields">
-                <div><MapPin size={16} /><span><small>Adresse de départ</small>Votre adresse</span></div>
-                <div><Building2 size={16} /><span><small>Destination</small>Hôpital, clinique, cabinet…</span></div>
-                <div><CalendarDays size={16} /><span><small>Date du trajet</small>Choisir une date</span></div>
-                <Link to="/reservation-taxi-vsl" aria-label="Continuer vers la réservation"><ArrowRight size={20} /></Link>
-              </div>
+              <aside className="home2-help-card">
+                <span className="home2-help-avatar"><Users size={24} /></span>
+                <div>
+                  <strong>Une question ?</strong>
+                  <small>Notre équipe vous écoute</small>
+                  <a href="tel:+33650366491"><Phone size={14} /> 06 50 36 64 91</a>
+                </div>
+              </aside>
             </div>
           </div>
         </section>
 
         <section className="home2-reassurance">
           <div className="home2-container home2-reassurance-grid">
-            {reassurance.map(({ icon: Icon, title, text }) => (
+            {trustItems.map(({ icon: Icon, title, text }) => (
               <article key={title}>
                 <span><Icon size={20} /></span>
                 <div><strong>{title}</strong><small>{text}</small></div>
@@ -135,12 +139,15 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
 
         <section className="home2-human">
           <div className="home2-container home2-human-grid">
-            <div className="home2-human-visual" aria-hidden="true">
-              <div className="home2-paris-river" />
-              <div className="home2-mini-tower">A</div>
-              <div className="home2-human-badge">
-                <HeartHandshake size={26} />
-                <span>Présents à chaque étape</span>
+            <div className="home2-human-photo" aria-label="Paris et accompagnement médical">
+              <div className="home2-human-skyline" aria-hidden="true">
+                <span>A</span>
+                <span><Building2 size={44} /></span>
+              </div>
+              <div className="home2-human-quote">
+                <HeartHandshake size={22} />
+                <p>« Un service fiable, des chauffeurs attentionnés. Je me sens en confiance à chaque trajet. »</p>
+                <small>Marie D. · Paris</small>
               </div>
             </div>
 
@@ -148,19 +155,17 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
               <p className="home2-section-kicker">Un service à vos côtés</p>
               <h2>Un accompagnement humain à chaque étape</h2>
               <p>
-                Nous vous accompagnons avec bienveillance, de votre domicile jusqu’à votre
-                établissement de soins. Notre objectif : vous offrir un trajet simple, rassurant et confortable.
+                Nous vous accompagnons avec bienveillance vers vos établissements de soins.
+                Notre objectif : vous offrir un trajet simple, rassurant et confortable.
               </p>
-
               <ul>
-                <li><CheckCircle2 size={17} /> Trajets toutes distances</li>
-                <li><CheckCircle2 size={17} /> Véhicules confortables et adaptés</li>
-                <li><CheckCircle2 size={17} /> Aide à la montée et à l’installation</li>
-                <li><CheckCircle2 size={17} /> Ponctualité et discrétion</li>
+                <li><CheckCircle2 size={16} /> Trajets toutes distances</li>
+                <li><CheckCircle2 size={16} /> Véhicules confortables et adaptés</li>
+                <li><CheckCircle2 size={16} /> Aide à la montée et à l’installation</li>
+                <li><CheckCircle2 size={16} /> Ponctualité et discrétion</li>
               </ul>
-
               <Link to="/qui-sommes-nous" className="home2-dark-btn">
-                Découvrir notre engagement <ArrowRight size={16} />
+                Découvrir nos engagements <ArrowRight size={16} />
               </Link>
             </div>
           </div>
@@ -169,10 +174,9 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
         <section className="home2-commitments">
           <div className="home2-container">
             <div className="home2-section-heading">
-              <p>Nos engagements</p>
+              <p>Nos engagements pour votre santé</p>
               <h2>Votre santé mérite une attention particulière</h2>
             </div>
-
             <div className="home2-commitment-grid">
               {commitments.map(({ icon: Icon, title, text }) => (
                 <article key={title}>
@@ -185,7 +189,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
           </div>
         </section>
 
-        <section className="home2-health-destinations">
+        <section id="services" className="home2-services">
           <div className="home2-container">
             <div className="home2-section-heading">
               <p>Vos trajets médicaux</p>
@@ -193,7 +197,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
               <span>Hôpitaux, cliniques, cabinets médicaux et centres de soins en Île-de-France.</span>
             </div>
 
-            <div className="home2-destination-grid">
+            <div className="home2-service-grid">
               <article><Stethoscope size={24} /><strong>Consultations médicales</strong><span>Médecine générale et spécialistes</span></article>
               <article><Building2 size={24} /><strong>Hospitalisations</strong><span>Entrées, sorties et transferts</span></article>
               <article><Activity size={24} /><strong>Soins réguliers</strong><span>Dialyse, chimiothérapie, radiothérapie</span></article>
@@ -202,23 +206,22 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
           </div>
         </section>
 
-        <section className="home2-final-cta">
-          <div className="home2-container home2-final-grid">
-            <div className="home2-final-car">
-              <Car size={122} />
-            </div>
-            <div>
+        <section className="home2-final">
+          <div className="home2-container home2-final-card">
+            <div className="home2-final-visual"><Car size={112} /></div>
+            <div className="home2-final-copy">
               <p>Besoin d’un transport médical ?</p>
               <h2>Réservez dès maintenant</h2>
-              <span>Une équipe disponible pour organiser votre trajet médical en toute sérénité.</span>
+              <span>Notre équipe est disponible pour organiser votre trajet en toute sérénité.</span>
+              <div className="home2-final-badges">
+                <small><Clock size={13} /> 24h/24 · 7j/7</small>
+                <small><ShieldCheck size={13} /> Conventionné CPAM</small>
+                <small><Users size={13} /> Équipe à l’écoute</small>
+              </div>
             </div>
             <div className="home2-final-actions">
-              <Link to="/reservation-taxi-vsl" className="home2-primary-btn">
-                Réserver en ligne <ArrowRight size={16} />
-              </Link>
-              <a href="tel:+33650366491" className="home2-outline-btn">
-                <Phone size={16} /> 06 50 36 64 91
-              </a>
+              <Link to="/reservation-taxi-vsl" className="home2-primary-btn">Réserver en ligne <ArrowRight size={16} /></Link>
+              <a href="tel:+33650366491" className="home2-outline-btn"><Phone size={16} /> 06 50 36 64 91</a>
             </div>
           </div>
         </section>
