@@ -25,7 +25,7 @@ const services = [
   { icon: Stethoscope, title: 'Consultation médicale', text: 'Tous vos rendez-vous spécialisés' },
   { icon: Activity, title: 'Dialyse', text: 'Trajets réguliers organisés' },
   { icon: HeartHandshake, title: 'Chimiothérapie', text: 'Un accompagnement de confiance' },
-  { icon: Hospital, title: 'Hospitalisation', text: 'À l’aller comme au retour' },
+  { icon: Building2, title: 'Hospitalisation', text: 'À l’aller comme au retour' },
   { icon: Microscope, title: 'Examens médicaux', text: 'IRM, scanner, analyses et soins' },
   { icon: ShieldCheck, title: 'Transport CPAM', text: 'Selon prescription et prise en charge' },
 ];
@@ -115,7 +115,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
           <div className="maquette-container maquette-trust-grid">
             {[
               [ShieldCheck, 'Conventionné CPAM', 'Transport médical agréé'],
-              [Hospital, 'Tiers payant', 'Selon votre situation'],
+              [Building2, 'Tiers payant', 'Selon votre situation'],
               [Users, 'Chauffeurs professionnels', 'Ponctuels et bienveillants'],
               [MapPin, 'Toute l’Île-de-France', 'Paris et départements proches'],
             ].map(([Icon, title, text]: any) => (
