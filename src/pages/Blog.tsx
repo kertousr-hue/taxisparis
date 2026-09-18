@@ -245,10 +245,10 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
               {posts.map((post) => (
                 <article
                   key={post.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group"
+                  className="exact-blog-card bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group"
                 >
-                  {post.featured_image_url && (
-                    <div className="h-48 overflow-hidden bg-gray-100">
+                  <div className="exact-blog-media h-48 overflow-hidden bg-gray-100">
+                    {post.featured_image_url ? (
                       <img
                         src={post.featured_image_url}
                         alt={post.title}
@@ -256,8 +256,13 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                         loading="lazy"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="exact-blog-placeholder">
+                        <BookOpen size={28} />
+                        <span>Guide transport médical</span>
+                      </div>
+                    )}
+                  </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
@@ -304,7 +309,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                 {STATIC_GUIDES.map((guide) => (
                   <article
                     key={guide.title}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
+                    className="exact-blog-card exact-blog-static-card bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
                   >
                     <div className="p-6">
                       <span className="inline-flex text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-3">
@@ -332,7 +337,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-white" aria-label="Guide du transport médical conventionné">
+      <section className="exact-blog-guide py-12 bg-white" aria-label="Guide du transport médical conventionné">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
             Guide complet du transport médical en taxi conventionné
@@ -407,7 +412,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50" aria-label="Questions fréquentes">
+      <section className="exact-blog-faq py-12 bg-gray-50" aria-label="Questions fréquentes">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
             Questions fréquentes
@@ -452,7 +457,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-white" aria-label="Réserver un transport médical">
+      <section className="exact-blog-final py-12 bg-white" aria-label="Réserver un transport médical">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
             Besoin d'un transport médical remboursé ?
