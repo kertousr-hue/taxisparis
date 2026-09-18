@@ -400,7 +400,7 @@ export default function ReservationPage() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-blue-50 via-white to-gray-50 min-h-screen">
+      <div className="reservation-maquette bg-gradient-to-b from-blue-50 via-white to-gray-50 min-h-screen">
         <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-10">
           <div className="max-w-2xl mx-auto">
 
