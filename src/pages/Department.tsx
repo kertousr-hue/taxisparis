@@ -7,7 +7,6 @@ import {
   ChevronDown,
   Clock,
   FileText,
-  Hospital,
   Mail,
   MapPin,
   Navigation,
@@ -311,7 +310,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
           <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-700 text-white">
-                <Hospital size={22} aria-hidden="true" />
+                <Building2 size={22} aria-hidden="true" />
               </span>
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-slate-400">Santé</p>
