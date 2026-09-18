@@ -95,7 +95,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
   ];
 
   return (
-    <div className="department-redesign bg-white">
+    <div className="refonte-department department-redesign bg-white">
       <SEOHead
         title={seo.metaTitle}
         description={seo.metaDescription}
