@@ -389,7 +389,7 @@ export default function ReservationPage() {
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
-      /* ── Hero ── */}
+      {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 text-white">
         <div
           className="absolute inset-0 opacity-20"
