@@ -302,33 +302,35 @@ export default function Zones({ onNavigate }: ZonesProps) {
       />
 
       {/* ── Hero ────────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
-            <MapPin size={14} aria-hidden="true" />
-            193 villes desservies
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm">
+              <MapPin size={16} /> 193 villes desservies
+            </div>
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
+              Zones desservies
+              <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">à Paris et en Île-de-France</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              Paris (75), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93) et Val-de-Marne (94). Retrouvez toutes les villes réellement présentes dans notre base.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link to="/reservation-taxi-vsl" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)] transition hover:bg-blue-800">
+                Réserver maintenant <ArrowRight size={18} />
+              </Link>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={17} /> 06 50 36 64 91</a>
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Zones desservies par notre service<br className="hidden sm:block" /> de taxi VSL conventionné
-          </h1>
-          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8">
-            Île-de-France — Paris (75), Essonne (91), Hauts-de-Seine (92),<br className="hidden sm:block" /> Seine-Saint-Denis (93) et Val-de-Marne (94)
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Link
-              to="/reservation-taxi-vsl"
-              className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition shadow-lg"
-            >
-              Réserver maintenant
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-            <a
-              href="tel:+33650366491"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 border-2 border-white text-white font-bold px-6 py-3 rounded-xl hover:bg-white hover:text-blue-600 transition"
-            >
-              <Phone size={16} aria-hidden="true" />
-              06 50 36 64 91
-            </a>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/40 via-blue-200/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt="Taxi conventionné en Île-de-France" className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur">
+                <p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Couverture Île-de-France</p>
+                <p className="mt-1 text-lg font-black">193 villes et arrondissements desservis.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
