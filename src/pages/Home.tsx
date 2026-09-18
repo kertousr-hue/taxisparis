@@ -130,122 +130,48 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
       />
 
       <div className="home-redesign overflow-hidden bg-white text-slate-950">
-        <section className="relative border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_50%,#eef8ff_100%)]">
-          <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-cyan-200/30 blur-3xl" aria-hidden="true" />
-          <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" aria-hidden="true" />
-
+        <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_50%,#eef8ff_100%)]">
           <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-16">
-            <div className="relative z-10">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/90 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-cyan-700 shadow-sm sm:text-sm">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/90 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-cyan-700 shadow-sm">
                 <Shield size={16} aria-hidden="true" />
                 Transport médical assis à Paris et en Île-de-France
               </div>
-
               <h1 className="max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
                 Taxi conventionné &amp; VSL
-                <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">
-                  à Paris et en Île-de-France
-                </span>
+                <span className="block bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-transparent">à Paris et en Île-de-France</span>
               </h1>
-
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Vos déplacements médicaux en toute sérénité. Service de taxi conventionné par la CPAM,
-                disponible 24h/24 et 7j/7 à Paris et en Île-de-France. Prise en charge possible sur prescription médicale selon votre situation.
+                Vos déplacements médicaux en toute sérénité. Service de taxi conventionné par la CPAM, disponible 24h/24 et 7j/7 à Paris et en Île-de-France.
               </p>
-
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  to="/reservation-taxi-vsl"
-                  className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 text-base font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,0.26)] transition hover:-translate-y-0.5 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-200"
-                >
-                  <Calendar size={19} aria-hidden="true" />
-                  Réserver maintenant
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <Link to="/reservation-taxi-vsl" className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 text-base font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,0.26)] transition hover:-translate-y-0.5 hover:bg-blue-800">
+                  <Calendar size={19} /> Réserver maintenant <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                 </Link>
-
-                <a
-                  href="tel:+33650366491"
-                  className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 text-base font-extrabold text-blue-900 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100"
-                  aria-label="Appeler le 06 50 36 64 91"
-                >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                    <Phone size={18} aria-hidden="true" />
-                  </span>
-                  <span className="text-left leading-tight">
-                    <span className="block text-xs font-bold uppercase tracking-wide text-slate-500">Appeler</span>
-                    <span className="block">06 50 36 64 91</span>
-                  </span>
+                <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 text-base font-extrabold text-blue-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-50">
+                  <Phone size={18} /> 06 50 36 64 91
                 </a>
               </div>
-
               <div className="mt-7 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
                 {[
                   ['Agréé CPAM', 'Tiers payant'],
                   ['24h/24 · 7j/7', 'Jours fériés inclus'],
                   ['Paris & IDF', '193 villes desservies'],
                 ].map(([title, text]) => (
-                  <div key={title} className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm">
-                    <CheckCircle size={18} className="shrink-0 text-teal-500" aria-hidden="true" />
-                    <div>
-                      <p className="text-sm font-extrabold text-slate-900">{title}</p>
-                      <p className="text-xs text-slate-500">{text}</p>
-                    </div>
+                  <div key={title} className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-3 shadow-sm">
+                    <CheckCircle size={18} className="shrink-0 text-teal-500" />
+                    <div><p className="text-sm font-extrabold text-slate-900">{title}</p><p className="text-xs text-slate-500">{text}</p></div>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
-              <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/45 via-blue-200/15 to-transparent blur-2xl" aria-hidden="true" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-slate-900 via-blue-950 to-blue-800 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.22)] sm:p-7">
-                <div className="absolute inset-0 opacity-35" aria-hidden="true" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.2) 1px, transparent 0)', backgroundSize: '20px 20px' }} />
-
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <div>
-                    <span className="inline-flex rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-cyan-100 ring-1 ring-white/15">Votre santé, notre priorité</span>
-                    <p className="mt-4 max-w-sm text-2xl font-black leading-tight text-white sm:text-3xl">
-                      Plus qu’un trajet,
-                      <span className="block text-cyan-300">un accompagnement rassurant.</span>
-                    </p>
-                  </div>
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-cyan-200 ring-1 ring-white/20">
-                    <HeartPulse size={29} aria-hidden="true" />
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-8 rounded-[1.75rem] border border-white/15 bg-white/10 p-5 backdrop-blur-md">
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">Taxi conventionné</p>
-                      <p className="mt-1 text-lg font-black text-white">Transport médical assis</p>
-                    </div>
-                    <span className="rounded-full bg-teal-400/15 px-3 py-1.5 text-xs font-bold text-teal-200 ring-1 ring-teal-300/20">CPAM</span>
-                  </div>
-
-                  <div className="mt-5 flex min-h-[190px] items-center justify-center rounded-3xl bg-gradient-to-br from-white/10 to-white/[0.03] p-6 ring-1 ring-white/10">
-                    <div className="relative w-full max-w-md">
-                      <div className="absolute left-1/2 top-0 h-28 w-48 -translate-x-1/2 rounded-t-[1.8rem] border-4 border-cyan-200/40 border-b-0 bg-white/[0.04]" aria-hidden="true" />
-                      <div className="relative flex items-end justify-center pt-10">
-                        <div className="absolute left-[17%] bottom-6 flex h-20 w-14 items-center justify-center rounded-t-xl bg-white/10 text-cyan-100 ring-1 ring-white/15">
-                          <Hospital size={30} aria-hidden="true" />
-                        </div>
-                        <div className="relative flex h-24 w-64 items-center justify-center rounded-[2.25rem_2.25rem_1.4rem_1.4rem] bg-gradient-to-b from-slate-100 to-slate-300 shadow-2xl">
-                          <div className="absolute -top-7 rounded-lg bg-white px-3 py-1 text-xs font-black tracking-wide text-blue-800 shadow">TAXI</div>
-                          <Car size={82} className="text-blue-950" strokeWidth={1.4} aria-hidden="true" />
-                          <span className="absolute -bottom-3 left-8 h-7 w-7 rounded-full border-[6px] border-slate-700 bg-slate-950" />
-                          <span className="absolute -bottom-3 right-8 h-7 w-7 rounded-full border-[6px] border-slate-700 bg-slate-950" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-5 -left-2 hidden items-center gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-xl sm:flex">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600"><Shield size={20} /></span>
-                <div>
-                  <p className="text-xs font-bold text-slate-500">Prise en charge</p>
-                  <p className="text-sm font-black text-slate-900">CPAM & tiers payant</p>
+            <div className="relative mx-auto w-full max-w-xl lg:ml-auto">
+              <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/45 via-blue-200/15 to-transparent blur-2xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_30px_80px_rgba(15,23,42,0.2)]">
+                <img src="/image.png" alt="Taxi conventionné devant un établissement de santé" className="h-[380px] w-full rounded-[1.6rem] object-cover sm:h-[460px]" />
+                <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur">
+                  <p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Taxis Paris Conventionnés</p>
+                  <p className="mt-1 text-lg font-black">Votre santé, notre priorité à chaque trajet.</p>
                 </div>
               </div>
             </div>
