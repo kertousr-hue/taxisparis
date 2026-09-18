@@ -104,119 +104,45 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         jsonLD={jsonLD}
       />
 
-      <section
-        className="relative overflow-hidden border-b border-slate-100"
-        style={{
-          background:
-            'radial-gradient(circle at 16% 18%, rgba(255,255,255,.18), transparent 24%), linear-gradient(135deg, #073a81 0%, #0b56bd 48%, #0e78c9 100%)',
-        }}
-      >
-        <div
-          className="absolute inset-0 opacity-25"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div
-          className="absolute -right-28 -top-24 h-96 w-96 rounded-full blur-3xl"
-          aria-hidden="true"
-          style={{ background: accent.glow }}
-        />
-
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1.06fr_.94fr] lg:px-8 lg:py-20">
-          <div className="text-white">
-            <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-bold text-blue-100 sm:text-sm">
-              <Link to="/" className="transition hover:text-white">Accueil</Link>
-              <span aria-hidden="true">/</span>
-              <Link to="/zones-desservies" className="transition hover:text-white">Zones desservies</Link>
-              <span aria-hidden="true">/</span>
-              <span className="text-white">{deptData.name} ({department})</span>
+      <section className="relative overflow-hidden border-b border-slate-100 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_34%),linear-gradient(135deg,#f8fbff_0%,#ffffff_52%,#eef8ff_100%)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div>
+            <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-500 sm:text-sm">
+              <Link to="/" className="transition hover:text-blue-700">Accueil</Link>
+              <span>/</span>
+              <Link to="/zones-desservies" className="transition hover:text-blue-700">Zones desservies</Link>
+              <span>/</span>
+              <span className="text-slate-800">{deptData.name} ({department})</span>
             </div>
-
-            <h1 className="max-w-4xl text-4xl font-black leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700 shadow-sm">
+              <Shield size={16} /> Taxi conventionné CPAM · {department}
+            </div>
+            <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
               {seo.h1}
             </h1>
-
-            <p className="mt-5 max-w-3xl text-base leading-7 text-blue-50 sm:text-lg sm:leading-8">
-              {seo.metaDescription}
-            </p>
-
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link
-                to="/reservation-taxi-vsl"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 font-extrabold text-blue-800 shadow-[0_14px_34px_rgba(15,23,42,.22)] transition hover:-translate-y-0.5 hover:bg-blue-50"
-              >
-                <Calendar size={19} aria-hidden="true" />
-                Réserver maintenant
-                <ArrowRight size={17} aria-hidden="true" />
+            <p className="mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg">{seo.metaDescription}</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link to="/reservation-taxi-vsl" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-3.5 font-extrabold text-white shadow-[0_14px_35px_rgba(29,78,216,.25)]">
+                <Calendar size={18} /> Réserver maintenant <ArrowRight size={17} />
               </Link>
-              <a
-                href="tel:+33650366491"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border border-white/35 bg-white/10 px-6 py-3.5 font-extrabold text-white backdrop-blur-sm transition hover:bg-white hover:text-blue-800"
-              >
-                <Phone size={19} aria-hidden="true" />
-                06 50 36 64 91
-              </a>
+              <a href="tel:+33650366491" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-blue-100 bg-white px-6 py-3.5 font-extrabold text-blue-900 shadow-sm"><Phone size={18} /> 06 50 36 64 91</a>
             </div>
-
             <div className="mt-7 grid max-w-3xl gap-3 sm:grid-cols-3">
               {[
                 ['Conventionné CPAM', 'Prise en charge selon conditions'],
                 ['Disponible 24h/24', '7j/7, jours fériés inclus'],
-                ['Porte à porte', `${deptData.cities.length} zones locales`],
-              ].map(([title, text]) => (
-                <div key={title} className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 backdrop-blur-md">
-                  <p className="text-sm font-black text-white">{title}</p>
-                  <p className="mt-1 text-xs leading-5 text-blue-100">{text}</p>
-                </div>
-              ))}
+                ['Porte à porte', deptData.cities.length + ' zones locales'],
+              ].map(([title,text]) => <div key={title} className="rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 shadow-sm"><p className="text-sm font-black text-slate-900">{title}</p><p className="mt-1 text-xs text-slate-500">{text}</p></div>)}
             </div>
           </div>
-
           <div className="relative">
-            <div className="absolute -inset-5 rounded-[2.5rem] bg-white/10 blur-2xl" aria-hidden="true" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.09] p-6 shadow-[0_30px_80px_rgba(15,23,42,.24)] backdrop-blur-md sm:p-7">
-              <div className="flex items-start justify-between gap-5">
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-200">Zone desservie</p>
-                  <p className="mt-2 text-3xl font-black text-white">{deptData.name}</p>
-                  <p className="mt-1 text-sm text-blue-100">Département {department}</p>
-                </div>
-                <span
-                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-3xl text-2xl font-black text-white shadow-lg"
-                  style={{ background: accent.primary }}
-                >
-                  {department}
-                </span>
-              </div>
-
-              <div className="mt-7 rounded-3xl bg-white p-5 text-slate-900 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: accent.soft, color: accent.primary }}>
-                    <Navigation size={21} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-black">Transport médical de proximité</p>
-                    <p className="text-xs text-slate-500">Depuis votre domicile vers vos soins</p>
-                  </div>
-                </div>
-
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-2xl font-black text-slate-950">{deptData.cities.length}</p>
-                    <p className="mt-1 text-xs font-bold text-slate-500">villes / secteurs</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-2xl font-black text-slate-950">24/7</p>
-                    <p className="mt-1 text-xs font-bold text-slate-500">disponibilité</p>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex items-center gap-2 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800">
-                  <CheckCircle size={17} aria-hidden="true" />
-                  Taxi conventionné CPAM
+            <div className="absolute -inset-4 rounded-[2.5rem] blur-2xl" style={{ background: accent.glow }} />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-2 shadow-[0_28px_80px_rgba(15,23,42,.18)]">
+              <img src="/image.png" alt={'Taxi conventionné ' + deptData.name} className="h-[360px] w-full rounded-[1.6rem] object-cover sm:h-[430px]" />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-slate-950/80 px-5 py-4 text-white backdrop-blur">
+                <div className="flex items-center justify-between gap-4">
+                  <div><p className="text-xs font-extrabold uppercase tracking-[.14em] text-cyan-200">Zone desservie</p><p className="mt-1 text-lg font-black">{deptData.name} · {department}</p></div>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl text-sm font-black text-white" style={{background:accent.primary}}>{department}</span>
                 </div>
               </div>
             </div>
