@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarDays, ChevronRight, Heart, Menu, Phone, ShieldCheck, Users, X } from 'lucide-react';
+import PremiumBrandLogo from './PremiumBrandLogo';
 
 const navItems = [
   { path: '/', label: 'Accueil' },
@@ -18,7 +19,7 @@ export default function HomePremiumHeader() {
       <div className="home2-brandbar">
         <div className="home2-container home2-brandbar-inner">
           <Link to="/" className="home2-brandbar-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+            <PremiumBrandLogo className="home2-premium-logo" />
           </Link>
 
           <div className="home2-brandbar-message">
@@ -38,7 +39,7 @@ export default function HomePremiumHeader() {
       <div className="home2-nav">
         <div className="home2-container home2-nav-inner">
           <Link to="/" className="home2-nav-logo" aria-label="Taxis Paris Conventionnés">
-            <img src="/taxi-logo.svg" alt="" width="320" height="208" />
+            <PremiumBrandLogo compact variant="light" className="home2-premium-logo home2-premium-logo--compact" />
           </Link>
 
           <nav className="home2-desktop-nav" aria-label="Navigation principale">
