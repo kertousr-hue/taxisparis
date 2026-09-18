@@ -264,7 +264,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
       />
 
       {/* ── Hero ────────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
+      <section className="zones-maquette-hero bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
             <MapPin size={14} aria-hidden="true" />
