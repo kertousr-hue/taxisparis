@@ -263,6 +263,8 @@ export default function Zones({ onNavigate }: ZonesProps) {
         jsonLD={[jsonLDWebPage, jsonLDFAQ, jsonLDMedical]}
       />
 
+      <div className="exact-subpage exact-zones-page">
+
       {/* ── Hero ────────────────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4 text-center">
@@ -545,6 +547,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }
