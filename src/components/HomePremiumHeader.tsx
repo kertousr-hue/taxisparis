@@ -4,7 +4,7 @@ import { CalendarDays, ChevronRight, Heart, Menu, Phone, ShieldCheck, Users, X }
 
 const navItems = [
   { path: '/', label: 'Accueil' },
-  { path: '/reservation-taxi-vsl', label: 'Réserver' },
+  { path: '/#services', label: 'Nos services' },
   { path: '/zones-desservies', label: 'Zones' },
   { path: '/qui-sommes-nous', label: 'À propos' },
   { path: '/faq', label: 'FAQ' },
@@ -15,36 +15,47 @@ export default function HomePremiumHeader() {
 
   return (
     <header className="home2-header">
-      <div className="home2-topline">
-        <div className="home2-container home2-topline-inner">
-          <p>Plus qu’un transport, <strong>une présence à vos côtés</strong></p>
-          <div className="home2-topline-trust">
-            <span><ShieldCheck size={15} /> Conventionné CPAM</span>
-            <span><Heart size={15} /> Accompagnement humain</span>
-            <span><Users size={15} /> Proximité en Île-de-France</span>
+      <div className="home2-brandbar">
+        <div className="home2-container home2-brandbar-inner">
+          <Link to="/" className="home2-brandbar-logo" aria-label="Taxis Paris Conventionnés - accueil">
+            <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+          </Link>
+
+          <div className="home2-brandbar-message">
+            <strong>Plus qu’un transport,</strong>
+            <span>une présence à vos côtés</span>
+            <small>PARIS · ÎLE-DE-FRANCE · TOUJOURS À VOS CÔTÉS</small>
+          </div>
+
+          <div className="home2-brandbar-values">
+            <div><ShieldCheck size={22} /><span><strong>Conventionné</strong><small>CPAM</small></span></div>
+            <div><Heart size={22} /><span><strong>Accompagnement</strong><small>humain</small></span></div>
+            <div><Users size={22} /><span><strong>Proximité</strong><small>Île-de-France</small></span></div>
           </div>
         </div>
       </div>
 
       <div className="home2-nav">
         <div className="home2-container home2-nav-inner">
-          <Link to="/" className="home2-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/taxi-logo.svg" alt="Taxis Paris Conventionnés" width="320" height="208" />
+          <Link to="/" className="home2-nav-logo" aria-label="Taxis Paris Conventionnés">
+            <img src="/taxi-logo.svg" alt="" width="320" height="208" />
           </Link>
 
           <nav className="home2-desktop-nav" aria-label="Navigation principale">
             {navItems.map((item) => (
-              <Link key={item.path} to={item.path}>{item.label}</Link>
+              item.path.startsWith('/#')
+                ? <a key={item.path} href={item.path.slice(1)}>{item.label}</a>
+                : <Link key={item.path} to={item.path}>{item.label}</Link>
             ))}
           </nav>
 
           <div className="home2-nav-actions">
             <a href="tel:+33650366491" className="home2-phone">
-              <Phone size={16} />
+              <Phone size={15} />
               <span>06 50 36 64 91</span>
             </a>
             <Link to="/reservation-taxi-vsl" className="home2-gold-btn">
-              <CalendarDays size={16} />
+              <CalendarDays size={15} />
               Réserver
             </Link>
           </div>
@@ -65,9 +76,9 @@ export default function HomePremiumHeader() {
         <div className="home2-mobile-panel">
           <nav className="home2-container" aria-label="Navigation mobile">
             {navItems.map((item) => (
-              <Link key={item.path} to={item.path} onClick={() => setOpen(false)}>
-                {item.label}<ChevronRight size={16} />
-              </Link>
+              item.path.startsWith('/#')
+                ? <a key={item.path} href={item.path.slice(1)} onClick={() => setOpen(false)}>{item.label}<ChevronRight size={16} /></a>
+                : <Link key={item.path} to={item.path} onClick={() => setOpen(false)}>{item.label}<ChevronRight size={16} /></Link>
             ))}
             <a href="tel:+33650366491" onClick={() => setOpen(false)}>
               <Phone size={16} /> 06 50 36 64 91
