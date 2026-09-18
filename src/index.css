@@ -1088,3 +1088,376 @@ input[type="month"] {
   .exact-reservation-page #page-title{font-size:2.55rem!important}
   .exact-home-footer-logo img{width:170px}
 }
+
+
+/* ===== HARMONISATION FINALE — RESERVATION + DEPARTEMENTS ===== */
+
+/* Reservation : on conserve strictement le formulaire et sa logique, seul l'habillage change */
+.exact-reservation-page>.bg-gradient-to-b{
+  background:
+    radial-gradient(circle at 86% 4%,rgba(196,147,69,.10),transparent 24%),
+    linear-gradient(180deg,#edf5fa 0%,#f8fbfd 18%,#ffffff 48%,#f5f8fa 100%)!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container{
+  max-width:1180px!important;
+  padding-left:18px!important;
+  padding-right:18px!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl{
+  max-width:980px!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type{
+  position:relative;
+  overflow:hidden;
+  margin-bottom:26px!important;
+  padding:38px 28px 34px!important;
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.22),transparent 24%),
+    linear-gradient(125deg,#052a46 0%,#073455 62%,#0b4d7d 100%);
+  box-shadow:0 20px 44px rgba(5,42,70,.14);
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:30px 30px;
+  mask-image:linear-gradient(90deg,black,transparent 78%);
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type>*{
+  position:relative;
+  z-index:1;
+}
+.exact-reservation-page #page-title{
+  color:#fff!important;
+}
+.exact-reservation-page #page-title+p{
+  color:rgba(255,255,255,.82)!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type .bg-blue-100{
+  background:rgba(255,255,255,.10)!important;
+  color:#f1c981!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type .text-gray-500{
+  color:rgba(255,255,255,.72)!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type .text-green-600,
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type .text-yellow-500{
+  color:#f1c981!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>.grid.grid-cols-1.sm\:grid-cols-3{
+  margin-top:-15px!important;
+  margin-bottom:28px!important;
+  position:relative;
+  z-index:2;
+  gap:12px!important;
+}
+.exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>.grid.grid-cols-1.sm\:grid-cols-3>div{
+  min-height:112px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-radius:11px!important;
+  border-color:#dbe6ec!important;
+  background:#fff!important;
+  box-shadow:0 12px 28px rgba(5,42,70,.07)!important;
+}
+.exact-reservation-page form{
+  max-width:820px;
+  margin-inline:auto;
+}
+.exact-reservation-page form>div,
+.exact-reservation-page form section,
+.exact-reservation-page .bg-white.rounded-2xl{
+  background:#fff!important;
+  border:1px solid #dce7ee!important;
+  box-shadow:0 10px 24px rgba(5,42,70,.055)!important;
+}
+.exact-reservation-page form h2,
+.exact-reservation-page form h3{
+  color:#073455!important;
+}
+.exact-reservation-page form label{
+  color:#294d69!important;
+}
+.exact-reservation-page form input,
+.exact-reservation-page form textarea,
+.exact-reservation-page form select{
+  background:#fbfdfe!important;
+}
+.exact-reservation-page form [class*="border-blue-"],
+.exact-reservation-page form [class*="ring-blue-"]{
+  border-color:#0e5c9f!important;
+}
+.exact-reservation-page form [class*="bg-blue-600"],
+.exact-reservation-page form [class*="bg-blue-700"]{
+  background:#073455!important;
+  color:#fff!important;
+}
+.exact-reservation-page form [class*="text-blue-600"],
+.exact-reservation-page form [class*="text-blue-700"]{
+  color:#0e5c9f!important;
+}
+.exact-reservation-page section.mb-8,
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl{
+  max-width:820px;
+  margin-inline:auto;
+}
+.exact-reservation-page section.mb-8 h2{
+  color:#073455!important;
+  font-size:26px!important;
+}
+.exact-reservation-page section.mb-8>div>div{
+  border-radius:9px!important;
+  border-color:#dce7ee!important;
+}
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl{
+  background:
+    radial-gradient(circle at 82% 22%,rgba(196,147,69,.17),transparent 22%),
+    linear-gradient(125deg,#052a46,#073455 70%,#0b4d7d)!important;
+  border-radius:14px!important;
+  box-shadow:0 16px 36px rgba(5,42,70,.11)!important;
+}
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl h2{
+  color:#fff!important;
+}
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl p{
+  color:rgba(255,255,255,.78)!important;
+}
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl a,
+.exact-reservation-page .bg-blue-700.text-white.rounded-2xl button{
+  border-radius:8px!important;
+}
+
+/* Pages département communes aux 75, 91, 92, 93, 94 */
+.exact-department-page{
+  background:#fff!important;
+}
+.exact-department-page>section:first-of-type{
+  position:relative;
+  background:
+    radial-gradient(circle at 84% 17%,rgba(196,147,69,.20),transparent 25%),
+    linear-gradient(125deg,#052a46 0%,#073455 60%,#0b4d7d 100%)!important;
+  border-bottom:0!important;
+}
+.exact-department-page>section:first-of-type>div[aria-hidden="true"]{
+  opacity:.16!important;
+}
+.exact-department-page>section:first-of-type .relative.mx-auto.grid{
+  max-width:1180px!important;
+  gap:36px!important;
+  padding-top:64px!important;
+  padding-bottom:64px!important;
+}
+.exact-department-page>section:first-of-type h1{
+  color:#fff!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(2.75rem,5vw,4.8rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
+}
+.exact-department-page>section:first-of-type p{
+  color:rgba(255,255,255,.80)!important;
+}
+.exact-department-page>section:first-of-type .text-blue-100,
+.exact-department-page>section:first-of-type .text-blue-50{
+  color:rgba(255,255,255,.75)!important;
+}
+.exact-department-page>section:first-of-type .text-cyan-200{
+  color:#f0c67b!important;
+}
+.exact-department-page>section:first-of-type a[class*="bg-white"]{
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+  color:#fff!important;
+  border-radius:8px!important;
+  box-shadow:0 10px 25px rgba(165,111,40,.20)!important;
+}
+.exact-department-page>section:first-of-type a[class*="border-white"]{
+  border-color:rgba(255,255,255,.50)!important;
+  background:rgba(255,255,255,.05)!important;
+  color:#fff!important;
+  border-radius:8px!important;
+}
+.exact-department-page>section:first-of-type .rounded-2xl.border.border-white\/15{
+  border-radius:10px!important;
+  border-color:rgba(255,255,255,.15)!important;
+  background:rgba(255,255,255,.065)!important;
+}
+.exact-department-page>section:first-of-type .rounded-\[2rem\]{
+  border-radius:14px!important;
+}
+.exact-department-page>section:first-of-type .rounded-3xl.bg-white{
+  border-radius:12px!important;
+}
+.exact-department-page>section:first-of-type .rounded-3xl.bg-white .bg-slate-50{
+  background:#f4f8fa!important;
+  border-radius:9px!important;
+}
+.exact-department-page>section:first-of-type .bg-emerald-50{
+  background:#eef7f3!important;
+}
+.exact-department-page>section:first-of-type .text-emerald-800{
+  color:#496d63!important;
+}
+
+/* bénéfices sous hero */
+.exact-department-page>section:nth-of-type(2){
+  padding-top:24px!important;
+  padding-bottom:34px!important;
+  background:#f5f9fc!important;
+}
+.exact-department-page>section:nth-of-type(2)>.mx-auto{
+  max-width:1180px!important;
+  gap:12px!important;
+}
+.exact-department-page>section:nth-of-type(2) article{
+  border-radius:10px!important;
+  border-color:#dce7ee!important;
+  box-shadow:0 10px 24px rgba(5,42,70,.05)!important;
+}
+.exact-department-page>section:nth-of-type(2) article h2{
+  color:#073455!important;
+}
+
+/* contenu principal */
+.exact-department-page>section:nth-of-type(3){
+  padding-top:54px!important;
+  padding-bottom:58px!important;
+  background:#fff!important;
+}
+.exact-department-page>section:nth-of-type(3)>.mx-auto{
+  max-width:1180px!important;
+}
+.exact-department-page>section:nth-of-type(3) article,
+.exact-department-page>section:nth-of-type(3) aside>div{
+  border-radius:12px!important;
+  border-color:#dce7ee!important;
+  box-shadow:0 12px 28px rgba(5,42,70,.055)!important;
+}
+.exact-department-page>section:nth-of-type(3) article h2,
+.exact-department-page>section:nth-of-type(3) aside h2{
+  color:#073455!important;
+}
+.exact-department-page>section:nth-of-type(3) aside>div:first-child{
+  background:linear-gradient(145deg,#eef6fb,#fff)!important;
+}
+.exact-department-page>section:nth-of-type(3) aside>div:last-child{
+  background:
+    radial-gradient(circle at 80% 18%,rgba(196,147,69,.16),transparent 22%),
+    linear-gradient(125deg,#052a46,#073455)!important;
+}
+.exact-department-page>section:nth-of-type(3) aside>div:last-child p{
+  color:rgba(255,255,255,.77)!important;
+}
+.exact-department-page>section:nth-of-type(3) aside>div:last-child p.text-2xl{
+  color:#fff!important;
+}
+.exact-department-page>section:nth-of-type(3) aside>div:last-child a{
+  border-radius:8px!important;
+  background:#fff!important;
+  color:#073455!important;
+}
+
+/* établissements + prestations et sections suivantes */
+.exact-department-page>section:nth-of-type(n+4){
+  border-color:#e4ebee!important;
+}
+.exact-department-page>section:nth-of-type(4){
+  background:#f6f9fb!important;
+  padding-top:52px!important;
+  padding-bottom:58px!important;
+}
+.exact-department-page>section:nth-of-type(4)>.mx-auto{
+  max-width:1180px!important;
+  gap:16px!important;
+}
+.exact-department-page>section:nth-of-type(4) article{
+  border-radius:12px!important;
+  border-color:#dce7ee!important;
+  box-shadow:0 10px 26px rgba(5,42,70,.05)!important;
+}
+.exact-department-page>section:nth-of-type(4) article h2{
+  color:#073455!important;
+}
+.exact-department-page>section:nth-of-type(4) article li{
+  border-radius:8px!important;
+  background:#f7fafc!important;
+}
+
+/* couleurs globales */
+.exact-department-page .bg-blue-700,
+.exact-department-page .bg-blue-800,
+.exact-department-page .bg-blue-900{
+  background:#073455!important;
+}
+.exact-department-page .text-blue-600,
+.exact-department-page .text-blue-700,
+.exact-department-page .text-blue-800,
+.exact-department-page .text-blue-900{
+  color:#0e5c9f!important;
+}
+.exact-department-page .bg-blue-50,
+.exact-department-page .bg-blue-100{
+  background:#eef6fb!important;
+}
+.exact-department-page .border-blue-100,
+.exact-department-page .border-blue-200,
+.exact-department-page .border-slate-200{
+  border-color:#dce7ee!important;
+}
+.exact-department-page .rounded-2xl,
+.exact-department-page .rounded-3xl,
+.exact-department-page .rounded-\[2rem\],
+.exact-department-page .rounded-\[2\.5rem\]{
+  border-radius:10px!important;
+}
+.exact-department-page .shadow-lg,
+.exact-department-page .shadow-xl{
+  box-shadow:0 12px 30px rgba(5,42,70,.07)!important;
+}
+.exact-department-page a[class*="bg-blue-"],
+.exact-department-page button[class*="bg-blue-"]{
+  background:#073455!important;
+  color:#fff!important;
+}
+.exact-department-page a[class*="bg-emerald-"],
+.exact-department-page button[class*="bg-emerald-"]{
+  background:#50796f!important;
+  color:#fff!important;
+}
+
+@media(max-width:900px){
+  .exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl{
+    max-width:760px!important;
+  }
+  .exact-department-page>section:first-of-type .relative.mx-auto.grid{
+    padding-top:46px!important;
+    padding-bottom:48px!important;
+  }
+}
+@media(max-width:680px){
+  .exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>div.text-center:first-of-type{
+    padding:28px 16px!important;
+    border-radius:12px;
+  }
+  .exact-reservation-page form,
+  .exact-reservation-page section.mb-8,
+  .exact-reservation-page .bg-blue-700.text-white.rounded-2xl{
+    max-width:100%;
+  }
+  .exact-reservation-page>.bg-gradient-to-b>.container>.max-w-2xl>.grid.grid-cols-1.sm\:grid-cols-3{
+    margin-top:0!important;
+  }
+  .exact-department-page>section:first-of-type .relative.mx-auto.grid{
+    padding-top:38px!important;
+    padding-bottom:40px!important;
+  }
+  .exact-department-page>section:first-of-type h1{
+    font-size:2.55rem!important;
+  }
+}
