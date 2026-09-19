@@ -3622,3 +3622,48 @@ html, body, #root{
   transform:translateY(-1px)!important;
   box-shadow:0 12px 24px rgba(5,42,70,.07)!important;
 }
+
+
+/* ===== FIX SCROLL SOURIS + LOGO FINAL ===== */
+html,
+body{
+  height:auto!important;
+  min-height:100%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-y:auto!important;
+  scroll-behavior:smooth;
+}
+body{
+  position:static!important;
+  touch-action:auto!important;
+}
+#root{
+  height:auto!important;
+  min-height:100%!important;
+  overflow:visible!important;
+}
+.exact-home-shell,
+.exact-site-shell,
+.exact-home-main,
+.exact-site-main{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.exact-home-logo,
+.exact-site-footer-logo{
+  background-image:none!important;
+  background-color:#fff!important;
+}
+.exact-home-brand-image,
+.exact-site-footer-brand-image{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+}
