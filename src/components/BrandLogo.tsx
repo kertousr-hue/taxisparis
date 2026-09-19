@@ -3,7 +3,7 @@ type BrandLogoProps = {
   alt?: string;
 };
 
-const LOGO_SRC = '/logo-taxi-conventionne-assurance.webp';
+const LOGO_SRC = '/logo-taxi-conventionne-assurance.webp?v=20260919-2';
 
 export default function BrandLogo({
   className = '',
