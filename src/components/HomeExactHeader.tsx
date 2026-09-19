@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarDays, Clock, Menu, MapPin, Phone, ShieldCheck, Users, X } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 const navItems = [
   { path: '/', label: 'Accueil' },
@@ -29,7 +30,7 @@ export default function HomeExactHeader() {
       <div className="exact-home-nav">
         <div className="exact-home-container exact-home-nav-inner">
           <Link to="/" className="exact-home-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/logo-taxi-conventionne-assurance.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
+            <BrandLogo className="exact-home-brand-image" />
           </Link>
 
           <nav className="exact-home-desktop-nav" aria-label="Navigation principale">
