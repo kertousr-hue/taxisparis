@@ -425,10 +425,45 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
                   <Link
                     key={city.slug}
                     to={`/${deptData.slug}/${city.slug}`}
-                    className="exact-department-city-secondary flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800" style={{ color: '#173e5c', opacity: 1 }}
+                    className="exact-department-city-secondary group flex items-center justify-between gap-3 rounded-2xl border bg-white px-4 py-3 transition"
+                    style={{
+                      color: '#0b2239',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#dce7ed',
+                      opacity: 1,
+                      visibility: 'visible',
+                      filter: 'none',
+                      mixBlendMode: 'normal',
+                    }}
                   >
-                    <MapPin size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
-                    <span className="truncate">{city.name}</span>
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl"
+                        style={{ background: accent.soft, color: accent.primary, opacity: 1 }}
+                      >
+                        <MapPin size={14} aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span
+                          className="block truncate text-sm font-extrabold"
+                          style={{ color: '#0b2239', opacity: 1, WebkitTextFillColor: '#0b2239' }}
+                        >
+                          {city.name}
+                        </span>
+                        <span
+                          className="block text-xs"
+                          style={{ color: '#6f8291', opacity: 1, WebkitTextFillColor: '#6f8291' }}
+                        >
+                          {city.postalCode}
+                        </span>
+                      </span>
+                    </span>
+                    <ArrowRight
+                      size={14}
+                      className="shrink-0 transition group-hover:translate-x-1"
+                      style={{ color: '#8aa5b7', opacity: 1 }}
+                      aria-hidden="true"
+                    />
                   </Link>
                 ))}
               </div>
