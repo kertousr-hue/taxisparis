@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Activity,
@@ -6,6 +7,8 @@ import {
   CalendarDays,
   Car,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Clock,
   FileText,
   HeartHandshake,
@@ -21,6 +24,27 @@ import { generateJsonLD } from '../utils/seoData';
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
+
+const hospitalSlides = [
+  {
+    image: 'https://static.mediapart.fr/etmagine/article_google_discover/files/2026/02/19/260219-img-la-justice-confirme-l-exclusion-de-huit-mois-dune-infirmiere-qui-refuse-d-oter-son-calot.jpg',
+    title: 'Hôpital Universitaire La Pitié-Salpêtrière',
+    place: 'Paris 13e',
+    alt: 'Entrée de l’Hôpital Universitaire La Pitié-Salpêtrière à Paris',
+  },
+  {
+    image: 'https://sprintally.com/static/uploads/2017/09/Gustave-Roussy-Cancer-Center-France.jpg',
+    title: 'Hôpital Gustave Roussy',
+    place: 'Villejuif',
+    alt: 'Hôpital Gustave Roussy à Villejuif',
+  },
+  {
+    image: 'https://www.myhospitalnow.com/file_managament/storage/photo_gallery_files/1626_aleson6%40greendike.com/P_1626_1716296494_IMG_20210213_140431.jpg',
+    title: 'Hôpital Bichat',
+    place: 'Paris 18e',
+    alt: 'Centre Hospitalier Universitaire Bichat à Paris',
+  },
+];
 
 const reassurance = [
   { icon: Clock, title: 'Disponible 24h/24', text: 'et 7j/7' },
@@ -75,6 +99,24 @@ const zones = [
 ];
 
 export default function Home({ onNavigate: _onNavigate }: HomeProps) {
+  const [hospitalSlide, setHospitalSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHospitalSlide((current) => (current + 1) % hospitalSlides.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const previousHospital = () => {
+    setHospitalSlide((current) => (current - 1 + hospitalSlides.length) % hospitalSlides.length);
+  };
+
+  const nextHospital = () => {
+    setHospitalSlide((current) => (current + 1) % hospitalSlides.length);
+  };
+
   return (
     <>
       <SEOHead
@@ -148,16 +190,67 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
         </section>
 
         <section className="exact-home-human">
-          <div className="exact-home-human-photo">
-            <img
-              src="https://ber.berlin-airport.de/en/flying/airlines-ziele/inspiration-urlaub/dest-165-paris.thumb.800.480.png?ck=1761569582"
-              alt="Paris et la Tour Eiffel"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="exact-home-human-review">
-              <p>« Un service fiable, humain et rassurant. Merci pour votre professionnalisme. »</p>
-              <strong>Sophie D. – Paris</strong>
+          <div
+            className="exact-home-hospital-carousel"
+            role="region"
+            aria-roledescription="carrousel"
+            aria-label="Établissements de santé partenaires"
+          >
+            <div className="exact-home-hospital-stack">
+              {[-1, 0, 1].map((offset) => {
+                const index = (hospitalSlide + offset + hospitalSlides.length) % hospitalSlides.length;
+                const slide = hospitalSlides[index];
+                const position = offset === 0 ? 'is-active' : offset < 0 ? 'is-prev' : 'is-next';
+
+                return (
+                  <article
+                    key={`${slide.title}-${position}`}
+                    className={`exact-home-hospital-slide ${position}`}
+                    aria-hidden={offset !== 0}
+                  >
+                    <img src={slide.image} alt={offset === 0 ? slide.alt : ''} loading="lazy" decoding="async" />
+                    <div className="exact-home-hospital-overlay">
+                      <h3>{slide.title}</h3>
+                      <span>{slide.place}</span>
+                    </div>
+                    {offset === 0 && (
+                      <span className="exact-home-hospital-count">
+                        {hospitalSlide + 1} / {hospitalSlides.length}
+                      </span>
+                    )}
+                  </article>
+                );
+              })}
+
+              <button
+                type="button"
+                className="exact-home-hospital-arrow is-left"
+                onClick={previousHospital}
+                aria-label="Photo d’hôpital précédente"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                type="button"
+                className="exact-home-hospital-arrow is-right"
+                onClick={nextHospital}
+                aria-label="Photo d’hôpital suivante"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+
+            <div className="exact-home-hospital-dots" aria-label="Choisir une photo d’hôpital">
+              {hospitalSlides.map((slide, index) => (
+                <button
+                  key={slide.title}
+                  type="button"
+                  className={index === hospitalSlide ? 'active' : ''}
+                  onClick={() => setHospitalSlide(index)}
+                  aria-label={`Afficher ${slide.title}`}
+                  aria-current={index === hospitalSlide ? 'true' : undefined}
+                />
+              ))}
             </div>
           </div>
 
