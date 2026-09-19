@@ -260,7 +260,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
             200+ communes desservies
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Zones desservies par notre service<br className="hidden sm:block" /> de taxi VSL conventionné
+            Zones desservies par notre service<br className="hidden sm:block" /> de taxi et VSL conventionné
           </h1>
           <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8">
             Île-de-France — Paris (75), Essonne (91), Hauts-de-Seine (92),<br className="hidden sm:block" /> Seine-Saint-Denis (93) et Val-de-Marne (94)
