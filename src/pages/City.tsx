@@ -430,16 +430,74 @@ export default function CityPage() {
       />
 
       <div className="exact-subpage exact-city-page bg-white">
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-              {h1Text}
-            </h1>
-            <h2 className="text-2xl text-blue-100">
-              Transport médical remboursé CPAM | Dialyse, Chimio, Hospitalisation
-            </h2>
+        <section className="exact-city-hero">
+          <div className="exact-home-container exact-city-hero-grid">
+            <div className="exact-city-hero-copy">
+              <div className="exact-city-breadcrumb">
+                <Link to="/">Accueil</Link>
+                <span>/</span>
+                <Link to="/zones-desservies">Zones desservies</Link>
+                <span>/</span>
+                <Link to={`/${department.slug}`}>{department.name} ({department.code})</Link>
+                <span>/</span>
+                <strong>{city.name}</strong>
+              </div>
+
+              <p className="exact-home-section-kicker">Transport médical conventionné</p>
+              <h1>{h1Text}</h1>
+              <p className="exact-city-hero-lead">
+                Transport médical remboursé CPAM pour vos consultations, dialyse, chimiothérapie,
+                radiothérapie, examens et hospitalisations depuis {city.name}.
+              </p>
+
+              <div className="exact-city-hero-actions">
+                <Link to="/reservation-taxi-vsl">
+                  <Calendar size={18} /> Réserver maintenant
+                </Link>
+                <a href="tel:+33650366491">
+                  <Phone size={18} /> 06 50 36 64 91
+                </a>
+              </div>
+
+              <div className="exact-city-hero-points">
+                <span><ShieldCheck size={17} /> Conventionné CPAM</span>
+                <span><Clock size={17} /> Disponible 24h/24 · 7j/7</span>
+                <span><MapPin size={17} /> Prise en charge à domicile</span>
+              </div>
+            </div>
+
+            <aside className="exact-city-hero-card">
+              <div className="exact-city-hero-card-head">
+                <div>
+                  <span>Votre ville</span>
+                  <h2>{city.name}</h2>
+                  <p>{city.postalCode} · {department.name}</p>
+                </div>
+                <strong>{department.code}</strong>
+              </div>
+
+              <div className="exact-city-hero-card-body">
+                <div>
+                  <MapPin size={20} />
+                  <span><b>Départ depuis {city.name}</b><small>Prise en charge porte à porte</small></span>
+                </div>
+                <div className="exact-city-hero-stats">
+                  <span><b>{city.nearHospitals?.length || 0}</b><small>hôpitaux proches</small></span>
+                  <span><b>24/7</b><small>disponibilité</small></span>
+                </div>
+                <div className="exact-city-cpam"><ShieldCheck size={16} /> Taxi conventionné CPAM</div>
+              </div>
+            </aside>
           </div>
-        </div>
+        </section>
+
+        <section className="exact-city-benefits">
+          <div className="exact-home-container exact-city-benefits-grid">
+            <article><ShieldCheck size={21} /><div><strong>Conventionné CPAM</strong><span>Prise en charge possible sur prescription</span></div></article>
+            <article><Car size={21} /><div><strong>Trajet confortable</strong><span>Véhicule adapté et chauffeur professionnel</span></div></article>
+            <article><MapPin size={21} /><div><strong>Porte à porte</strong><span>De votre domicile à votre établissement de santé</span></div></article>
+          </div>
+        </section>
 
         <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-10">
