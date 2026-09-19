@@ -223,7 +223,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="relative z-10 -mt-1 bg-slate-50/80 py-8 sm:py-10">
+      <section className="exact-department-trust relative z-10 -mt-1 bg-slate-50/80 py-8 sm:py-10">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
           {[
             { icon: Shield, title: 'Conventionné CPAM', text: 'Prise en charge possible sur prescription médicale', color: '#0f64d8', bg: '#e9f3ff' },
@@ -245,7 +245,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="bg-white py-12 sm:py-16">
+      <section className="exact-department-overview bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[1.25fr_.75fr]">
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_55px_rgba(15,23,42,.07)] sm:p-8">
@@ -349,7 +349,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="bg-white py-12 sm:py-16">
+      <section className="exact-department-access bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-[2rem] border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-white p-6 sm:p-8">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -472,7 +472,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="bg-white py-12 sm:py-16">
+      <section className="exact-department-faq bg-white py-12 sm:py-16">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[.72fr_1.28fr] lg:px-8">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.14em] text-blue-600">Questions fréquentes</p>
@@ -579,7 +579,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
+      <section className="exact-department-final-cta px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#064e8a_0%,#0756b6_48%,#0f9f9a_100%)] px-6 py-8 text-white shadow-[0_24px_65px_rgba(3,105,161,.22)] sm:px-9 sm:py-9">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -609,7 +609,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="border-t border-slate-100 bg-slate-50 py-10">
+      <section className="exact-department-contact-strip border-t border-slate-100 bg-slate-50 py-10">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
           {[
             { icon: Phone, title: 'Téléphone', value: '06 50 36 64 91', href: 'tel:+33650366491' },
