@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BadgeCheck, Building2, MapPin, ShieldCheck, Users } from 'lucide-react';
 
@@ -76,7 +77,7 @@ export default function HomeDepartmentsShowcase() {
             <article
               key={dept.code}
               className="exact-zones-card-premium exact-zones-card-showcase group"
-              style={{ '--dept-accent': dept.hex, '--dept-tint': dept.tint } as React.CSSProperties}
+              style={{ '--dept-accent': dept.hex, '--dept-tint': dept.tint } as CSSProperties}
             >
               <div className="exact-zones-card-top exact-zones-card-top-showcase">
                 <div className="exact-zones-card-title">
