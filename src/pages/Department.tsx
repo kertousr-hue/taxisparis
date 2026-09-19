@@ -7,7 +7,6 @@ import {
   ChevronDown,
   Clock,
   FileText,
-  Hospital,
   Mail,
   MapPin,
   Navigation,
@@ -96,7 +95,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
   ];
 
   return (
-    <div className="department-redesign bg-white">
+    <div className="exact-subpage exact-department-page department-redesign bg-white">
       <SEOHead
         title={seo.metaTitle}
         description={seo.metaDescription}
@@ -306,12 +305,12 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+      <section className="exact-department-health border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-700 text-white">
-                <Hospital size={22} aria-hidden="true" />
+                <Building2 size={22} aria-hidden="true" />
               </span>
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-slate-400">Santé</p>
@@ -375,7 +374,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+      <section className="exact-department-cities border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -397,7 +396,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
               <Link
                 key={city.slug}
                 to={`/${deptData.slug}/${city.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-white px-4 py-3.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                className="exact-department-city-primary group flex items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-white px-4 py-3.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
               >
                 <span className="flex min-w-0 items-center gap-3">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl" style={{ background: accent.soft, color: accent.primary }}>
@@ -414,7 +413,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
           </div>
 
           {remainingCities.length > 0 ? (
-            <details className="group mt-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+            <details className="exact-department-city-more group mt-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-2 py-1 font-extrabold text-slate-900">
                 <span>Voir toutes les autres villes ({remainingCities.length})</span>
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 text-blue-700 transition group-open:rotate-180">
@@ -426,10 +425,45 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
                   <Link
                     key={city.slug}
                     to={`/${deptData.slug}/${city.slug}`}
-                    className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800"
+                    className="exact-department-city-secondary group flex items-center justify-between gap-3 rounded-2xl border bg-white px-4 py-3 transition"
+                    style={{
+                      color: '#0b2239',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#dce7ed',
+                      opacity: 1,
+                      visibility: 'visible',
+                      filter: 'none',
+                      mixBlendMode: 'normal',
+                    }}
                   >
-                    <MapPin size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
-                    <span className="truncate">{city.name}</span>
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl"
+                        style={{ background: accent.soft, color: accent.primary, opacity: 1 }}
+                      >
+                        <MapPin size={14} aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span
+                          className="block truncate text-sm font-extrabold"
+                          style={{ color: '#0b2239', opacity: 1, WebkitTextFillColor: '#0b2239' }}
+                        >
+                          {city.name}
+                        </span>
+                        <span
+                          className="block text-xs"
+                          style={{ color: '#6f8291', opacity: 1, WebkitTextFillColor: '#6f8291' }}
+                        >
+                          {city.postalCode}
+                        </span>
+                      </span>
+                    </span>
+                    <ArrowRight
+                      size={14}
+                      className="shrink-0 transition group-hover:translate-x-1"
+                      style={{ color: '#8aa5b7', opacity: 1 }}
+                      aria-hidden="true"
+                    />
                   </Link>
                 ))}
               </div>

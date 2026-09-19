@@ -75,6 +75,8 @@ export default function About() {
         ]}
       />
 
+      <div className="exact-subpage exact-about-page">
+
       {/* Bandeau CTA haut */}
       <div className="bg-blue-700 text-white py-3">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm sm:text-base">
@@ -329,6 +331,7 @@ export default function About() {
 
           </div>
         </div>
+      </div>
       </div>
     </>
   );

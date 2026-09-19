@@ -140,7 +140,7 @@ export default function FAQ() {
         jsonLD={schemaData}
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <div className="exact-subpage exact-faq-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white">
           <div className="absolute inset-0 bg-black opacity-10"></div>
           <div className="absolute inset-0" style={{

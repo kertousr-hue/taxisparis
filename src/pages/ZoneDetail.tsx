@@ -165,7 +165,7 @@ export default function ZoneDetail({ zone, onNavigate }: ZoneDetailProps) {
           description="Cette zone n'existe pas dans notre système."
           robots="noindex, nofollow"
         />
-        <div className="py-12">
+        <div className="exact-subpage exact-zone-detail-page py-12">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Zone non trouvée</h1>
           <button

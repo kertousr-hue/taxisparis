@@ -205,6 +205,8 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         jsonLD={[jsonLDWebPage, jsonLDItemList, jsonLDFAQ, jsonLDMedical]}
       />
 
+      <div className="exact-subpage exact-blog-page">
+
       <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
@@ -212,7 +214,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
             Guides & conseils transport médical
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Blog Taxi VSL Conventionné<br className="hidden sm:block" /> en Île-de-France
+            Blog Taxi et VSL Conventionné<br className="hidden sm:block" /> en Île-de-France
           </h1>
           <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8">
             Tout savoir sur le transport médical remboursé CPAM : démarches, remboursements, zones desservies et conseils pratiques
@@ -239,14 +241,20 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
       <section className="py-12 bg-gray-50" aria-label="Articles et guides du blog">
         <div className="container mx-auto px-4">
           {hasPublishedPosts ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="exact-blog-list-wrap max-w-7xl mx-auto">
+              <div className="exact-blog-list-heading text-center mb-8">
+                <span>Conseils & actualités</span>
+                <h2>Nos derniers articles</h2>
+                <p>Des informations utiles pour préparer vos trajets médicaux et comprendre la prise en charge CPAM.</p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
                 <article
                   key={post.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group"
+                  className="exact-blog-card bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group"
                 >
-                  {post.featured_image_url && (
-                    <div className="h-48 overflow-hidden bg-gray-100">
+                  <div className="exact-blog-media h-48 overflow-hidden bg-gray-100">
+                    {post.featured_image_url ? (
                       <img
                         src={post.featured_image_url}
                         alt={post.title}
@@ -254,8 +262,13 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                         loading="lazy"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="exact-blog-placeholder">
+                        <BookOpen size={28} />
+                        <span>Guide transport médical</span>
+                      </div>
+                    )}
+                  </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
@@ -285,6 +298,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                   </div>
                 </article>
               ))}
+              </div>
             </div>
           ) : (
             <div className="max-w-7xl mx-auto">
@@ -302,7 +316,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                 {STATIC_GUIDES.map((guide) => (
                   <article
                     key={guide.title}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
+                    className="exact-blog-card exact-blog-static-card bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-100"
                   >
                     <div className="p-6">
                       <span className="inline-flex text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-3">
@@ -330,7 +344,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-white" aria-label="Guide du transport médical conventionné">
+      <section className="exact-blog-guide py-12 bg-white" aria-label="Guide du transport médical conventionné">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
             Guide complet du transport médical en taxi conventionné
@@ -405,7 +419,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50" aria-label="Questions fréquentes">
+      <section className="exact-blog-faq py-12 bg-gray-50" aria-label="Questions fréquentes">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
             Questions fréquentes
@@ -450,7 +464,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
         </div>
       </section>
 
-      <section className="py-12 bg-white" aria-label="Réserver un transport médical">
+      <section className="exact-blog-final py-12 bg-white" aria-label="Réserver un transport médical">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
             Besoin d'un transport médical remboursé ?
@@ -476,6 +490,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }

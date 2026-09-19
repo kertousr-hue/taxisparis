@@ -95,7 +95,7 @@ export default function BlogPost() {
         description={post.meta_description || post.excerpt}
         keywords={keywords}
       />
-      <article className="bg-gray-50 py-12">
+      <article className="exact-subpage exact-blogpost-page bg-gray-50 py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <button
             onClick={() => navigate('/blog/')}
