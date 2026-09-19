@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight, ChevronDown, ChevronUp, CheckCircle, Phone, Building2, CircleDot, BadgeCheck } from 'lucide-react';
+import { MapPin, ArrowRight, ChevronDown, ChevronUp, CheckCircle, Phone, Building2, CircleDot, BadgeCheck, Users, ShieldCheck } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
 interface ZonesProps {
@@ -285,77 +285,102 @@ export default function Zones({ onNavigate }: ZonesProps) {
       </section>
 
       {/* ── Cartes départements ─────────────────────────────────────── */}
-      <section className="exact-zones-departments" aria-label="Départements couverts">
+      <section className="exact-zones-departments exact-zones-departments-showcase" aria-label="Départements couverts">
+        <div className="exact-zones-departments-watermark" aria-hidden="true">
+          <svg viewBox="0 0 220 160">
+            <path d="M52 24 96 12 130 28 169 21 194 53 184 91 154 119 111 142 72 131 37 145 18 111 26 69Z" />
+            <path d="M87 53 125 48 149 68 143 100 114 111 86 93 77 70Z" />
+          </svg>
+          <span>Au plus près<br />de votre santé</span>
+        </div>
+
         <div className="exact-home-container">
-          <div className="exact-zones-departments-head">
+          <div className="exact-zones-departments-head exact-zones-departments-head-showcase">
             <div>
-              <span className="exact-zones-departments-kicker">Couverture régionale</span>
+              <span className="exact-zones-departments-kicker">Notre territoire</span>
               <h2>Nos 5 départements d'intervention</h2>
               <p>
                 Couverture CPAM en Île-de-France : réservation rapide, trajets réguliers et accès aux hôpitaux partenaires.
               </p>
             </div>
-            <div className="exact-zones-departments-summary">
-              <strong>5</strong>
-              <span>départements<br />desservis</span>
+
+            <div className="exact-zones-departments-summary exact-zones-departments-summary-showcase">
+              <span className="exact-zones-summary-icon"><MapPin size={22} /></span>
+              <div>
+                <strong>5 départements desservis</strong>
+                <small>en Île-de-France</small>
+              </div>
             </div>
           </div>
 
-          <div className="exact-zones-department-grid">
+          <div className="exact-zones-department-grid exact-zones-department-grid-showcase">
             {DEPARTMENTS.map((dept) => (
               <article
                 key={dept.code}
-                className="exact-zones-card-premium group"
+                className="exact-zones-card-premium exact-zones-card-showcase group"
                 style={{
                   '--dept-accent': dept.hex,
                   '--dept-tint': dept.tint,
                 } as CSSProperties}
               >
-                <div className="exact-zones-card-top">
+                <div className="exact-zones-card-top exact-zones-card-top-showcase">
                   <div className="exact-zones-card-title">
-                    <span className="exact-zones-card-code">{dept.code}</span>
+                    <span className="exact-zones-card-code exact-zones-card-code-showcase">{dept.code}</span>
                     <div>
                       <h3>{dept.name}</h3>
-                      <p>{dept.sector}</p>
+                      <p>{dept.code === '75' ? '20 arrondissements' : dept.sector}</p>
                     </div>
                   </div>
-                  <span className="exact-zones-card-dot" aria-hidden="true" />
                 </div>
 
                 <DepartmentMiniMap department={dept} />
 
-                <div className="exact-zones-card-stats">
+                <div className="exact-zones-card-list">
                   <div>
-                    <Building2 size={16} aria-hidden="true" />
-                    <span>
-                      <strong>{dept.villesCount}</strong>
-                      <small>villes desservies</small>
-                    </span>
+                    <Building2 size={17} aria-hidden="true" />
+                    <span><strong>{dept.villesCount}</strong> villes desservies</span>
                   </div>
                   <div>
-                    <CircleDot size={16} aria-hidden="true" />
-                    <span>
-                      <strong>{dept.hopitauxCount}</strong>
-                      <small>hôpitaux partenaires</small>
-                    </span>
+                    <Users size={17} aria-hidden="true" />
+                    <span><strong>{dept.hopitauxCount}</strong> hôpitaux partenaires</span>
                   </div>
                 </div>
 
-                <div className="exact-zones-card-cpam">
-                  <BadgeCheck size={16} aria-hidden="true" />
+                <div className="exact-zones-card-cpam exact-zones-card-cpam-showcase">
+                  <BadgeCheck size={17} aria-hidden="true" />
                   <span>Conventionné CPAM</span>
                 </div>
 
                 <Link
                   to={`/${dept.slug}`}
-                  className="exact-zones-card-cta"
+                  className="exact-zones-card-cta exact-zones-card-cta-showcase"
                   aria-label={`Voir les villes desservies en ${dept.name} (${dept.code})`}
                 >
                   <span>{dept.code === '75' ? 'Voir Paris' : 'Voir les villes'}</span>
-                  <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden="true" />
+                  <ArrowRight size={17} className="transition group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </article>
             ))}
+          </div>
+
+          <div className="exact-zones-reassurance-strip">
+            <div>
+              <span className="exact-zones-reassurance-icon"><Building2 size={22} /></span>
+              <div>
+                <strong>Des trajets sécurisés vers tous les établissements de santé partenaires</strong>
+                <small>Hôpitaux, cliniques, centres de rééducation… dans toute l'Île-de-France.</small>
+              </div>
+            </div>
+
+            <span className="exact-zones-reassurance-divider" aria-hidden="true" />
+
+            <div>
+              <span className="exact-zones-reassurance-icon"><ShieldCheck size={22} /></span>
+              <div>
+                <strong>Service conventionné CPAM</strong>
+                <small>Une prise en charge facilitée pour vos déplacements médicaux.</small>
+              </div>
+            </div>
           </div>
         </div>
       </section>
