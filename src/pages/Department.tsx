@@ -305,7 +305,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+      <section className="exact-department-cities border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
             <div className="flex items-center gap-3">
@@ -396,7 +396,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
               <Link
                 key={city.slug}
                 to={`/${deptData.slug}/${city.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-white px-4 py-3.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                className="exact-department-city-primary group flex items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-white px-4 py-3.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
               >
                 <span className="flex min-w-0 items-center gap-3">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl" style={{ background: accent.soft, color: accent.primary }}>
@@ -413,7 +413,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
           </div>
 
           {remainingCities.length > 0 ? (
-            <details className="group mt-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+            <details className="exact-department-city-more group mt-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-2 py-1 font-extrabold text-slate-900">
                 <span>Voir toutes les autres villes ({remainingCities.length})</span>
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 text-blue-700 transition group-open:rotate-180">
@@ -425,7 +425,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
                   <Link
                     key={city.slug}
                     to={`/${deptData.slug}/${city.slug}`}
-                    className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800"
+                    className="exact-department-city-secondary flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800"
                   >
                     <MapPin size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
                     <span className="truncate">{city.name}</span>
