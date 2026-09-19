@@ -121,31 +121,44 @@ type DepartmentCard = (typeof DEPARTMENTS)[number];
 
 function DepartmentMiniMap({ department }: { department: DepartmentCard }) {
   const path = REAL_DEPARTMENT_PATHS[department.code];
+  const zoom = department.code === '75' ? 11 : department.code === '92' || department.code === '93' || department.code === '94' ? 10 : 9;
+  const mapQuery = encodeURIComponent(`${department.name} ${department.code} Île-de-France`);
 
   return (
-    <div className="exact-zones-map-panel">
-      <span className="exact-zones-map-label">Contour réel</span>
+    <div className="exact-zones-map-panel exact-zones-real-map">
+      <iframe
+        className="exact-zones-real-map-frame"
+        src={`https://www.google.com/maps?q=${mapQuery}&z=${zoom}&output=embed`}
+        title={`Carte réelle de ${department.name} (${department.code})`}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        tabIndex={-1}
+        aria-hidden="true"
+      />
+      <div className="exact-zones-real-map-tint" style={{ background: department.tint }} aria-hidden="true" />
+      <span className="exact-zones-map-label">Carte réelle</span>
       <svg
         viewBox="0 0 160 128"
-        className="exact-zones-map-svg"
+        className="exact-zones-map-svg exact-zones-map-overlay"
         role="img"
         aria-label={`Contour géographique réel du département ${department.name} (${department.code})`}
       >
         <defs>
           <filter id={`shadow-${department.code}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="5" stdDeviation="4" floodOpacity="0.13" />
+            <feDropShadow dx="0" dy="5" stdDeviation="4" floodOpacity="0.18" />
           </filter>
         </defs>
         <path
           d={path}
           fill={department.tint}
+          fillOpacity="0.68"
           stroke={department.hex}
-          strokeWidth="2.35"
+          strokeWidth="2.8"
           strokeLinejoin="round"
           fillRule="evenodd"
           filter={`url(#shadow-${department.code})`}
         />
-        <circle cx="80" cy="64" r="18" fill="#ffffff" opacity="0.96" />
+        <circle cx="80" cy="64" r="18" fill="#ffffff" opacity="0.97" />
         <text
           x="80"
           y="69"
