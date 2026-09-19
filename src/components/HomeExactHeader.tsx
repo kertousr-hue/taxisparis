@@ -29,7 +29,7 @@ export default function HomeExactHeader() {
       <div className="exact-home-nav">
         <div className="exact-home-container exact-home-nav-inner">
           <Link to="/" className="exact-home-logo" aria-label="Taxis Paris Conventionnés - accueil">
-            <img src="/taxi-logo.svg" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
+            <img src="/taxi-logo.webp" alt="Taxi conventionné Assurance Maladie" width="520" height="240" />
           </Link>
 
           <nav className="exact-home-desktop-nav" aria-label="Navigation principale">
