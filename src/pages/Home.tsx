@@ -19,6 +19,7 @@ import {
   Users,
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import HomeDepartmentsShowcase from '../components/HomeDepartmentsShowcase';
 import { generateJsonLD } from '../utils/seoData';
 
 interface HomeProps {
@@ -188,6 +189,8 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
             ))}
           </div>
         </section>
+
+        <HomeDepartmentsShowcase />
 
         <section className="exact-home-human">
           <div
