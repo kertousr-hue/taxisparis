@@ -4541,3 +4541,607 @@ body{
     grid-template-columns:1fr!important;
   }
 }
+
+
+/* ===== REDESIGN PREMIUM 2026 — PAGES DEPARTEMENT + VILLE ===== */
+
+/* ---------- DEPARTEMENTS ---------- */
+.exact-department-page{
+  --dept-navy:#073455;
+  --dept-navy-deep:#052a46;
+  --dept-blue:#0e5c9f;
+  --dept-gold:#c49345;
+  --dept-ice:#f3f8fb;
+  --dept-border:#dce7ee;
+  background:#fff!important;
+}
+.exact-department-page>section:first-of-type{
+  min-height:520px;
+  border:0!important;
+}
+.exact-department-page>section:first-of-type .relative.mx-auto.grid{
+  max-width:1240px!important;
+  gap:56px!important;
+  padding-top:74px!important;
+  padding-bottom:76px!important;
+}
+.exact-department-page>section:first-of-type h1{
+  max-width:760px!important;
+  color:#fff!important;
+  font:700 clamp(3rem,5vw,5.1rem)/.94 Georgia,"Times New Roman",serif!important;
+  letter-spacing:-.05em!important;
+}
+.exact-department-page>section:first-of-type p{
+  max-width:720px;
+}
+.exact-department-page>section:first-of-type .text-blue-100,
+.exact-department-page>section:first-of-type .text-blue-50{
+  color:rgba(255,255,255,.78)!important;
+}
+.exact-department-page>section:first-of-type a:first-of-type{
+  border-radius:8px!important;
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(165,111,40,.20)!important;
+}
+.exact-department-page>section:first-of-type a:nth-of-type(2){
+  border-radius:8px!important;
+}
+.exact-department-page>section:first-of-type .rounded-\[2rem\]{
+  border-radius:18px!important;
+  border-color:rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.085)!important;
+  box-shadow:0 28px 70px rgba(0,0,0,.16)!important;
+}
+.exact-department-page>section:first-of-type .rounded-3xl.bg-white{
+  border-radius:12px!important;
+}
+.exact-department-page>section:first-of-type .rounded-3xl.bg-white .bg-slate-50{
+  background:#f5f8fa!important;
+}
+.exact-department-page>section:first-of-type .rounded-3xl.bg-white .text-2xl{
+  color:var(--dept-navy)!important;
+}
+
+.exact-department-trust{
+  margin-top:-24px!important;
+  padding-top:0!important;
+  padding-bottom:46px!important;
+  background:linear-gradient(180deg,transparent 0,#f5f9fc 24px,#f5f9fc 100%)!important;
+}
+.exact-department-trust>div{
+  position:relative;
+  z-index:3;
+  max-width:1180px!important;
+}
+.exact-department-trust article{
+  min-height:110px;
+  border:1px solid var(--dept-border)!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  box-shadow:0 14px 30px rgba(5,42,70,.075)!important;
+}
+.exact-department-trust article h2{
+  color:var(--dept-navy)!important;
+  font-family:Arial,sans-serif!important;
+  font-size:14px!important;
+}
+
+.exact-department-overview{
+  padding-top:62px!important;
+  padding-bottom:64px!important;
+  background:#fff!important;
+}
+.exact-department-overview>div{
+  max-width:1180px!important;
+}
+.exact-department-overview article,
+.exact-department-overview aside>div{
+  border:1px solid var(--dept-border)!important;
+  border-radius:14px!important;
+  box-shadow:0 14px 34px rgba(5,42,70,.06)!important;
+}
+.exact-department-overview article{
+  padding:34px!important;
+  background:linear-gradient(180deg,#fff,#fbfdfe)!important;
+}
+.exact-department-overview article h2{
+  color:var(--dept-navy)!important;
+  font:700 30px/1.05 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-overview article p{
+  color:#607585!important;
+  font-size:15px!important;
+  line-height:1.78!important;
+}
+.exact-department-overview aside>div:first-child{
+  background:linear-gradient(145deg,#eef6fb,#fff)!important;
+}
+.exact-department-overview aside>div:last-child{
+  background:
+    radial-gradient(circle at 82% 18%,rgba(196,147,69,.17),transparent 24%),
+    linear-gradient(125deg,var(--dept-navy-deep),var(--dept-navy))!important;
+}
+.exact-department-overview aside>div:last-child p,
+.exact-department-overview aside>div:last-child h2{
+  color:#fff!important;
+}
+.exact-department-overview aside>div:last-child a{
+  background:#fff!important;
+  color:var(--dept-navy)!important;
+  border-radius:8px!important;
+}
+
+.exact-department-health{
+  padding-top:66px!important;
+  padding-bottom:70px!important;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(196,147,69,.045),transparent 26%),
+    #f4f8fb!important;
+}
+.exact-department-health>div{
+  max-width:1180px!important;
+  gap:20px!important;
+}
+.exact-department-health article{
+  padding:30px!important;
+  border:1px solid var(--dept-border)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:0 14px 32px rgba(5,42,70,.055)!important;
+}
+.exact-department-health article h2{
+  color:var(--dept-navy)!important;
+  font:700 25px/1.05 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-health li{
+  border:1px solid #e6edf1;
+  border-radius:9px!important;
+  background:#fbfdfe!important;
+}
+.exact-department-health article:last-child li{
+  background:#f2faf6!important;
+}
+
+.exact-department-access{
+  padding-top:62px!important;
+  padding-bottom:66px!important;
+  background:#fff!important;
+}
+.exact-department-access>div{
+  max-width:1180px!important;
+}
+.exact-department-access>div>div{
+  padding:34px!important;
+  border-radius:15px!important;
+  border:1px solid #eadcc6!important;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(196,147,69,.10),transparent 28%),
+    linear-gradient(180deg,#fffaf3,#fff)!important;
+}
+.exact-department-access h2{
+  color:var(--dept-navy)!important;
+  font:700 28px/1.05 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-access ol li{
+  border-radius:10px!important;
+  border-color:#eadcc6!important;
+  box-shadow:0 9px 22px rgba(126,87,34,.045)!important;
+}
+
+.exact-department-cities{
+  padding-top:68px!important;
+  padding-bottom:72px!important;
+  background:
+    radial-gradient(circle at 84% 0%,rgba(188,216,235,.22),transparent 26%),
+    #f2f7fa!important;
+}
+.exact-department-cities>div{
+  max-width:1180px!important;
+}
+.exact-department-cities h2{
+  color:var(--dept-navy)!important;
+  font:700 clamp(2.35rem,3.6vw,3.45rem)/1 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-cities .exact-department-city-primary,
+.exact-department-cities .exact-department-city-secondary{
+  min-height:64px!important;
+  border:1px solid #dbe6ec!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  box-shadow:0 9px 20px rgba(5,42,70,.045)!important;
+}
+.exact-department-cities .exact-department-city-primary:hover,
+.exact-department-cities .exact-department-city-secondary:hover{
+  transform:translateY(-2px)!important;
+  border-color:#a9cbe0!important;
+  background:#fff!important;
+  box-shadow:0 15px 28px rgba(5,42,70,.08)!important;
+}
+.exact-department-cities details{
+  border:1px solid #dbe6ec!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  box-shadow:0 10px 24px rgba(5,42,70,.045)!important;
+}
+.exact-department-cities summary{
+  min-height:54px;
+}
+
+.exact-department-faq{
+  padding-top:66px!important;
+  padding-bottom:70px!important;
+  background:#fff!important;
+}
+.exact-department-faq>div{
+  max-width:1100px!important;
+  gap:44px!important;
+}
+.exact-department-faq h2{
+  color:var(--dept-navy)!important;
+  font:700 32px/1.05 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-faq details{
+  border:1px solid var(--dept-border)!important;
+  border-radius:10px!important;
+  box-shadow:0 8px 20px rgba(5,42,70,.04)!important;
+}
+.exact-department-faq details[open]{
+  border-color:#b9d4e5!important;
+  box-shadow:0 14px 28px rgba(5,42,70,.07)!important;
+}
+
+.exact-department-map-section{
+  padding-top:56px!important;
+  padding-bottom:60px!important;
+  background:#f5f9fc!important;
+}
+.exact-department-map-section>div{
+  max-width:1120px!important;
+}
+.exact-department-map-section>div>div{
+  border-radius:14px!important;
+  border:1px solid var(--dept-border)!important;
+  box-shadow:0 14px 32px rgba(5,42,70,.055)!important;
+}
+.exact-department-map-section iframe{
+  display:block;
+}
+
+.exact-department-neighbors{
+  padding-top:52px!important;
+  padding-bottom:56px!important;
+}
+.exact-department-neighbors>div{
+  max-width:1120px!important;
+}
+.exact-department-neighbors>div>div{
+  border-radius:14px!important;
+  border:1px solid var(--dept-border)!important;
+  background:linear-gradient(180deg,#f8fbfd,#fff)!important;
+}
+.exact-department-neighbors a{
+  border-radius:8px!important;
+}
+
+.exact-department-final-cta{
+  padding-bottom:58px!important;
+}
+.exact-department-final-cta>div{
+  max-width:1180px!important;
+  border-radius:16px!important;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(196,147,69,.18),transparent 24%),
+    linear-gradient(125deg,var(--dept-navy-deep),#0a416a 66%,#0a7b78)!important;
+  box-shadow:0 20px 50px rgba(5,42,70,.15)!important;
+}
+.exact-department-final-cta h2{
+  font:700 34px/1.02 Georgia,"Times New Roman",serif!important;
+}
+.exact-department-final-cta a:first-of-type{
+  background:#fff!important;
+  color:var(--dept-navy)!important;
+  border-radius:8px!important;
+}
+.exact-department-final-cta a:last-of-type{
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+  color:#fff!important;
+  border-radius:8px!important;
+}
+
+.exact-department-contact-strip{
+  padding-top:24px!important;
+  padding-bottom:30px!important;
+  background:#f5f9fc!important;
+}
+.exact-department-contact-strip>div{
+  max-width:1100px!important;
+}
+.exact-department-contact-strip>div>*>div{
+  border-radius:10px!important;
+  border:1px solid var(--dept-border)!important;
+  box-shadow:0 8px 18px rgba(5,42,70,.04)!important;
+}
+
+/* ---------- VILLES ---------- */
+.exact-city-page{
+  --city-navy:#073455;
+  --city-navy-deep:#052a46;
+  --city-blue:#0e5c9f;
+  --city-gold:#c49345;
+  --city-border:#dce7ee;
+  background:#fff!important;
+}
+.exact-city-hero{
+  min-height:500px;
+  background:
+    radial-gradient(circle at 82% 12%,rgba(196,147,69,.18),transparent 24%),
+    linear-gradient(125deg,var(--city-navy-deep),var(--city-navy) 62%,#0b4d7d)!important;
+}
+.exact-city-hero-grid{
+  max-width:1240px!important;
+  grid-template-columns:minmax(0,1.15fr) minmax(350px,.85fr)!important;
+  gap:52px!important;
+  padding-top:72px!important;
+  padding-bottom:74px!important;
+}
+.exact-city-hero-copy h1{
+  max-width:760px!important;
+  font-size:clamp(3rem,5vw,5rem)!important;
+  line-height:.96!important;
+}
+.exact-city-hero-lead{
+  max-width:740px!important;
+  font-size:15px!important;
+}
+.exact-city-hero-card{
+  padding:26px!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.085)!important;
+  border-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 28px 68px rgba(0,0,0,.16)!important;
+}
+.exact-city-hero-card-head h2{
+  font-size:32px!important;
+}
+.exact-city-hero-card-body{
+  border-radius:12px!important;
+}
+.exact-city-hero-actions a{
+  min-height:50px!important;
+  border-radius:8px!important;
+}
+.exact-city-hero-actions a:first-child{
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+}
+.exact-city-hero-points span{
+  font-size:10px!important;
+}
+
+.exact-city-benefits{
+  background:#f5f9fc!important;
+}
+.exact-city-benefits-grid{
+  max-width:1180px!important;
+  padding-top:22px!important;
+  padding-bottom:22px!important;
+  gap:14px!important;
+}
+.exact-city-benefits article{
+  min-height:92px!important;
+  border-radius:11px!important;
+  box-shadow:0 9px 22px rgba(5,42,70,.045)!important;
+}
+
+.exact-city-content{
+  max-width:1220px!important;
+  grid-template-columns:minmax(0,1fr) 320px!important;
+  gap:28px!important;
+  padding-top:58px!important;
+  padding-bottom:66px!important;
+  background:#fff!important;
+}
+.exact-city-main-column{
+  min-width:0;
+  gap:18px!important;
+}
+.exact-city-main-column>section{
+  padding:28px 30px!important;
+  border:1px solid var(--city-border)!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,#fff,#fcfdfe)!important;
+  box-shadow:0 11px 28px rgba(5,42,70,.052)!important;
+}
+.exact-city-main-column>section h3{
+  color:var(--city-navy)!important;
+  font:700 27px/1.08 Georgia,"Times New Roman",serif!important;
+  letter-spacing:-.025em!important;
+}
+.exact-city-main-column>section h3 svg{
+  width:24px!important;
+  height:24px!important;
+  color:var(--city-gold)!important;
+}
+.exact-city-main-column>section p,
+.exact-city-main-column>section .prose{
+  color:#607585!important;
+  font-size:14px!important;
+  line-height:1.75!important;
+}
+.exact-city-main-column>section .prose strong{
+  color:#173e5c!important;
+}
+.exact-city-main-column>section .bg-blue-50{
+  background:#eef6fb!important;
+}
+.exact-city-main-column>section .border-l-4{
+  border-left-color:var(--city-gold)!important;
+  background:#fbf8f1!important;
+}
+.exact-city-main-column>section .rounded-xl{
+  border-radius:9px!important;
+}
+.exact-city-main-column>section a{
+  text-decoration:none;
+}
+.exact-city-main-column>section a:hover{
+  text-decoration:none;
+}
+
+.exact-city-booking-cta{
+  padding:36px!important;
+  border:0!important;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.20),transparent 24%),
+    linear-gradient(125deg,var(--city-navy-deep),var(--city-navy) 68%,#0b4d7d)!important;
+  box-shadow:0 18px 42px rgba(5,42,70,.13)!important;
+}
+.exact-city-booking-cta h3{
+  color:#fff!important;
+  font-size:30px!important;
+}
+.exact-city-booking-cta p{
+  color:rgba(255,255,255,.76)!important;
+}
+.exact-city-booking-cta a{
+  border-radius:8px!important;
+}
+.exact-city-booking-cta a:first-of-type{
+  background:#fff!important;
+  color:var(--city-navy)!important;
+}
+.exact-city-booking-cta a:last-of-type{
+  border:0!important;
+  background:linear-gradient(180deg,#d2a04d,#b67c31)!important;
+  color:#fff!important;
+}
+
+.exact-city-neighbors{
+  background:
+    radial-gradient(circle at 88% 8%,rgba(188,216,235,.22),transparent 24%),
+    linear-gradient(180deg,#f5f9fc,#fff)!important;
+}
+.exact-city-neighbors>div:first-child h3{
+  font-size:29px!important;
+}
+.exact-city-neighbors .grid a{
+  border:1px solid var(--city-border)!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  box-shadow:0 7px 18px rgba(5,42,70,.035)!important;
+}
+.exact-city-neighbors .grid a:hover{
+  border-color:#a9cbe0!important;
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(5,42,70,.065)!important;
+}
+.exact-city-neighbors>div:last-child>div{
+  border-radius:10px!important;
+  box-shadow:none!important;
+}
+
+.exact-city-complementary{
+  border-top:0!important;
+}
+.exact-city-complementary .grid a{
+  border:1px solid var(--city-border)!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  box-shadow:0 7px 18px rgba(5,42,70,.035)!important;
+}
+.exact-city-complementary .grid a:nth-child(3){
+  background:#eef6fb!important;
+}
+
+.exact-city-sidebar>div{
+  top:20px!important;
+  gap:14px!important;
+}
+.exact-city-sidebar>div>div{
+  border-radius:14px!important;
+  box-shadow:0 12px 28px rgba(5,42,70,.065)!important;
+}
+.exact-city-sidebar>div>div:first-child{
+  padding:26px!important;
+  background:
+    radial-gradient(circle at 82% 16%,rgba(196,147,69,.18),transparent 26%),
+    linear-gradient(125deg,var(--city-navy-deep),var(--city-navy))!important;
+}
+.exact-city-sidebar>div>div:first-child h4{
+  font:700 24px/1.05 Georgia,"Times New Roman",serif!important;
+}
+.exact-city-sidebar>div>div:first-child a{
+  border-radius:8px!important;
+}
+.exact-city-sidebar>div>div:nth-child(2){
+  border:1px solid var(--city-border)!important;
+  background:#fff!important;
+}
+
+.exact-city-mobile-booking{
+  border-radius:13px!important;
+  background:
+    radial-gradient(circle at 82% 15%,rgba(196,147,69,.17),transparent 25%),
+    linear-gradient(125deg,var(--city-navy-deep),var(--city-navy))!important;
+}
+.exact-city-mobile-booking a{
+  border-radius:8px!important;
+}
+
+/* FAQ cards on city pages */
+.exact-city-main-column>section:nth-last-of-type(3) .space-y-4>div{
+  border:1px solid var(--city-border)!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  padding:16px 18px!important;
+}
+
+/* Responsive */
+@media(max-width:1100px){
+  .exact-department-page>section:first-of-type .relative.mx-auto.grid{
+    gap:34px!important;
+  }
+  .exact-city-content{
+    grid-template-columns:1fr!important;
+  }
+  .exact-city-sidebar{
+    display:none!important;
+  }
+}
+@media(max-width:900px){
+  .exact-department-page>section:first-of-type{
+    min-height:auto;
+  }
+  .exact-department-page>section:first-of-type .relative.mx-auto.grid,
+  .exact-city-hero-grid{
+    grid-template-columns:1fr!important;
+    padding-top:52px!important;
+    padding-bottom:54px!important;
+  }
+  .exact-city-hero{
+    min-height:auto;
+  }
+}
+@media(max-width:680px){
+  .exact-department-page>section:first-of-type h1,
+  .exact-city-hero-copy h1{
+    font-size:2.65rem!important;
+  }
+  .exact-department-overview article,
+  .exact-department-health article,
+  .exact-department-access>div>div,
+  .exact-city-main-column>section{
+    padding:20px!important;
+  }
+  .exact-city-content{
+    padding-left:12px!important;
+    padding-right:12px!important;
+    padding-top:34px!important;
+  }
+  .exact-city-main-column>section h3{
+    font-size:23px!important;
+  }
+  .exact-department-faq>div{
+    gap:24px!important;
+  }
+}
