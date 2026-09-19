@@ -123,28 +123,29 @@ function DepartmentMiniMap({ department }: { department: DepartmentCard }) {
   const path = REAL_DEPARTMENT_PATHS[department.code];
 
   return (
-    <div className="mb-4 rounded-lg border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-2.5">
+    <div className="exact-zones-map-panel">
+      <span className="exact-zones-map-label">Contour réel</span>
       <svg
         viewBox="0 0 160 128"
-        className="h-32 w-full"
+        className="exact-zones-map-svg"
         role="img"
         aria-label={`Contour géographique réel du département ${department.name} (${department.code})`}
       >
         <defs>
           <filter id={`shadow-${department.code}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="3" stdDeviation="3" floodOpacity="0.12" />
+            <feDropShadow dx="0" dy="5" stdDeviation="4" floodOpacity="0.13" />
           </filter>
         </defs>
         <path
           d={path}
           fill={department.tint}
           stroke={department.hex}
-          strokeWidth="2.2"
+          strokeWidth="2.35"
           strokeLinejoin="round"
           fillRule="evenodd"
           filter={`url(#shadow-${department.code})`}
         />
-        <circle cx="80" cy="64" r="17" fill="#ffffff" opacity="0.92" />
+        <circle cx="80" cy="64" r="18" fill="#ffffff" opacity="0.96" />
         <text
           x="80"
           y="69"
@@ -156,9 +157,6 @@ function DepartmentMiniMap({ department }: { department: DepartmentCard }) {
           {department.code}
         </text>
       </svg>
-      <p className="mt-1 text-center text-[10px] font-semibold text-slate-500">
-        Contour géographique réel
-      </p>
     </div>
   );
 }
@@ -287,63 +285,73 @@ export default function Zones({ onNavigate }: ZonesProps) {
       </section>
 
       {/* ── Cartes départements ─────────────────────────────────────── */}
-      <section className="py-12 bg-gray-50" aria-label="Départements couverts">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              Nos 5 départements d'intervention
-            </h2>
-            <p className="mt-2 text-sm sm:text-base text-gray-600">
-              Couverture CPAM en Île-de-France : réservation rapide, trajets réguliers et accès aux hôpitaux partenaires
-            </p>
+      <section className="exact-zones-departments" aria-label="Départements couverts">
+        <div className="exact-home-container">
+          <div className="exact-zones-departments-head">
+            <div>
+              <span className="exact-zones-departments-kicker">Couverture régionale</span>
+              <h2>Nos 5 départements d'intervention</h2>
+              <p>
+                Couverture CPAM en Île-de-France : réservation rapide, trajets réguliers et accès aux hôpitaux partenaires.
+              </p>
+            </div>
+            <div className="exact-zones-departments-summary">
+              <strong>5</strong>
+              <span>départements<br />desservis</span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
+          <div className="exact-zones-department-grid">
             {DEPARTMENTS.map((dept) => (
               <article
                 key={dept.code}
-                className="exact-zones-card group flex flex-col rounded-lg border border-gray-200 border-t-4 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-                style={{ borderTopColor: dept.hex }}
+                className="exact-zones-card-premium group"
+                style={{
+                  '--dept-accent': dept.hex,
+                  '--dept-tint': dept.tint,
+                } as React.CSSProperties}
               >
-                <div className="mb-4 flex items-start gap-3">
-                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${dept.badgeClass}`}>
-                    {dept.code}
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="text-base font-bold leading-tight text-gray-900">{dept.name}</h3>
-                    <p className="text-xs text-gray-500">{dept.sector}</p>
+                <div className="exact-zones-card-top">
+                  <div className="exact-zones-card-title">
+                    <span className="exact-zones-card-code">{dept.code}</span>
+                    <div>
+                      <h3>{dept.name}</h3>
+                      <p>{dept.sector}</p>
+                    </div>
                   </div>
+                  <span className="exact-zones-card-dot" aria-hidden="true" />
                 </div>
 
                 <DepartmentMiniMap department={dept} />
 
-                <div className="mb-5 flex-1 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={14} className="text-gray-400" aria-hidden="true" />
-                    <span className="text-sm">
-                      <strong className="text-green-600">{dept.villesCount}</strong>{' '}
-                      <span className="text-gray-500">villes desservies</span>
+                <div className="exact-zones-card-stats">
+                  <div>
+                    <Building2 size={16} aria-hidden="true" />
+                    <span>
+                      <strong>{dept.villesCount}</strong>
+                      <small>villes desservies</small>
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CircleDot size={14} className="text-gray-400" aria-hidden="true" />
-                    <span className="text-sm">
-                      <strong className="text-green-600">{dept.hopitauxCount}</strong>{' '}
-                      <span className="text-gray-500">hôpitaux partenaires</span>
+                  <div>
+                    <CircleDot size={16} aria-hidden="true" />
+                    <span>
+                      <strong>{dept.hopitauxCount}</strong>
+                      <small>hôpitaux partenaires</small>
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <BadgeCheck size={14} className="text-green-500" aria-hidden="true" />
-                    <span className="text-sm font-medium text-green-600">Conventionné CPAM</span>
-                  </div>
+                </div>
+
+                <div className="exact-zones-card-cpam">
+                  <BadgeCheck size={16} aria-hidden="true" />
+                  <span>Conventionné CPAM</span>
                 </div>
 
                 <Link
                   to={`/${dept.slug}`}
-                  className={`mt-auto inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-white transition focus:outline-none focus:ring-4 ${dept.btnColor}`}
+                  className="exact-zones-card-cta"
                   aria-label={`Voir les villes desservies en ${dept.name} (${dept.code})`}
                 >
-                  {dept.code === '75' ? 'Voir Paris' : 'Voir les villes'}
+                  <span>{dept.code === '75' ? 'Voir Paris' : 'Voir les villes'}</span>
                   <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </article>
