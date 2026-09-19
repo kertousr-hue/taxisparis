@@ -305,7 +305,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="exact-department-cities border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+      <section className="exact-department-health border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
             <div className="flex items-center gap-3">
@@ -374,7 +374,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </div>
       </section>
 
-      <section className="border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+      <section className="exact-department-cities border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -425,7 +425,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
                   <Link
                     key={city.slug}
                     to={`/${deptData.slug}/${city.slug}`}
-                    className="exact-department-city-secondary flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800"
+                    className="exact-department-city-secondary flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-800" style={{ color: '#173e5c', opacity: 1 }}
                   >
                     <MapPin size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
                     <span className="truncate">{city.name}</span>
