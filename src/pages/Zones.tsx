@@ -255,7 +255,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
       <div className="exact-subpage exact-zones-page">
 
       {/* ── Hero ────────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
+      <section className="exact-zones-hero bg-gradient-to-br from-blue-600 to-blue-700 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
             <MapPin size={14} aria-hidden="true" />
@@ -302,7 +302,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
             {DEPARTMENTS.map((dept) => (
               <article
                 key={dept.code}
-                className="group flex flex-col rounded-lg border border-gray-200 border-t-4 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                className="exact-zones-card group flex flex-col rounded-lg border border-gray-200 border-t-4 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ borderTopColor: dept.hex }}
               >
                 <div className="mb-4 flex items-start gap-3">
@@ -353,7 +353,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
       </section>
 
       {/* ── Section SEO 700+ mots ────────────────────────────────────── */}
-      <section className="py-12 bg-white" aria-label="Informations sur le taxi VSL conventionné">
+      <section className="exact-zones-info py-12 bg-white" aria-label="Informations sur le taxi VSL conventionné">
         <div className="container mx-auto px-4 max-w-4xl">
 
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
@@ -464,7 +464,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
       </section>
 
       {/* ── FAQ accordéon ───────────────────────────────────────────── */}
-      <section className="py-12 bg-gray-50" aria-label="Questions fréquentes">
+      <section className="exact-zones-faq py-12 bg-gray-50" aria-label="Questions fréquentes">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8">
             Questions fréquentes
@@ -510,7 +510,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
       </section>
 
       {/* ── CTA final ───────────────────────────────────────────────── */}
-      <section className="py-12 bg-white" aria-label="Réserver un transport médical">
+      <section className="exact-zones-final py-12 bg-white" aria-label="Réserver un transport médical">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
             Votre destination n'est pas listée ?
