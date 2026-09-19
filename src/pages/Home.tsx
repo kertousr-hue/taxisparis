@@ -88,14 +88,11 @@ const reviews = [
 ];
 
 const zones = [
-  ['75', 'Paris'],
-  ['77', 'Seine-et-Marne'],
-  ['78', 'Yvelines'],
-  ['91', 'Essonne'],
-  ['92', 'Hauts-de-Seine'],
-  ['93', 'Seine-Saint-Denis'],
-  ['94', 'Val-de-Marne'],
-  ['95', 'Val-d’Oise'],
+  { code: '75', name: 'Paris', slug: 'taxi-conventionne-paris-75' },
+  { code: '91', name: 'Essonne', slug: 'taxi-conventionne-essonne-91' },
+  { code: '92', name: 'Hauts-de-Seine', slug: 'taxi-conventionne-hauts-de-seine-92' },
+  { code: '93', name: 'Seine-Saint-Denis', slug: 'taxi-conventionne-seine-saint-denis-93' },
+  { code: '94', name: 'Val-de-Marne', slug: 'taxi-conventionne-val-de-marne-94' },
 ];
 
 export default function Home({ onNavigate: _onNavigate }: HomeProps) {
@@ -333,30 +330,77 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
 
         <section className="exact-home-coverage">
           <div className="exact-home-container exact-home-coverage-grid">
-            <div className="exact-home-map" aria-label="Carte stylisée de l’Île-de-France">
-              <svg viewBox="0 0 240 160" role="img">
-                <path d="M41 31 78 18 112 28 137 16 179 31 203 59 198 95 172 123 131 145 94 135 61 145 32 119 20 82Z" fill="#e6f1f8" stroke="#bdd4e5" strokeWidth="2"/>
-                <path d="M101 55 131 50 149 65 145 91 122 102 97 91 88 70Z" fill="#d7e7f2" stroke="#bdd4e5" strokeWidth="1.5"/>
-                <path d="M103 76 120 67 136 77 130 95 111 99 98 89Z" fill="#c28f3f" opacity=".85"/>
+            <div className="exact-home-map exact-home-map-premium" aria-label="Carte de couverture en Île-de-France : Paris 75, Essonne 91, Hauts-de-Seine 92, Seine-Saint-Denis 93 et Val-de-Marne 94">
+              <div className="exact-home-map-badge">5 départements desservis</div>
+              <svg viewBox="0 0 320 230" role="img" aria-labelledby="homeCoverageMapTitle homeCoverageMapDesc">
+                <title id="homeCoverageMapTitle">Zone de couverture en Île-de-France</title>
+                <desc id="homeCoverageMapDesc">Paris, Essonne, Hauts-de-Seine, Seine-Saint-Denis et Val-de-Marne</desc>
+                <defs>
+                  <linearGradient id="idfBase" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#eef6fb" />
+                    <stop offset="100%" stopColor="#dbeaf4" />
+                  </linearGradient>
+                  <linearGradient id="idfActive" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#0e5c9f" />
+                    <stop offset="100%" stopColor="#073455" />
+                  </linearGradient>
+                  <filter id="idfShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="7" floodColor="#073455" floodOpacity=".15" />
+                  </filter>
+                </defs>
+
+                <path
+                  d="M67 34 111 22 151 34 191 20 240 40 278 74 283 119 261 156 220 191 170 210 125 198 82 209 45 185 26 144 30 98 48 63Z"
+                  fill="url(#idfBase)"
+                  stroke="#b7d1e2"
+                  strokeWidth="2.5"
+                  filter="url(#idfShadow)"
+                />
+
+                <path d="M119 91 139 80 157 88 153 111 132 118 115 106Z" fill="url(#idfActive)" stroke="#fff" strokeWidth="2" />
+                <path d="M84 83 112 77 119 91 115 106 93 113 75 101Z" fill="#dcecff" stroke="#70aee0" strokeWidth="2" />
+                <path d="M157 70 192 69 214 88 204 108 173 110 153 96Z" fill="#e8eefc" stroke="#6885d5" strokeWidth="2" />
+                <path d="M153 111 181 111 207 126 198 150 169 158 144 142Z" fill="#e6f6f1" stroke="#46a98a" strokeWidth="2" />
+                <path d="M118 119 144 142 169 158 159 188 125 194 96 175 91 143Z" fill="#fff2d9" stroke="#d2a04d" strokeWidth="2" />
+
                 {[
-                  [87,44,'95'],[170,62,'93'],[187,95,'77'],[160,112,'94'],
-                  [112,126,'91'],[68,105,'78'],[73,72,'92'],[117,86,'75']
-                ].map(([x,y,label]) => <text key={label} x={x as number} y={y as number} fontSize="10" fontWeight="700" fill="#0c3a63">{label}</text>)}
+                  { x: 135, y: 101, code: '75', label: 'Paris' },
+                  { x: 96, y: 96, code: '92', label: 'Hauts-de-Seine' },
+                  { x: 184, y: 91, code: '93', label: 'Seine-Saint-Denis' },
+                  { x: 174, y: 135, code: '94', label: 'Val-de-Marne' },
+                  { x: 126, y: 163, code: '91', label: 'Essonne' },
+                ].map((item) => (
+                  <g key={item.code}>
+                    <circle cx={item.x} cy={item.y} r="13" fill="#fff" stroke="#d8e5ed" />
+                    <text x={item.x} y={item.y + 4} textAnchor="middle" fontSize="10" fontWeight="900" fill="#073455">{item.code}</text>
+                  </g>
+                ))}
+
+                <text x="160" y="219" textAnchor="middle" fontSize="9" fontWeight="700" fill="#698092">
+                  Île-de-France • secteurs conventionnés CPAM
+                </text>
               </svg>
             </div>
 
             <div className="exact-home-coverage-copy">
               <p className="exact-home-section-kicker">Dans toute l’Île-de-France</p>
               <h2>Notre zone de couverture</h2>
-              <p>Nous intervenons dans tous les départements d’Île-de-France et dans plus de 193 villes.</p>
+              <p>
+                Nous intervenons dans 5 départements d’Île-de-France : Paris (75), Essonne (91),
+                Hauts-de-Seine (92), Seine-Saint-Denis (93) et Val-de-Marne (94).
+              </p>
               <Link to="/zones-desservies" className="exact-home-gold-btn">
                 Voir toutes les villes desservies <ArrowRight size={16} />
               </Link>
             </div>
 
-            <div className="exact-home-zone-list">
-              {zones.map(([code, name]) => (
-                <span key={code}><MapPin size={14} /> {name} ({code})</span>
+            <div className="exact-home-zone-list exact-home-zone-list-five">
+              {zones.map(({ code, name, slug }) => (
+                <Link key={code} to={`/${slug}`}>
+                  <span className="exact-home-zone-code">{code}</span>
+                  <span>{name}</span>
+                  <ArrowRight size={13} />
+                </Link>
               ))}
             </div>
           </div>
