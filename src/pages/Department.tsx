@@ -107,7 +107,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         className="relative overflow-hidden border-b border-slate-100"
         style={{
           background:
-            'radial-gradient(circle at 16% 18%, rgba(255,255,255,.18), transparent 24%), linear-gradient(135deg, #073a81 0%, #0b56bd 48%, #0e78c9 100%)',
+            'radial-gradient(circle at 82% 12%, rgba(196,147,69,.18), transparent 24%), linear-gradient(125deg, #052a46 0%, #073455 62%, #0b4d7d 100%)',
         }}
       >
         <div
@@ -504,7 +504,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
       </section>
 
       {department === '91' ? (
-        <section className="border-y border-slate-100 bg-slate-50 py-12">
+        <section className="exact-department-map-section border-y border-slate-100 bg-slate-50 py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
               <div className="flex items-center gap-3 px-6 py-5">
@@ -553,7 +553,7 @@ export default function DepartmentPage({ department, onNavigate: _onNavigate }: 
         </section>
       ) : null}
 
-      <section className="bg-white py-12 sm:py-16">
+      <section className="exact-department-neighbors bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
