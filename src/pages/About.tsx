@@ -103,7 +103,7 @@ export default function About() {
                 Agréé CPAM – Tiers-payant accepté
               </div>
               <h1 id="about-h1" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 leading-tight">
-                Taxi conventionné VSL en Île-de-France – Qui sommes-nous ?
+                Taxi conventionné et VSL en Île-de-France – Qui sommes-nous ?
               </h1>
               <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-6">
                 Votre partenaire de confiance pour tous vos transports médicaux en Île-de-France, remboursés par la CPAM.
