@@ -214,7 +214,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
             Guides & conseils transport médical
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Blog Taxi VSL Conventionné<br className="hidden sm:block" /> en Île-de-France
+            Blog Taxi et VSL Conventionné<br className="hidden sm:block" /> en Île-de-France
           </h1>
           <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8">
             Tout savoir sur le transport médical remboursé CPAM : démarches, remboursements, zones desservies et conseils pratiques
@@ -241,7 +241,13 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
       <section className="py-12 bg-gray-50" aria-label="Articles et guides du blog">
         <div className="container mx-auto px-4">
           {hasPublishedPosts ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="exact-blog-list-wrap max-w-7xl mx-auto">
+              <div className="exact-blog-list-heading text-center mb-8">
+                <span>Conseils & actualités</span>
+                <h2>Nos derniers articles</h2>
+                <p>Des informations utiles pour préparer vos trajets médicaux et comprendre la prise en charge CPAM.</p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
                 <article
                   key={post.id}
@@ -292,6 +298,7 @@ export default function Blog({ onNavigate: _onNavigate }: { onNavigate?: (page: 
                   </div>
                 </article>
               ))}
+              </div>
             </div>
           ) : (
             <div className="max-w-7xl mx-auto">
