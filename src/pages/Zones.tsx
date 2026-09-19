@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, ChevronDown, ChevronUp, CheckCircle, Phone, Building2, CircleDot, BadgeCheck } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
@@ -309,7 +309,7 @@ export default function Zones({ onNavigate }: ZonesProps) {
                 style={{
                   '--dept-accent': dept.hex,
                   '--dept-tint': dept.tint,
-                } as React.CSSProperties}
+                } as CSSProperties}
               >
                 <div className="exact-zones-card-top">
                   <div className="exact-zones-card-title">
