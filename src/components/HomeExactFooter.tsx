@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 export default function HomeExactFooter() {
   return (
@@ -7,12 +8,7 @@ export default function HomeExactFooter() {
       <div className="exact-home-container exact-site-footer-grid">
         <div className="exact-site-footer-brand">
           <Link to="/" className="exact-site-footer-logo" aria-label="Accueil Taxis Paris Conventionnés">
-            <img
-              src="/logo-taxi-conventionne-assurance.webp"
-              alt="Taxi conventionné Assurance Maladie"
-              width="520"
-              height="240"
-            />
+            <BrandLogo className="exact-site-footer-brand-image" />
           </Link>
           <h2>Taxi VSL</h2>
           <p>
