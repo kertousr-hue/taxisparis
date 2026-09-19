@@ -2250,3 +2250,26 @@ input[type="month"] {
   .exact-city-page>div:first-child{padding-top:42px!important;padding-bottom:44px!important}
   .exact-legal-page .bg-white{padding:22px!important}
 }
+
+
+/* ===== HERO ACCUEIL — TITRE TAXI CONVENTIONNE & VSL ===== */
+.exact-home-hero-copy h1{
+  max-width:600px!important;
+  font-size:clamp(2.65rem,4.35vw,4.1rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.042em!important;
+}
+.exact-home-hero-copy>p:not(.exact-home-eyebrow){
+  max-width:610px!important;
+  font-size:13px!important;
+  line-height:1.6!important;
+}
+@media(max-width:680px){
+  .exact-home-hero-copy h1{
+    font-size:2.35rem!important;
+    line-height:1.02!important;
+  }
+  .exact-home-hero-copy>p:not(.exact-home-eyebrow){
+    font-size:12px!important;
+  }
+}
