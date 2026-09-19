@@ -499,11 +499,11 @@ export default function CityPage() {
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
-          <div className="lg:col-span-2 space-y-10">
+        <div className="exact-city-content max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
+          <div className="exact-city-main-column lg:col-span-2 space-y-10">
 
             {/* BOUTONS MOBILE - Visible uniquement sur mobile */}
-            <div className="lg:hidden bg-blue-900 text-white p-6 rounded-2xl text-center shadow-xl">
+            <div className="exact-city-mobile-booking lg:hidden bg-blue-900 text-white p-6 rounded-2xl text-center shadow-xl">
               <h4 className="text-lg font-bold mb-3">
                 Réservation à {city.name}
               </h4>
@@ -711,7 +711,7 @@ export default function CityPage() {
               </div>
             </section>
 
-            <section className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white shadow-xl">
+            <section className="exact-city-booking-cta bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white shadow-xl">
               <h3 className="text-2xl font-bold mb-4">
                 Réservez votre transport médical depuis {city.name}
               </h3>
@@ -757,7 +757,7 @@ export default function CityPage() {
               </div>
             </section>
 
-            <section className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8">
+            <section className="exact-city-neighbors bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
                 <h3 className="text-2xl font-bold flex items-center gap-2">
                   <MapPin className="text-blue-600" />
@@ -851,7 +851,7 @@ export default function CityPage() {
               </div>
             </section>
 
-            <section className="border-t pt-8">
+            <section className="exact-city-complementary border-t pt-8">
               <h3 className="text-2xl font-bold mb-4">
                 Services complémentaires
               </h3>
@@ -894,7 +894,7 @@ export default function CityPage() {
           </div>
 
           {/* SIDEBAR DESKTOP - Visible uniquement sur desktop */}
-          <div className="hidden lg:block">
+          <div className="exact-city-sidebar hidden lg:block">
             <div className="sticky top-24 space-y-6">
               <div className="bg-blue-900 text-white p-8 rounded-3xl text-center shadow-2xl">
                 <h4 className="text-xl font-bold mb-4">
