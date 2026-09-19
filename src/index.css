@@ -2580,3 +2580,369 @@ input[type="month"] {
     height:84px!important;
   }
 }
+
+
+/* ===== PAGES VILLE + DEPARTEMENT — HARMONISATION PREMIUM ===== */
+
+/* Ville : même langage visuel que les départements */
+.exact-city-hero{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.20),transparent 24%),
+    linear-gradient(125deg,#052a46 0%,#073455 62%,#0b4d7d 100%);
+  color:#fff;
+}
+.exact-city-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:linear-gradient(90deg,black,transparent 76%);
+}
+.exact-city-hero-grid{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding-top:60px;
+  padding-bottom:62px;
+}
+.exact-city-breadcrumb{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:7px;
+  margin-bottom:18px;
+  color:rgba(255,255,255,.64);
+  font-size:9px;
+  font-weight:750;
+}
+.exact-city-breadcrumb a{color:rgba(255,255,255,.70)}
+.exact-city-breadcrumb a:hover{color:#fff}
+.exact-city-breadcrumb strong{color:#fff}
+.exact-city-hero-copy h1{
+  max-width:720px;
+  margin:8px 0 0;
+  color:#fff!important;
+  font:700 clamp(2.8rem,5vw,4.8rem)/.98 Georgia,"Times New Roman",serif!important;
+  letter-spacing:-.045em!important;
+}
+.exact-city-hero-lead{
+  max-width:720px;
+  margin-top:16px;
+  color:rgba(255,255,255,.80)!important;
+  font-size:14px!important;
+  line-height:1.65!important;
+}
+.exact-city-hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:25px;
+}
+.exact-city-hero-actions a{
+  display:inline-flex;
+  min-height:48px;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 17px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:900;
+}
+.exact-city-hero-actions a:first-child{
+  background:linear-gradient(180deg,#d2a04d,#b67c31);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(165,111,40,.18);
+}
+.exact-city-hero-actions a:last-child{
+  border:1px solid rgba(255,255,255,.48);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+}
+.exact-city-hero-points{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  margin-top:22px;
+}
+.exact-city-hero-points span{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:rgba(255,255,255,.76);
+  font-size:9px;
+  font-weight:750;
+}
+.exact-city-hero-points svg{color:#f0c77d}
+
+.exact-city-hero-card{
+  position:relative;
+  padding:22px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:15px;
+  background:rgba(255,255,255,.08);
+  box-shadow:0 24px 56px rgba(5,30,50,.18);
+  backdrop-filter:blur(10px);
+}
+.exact-city-hero-card-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+}
+.exact-city-hero-card-head>div>span{
+  color:#f0c77d;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.exact-city-hero-card-head h2{
+  margin-top:4px;
+  color:#fff!important;
+  font-size:30px!important;
+  line-height:1!important;
+}
+.exact-city-hero-card-head p{
+  margin-top:4px;
+  color:rgba(255,255,255,.68)!important;
+  font-size:9px!important;
+}
+.exact-city-hero-card-head>strong{
+  display:grid;
+  width:58px;height:58px;
+  flex:0 0 58px;
+  place-items:center;
+  border-radius:12px;
+  background:#0e5c9f;
+  color:#fff;
+  font:700 18px Georgia,serif;
+}
+.exact-city-hero-card-body{
+  margin-top:18px;
+  padding:17px;
+  border-radius:11px;
+  background:#fff;
+  color:#173e5c;
+}
+.exact-city-hero-card-body>div:first-child{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.exact-city-hero-card-body>div:first-child svg{
+  color:#0e5c9f;
+}
+.exact-city-hero-card-body b{
+  display:block;
+  color:#073455;
+  font-size:10px;
+}
+.exact-city-hero-card-body small{
+  display:block;
+  margin-top:2px;
+  color:#7e8f9a;
+  font-size:8px;
+}
+.exact-city-hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px;
+}
+.exact-city-hero-stats>span{
+  padding:12px;
+  border-radius:9px;
+  background:#f5f8fa;
+}
+.exact-city-hero-stats b{
+  font-size:18px;
+}
+.exact-city-cpam{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:10px;
+  padding:10px 12px;
+  border:1px solid #cfe6d8;
+  border-radius:8px;
+  background:#eef8f2;
+  color:#317253;
+  font-size:9px;
+  font-weight:850;
+}
+
+.exact-city-benefits{
+  background:#f5f9fc;
+  border-bottom:1px solid #e1e9ed;
+}
+.exact-city-benefits-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+.exact-city-benefits article{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:82px;
+  padding:16px;
+  border:1px solid #dce7ee;
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 8px 22px rgba(5,42,70,.045);
+}
+.exact-city-benefits article>svg{
+  flex:0 0 auto;
+  color:#0e5c9f;
+}
+.exact-city-benefits strong{
+  display:block;
+  color:#073455;
+  font-size:10px;
+}
+.exact-city-benefits span{
+  display:block;
+  margin-top:3px;
+  color:#758795;
+  font-size:8px;
+  line-height:1.35;
+}
+
+/* Contenu des pages ville */
+.exact-city-page>div.max-w-7xl{
+  max-width:1180px!important;
+  gap:26px!important;
+  padding-top:48px!important;
+  padding-bottom:58px!important;
+}
+.exact-city-page>div.max-w-7xl>.lg\:col-span-2{
+  gap:14px!important;
+}
+.exact-city-page>div.max-w-7xl>.lg\:col-span-2>section{
+  padding:24px!important;
+  border:1px solid #dce7ee!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  box-shadow:0 10px 26px rgba(5,42,70,.05)!important;
+}
+.exact-city-page>div.max-w-7xl>.lg\:col-span-2>section h3{
+  color:#073455!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:22px!important;
+  line-height:1.08!important;
+}
+.exact-city-page .prose{
+  color:#5f7383!important;
+  font-size:14px!important;
+  line-height:1.75!important;
+}
+.exact-city-page .prose strong{color:#173e5c!important}
+.exact-city-page .border-l-4{
+  border-left-color:#c49345!important;
+  background:#fbf8f1!important;
+}
+.exact-city-page aside>div{
+  border:1px solid #dce7ee!important;
+  border-radius:11px!important;
+  box-shadow:0 10px 26px rgba(5,42,70,.055)!important;
+}
+.exact-city-page aside .bg-blue-900,
+.exact-city-page aside .bg-blue-800,
+.exact-city-page aside .bg-blue-700{
+  background:linear-gradient(125deg,#052a46,#073455)!important;
+}
+.exact-city-page aside a[class*="bg-blue-"]{
+  background:#073455!important;
+  color:#fff!important;
+}
+.exact-city-page section.bg-gradient-to-br{
+  background:
+    radial-gradient(circle at 84% 18%,rgba(196,147,69,.16),transparent 24%),
+    linear-gradient(125deg,#052a46,#073455)!important;
+}
+
+/* Départements : mêmes rayons, espacements et couleurs */
+.exact-department-page>section:first-of-type .relative.mx-auto.grid{
+  max-width:1180px!important;
+  gap:34px!important;
+}
+.exact-department-page>section:first-of-type h1{
+  max-width:720px!important;
+}
+.exact-department-page>section:nth-of-type(2)>.mx-auto,
+.exact-department-page>section:nth-of-type(n+3)>.mx-auto{
+  max-width:1180px!important;
+}
+.exact-department-page article,
+.exact-department-page aside>div{
+  border-radius:11px!important;
+}
+.exact-department-page section:nth-of-type(3) article,
+.exact-department-page section:nth-of-type(4) article,
+.exact-department-page section:nth-of-type(5) article,
+.exact-department-page section:nth-of-type(6) article{
+  border-color:#dce7ee!important;
+  box-shadow:0 10px 26px rgba(5,42,70,.05)!important;
+}
+.exact-department-page section h2{
+  color:#073455!important;
+}
+.exact-department-page section p{
+  color:#647988;
+}
+.exact-department-page section[class*="bg-slate-50"]{
+  background:#f5f9fc!important;
+}
+.exact-department-page section[class*="bg-white"]{
+  background:#fff!important;
+}
+.exact-department-page .bg-blue-50{
+  background:#eef6fb!important;
+}
+.exact-department-page .bg-emerald-50{
+  background:#eef8f2!important;
+}
+.exact-department-page .text-blue-700,
+.exact-department-page .text-blue-800{
+  color:#0e5c9f!important;
+}
+
+/* Responsive ville/département */
+@media(max-width:980px){
+  .exact-city-hero-grid{grid-template-columns:1fr}
+  .exact-city-hero-card{max-width:620px}
+  .exact-city-benefits-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .exact-city-hero-grid{
+    padding-top:40px;
+    padding-bottom:42px;
+  }
+  .exact-city-hero-copy h1{
+    font-size:2.55rem!important;
+  }
+  .exact-city-hero-actions{
+    flex-direction:column;
+  }
+  .exact-city-hero-actions a{width:100%}
+  .exact-city-hero-card{padding:16px}
+  .exact-city-page>div.max-w-7xl{
+    padding-left:12px!important;
+    padding-right:12px!important;
+  }
+  .exact-city-page>div.max-w-7xl>.lg\:col-span-2>section{
+    padding:18px!important;
+  }
+}
