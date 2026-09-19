@@ -3577,3 +3577,48 @@ html, body, #root{
     padding-bottom:48px!important;
   }
 }
+
+
+/* ===== FIX DEFINITIF — VILLES SECONDAIRES DEPARTEMENT ===== */
+.exact-department-page .exact-department-city-more,
+.exact-department-page .exact-department-city-more[open],
+.exact-department-page .exact-department-city-more[open] > div{
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+}
+.exact-department-page .exact-department-city-secondary{
+  min-height:56px!important;
+  background:#fff!important;
+  border:1px solid #dce7ed!important;
+  color:#0b2239!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+  box-shadow:0 7px 18px rgba(5,42,70,.04)!important;
+}
+.exact-department-page .exact-department-city-secondary *,
+.exact-department-page .exact-department-city-secondary span,
+.exact-department-page .exact-department-city-secondary svg{
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+}
+.exact-department-page .exact-department-city-secondary .text-sm,
+.exact-department-page .exact-department-city-secondary .font-extrabold{
+  color:#0b2239!important;
+  -webkit-text-fill-color:#0b2239!important;
+}
+.exact-department-page .exact-department-city-secondary .text-xs{
+  color:#6f8291!important;
+  -webkit-text-fill-color:#6f8291!important;
+}
+.exact-department-page .exact-department-city-secondary:hover{
+  background:#f7fbfd!important;
+  border-color:#9fc5df!important;
+  transform:translateY(-1px)!important;
+  box-shadow:0 12px 24px rgba(5,42,70,.07)!important;
+}
