@@ -412,7 +412,7 @@ export default function ReservationPage() {
                 <Shield size={12} /> Transport remboursé CPAM
               </div>
               <h1 id="page-title" className="text-xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-2">
-                Réservation taxi conventionné VSL CPAM
+                Réservation taxi conventionné et VSL
               </h1>
               <p className="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
                 Réservez votre taxi conventionné ou VSL pour un transport médical assis en Île-de-France. Service 24h/24 pour les rendez-vous médicaux, avec prise en charge CPAM possible sur prescription.
