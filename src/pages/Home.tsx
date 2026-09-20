@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Activity,
   ArrowRight,
-  Building2,
   CalendarDays,
   Car,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
   Clock,
-  FileText,
   HeartHandshake,
   MapPin,
   Phone,
   ShieldCheck,
-  Stethoscope,
   Users,
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import HomeCoverage from '../components/HomeCoverage';
 import '../components/HomeCoverage.css';
+import '../components/HomeResponsive.css';
 import { generateJsonLD } from '../utils/seoData';
 
 interface HomeProps {
@@ -89,7 +86,7 @@ const reviews = [
   { quote: '“Réservation simple, chauffeur très aimable. Je recommande vivement.”', name: 'Patrick L. – 91' },
 ];
 
-export default function Home({ onNavigate: _onNavigate }: HomeProps) {
+const Home: FC<HomeProps> = () => {
   const [hospitalSlide, setHospitalSlide] = useState(0);
 
   useEffect(() => {
@@ -123,6 +120,7 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
               src="https://www.rideinbliss.com/sablony/rideinbliss3/imagesrib/2026/senior/senior-transportation-big.jpg"
               alt=""
               loading="eager"
+              fetchPriority="high"
               decoding="async"
             />
           </div>
@@ -132,12 +130,20 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
             <div className="exact-home-hero-copy">
               <p className="exact-home-eyebrow">Taxi conventionné CPAM · 24h/24 · 7j/7</p>
               <h1>Taxi Conventionné &amp; VSL à Paris et en Île-de-France</h1>
-              <p>
+              <p className="exact-home-hero-desktop-description">
                 Transport médical assis agréé Sécurité sociale pour tous les rendez-vous médicaux :
                 consultations, dialyse, chimiothérapie, radiothérapie et hospitalisations.
                 Intervention rapide sur Paris (75), Essonne (91), Hauts-de-Seine (92),
                 Seine-Saint-Denis (93) et Val-de-Marne (94).
               </p>
+              <p className="exact-home-hero-mobile-description">
+                Votre transport médical sur prescription, à Paris et en Île-de-France.
+                Un accompagnement de votre domicile jusqu’à vos soins.
+              </p>
+              <div className="exact-home-mobile-actions">
+                <Link to="/reservation-taxi-vsl"><CalendarDays size={18} aria-hidden="true" /> Réserver mon trajet</Link>
+                <a href="tel:+33650366491"><Phone size={18} aria-hidden="true" /> Appeler</a>
+              </div>
 
               <div className="exact-home-hero-benefits">
                 <span><ShieldCheck size={18} /> Conventionné<br />CPAM</span>
@@ -363,4 +369,6 @@ export default function Home({ onNavigate: _onNavigate }: HomeProps) {
       </div>
     </>
   );
-}
+};
+
+export default Home;
