@@ -10,10 +10,10 @@ export default function HomeExactFooter() {
           <Link to="/" className="exact-site-footer-logo" aria-label="Accueil Taxis conventionnés — Paris et Île-de-France">
             <BrandLogo className="exact-site-footer-brand-image" />
           </Link>
-          <h2>Taxi VSL</h2>
+          <h2>Taxis conventionnés et VSL</h2>
           <p>
-            Service de taxi conventionné en Île-de-France.
-            Disponible 24h/24, 7j/7.
+            Service de taxis conventionnés et de VSL agréés par la Sécurité sociale en Île-de-France.
+            Disponible 24 h/24 et 7 j/7.
           </p>
         </div>
 
@@ -39,15 +39,15 @@ export default function HomeExactFooter() {
           <Link to="/faq">FAQ</Link>
           <Link to="/blog">Blog</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/mentions-legales">Mentions Légales</Link>
-          <Link to="/conditions-generales-de-vente">Conditions Générales de Vente</Link>
-          <Link to="/conditions-generales">Conditions Générales</Link>
+          <Link to="/mentions-legales">Mentions légales</Link>
+          <Link to="/conditions-generales-de-vente">Conditions générales de vente</Link>
+          <Link to="/conditions-generales">Conditions générales</Link>
         </div>
       </div>
 
       <div className="exact-home-container exact-site-footer-bottom">
         <span>© {new Date().getFullYear()} Taxis Paris Conventionnés</span>
-        <span>Transport médical conventionné · Paris & Île-de-France</span>
+        <span>Transport médical conventionné · Paris et Île-de-France</span>
       </div>
     </footer>
   );
