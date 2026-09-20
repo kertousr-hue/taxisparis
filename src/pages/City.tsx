@@ -418,7 +418,7 @@ export default function CityPage() {
   return (
     <div className="local-page local-page-city">
       <SEOHead title={seoTitle} description={metaDescription} canonical={baseUrl} jsonLD={jsonLD} />
-      <LocalHero name={city.name} code={department.code} postalCode={city.postalCode} description={`Vos déplacements médicaux depuis ${city.name} vers les hôpitaux et centres de soins de Paris et d’Île-de-France. Prise en charge CPAM possible selon votre prescription et votre situation.`} breadcrumbs={[{ label: 'Zones desservies', href: '/zones-desservies' }, { label: department.name, href: `/${department.slug}` }, { label: city.name }]} />
+      <LocalHero name={city.name} code={department.code} citySlug={city.slug} postalCode={city.postalCode} description={`Vos déplacements médicaux depuis ${city.name} vers les hôpitaux et centres de soins de Paris et d’Île-de-France. Prise en charge CPAM possible selon votre prescription et votre situation.`} breadcrumbs={[{ label: 'Zones desservies', href: '/zones-desservies' }, { label: department.name, href: `/${department.slug}` }, { label: city.name }]} />
       <LocalTrust />
       <LocalSectionNav items={[{ id: 'votre-transport', label: 'Votre transport' }, { id: 'trajets', label: 'Trajets & hôpitaux' }, { id: 'organisation', label: 'Organisation' }, { id: 'questions', label: 'Vos questions' }, { id: 'villes-voisines', label: 'Autour de vous' }]} />
 

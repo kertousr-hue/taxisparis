@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, CalendarDays, Check, ChevronRight, Clock3, FileText, MapPin, Phone, ShieldCheck } from 'lucide-react';
-import boundaries from '../data/coverageMap.json';
+import LocalAreaMap from './LocalAreaMap';
 import './LocalPages.css';
 
 type Breadcrumb = { label: string; href?: string };
 
-export function LocalHero({ name, code, postalCode, preposition = 'à', description, breadcrumbs, count }: {
+export function LocalHero({ name, code, citySlug, postalCode, preposition = 'à', description, breadcrumbs }: {
   name: string;
   code: string;
   postalCode?: string;
   preposition?: string;
   description: string;
   breadcrumbs: Breadcrumb[];
-  count?: number;
+  citySlug?: string;
 }) {
   return (
     <header className="lp-hero">
@@ -33,15 +33,7 @@ export function LocalHero({ name, code, postalCode, preposition = 'à', descript
             <div className="lp-hero-note"><ShieldCheck size={17} aria-hidden="true" /> Prise en charge CPAM selon votre situation</div>
           </div>
 
-          <div className="lp-area-card">
-            <div className="lp-area-top"><span><MapPin size={15} aria-hidden="true" /> Île-de-France</span><span>Département {code}</span></div>
-            <svg className="lp-area-map" viewBox="40 -20 710 550" role="img" aria-label={`Localisation du département ${code} en Île-de-France`}>
-              {boundaries.filter((area) => area.code !== code).map((area) => <path key={area.code} className="lp-area-background" d={area.path} />)}
-              <path className="lp-area-selected" d={boundaries.find((area) => area.code === code)?.path} />
-              <text className="lp-area-code" x="90" y="440" aria-hidden="true">{code}</text>
-            </svg>
-            <div className="lp-area-bottom"><div><span>{postalCode ? 'Votre départ' : 'Votre département'}</span><strong>{name}</strong></div><div className="lp-area-count"><strong>{postalCode || count}</strong><span>{postalCode ? 'code postal' : code === '75' ? 'arrondissements' : 'villes desservies'}</span></div></div>
-          </div>
+          <LocalAreaMap key={`${code}-${citySlug ?? ''}`} code={code} citySlug={citySlug} />
         </div>
       </div>
     </header>

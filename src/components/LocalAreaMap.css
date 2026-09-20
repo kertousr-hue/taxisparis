@@ -1,0 +1,50 @@
+.local-map { margin: 0; min-width: 0; overflow: hidden; background: #f8faf7; border: 1px solid #ffffff30; border-radius: 19px; box-shadow: 0 24px 60px #031c3240; color: #14384c; }
+.local-map__heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 25px 26px 20px; background: #fffefa; border-bottom: 1px solid #e4e8e1; }
+.local-map__heading > div { min-width: 0; }
+.local-map__heading p { display: flex; align-items: center; gap: 7px; color: #7e7566; font-size: 10px; line-height: 1.5; }
+.local-map__heading p svg { flex-shrink: 0; color: #a38046; }
+.local-page .local-map__heading h2 { color: #14384c; font-size: clamp(24px, 2.3vw, 32px); line-height: 1.12; margin: 8px 0 6px; overflow-wrap: anywhere; text-wrap: balance; }
+.local-map__heading > div > span { color: #71838a; font-size: 11px; }
+.local-map__code { display: grid; align-content: center; justify-items: center; flex-shrink: 0; min-width: 66px; min-height: 62px; padding: 11px; border: 1px solid #e5dac7; border-radius: 9px; background: #f8f2e7; color: #7e5b29; font-size: 21px; font-weight: 700; line-height: 1.35; font-variant-numeric: tabular-nums; }
+.local-map__code small { font-size: 8px; font-weight: 400; letter-spacing: .02em; }
+.local-map__canvas { position: relative; padding: 0 5px; background: #f2f6f3; }
+.local-map__canvas > svg { display: block; width: 100%; height: auto; aspect-ratio: 480 / 340; }
+.local-map__north { fill: #789087; font: 9px Arial, sans-serif; }
+.local-map__outline { fill: #e7ede8; stroke: #c0d0c6; stroke-width: 1; stroke-linejoin: round; }
+.local-map__place { cursor: pointer; outline: none; }
+.local-map__place > path { fill: #bacdc2; stroke: #f8faf7; stroke-width: 1.4; stroke-linejoin: round; transition: fill .18s ease; }
+.local-map__place:nth-of-type(even) > path { fill: #c6d7cd; }
+.local-map__place > text { fill: #244b3a; font: 600 13px Arial, sans-serif; pointer-events: none; }
+.local-map__place[data-active=true] > path { fill: #b88b43; }
+.local-map__place:hover > path, .local-map__place:focus > path { fill: #b88b43; }
+.local-map__place[data-active=true] > text { fill: #082f49; font-weight: 700; }
+.local-map__place:hover > text, .local-map__place:focus > text { fill: #082f49; font-weight: 700; }
+.local-page .local-map__place:focus-visible { outline: none; }
+.local-map__place:focus-visible > path { stroke: #082f49; stroke-width: 2.5; }
+.local-map__selection > path { fill: none; stroke: #875f25; stroke-width: 1.7; stroke-linejoin: round; }
+.local-map__halo { fill: #b4833a22; stroke: #b4833a66; stroke-width: 1; }
+.local-map__pin { fill: #082f49; stroke: #fff; stroke-width: 2; }
+.local-map__legend { display: flex; align-items: center; gap: 8px; min-height: 39px; padding: 0 20px 14px; font-size: 11px; color: #456457; }
+.local-map__legend i { width: 8px; height: 8px; border-radius: 2px; background: #91ad9c; flex-shrink: 0; }
+.local-map__legend i[data-selected=true] { background: #b88b43; }
+.local-map__legend span { font-weight: 600; }
+.local-map__legend small { margin-left: auto; font-size: 10px; color: #778b81; font-variant-numeric: tabular-nums; }
+.local-map__footer { padding: 17px 24px 15px; border-top: 1px solid #e0e7df; background: #fffefa; }
+.local-map__directory { display: flex; align-items: center; justify-content: space-between; gap: 13px; min-height: 33px; color: #123e54; font-size: 13px; font-weight: 700; }
+.local-map__directory > svg { transition: transform .18s ease; color: #a27936; }
+.local-map__directory:hover > svg { transform: translateX(3px); }
+.local-map__footer p { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 15px; color: #849087; font-size: 9px; line-height: 1.6; margin-top: 5px; }
+.local-map__footer p a { color: #77817b; text-underline-offset: 3px; }
+.local-map__footer p a:hover { text-decoration: underline; }
+@media (max-width: 800px) { .local-map { width: min(100%, 480px); justify-self: center; } }
+@media (max-width: 520px) {
+  .local-map { border-radius: 15px; }
+  .local-map__heading { padding: 21px 19px 18px; gap: 12px; }
+  .local-page .local-map__heading h2 { font-size: 27px; }
+  .local-map__heading p { font-size: 9px; }
+  .local-map__code { min-width: 58px; min-height: 57px; padding: 9px; font-size: 18px; }
+  .local-map__footer { padding: 15px 19px; }
+  .local-map__legend { padding-inline: 15px; }
+  .local-map__directory { min-height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .local-map *, .local-map *::before, .local-map *::after { transition: none; } }

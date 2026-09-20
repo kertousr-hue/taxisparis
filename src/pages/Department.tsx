@@ -35,7 +35,7 @@ export default function DepartmentPage({ department }: DepartmentPageProps) {
   return (
     <div className="local-page local-page-department">
       <SEOHead title={seo.metaTitle} description={seo.metaDescription} keywords={seo.keywords} jsonLD={jsonLD} />
-      <LocalHero name={dept.name} code={department} preposition={prep} count={dept.cities.length} description={seo.metaDescription} breadcrumbs={[{ label: 'Zones desservies', href: '/zones-desservies' }, { label: `${dept.name} (${department})` }]} />
+      <LocalHero name={dept.name} code={department} preposition={prep} description={seo.metaDescription} breadcrumbs={[{ label: 'Zones desservies', href: '/zones-desservies' }, { label: `${dept.name} (${department})` }]} />
       <LocalTrust />
       <LocalSectionNav items={[{ id: 'votre-transport', label: 'Votre transport' }, { id: 'etablissements', label: 'Hôpitaux & soins' }, { id: 'villes', label: department === '75' ? 'Les arrondissements' : 'Les villes desservies' }, { id: 'questions', label: 'Vos questions' }]} />
 
