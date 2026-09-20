@@ -127,7 +127,7 @@ export default function About() {
             {/* ─── INTRO ────────────────────────────────────────────── */}
             <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 mb-8" aria-labelledby="intro-title">
               <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
-                Notre service de <strong className="text-blue-600">taxi conventionné VSL</strong> est spécialisé dans le transport médical assis en Île-de-France. Agréés par la Caisse Primaire d'Assurance Maladie (CPAM), nous assurons le transport de patients vers tous les établissements de santé de Paris et de la région parisienne, dans les départements 75, 91, 92, 93 et 94.
+                Notre service de <strong className="text-blue-600">taxi conventionné et VSL</strong> est spécialisé dans le transport médical assis en Île-de-France. Agréés par la Caisse Primaire d'Assurance Maladie (CPAM), nous assurons le transport de patients vers tous les établissements de santé de Paris et de la région parisienne, dans les départements 75, 91, 92, 93 et 94.
               </p>
               <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
                 Nos solutions de transport médical couvrent les consultations, hospitalisations programmées, séances de chimiothérapie, dialyse, radiothérapie, examens médicaux (IRM, scanner, radiologie) et la prise en charge des patients en Affection Longue Durée (ALD). Notre conventionnement CPAM permet à nos patients de bénéficier du tiers-payant sur prescription médicale de transport.
@@ -168,7 +168,7 @@ export default function About() {
 
               <div>
                 <p className="text-gray-700 leading-relaxed">
-                  Notre service de taxi conventionné VSL est dédié au transport médical assis en Île-de-France. Nous accompagnons quotidiennement des patients vers les hôpitaux, cliniques, centres médicaux et cabinets spécialisés, avec une prise en charge adaptée à chaque situation médicale. Qu'il s'agisse d'un rendez-vous de routine chez le médecin, d'une hospitalisation programmée ou d'une séance de traitement lourd, notre équipe s'engage à assurer votre trajet dans les meilleures conditions.
+                  Notre service de taxi conventionné et VSL est dédié au transport médical assis en Île-de-France. Nous accompagnons quotidiennement des patients vers les hôpitaux, cliniques, centres médicaux et cabinets spécialisés, avec une prise en charge adaptée à chaque situation médicale. Qu'il s'agisse d'un rendez-vous de routine chez le médecin, d'une hospitalisation programmée ou d'une séance de traitement lourd, notre équipe s'engage à assurer votre trajet dans les meilleures conditions.
                 </p>
                 <p className="mt-3 text-gray-700 leading-relaxed">
                   Nous desservons l'ensemble des établissements du réseau AP-HP ainsi que les cliniques privées et les centres de soins de la région parisienne : Pitié-Salpêtrière, Necker, Cochin, Lariboisière, Saint-Louis, Tenon, Georges Pompidou, Robert Debré, Institut Curie et bien d'autres.
