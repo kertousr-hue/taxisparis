@@ -21,7 +21,7 @@
   .exact-home-page .exact-home-eyebrow { font-size: 9px; line-height: 1.6; letter-spacing: .11em; }
   .exact-home-page .exact-home-hero h1 { margin-top: 11px; font-size: clamp(30px, 8.3vw, 40px) !important; line-height: 1.08 !important; letter-spacing: -.035em !important; }
   .exact-home-page .exact-home-hero-desktop-description { display: none; }
-  .exact-home-page .exact-home-hero-mobile-description { display: block; margin-top: 16px; color: #d8e4ec; font-size: 15px !important; line-height: 1.65 !important; }
+  .exact-home-page .exact-home-hero-copy > .exact-home-hero-mobile-description { display: block; margin-top: 16px; color: #d8e4ec; font-size: 15px !important; line-height: 1.65 !important; }
   .exact-home-page .exact-home-script { display: none; }
   .exact-home-page .exact-home-mobile-actions { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; margin-top: 21px; }
   .exact-home-mobile-actions a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 10px; border: 1px solid #ffffff55; border-radius: 7px; color: #fff; font-size: 12px; font-weight: 700; line-height: 1.4; }
