@@ -5343,8 +5343,9 @@ body{
 .exact-home-logo .exact-home-brand-image{
   display:block!important;
   width:250px!important;
+  max-width:100%!important;
   height:auto!important;
-  max-height:74px!important;
+  max-height:none!important;
   opacity:1!important;
   visibility:visible!important;
   filter:none!important;
@@ -5360,8 +5361,9 @@ body{
 .exact-site-footer-logo .exact-site-footer-brand-image{
   display:block!important;
   width:220px!important;
+  max-width:100%!important;
   height:auto!important;
-  max-height:78px!important;
+  max-height:none!important;
   opacity:1!important;
   visibility:visible!important;
   filter:none!important;
@@ -5429,11 +5431,9 @@ body{
 
 @media(max-width:680px){
   .exact-home-logo .exact-home-brand-image{
-    width:185px!important;
-    max-height:58px!important;
+    width:168px!important;
   }
   .exact-site-footer-logo .exact-site-footer-brand-image{
     width:180px!important;
-    max-height:64px!important;
   }
 }

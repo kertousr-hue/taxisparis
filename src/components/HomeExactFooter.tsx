@@ -7,7 +7,7 @@ export default function HomeExactFooter() {
     <footer className="exact-site-footer">
       <div className="exact-home-container exact-site-footer-grid">
         <div className="exact-site-footer-brand">
-          <Link to="/" className="exact-site-footer-logo" aria-label="Accueil Taxis Paris Conventionnés">
+          <Link to="/" className="exact-site-footer-logo" aria-label="Accueil Taxis conventionnés — Paris et Île-de-France">
             <BrandLogo className="exact-site-footer-brand-image" />
           </Link>
           <h2>Taxi VSL</h2>
