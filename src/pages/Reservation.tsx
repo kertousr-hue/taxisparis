@@ -389,6 +389,8 @@ export default function ReservationPage() {
         jsonLD={[webPageLD, breadcrumbLD, faqLD, serviceLD]}
       />
 
+      <div className="exact-subpage exact-reservation-page">
+
       {/* ── Sticky top bar ── */}
       <div className="sticky top-0 z-40 bg-blue-700 text-white py-2.5 shadow-md">
         <div className="container mx-auto px-4 flex items-center justify-between gap-3 text-sm">
@@ -410,7 +412,7 @@ export default function ReservationPage() {
                 <Shield size={12} /> Transport remboursé CPAM
               </div>
               <h1 id="page-title" className="text-xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-2">
-                Réservation taxi conventionné VSL CPAM
+                {'Réservation taxi conventionné et VSL'}
               </h1>
               <p className="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
                 Réservez votre taxi conventionné ou VSL pour un transport médical assis en Île-de-France. Service 24h/24 pour les rendez-vous médicaux, avec prise en charge CPAM possible sur prescription.
@@ -810,6 +812,7 @@ export default function ReservationPage() {
 
           </div>
         </div>
+      </div>
       </div>
     </>
   );

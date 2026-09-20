@@ -1,7 +1,7 @@
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import HomeExactHeader from './components/HomeExactHeader';
+import HomeExactFooter from './components/HomeExactFooter';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import Home from './pages/Home';
 import Reservation from './pages/Reservation';
@@ -170,9 +170,9 @@ function AppContent() {
         Aller au contenu principal
       </a>
       
-      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : 'premium-public-shell'} ${isHomePage ? 'app-background-home' : ''}`}>
-        {!isAdminPage && <Header onNavigate={handleNavigate} />}
-        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : 'premium-public-main'}`} role="main">
+      <div className={`min-h-screen flex flex-col ${isAdminPage ? 'bg-gray-50' : isHomePage ? 'exact-home-shell' : 'exact-site-shell'}`}>
+        {!isAdminPage && <HomeExactHeader />}
+        <main id="main-content" className={`flex-grow ${isAdminPage ? '' : isHomePage ? 'exact-home-main' : 'exact-site-main'}`} role="main">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Home onNavigate={handleNavigate} />} />
@@ -226,7 +226,7 @@ function AppContent() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-        {!isAdminPage && <Footer onNavigate={handleNavigate} />}
+        {!isAdminPage && <HomeExactFooter />}
       </div>
     </>
   );

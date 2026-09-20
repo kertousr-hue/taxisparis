@@ -1,0 +1,98 @@
+/* The desktop composition stays in index.css. These rules keep the photo,
+   copy and booking card in normal document flow on smaller screens. */
+.exact-home-page .exact-home-mobile-actions,
+.exact-home-page .exact-home-hero-mobile-description { display: none; }
+
+@media (max-width: 1050px) {
+  .exact-home-page .exact-home-booking-wrap { position: relative; left: auto; bottom: auto; transform: none; margin-top: 0; padding-bottom: 26px; }
+  .exact-home-page .exact-home-hero-copy { padding-bottom: 34px; }
+  .exact-home-page .exact-home-reassurance { padding-top: 26px; }
+}
+
+@media (max-width: 680px) {
+  .exact-home-page .exact-home-container { width: calc(100% - 36px); }
+  .exact-home-page .exact-home-hero { min-height: 0; padding-bottom: 0; }
+  .exact-home-page .exact-home-hero-photo { position: relative; inset: auto; width: 100%; height: clamp(185px, 57vw, 290px); }
+  .exact-home-page .exact-home-hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  /* The image is a separate block here: no full-height overlay can cover it. */
+  .exact-home-page .exact-home-hero-overlay { display: none; }
+  .exact-home-page .exact-home-hero-inner { display: block; min-height: 0; }
+  .exact-home-page .exact-home-hero-copy { width: 100%; padding: 25px 0 27px; }
+  .exact-home-page .exact-home-eyebrow { font-size: 9px; line-height: 1.6; letter-spacing: .11em; }
+  .exact-home-page .exact-home-hero h1 { margin-top: 11px; font-size: clamp(30px, 8.3vw, 40px) !important; line-height: 1.08 !important; letter-spacing: -.035em !important; }
+  .exact-home-page .exact-home-hero-desktop-description { display: none; }
+  .exact-home-page .exact-home-hero-copy > .exact-home-hero-mobile-description { display: block; margin-top: 16px; color: #d8e4ec; font-size: 15px !important; line-height: 1.65 !important; }
+  .exact-home-page .exact-home-script { display: none; }
+  .exact-home-page .exact-home-mobile-actions { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; margin-top: 21px; }
+  .exact-home-mobile-actions a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 10px; border: 1px solid #ffffff55; border-radius: 7px; color: #fff; font-size: 12px; font-weight: 700; line-height: 1.4; }
+  .exact-home-mobile-actions a:first-child { color: #082f49; background: #dfb873; border-color: #dfb873; }
+  .exact-home-mobile-actions svg { flex-shrink: 0; }
+  .exact-home-mobile-actions a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .exact-home-page .exact-home-hero-benefits { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 15px 12px; margin-top: 23px; padding-top: 20px; border-top: 1px solid #ffffff26; }
+  .exact-home-page .exact-home-hero-benefits span { gap: 9px; font-size: 11px; line-height: 1.4; }
+
+  .exact-home-page .exact-home-booking-wrap { margin-top: 0; padding-bottom: 26px; }
+  .exact-home-page .exact-home-booking-card { padding: 20px 17px; border-radius: 12px; box-shadow: none; }
+  .exact-home-page .exact-home-booking-card h2 { font-size: 22px; line-height: 1.2; }
+  .exact-home-page .exact-home-tabs { margin-top: 16px; }
+  .exact-home-page .exact-home-tabs span { min-height: 32px; font-size: 11px; }
+  .exact-home-page .exact-home-booking-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 14px; }
+  .exact-home-page .exact-home-booking-grid > div { min-height: 57px; padding: 10px 12px; }
+  .exact-home-page .exact-home-booking-grid > div span { font-size: 13px; }
+  .exact-home-page .exact-home-booking-grid small { font-size: 10px; color: #6b7d89; margin-bottom: 3px; }
+  .exact-home-page .exact-home-booking-grid > a { min-height: 51px; font-size: 13px; white-space: normal; text-align: center; }
+
+  .exact-home-page .exact-home-reassurance { padding: 15px 0 27px; }
+  .exact-home-page .exact-home-reassurance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+  .exact-home-page .exact-home-reassurance article { min-height: 83px; gap: 7px; }
+  .exact-home-page .exact-home-reassurance article > span { flex-shrink: 0; width: 28px; }
+  .exact-home-page .exact-home-reassurance strong { font-size: 11px; line-height: 1.45; }
+  .exact-home-page .exact-home-reassurance small { font-size: 11px; line-height: 1.4; }
+  .exact-home-page .exact-home-reassurance article:last-child { grid-column: 1 / -1; justify-content: center; min-height: 66px; }
+
+  .exact-home-page .exact-home-human { grid-template-columns: minmax(0, 1fr) !important; gap: 24px !important; padding: 28px 18px 38px !important; min-height: 0 !important; }
+  .exact-home-page .exact-home-hospital-carousel { padding: 0 15px 0; }
+  .exact-home-page .exact-home-hospital-stack { height: 275px; }
+  .exact-home-page .exact-home-hospital-slide { left: 7%; width: 86%; }
+  .exact-home-page .exact-home-hospital-arrow { width: 44px; height: 44px; }
+  .exact-home-page .exact-home-hospital-dots { gap: 0; margin-top: 0; }
+  .exact-home-page .exact-home-hospital-dots button { position: relative; width: 44px; height: 44px; min-width: 44px; background: transparent; }
+  .exact-home-page .exact-home-hospital-dots button::after { content: ''; position: absolute; top: 18px; left: 18px; width: 8px; height: 8px; border-radius: 50%; background: #c9d7e0; }
+  .exact-home-page .exact-home-hospital-dots button.active::after { left: 12px; width: 20px; border-radius: 6px; background: #073455; }
+  .exact-home-page .exact-home-human-copy { padding: 0 !important; }
+  .exact-home-page .exact-home-section-kicker { font-size: 10px; line-height: 1.6; }
+  .exact-home-page .exact-home-human-copy h2 { font-size: 31px !important; line-height: 1.1; }
+  .exact-home-page .exact-home-human-copy > p:not(.exact-home-section-kicker) { font-size: 14px !important; line-height: 1.75 !important; margin-top: 15px; }
+  .exact-home-page .exact-home-human-list { grid-template-columns: minmax(0, 1fr) !important; gap: 14px !important; margin-top: 20px !important; }
+  .exact-home-page .exact-home-human-list span { font-size: 13px !important; line-height: 1.5; }
+  .exact-home-page .exact-home-human-list svg { flex-shrink: 0; }
+  .exact-home-page .exact-home-dark-btn { min-height: 48px; max-width: 100%; padding: 12px 17px; font-size: 12px; line-height: 1.5; }
+
+  .exact-home-page .exact-home-services { padding: 34px 0; border-top: 1px solid #e8edf0; }
+  .exact-home-page .exact-home-section-title { text-align: left; }
+  .exact-home-page .exact-home-section-title h2 { font-size: 30px; line-height: 1.12; }
+  .exact-home-page .exact-home-section-title p { margin-top: 12px; font-size: 13px; line-height: 1.7; }
+  .exact-home-page .exact-home-service-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 23px; }
+  .exact-home-page .exact-home-service-grid img { height: 160px; }
+  .exact-home-page .exact-home-service-grid article > div { padding: 17px 45px 19px 17px; }
+  .exact-home-page .exact-home-service-grid h3 { font-size: 15px; line-height: 1.4; }
+  .exact-home-page .exact-home-service-grid p { font-size: 12px; line-height: 1.6; }
+  .exact-home-page .exact-home-service-grid article > span { bottom: 24px; }
+
+  .exact-home-page .exact-home-process-grid { grid-template-columns: minmax(0, 1fr); padding-block: 22px; }
+  .exact-home-page .exact-home-process-intro h2 { max-width: 100%; font-size: 28px; line-height: 1.15; }
+  .exact-home-page .exact-home-process-intro p { font-size: 12px; line-height: 1.6; margin-top: 10px; }
+  .exact-home-page .exact-home-process-step { grid-template-columns: 38px 24px minmax(0, 1fr); gap: 14px; padding-block: 19px; }
+  .exact-home-page .exact-home-process-step strong { font-size: 14px; }
+  .exact-home-page .exact-home-process-step small { margin-top: 4px; font-size: 12px; line-height: 1.5; }
+  .exact-home-page .exact-home-reviews { padding: 32px 0 38px; }
+  .exact-home-page .exact-home-reviews h2 { font-size: 28px; }
+  .exact-home-page .exact-home-review-grid { margin-top: 22px; gap: 12px; }
+  .exact-home-page .exact-home-review-grid article { padding: 21px; }
+  .exact-home-page .exact-home-review-grid p { font-size: 14px; line-height: 1.7; }
+  .exact-home-page .exact-home-review-grid strong { font-size: 11px; margin-top: 7px; }
+  .exact-home-page .exact-home-bottom-inner { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-block: 32px; }
+  .exact-home-page .exact-home-bottom-copy h2 { font-size: 26px; line-height: 1.2; }
+  .exact-home-page .exact-home-bottom-copy p { margin-top: 10px; font-size: 13px; line-height: 1.6; }
+  .exact-home-page .exact-home-bottom-actions a { min-height: 49px; font-size: 13px; }
+}

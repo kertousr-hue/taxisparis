@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Phone, MapPin, ShieldCheck, Stethoscope, Activity, Building2, Clock, CreditCard, Shield, Car, Brain as Train, Plane, Users, Calendar } from 'lucide-react'
+import { ArrowRight, MapPin, ShieldCheck, Building2, TrainFront, Plane, Users } from 'lucide-react'
+import { CityLinks } from '../components/CityDirectory'
+import { LocalBookingAside, LocalChecklist, LocalClosing, LocalFAQ, LocalHero, LocalParagraphs, LocalSectionNav, LocalTrust } from '../components/LocalPageUI'
 import citiesData from '../data/cities.json'
 import SEOHead from '../components/SEOHead'
 
@@ -20,7 +21,7 @@ function pickStable<T>(arr: T[], seed: number, count = 1) {
   const out: T[] = []
   let s = seed
   while (out.length < count && arr.length > 0) {
-    const index = s % arr.length
+    const index = ((s % arr.length) + arr.length) % arr.length
     out.push(arr[index])
     s = Math.imul(33, s + 7)
   }
@@ -31,11 +32,12 @@ function pickStable<T>(arr: T[], seed: number, count = 1) {
    GÉNÉRATEUR INTELLIGENT ULTRA PREMIUM - CONTENU UNIQUE
 ========================================================= */
 
-function generateLocalContent(city: any, department: any) {
+type CityContentRecord = { name: string; slug: string; postalCode: string; nearHospitals?: string[] }
+
+function generateLocalContent(city: CityContentRecord, department: { name: string; slug: string }) {
   const seed = hash(city.slug + department.slug + city.postalCode)
-  const hasStations = city.nearStations && city.nearStations.length > 0
-  const hasAirports = city.nearAirports && city.nearAirports.length > 0
-  const hasHospitals = city.nearHospitals && city.nearHospitals.filter((h: string) => h && h.trim()).length > 0
+  const hospitals = city.nearHospitals?.filter((hospital) => hospital && hospital.trim()) || []
+  const hasHospitals = hospitals.length > 0
 
   const careTypes = [
     'consultations spécialisées',
@@ -162,7 +164,7 @@ ${organizationIntro}
 ${serviceType} assure :
 • ${benefits.join('\n• ')}
 
-Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter((h: string) => h && h.trim())[0] : 'un établissement hospitalier d\'Île-de-France'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
+Que vous ayez besoin d'un trajet vers ${hasHospitals ? hospitals[0] : 'un établissement hospitalier d\'Île-de-France'} ou tout autre centre médical francilien, nous vous garantissons un service professionnel et ponctuel.
 `
 
   const faq = [
@@ -196,7 +198,7 @@ Que vous ayez besoin d'un trajet vers ${hasHospitals ? city.nearHospitals.filter
   ]
 
   const frequentTrips = hasHospitals
-    ? city.nearHospitals.filter((h: string) => h && h.trim()).slice(0, 4).map((hospital: string, idx: number) => ({
+    ? hospitals.slice(0, 4).map((hospital: string, idx: number) => ({
         from: city.name,
         to: hospital,
         description: pickStable(tripDescriptions, seed + idx + 100, 1)[0]
@@ -279,11 +281,11 @@ export default function CityPage() {
   const { departmentSlug, citySlug } = useParams()
 
   const department = citiesData.departments.find(
-    (d: any) => d.slug === departmentSlug
+    (d) => d.slug === departmentSlug
   )
 
   const city = department?.cities.find(
-    (c: any) => c.slug === citySlug
+    (c) => c.slug === citySlug
   )
 
   if (!department || !city) {
@@ -292,11 +294,7 @@ export default function CityPage() {
 
   const baseUrl = `https://www.taxisparis-conventionnes.fr/${departmentSlug}/${citySlug}`
 
-  const seed = hash(city.slug + city.postalCode)
-
   const seoTitle = `Taxi Conventionné ${city.name} (${city.postalCode}) | CPAM | Transport Médical 24h/24`
-  const h1Text = `Taxi Conventionné à ${city.name} (${city.postalCode})`
-  const Icon = ShieldCheck
 
   const {
     paragraph,
@@ -307,19 +305,16 @@ export default function CityPage() {
     selectedAccessibility,
     selectedCoverage,
     selectedBooking
-  } = useMemo(
-    () => generateLocalContent(city, department),
-    [city, department]
-  )
+  } = generateLocalContent(city, department)
 
   const metaDescription = `Taxi conventionné à ${city.name} (${city.postalCode}). Transport médical remboursé CPAM vers hôpitaux de Paris et Île-de-France. Dialyse, chimio, hospitalisation. Réservation 24h/24 : 06 50 36 64 91.`
 
   const nearbyCities = city.nearCities
-    ? department.cities.filter((c: any) => city.nearCities.includes(c.slug))
-    : department.cities.filter((c: any) => c.slug !== citySlug).slice(0, 5)
+    ? department.cities.filter((c) => city.nearCities.includes(c.slug))
+    : department.cities.filter((c) => c.slug !== citySlug).slice(0, 5)
 
   const allNearbyCities = department.cities
-    .filter((c: any) => c.slug !== citySlug)
+    .filter((c) => c.slug !== citySlug)
     .slice(0, 8)
 
   const jsonLD = {
@@ -421,494 +416,53 @@ export default function CityPage() {
   }
 
   return (
-    <>
-      <SEOHead
-        title={seoTitle}
-        description={metaDescription}
-        canonical={baseUrl}
-        jsonLD={jsonLD}
-      />
+    <div className="local-page local-page-city">
+      <SEOHead title={seoTitle} description={metaDescription} canonical={baseUrl} jsonLD={jsonLD} />
+      <LocalHero name={city.name} code={department.code} citySlug={city.slug} postalCode={city.postalCode} description={`Vos déplacements médicaux depuis ${city.name} vers les hôpitaux et centres de soins de Paris et d’Île-de-France. Prise en charge CPAM possible selon votre prescription et votre situation.`} breadcrumbs={[{ label: 'Zones desservies', href: '/zones-desservies' }, { label: department.name, href: `/${department.slug}` }, { label: city.name }]} />
+      <LocalTrust />
+      <LocalSectionNav items={[{ id: 'votre-transport', label: 'Votre transport' }, { id: 'trajets', label: 'Trajets & hôpitaux' }, { id: 'organisation', label: 'Organisation' }, { id: 'questions', label: 'Vos questions' }, { id: 'villes-voisines', label: 'Autour de vous' }]} />
 
-      <div className="bg-white">
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-              {h1Text}
-            </h1>
-            <h2 className="text-2xl text-blue-100">
-              Transport médical remboursé CPAM | Dialyse, Chimio, Hospitalisation
-            </h2>
-          </div>
+      <div className="lp-container lp-content">
+        <div className="lp-main-column">
+          <section id="votre-transport" className="lp-section">
+            <div className="lp-section-heading"><p className="lp-eyebrow">Au départ de {city.name}</p><h2>Votre transport médical,<br />avec attention.</h2></div>
+            <LocalParagraphs text={paragraph} lead />
+          </section>
+
+          <section id="trajets" className="lp-section">
+            <div className="lp-section-heading"><p className="lp-eyebrow">Du domicile à vos soins</p><h2>Vos trajets depuis {city.name}.</h2><p>Quelques destinations hospitalières desservies au départ de votre ville.</p></div>
+            <div className="lp-trips">{frequentTrips.map((trip, index) => <article className="lp-trip" key={`${trip.to}-${index}`}><div className="lp-trip-path"><i aria-hidden="true" /><span><small>Départ</small><strong>{trip.from}</strong></span><i aria-hidden="true" /><span><small>Destination</small><strong>{trip.to}</strong></span></div><p>{trip.description}</p></article>)}</div>
+            <div className="lp-care-note">Votre établissement ne figure pas dans cette liste ? Contactez-nous pour organiser un trajet adapté à votre rendez-vous et à votre prescription.</div>
+          </section>
+
+          {city.nearHospitals?.filter((hospital) => hospital?.trim()).length > 0 && <section className="lp-section"><div className="lp-section-heading"><p className="lp-eyebrow">Vos établissements</p><h2>Les hôpitaux desservis<br />depuis {city.name}.</h2></div><ul className="lp-hospital-list">{city.nearHospitals.filter((hospital) => hospital?.trim()).map((hospital) => <li key={hospital}><Building2 size={18} aria-hidden="true" /><span>{hospital}</span></li>)}</ul></section>}
+
+          <section id="organisation" className="lp-section">
+            <div className="lp-section-heading"><p className="lp-eyebrow">Un trajet bien préparé</p><h2>L’organisation de votre<br />transport à {city.name}.</h2></div>
+            <LocalParagraphs text={organizationText} />
+            <Link to={`/${department.slug}`} className="lp-text-link">Découvrir tout le département {department.name} <ArrowRight size={16} aria-hidden="true" /></Link>
+          </section>
+
+          <section className="lp-section">
+            <div className="lp-section-heading"><p className="lp-eyebrow">À vos côtés</p><h2>Un accompagnement<br />adapté à votre quotidien.</h2></div>
+            <LocalChecklist items={whyChoose} />
+            <div className="lp-local-details"><div><h3><Users size={18} aria-hidden="true" /> Accessibilité et accompagnement</h3><p>{selectedAccessibility}</p></div><div><h3><MapPin size={18} aria-hidden="true" /> Autour de {city.name}</h3><p>{selectedCoverage}</p></div></div>
+          </section>
+
+          <section className="lp-section">
+            <div className="lp-section-heading"><p className="lp-eyebrow">Avant votre rendez-vous</p><h2>Réserver votre taxi conventionné<br />à {city.name}.</h2></div>
+            <LocalParagraphs text={selectedBooking} />
+            <ol className="lp-steps"><li><span>01</span><p>Communiquez votre adresse de départ, votre destination et l’horaire de votre rendez-vous.</p></li><li><span>02</span><p>Préparez votre prescription de transport et vos informations de prise en charge.</p></li><li><span>03</span><p>Confirmez les modalités et l’heure de départ avec notre équipe.</p></li></ol>
+          </section>
+          <LocalFAQ title={`Vos questions à ${city.name}`} items={faq} />
         </div>
-
-        <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-16">
-          <div className="lg:col-span-2 space-y-10">
-
-            {/* BOUTONS MOBILE - Visible uniquement sur mobile */}
-            <div className="lg:hidden bg-blue-900 text-white p-6 rounded-2xl text-center shadow-xl">
-              <h4 className="text-lg font-bold mb-3">
-                Réservation à {city.name}
-              </h4>
-              <p className="text-blue-200 text-sm mb-4">
-                Service disponible 7j/7
-              </p>
-              <a
-                href="tel:+33650366491"
-                className="bg-white text-blue-900 font-bold py-4 px-6 rounded-xl inline-flex items-center gap-2 hover:bg-blue-50 transition shadow-lg hover:shadow-xl mb-3 w-full justify-center"
-              >
-                <Phone className="w-5 h-5" />
-                06 50 36 64 91
-              </a>
-              <Link
-                to="/reservation-taxi-vsl"
-                className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center gap-2 transition w-full justify-center"
-              >
-                <Calendar className="w-5 h-5" />
-                Réserver en ligne
-              </Link>
-            </div>
-
-            <section>
-              <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-6">
-                <p className="text-sm text-gray-700">
-                  <Link to={`/${departmentSlug}/`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
-                    {department.name}
-                  </Link>
-                  {' '}&gt;{' '}
-                  <span className="text-gray-900 font-semibold">{city.name}</span>
-                  {' '}&bull;{' '}
-                  <Link to="/zones-desservies/" className="text-blue-600 hover:text-blue-800 hover:underline">
-                    Toutes nos zones
-                  </Link>
-                </p>
-              </div>
-
-              <h3 className="text-3xl font-bold flex items-center gap-3 mb-6">
-                <Icon className="text-blue-600 w-8 h-8" />
-                Transport médical conventionné à {city.name}
-              </h3>
-              <div className="prose prose-lg whitespace-pre-line text-gray-700">
-                {paragraph}
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <Activity className="text-blue-600" />
-                Organisation des trajets médicaux depuis {city.name}
-              </h3>
-              <div className="prose prose-lg whitespace-pre-line text-gray-700">
-                {organizationText}
-              </div>
-              <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <p className="text-sm text-gray-700">
-                  Notre service de taxi conventionné couvre l'ensemble du{' '}
-                  <Link to={`/${departmentSlug}/`} className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
-                    {department.name}
-                  </Link>
-                  {' '}et toute{' '}
-                  <Link to="/zones-desservies/" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
-                    l'Île-de-France
-                  </Link>
-                  .{' '}
-                  <Link to="/reservation-taxi-vsl/" className="text-blue-600 hover:text-blue-800 font-semibold hover:underline">
-                    Réservez votre transport médical
-                  </Link>
-                  {' '}en quelques clics.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <MapPin className="text-blue-600" />
-                Trajets médicaux fréquents depuis {city.name}
-              </h3>
-              <p className="text-gray-700 mb-6">
-                Les patients de {city.name} nous font confiance pour leurs déplacements médicaux réguliers. Voici les trajets les plus fréquemment effectués depuis {city.name} vers les grands centres hospitaliers franciliens :
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {frequentTrips.map((trip: any, i: number) => (
-                  <div key={i} className="border-l-4 border-blue-600 bg-blue-50 rounded-lg p-4">
-                    <div className="flex items-center gap-2 font-semibold text-gray-900 mb-1">
-                      <span>{trip.from}</span>
-                      <span className="text-blue-600">→</span>
-                      <span>{trip.to}</span>
-                    </div>
-                    <p className="text-sm text-gray-600">{trip.description}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-white border border-blue-200 rounded-xl p-5">
-                <p className="text-gray-700 mb-3">
-                  Que vous habitiez le centre de {city.name} ou ses quartiers périphériques, nous organisons vos trajets médicaux vers l'ensemble des hôpitaux et cliniques d'Île-de-France. Chaque déplacement depuis {city.name} est pris en charge sur prescription médicale avec le tiers-payant CPAM.
-                </p>
-                <div className="flex flex-wrap gap-3 text-sm">
-                  <Link
-                    to="/taxis-aeroports-parisiens"
-                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
-                  >
-                    <Plane className="w-4 h-4" />
-                    Transferts aéroports
-                  </Link>
-                  <span className="text-gray-300">|</span>
-                  <Link
-                    to="/taxis-gares-parisiennes"
-                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
-                  >
-                    <Train className="w-4 h-4" />
-                    Transferts gares
-                  </Link>
-                  <span className="text-gray-300">|</span>
-                  <Link
-                    to="/reservation-taxi-vsl"
-                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline font-medium"
-                  >
-                    <Calendar className="w-4 h-4" />
-                    Réserver maintenant
-                  </Link>
-                </div>
-              </div>
-            </section>
-
-            {city.nearHospitals && city.nearHospitals.filter((h: string) => h && h.trim()).length > 0 && (
-              <section>
-                <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                  <Building2 className="text-blue-600" />
-                  Hôpitaux desservis depuis {city.name}
-                </h3>
-                <p className="text-gray-700 mb-6">
-                  Notre service de taxi conventionné à {city.name} vous conduit vers les principaux établissements hospitaliers de la région. Ces centres de santé sont régulièrement desservis par nos chauffeurs au départ de {city.name} :
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {city.nearHospitals.filter((h: string) => h && h.trim()).map((hospital: string, i: number) => (
-                    <div key={i} className="border rounded-xl p-4 flex items-center gap-3 hover:border-blue-600 hover:bg-blue-50 transition">
-                      <Stethoscope className="text-blue-500 w-5 h-5 flex-shrink-0" />
-                      <span className="text-gray-700">{hospital}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-gray-600 mt-4">
-                  Depuis {city.name}, nous assurons également le transport médical conventionné CPAM vers tous les autres établissements de santé d'Île-de-France selon votre prescription médicale.
-                </p>
-              </section>
-            )}
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <ShieldCheck className="text-blue-600" />
-                Pourquoi choisir notre taxi conventionné à {city.name} ?
-              </h3>
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
-                <ul className="space-y-3">
-                  {whyChoose.map((reason: string, i: number) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="mt-1 w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
-                      <span className="text-gray-700">{reason}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <Users className="text-blue-600" />
-                Accessibilité et adaptation à {city.name}
-              </h3>
-              <div className="prose prose-lg text-gray-700">
-                <p>{selectedAccessibility}</p>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <MapPin className="text-blue-600" />
-                Couverture géographique depuis {city.name}
-              </h3>
-              <div className="prose prose-lg text-gray-700">
-                <p>{selectedCoverage}</p>
-                <p className="mt-4">
-                  Le {department.name}, dont fait partie {city.name}, est idéalement situé en région Île-de-France.
-                  Cette localisation centrale facilite les trajets médicaux vers l'ensemble des établissements hospitaliers
-                  de la région parisienne. Notre connaissance approfondie du réseau routier francilien et de ses particularités
-                  de circulation nous permet d'optimiser chaque déplacement depuis {city.name}.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold flex items-center gap-2 mb-6">
-                <Calendar className="text-blue-600" />
-                Comment réserver votre taxi conventionné à {city.name}
-              </h3>
-              <div className="prose prose-lg text-gray-700">
-                <p>{selectedBooking}</p>
-                <p className="mt-4">
-                  Habitants de {city.name} dans le {department.name}, vous pouvez nous contacter 7 jours sur 7 pour organiser
-                  vos déplacements médicaux. Notre équipe connaît parfaitement le secteur de {city.name} et saura vous conseiller
-                  sur les meilleurs horaires de départ pour respecter vos rendez-vous hospitaliers. Le service client reste
-                  disponible pour répondre à toutes vos questions sur le transport médical conventionné CPAM depuis {city.name}.
-                </p>
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white shadow-xl">
-              <h3 className="text-2xl font-bold mb-4">
-                Réservez votre transport médical depuis {city.name}
-              </h3>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                Service disponible 24h/24 et 7j/7 pour vos déplacements médicaux prescrits
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a
-                  href="tel:+33650366491"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl font-bold transition shadow-lg hover:shadow-xl text-lg w-full sm:w-auto"
-                >
-                  <Phone className="w-6 h-6" />
-                  <span className="flex flex-col items-start">
-                    <span className="text-xs font-normal text-blue-500">Appelez-nous</span>
-                    <span>06 50 36 64 91</span>
-                  </span>
-                </a>
-                <Link
-                  to="/reservation-taxi-vsl"
-                  className="inline-flex items-center justify-center gap-2 bg-blue-800 hover:bg-blue-900 text-white px-8 py-4 rounded-xl font-bold transition shadow-lg hover:shadow-xl text-lg border-2 border-blue-300 w-full sm:w-auto"
-                >
-                  <Calendar className="w-6 h-6" />
-                  Réserver en ligne
-                </Link>
-              </div>
-              <p className="text-blue-200 text-sm mt-6">
-                Munissez-vous de votre prescription médicale de transport
-              </p>
-            </section>
-
-            <section>
-              <h3 className="text-2xl font-bold mb-4">
-                Questions fréquentes à {city.name}
-              </h3>
-
-              <div className="space-y-4">
-                {faq.map((f, i) => (
-                  <div key={i} className="border rounded-xl p-4">
-                    <p className="font-semibold">{f.q}</p>
-                    <p className="text-gray-600 mt-2">{f.a}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
-                <h3 className="text-2xl font-bold flex items-center gap-2">
-                  <MapPin className="text-blue-600" />
-                  Taxis conventionnés dans les villes voisines
-                </h3>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a
-                    href="tel:+33650366491"
-                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition shadow-lg hover:shadow-xl"
-                  >
-                    <Phone className="w-5 h-5" />
-                    06 50 36 64 91
-                  </a>
-                  <Link
-                    to="/reservation-taxi-vsl"
-                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-xl font-semibold transition shadow-md hover:shadow-lg"
-                  >
-                    <Calendar className="w-5 h-5" />
-                    Réserver
-                  </Link>
-                </div>
-              </div>
-
-              <p className="text-gray-700 mb-6">
-                Notre service de taxi conventionné dessert également les communes proches de {city.name}.
-                Découvrez nos services dans les villes voisines du {department.name}.
-              </p>
-
-              <div className="mb-6">
-                <h4 className="font-semibold text-lg mb-4 text-gray-900">
-                  Communes proches desservies par notre service
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {nearbyCities.map((neighbor: any) => (
-                    <Link
-                      key={neighbor.slug}
-                      to={`/${departmentSlug}/${neighbor.slug}`}
-                      className="bg-white border-2 border-gray-200 px-4 py-4 rounded-xl hover:border-blue-600 hover:shadow-lg transition group"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-900 group-hover:text-blue-600">
-                          {neighbor.name}
-                        </span>
-                        <MapPin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Taxi conventionné CPAM
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="font-semibold text-lg mb-4 text-gray-900">
-                  Autres villes du {department.name}
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-                  {allNearbyCities.map((neighbor: any) => (
-                    <Link
-                      key={neighbor.slug}
-                      to={`/${departmentSlug}/${neighbor.slug}`}
-                      className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
-                    >
-                      {neighbor.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-gray-300 pt-6 mt-6">
-                <div className="bg-white rounded-xl p-6 shadow-md">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                      <h4 className="font-bold text-lg text-gray-900 mb-2">
-                        Toutes nos destinations dans le {department.name}
-                      </h4>
-                      <p className="text-gray-600 text-sm">
-                        Découvrez l'ensemble des villes desservies par notre service de taxi conventionné
-                      </p>
-                    </div>
-                    <Link
-                      to={`/${departmentSlug}`}
-                      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition shadow-lg hover:shadow-xl whitespace-nowrap"
-                    >
-                      <MapPin className="w-5 h-5" />
-                      Voir toutes les villes
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="border-t pt-8">
-              <h3 className="text-2xl font-bold mb-4">
-                Services complémentaires
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Link
-                  to="/taxis-gares-parisiennes"
-                  className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
-                >
-                  <Train className="text-blue-600 w-6 h-6 mb-2" />
-                  <h4 className="font-bold mb-1">Taxis Gares Parisiennes</h4>
-                  <p className="text-sm text-gray-600">Transferts vers toutes les gares de Paris</p>
-                </Link>
-                <Link
-                  to="/taxis-aeroports-parisiens"
-                  className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
-                >
-                  <Plane className="text-blue-600 w-6 h-6 mb-2" />
-                  <h4 className="font-bold mb-1">Taxis Aéroports Parisiens</h4>
-                  <p className="text-sm text-gray-600">CDG, Orly, Beauvais pour raisons médicales</p>
-                </Link>
-                <Link
-                  to="/reservation-taxi-vsl"
-                  className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition bg-blue-50"
-                >
-                  <Car className="text-blue-600 w-6 h-6 mb-2" />
-                  <h4 className="font-bold mb-1">Réserver un taxi VSL</h4>
-                  <p className="text-sm text-gray-600">Réservation en ligne rapide et simple</p>
-                </Link>
-                <Link
-                  to="/faq"
-                  className="border rounded-xl p-5 hover:border-blue-600 hover:shadow-lg transition"
-                >
-                  <Shield className="text-blue-600 w-6 h-6 mb-2" />
-                  <h4 className="font-bold mb-1">Questions fréquentes</h4>
-                  <p className="text-sm text-gray-600">Toutes les réponses sur le transport CPAM</p>
-                </Link>
-              </div>
-            </section>
-
-          </div>
-
-          {/* SIDEBAR DESKTOP - Visible uniquement sur desktop */}
-          <div className="hidden lg:block">
-            <div className="sticky top-24 space-y-6">
-              <div className="bg-blue-900 text-white p-8 rounded-3xl text-center shadow-2xl">
-                <h4 className="text-xl font-bold mb-4">
-                  Réservation à {city.name}
-                </h4>
-                <p className="text-blue-200 text-sm mb-6">
-                  Service disponible 7j/7
-                </p>
-                <a
-                  href="tel:+33650366491"
-                  className="bg-white text-blue-900 font-bold py-4 px-6 rounded-xl inline-flex items-center gap-2 hover:bg-blue-50 transition shadow-lg hover:shadow-xl mb-4 w-full justify-center"
-                >
-                  <Phone className="w-5 h-5" />
-                  06 50 36 64 91
-                </a>
-                <Link
-                  to="/reservation-taxi-vsl"
-                  className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center gap-2 transition w-full justify-center"
-                >
-                  <Calendar className="w-5 h-5" />
-                  Réserver en ligne
-                </Link>
-              </div>
-
-              <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg">
-                <h5 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <MapPin className="text-blue-600 w-5 h-5" />
-                  Zones desservies
-                </h5>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  <li>
-                    <Link
-                      to={`/${departmentSlug}`}
-                      className="hover:text-blue-600 hover:underline flex items-center gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                      {department.name}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/zones-desservies"
-                      className="hover:text-blue-600 hover:underline flex items-center gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                      Toute l'Île-de-France
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/taxis-aeroports-parisiens"
-                      className="hover:text-blue-600 hover:underline flex items-center gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                      Aéroports parisiens
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/taxis-gares-parisiennes"
-                      className="hover:text-blue-600 hover:underline flex items-center gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                      Gares parisiennes
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <LocalBookingAside locality={city.name} departmentName={department.name} departmentSlug={department.slug} />
       </div>
-    </>
+
+      <section id="villes-voisines" className="lp-neighbors"><div className="lp-container"><div className="lp-neighbors-heading"><div><p className="lp-eyebrow">Et autour de vous</p><h2>Nos taxis dans les villes voisines.</h2></div><Link className="lp-text-link" to={`/${department.slug}`}>Toutes les villes · {department.name} <ArrowRight size={16} aria-hidden="true" /></Link></div><CityLinks cities={nearbyCities} departmentSlug={department.slug} /><div className="lp-other-cities">{allNearbyCities.filter((neighbor) => !nearbyCities.some((nearby) => nearby.slug === neighbor.slug)).map((neighbor) => <Link key={neighbor.slug} to={`/${department.slug}/${neighbor.slug}`}>{neighbor.name}</Link>)}</div></div></section>
+
+      <div className="lp-container lp-lower-content"><div className="lp-section-heading"><p className="lp-eyebrow">Pour vos autres déplacements</p><h2>Nos services complémentaires.</h2></div><div className="lp-complementary"><Link to="/taxis-gares-parisiennes"><TrainFront size={21} aria-hidden="true" />Gares parisiennes<ArrowRight size={15} aria-hidden="true" /></Link><Link to="/taxis-aeroports-parisiens"><Plane size={21} aria-hidden="true" />Aéroports parisiens<ArrowRight size={15} aria-hidden="true" /></Link><Link to="/faq"><ShieldCheck size={21} aria-hidden="true" />Questions sur la prise en charge<ArrowRight size={15} aria-hidden="true" /></Link></div></div>
+      <LocalClosing locality={city.name} />
+    </div>
   )
 }

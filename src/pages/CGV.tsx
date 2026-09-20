@@ -8,7 +8,7 @@ export default function CGV() {
         description="Conditions générales de vente de Taxi VSL Île-de-France. Tarifs, modalités de réservation et politique d'annulation."
         canonical="https://www.taxisparis-conventionnes.fr/conditions-generales-de-vente"
       />
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="exact-subpage exact-legal-page min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Conditions Générales de Vente</h1>
 

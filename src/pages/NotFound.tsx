@@ -15,7 +15,7 @@ export default function NotFound() {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 text-center">
+      <div className="exact-subpage exact-404-page min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 text-center">
         <div className="max-w-md">
           <p className="text-8xl font-bold text-gray-200 select-none">404</p>
           <h1 className="mt-4 text-2xl font-semibold text-gray-800">Page introuvable</h1>
