@@ -32,7 +32,7 @@ const hospitalSlides = [
     alt: 'Entrée de l’Hôpital Universitaire La Pitié-Salpêtrière à Paris',
   },
   {
-    image: 'https://sprintally.com/static/uploads/2017/09/Gustave-Roussy-Cancer-Center-France.jpg',
+    image: '/images/hospitalisations-gustave-roussy.jpg',
     title: 'Hôpital Gustave Roussy',
     place: 'Villejuif',
     alt: 'Hôpital Gustave Roussy à Villejuif',
@@ -63,7 +63,7 @@ const services = [
   {
     title: 'Hospitalisations',
     text: 'Entrées et sorties d’hôpital',
-    image: '/gustave-roussy.webp',
+    image: '/images/hospitalisations-gustave-roussy.jpg',
     alt: 'Hôpital Gustave Roussy à Villejuif',
   },
   {
