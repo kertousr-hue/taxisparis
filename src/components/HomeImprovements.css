@@ -4,7 +4,7 @@
 .exact-home-header .exact-home-topbar-inner svg { flex-shrink: 0; }
 .exact-home-header .exact-home-nav-inner { gap: 12px; }
 .exact-home-header .exact-home-desktop-nav { gap: 0; }
-.exact-home-header .exact-home-desktop-nav a { font-size: 14px; min-height: 48px; padding-inline: 7px; }
+.exact-home-header .exact-home-desktop-nav a { font-size: 14px !important; min-height: 48px; padding-inline: 7px; }
 .exact-home-header .exact-home-call,
 .exact-home-header .exact-home-reserve { font-size: 14px; min-height: 48px; padding-inline: 13px; white-space: nowrap; }
 .exact-home-header .exact-home-mobile-panel a { font-size: 16px; min-height: 48px; }
