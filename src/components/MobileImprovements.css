@@ -1,0 +1,108 @@
+/* Shared footer: contact comes first in the document and on small screens. */
+.exact-site-footer-grid { grid-template-areas: "brand contact zones useful"; }
+.exact-site-footer-brand { grid-area: brand; }
+.exact-site-footer-contact { grid-area: contact; }
+.exact-site-footer-zones { grid-area: zones; }
+.exact-site-footer-useful { grid-area: useful; }
+.exact-site-footer-links { min-width: 0; }
+.exact-site-footer-links summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; }
+.exact-site-footer-links summary::-webkit-details-marker { display: none; }
+.exact-site-footer-links summary h3 { margin: 0; font-family: Arial, sans-serif; font-size: 17px; font-weight: 800; letter-spacing: 0; color: #62a7ff; }
+.exact-site-footer-links summary svg { flex-shrink: 0; transition: transform .15s ease; }
+.exact-site-footer-links[open] summary svg { transform: rotate(180deg); }
+.footer-section-links { display: flex; flex-direction: column; gap: 14px; padding-top: 20px; }
+.footer-section-links a { min-height: 30px; color: #aeb9c8; font-size: 15px; line-height: 1.55; overflow-wrap: anywhere; }
+.footer-section-links a:hover { color: #fff; }
+.exact-site-footer a:focus-visible,
+.exact-site-footer summary:focus-visible { outline: 2px solid #e6be73; outline-offset: 4px; border-radius: 4px; }
+
+.mobile-quick-actions { display: none; }
+.exact-home-header .mobile-menu-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 16px; }
+.exact-home-header .mobile-menu-actions a { background: #0b354d; color: #fff; }
+.exact-home-header .mobile-menu-actions .mobile-menu-reserve { background: #e3b76b; color: #092e45; }
+#reservation-form { scroll-margin-top: 24px; }
+
+@media (max-width: 1050px) {
+  .exact-site-footer-grid { grid-template-areas: "brand contact" "zones useful"; }
+}
+
+@media (max-width: 800px) {
+  .exact-home-shell,
+  .exact-site-shell { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  html:has(.mobile-quick-actions) { scroll-padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-quick-actions {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 80;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));
+    border-top: 1px solid #dce5ea;
+    background: #fff;
+    box-shadow: 0 -4px 18px rgb(8 44 65 / 7%);
+  }
+  .mobile-quick-actions a { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 10px 8px; border: 1px solid #c5d3dc; border-radius: 9px; font-size: 16px; font-weight: 700; line-height: 1.4; text-decoration: none; color: #0b354d; }
+  .mobile-quick-actions .mobile-quick-actions__reserve { color: #092e45; border-color: #e3b76b; background: #e3b76b; }
+  .mobile-quick-actions a:focus-visible { outline: 3px solid #0b354d; outline-offset: 3px; }
+  /* Leave room for the on-screen keyboard when someone edits a form. */
+  :is(.exact-home-shell, .exact-site-shell):has(input:not([type=radio]):not([type=checkbox]):focus, textarea:focus, select:focus) .mobile-quick-actions { visibility: hidden; pointer-events: none; }
+
+  .exact-home-header .exact-home-mobile-panel { max-height: calc(100dvh - 220px - env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; }
+  .exact-home-header .exact-home-mobile-panel nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-block: 16px; }
+  .exact-home-header .exact-home-mobile-panel a { padding: 10px 8px; text-align: center; line-height: 1.4; }
+  .exact-home-header .exact-home-topbar-inner span { font-size: 14px; }
+  .exact-home-page .exact-home-eyebrow,
+  .exact-home-page .exact-home-section-kicker { font-size: 14px; }
+
+  .exact-site-footer .exact-site-footer-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "contact" "brand" "zones" "useful"; gap: 0; padding-block: 28px 0; }
+  .exact-site-footer .exact-site-footer-contact { gap: 4px; padding-bottom: 22px; }
+  .exact-site-footer-contact h3 { margin-bottom: 8px; font-size: 18px; }
+  .exact-site-footer-contact a { align-items: center; min-height: 44px; font-size: 16px; line-height: 1.5; }
+  .exact-site-footer-contact a[href^="tel:"] { font-size: 22px; font-weight: 700; color: #fff; }
+  .exact-site-footer-contact .exact-site-footer-static { align-items: center; min-height: 36px; font-size: 14px; }
+  .exact-site-footer .exact-site-footer-brand { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px 16px; align-items: center; padding-block: 22px; border-top: 1px solid rgb(255 255 255 / 12%); }
+  .exact-site-footer .exact-site-footer-logo { width: 112px; margin: 0; border-radius: 7px; }
+  .exact-site-footer .exact-site-footer-brand h2 { font-size: 18px; line-height: 1.35; }
+  .exact-site-footer .exact-site-footer-brand p { grid-column: 1 / -1; max-width: none; margin: 0; font-size: 14px; line-height: 1.6; }
+  .exact-site-footer-links { border-top: 1px solid rgb(255 255 255 / 12%); }
+  .exact-site-footer-links summary { min-height: 58px; }
+  .exact-site-footer-links summary h3 { font-size: 16px; }
+  .footer-section-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 18px; padding: 0 0 18px; }
+  .footer-section-links a { display: flex; align-items: center; min-height: 44px; font-size: 14px; }
+  .exact-site-footer .exact-site-footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; padding-block: 18px 22px; min-height: auto; font-size: 14px; line-height: 1.6; }
+
+  /* Form labels remain readable and native fields avoid automatic mobile zoom. */
+  :is(.exact-site-main, .exact-home-main) form .text-xs,
+  :is(.exact-site-main, .exact-home-main) form label { font-size: 14px; line-height: 1.5; }
+  :is(.exact-site-main, .exact-home-main) form :is(input:not([type=radio]):not([type=checkbox]), textarea, select) { font-size: 16px; }
+
+  /* Small supporting text on department and city pages. */
+  .local-page :is(.lp-eyebrow, .lp-breadcrumbs, .lp-hero-note, .lp-trust-grid small,
+    .lp-section-nav span, .lp-section-nav a, .lp-booking-panel .lp-eyebrow,
+    .lp-booking-panel p, .lp-booking-phone small, .lp-booking-note,
+    .lp-document-note h3, .lp-document-note p, .lp-document-note a,
+    .lp-back-department > span, .lp-back-department strong, .lp-hospital-list li,
+    .lp-service-card > span, .lp-steps li > span, .lp-directory-total,
+    .lp-results-count, .lp-city-link small, .lp-text-link, .lp-faq-grid dt, .lp-faq-grid dt > span,
+    .lp-faq-grid dd, .lp-department-links a, .lp-department-links a span,
+    .lp-closing p:not(.lp-eyebrow), .lp-contact-strip, .lp-trip-path small,
+    .lp-trip-path strong, .lp-trip > p, .lp-care-note, .lp-local-details p,
+    .lp-other-cities, .lp-complementary a) { font-size: 14px; line-height: 1.55; }
+  .local-page :is(.lp-city-link strong, .lp-service-card h3, .lp-prose p,
+    .lp-prose-lead, .lp-hero-description) { font-size: 16px; line-height: 1.65; }
+  .local-page .lp-button,
+  .local-page .lp-directory-toggle { min-height: 48px; font-size: 14px !important; }
+  .local-page .lp-search input { font-size: 16px; }
+  .local-page .lp-section-nav a { min-height: 44px; }
+  .local-page :is(.local-map__heading p, .local-map__heading > div > span,
+    .local-map__code small, .local-map__legend, .local-map__legend small,
+    .local-map__footer p, .local-map__directory) { font-size: 14px; line-height: 1.5; }
+  .local-page .local-map__heading { flex-wrap: wrap; }
+  .local-page .local-map__legend { flex-wrap: wrap; }
+  .local-page .local-map__directory { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exact-site-footer-links summary svg { transition: none; }
+}

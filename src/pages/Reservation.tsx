@@ -502,7 +502,7 @@ export default function ReservationPage() {
             {prefillNotice && <p className="reservation-prefill-notice" role="status"><CheckCircle size={20} aria-hidden="true" />{prefillNotice}</p>}
 
             {/* ══════════ FORM ══════════ */}
-            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" aria-labelledby="page-title">
+            <form id="reservation-form" onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" aria-labelledby="page-title">
 
               {/* 1 – Coordonnées */}
               <SectionCard step={1} stepColor="bg-blue-600" icon={<User size={16} className="text-blue-600" />} iconBg="bg-blue-50" title="Vos coordonnées">

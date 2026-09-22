@@ -2,6 +2,7 @@ import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-
 import { useEffect, useState } from 'react';
 import HomeExactHeader from './components/HomeExactHeader';
 import HomeExactFooter from './components/HomeExactFooter';
+import MobileQuickActions from './components/MobileQuickActions';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import Home from './pages/Home';
 import Reservation from './pages/Reservation';
@@ -227,6 +228,7 @@ function AppContent() {
           </Routes>
         </main>
         {!isAdminPage && <HomeExactFooter />}
+        {!isAdminPage && <MobileQuickActions />}
       </div>
     </>
   );

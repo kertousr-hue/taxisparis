@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { CalendarDays, Clock, Menu, MapPin, Phone, ShieldCheck, Users, X } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
@@ -15,6 +15,21 @@ const navItems = [
 
 export default function HomeExactHeader() {
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const { pathname } = useLocation();
+
+  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [open]);
 
   return (
     <header className="exact-home-header">
@@ -47,11 +62,13 @@ export default function HomeExactHeader() {
           </div>
 
           <button
+            ref={menuButton}
             type="button"
             className="exact-home-menu"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={open}
+            aria-controls="mobile-site-menu"
           >
             {open ? <X size={21} /> : <Menu size={21} />}
           </button>
@@ -59,14 +76,17 @@ export default function HomeExactHeader() {
       </div>
 
       {open && (
-        <div className="exact-home-mobile-panel">
-          <nav className="exact-home-container">
+        <div className="exact-home-mobile-panel" id="mobile-site-menu">
+          <div className="exact-home-container mobile-menu-actions">
+            <a href="tel:+33650366491" onClick={() => setOpen(false)}><Phone size={18} aria-hidden="true" /> Appeler</a>
+            <Link to="/reservation-taxi-vsl" className="mobile-menu-reserve" onClick={() => setOpen(false)}><CalendarDays size={18} aria-hidden="true" /> Réserver</Link>
+          </div>
+          <nav className="exact-home-container" aria-label="Navigation mobile">
             {navItems.map((item) => (
               item.path.startsWith('/#')
                 ? <a key={item.path} href={item.path} onClick={() => setOpen(false)}>{item.label}</a>
                 : <Link key={item.path} to={item.path} onClick={() => setOpen(false)}>{item.label}</Link>
             ))}
-            <a href="tel:+33650366491" onClick={() => setOpen(false)}><Phone size={15} /> 06 50 36 64 91</a>
           </nav>
         </div>
       )}

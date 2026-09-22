@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import './index.css';
 import './components/HomeImprovements.css';
+import './components/MobileImprovements.css';
 
 const container = document.getElementById('root')!;
 
