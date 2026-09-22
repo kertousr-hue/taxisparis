@@ -9,7 +9,8 @@ import { type Reservation, supabase } from '../lib/supabase';
 import AutocompleteInput from '../components/AutocompleteInput';
 import { calculateRoute } from '../utils/here';
 import SEOHead from '../components/SEOHead';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { reservationPrefill } from '../utils/bookingPrefill';
 
 const DEPARTMENTS = [
   { label: 'Paris (75)', href: '/taxi-conventionne-paris-75' },
@@ -161,7 +162,10 @@ function RadioPill({ name, value, checked, onChange, label, sublabel, required }
 /* ─── Page ─── */
 
 export default function ReservationPage() {
-  const [formData, setFormData] = useState<Partial<Reservation>>({
+  const location = useLocation();
+  const [recurring, setRecurring] = useState(false);
+  const [prefillNotice, setPrefillNotice] = useState('');
+  const [formData, setFormData] = useState<Partial<Reservation> & { informations_supplementaires: string }>({
     nom: '', prenom: '', telephone: '', email: '',
     adresse_depart: '', adresse_arrivee: '',
     date_rdv: '', heure_rdv: '', informations_supplementaires: '',
@@ -186,6 +190,25 @@ export default function ReservationPage() {
   const [coordsArrivee, setCoordsArrivee] = useState<{ lat: number; lng: number } | null>(null);
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
+
+  useEffect(() => {
+    const prefill = reservationPrefill(location.state, location.search);
+    if (!prefill.hasDraft && !prefill.serviceLabel) return;
+    setFormData(previous => ({ ...previous,
+      adresse_depart: prefill.departure, adresse_arrivee: prefill.destination,
+      date_rdv: prefill.date, informations_supplementaires: prefill.note,
+    }));
+    setCoordsDepart(prefill.departureCoordinates);
+    setCoordsArrivee(prefill.destinationCoordinates);
+    setDistance(null);
+    setDurationMinutes(null);
+    setTypeTrajet(prefill.trip);
+    setRecurring(prefill.recurring);
+    setTypePriseEnCharge(prefill.careType);
+    setPrefillNotice(prefill.hasDraft
+      ? 'Votre trajet a été repris depuis l’accueil. Complétez les informations ci-dessous pour envoyer votre demande.'
+      : `Votre demande : ${prefill.serviceLabel}. Précisez votre trajet ci-dessous.`);
+  }, [location.key, location.state, location.search]);
 
   useEffect(() => {
     if (!submitSuccess) return;
@@ -263,6 +286,7 @@ export default function ReservationPage() {
       const messageStr = [
         `Fauteuil roulant: ${fauteuilRoulant ? 'Oui' : 'Non'}`,
         `Type trajet: ${typeTrajet}`,
+        recurring ? 'Rendez-vous réguliers : planning à confirmer avec le patient' : '',
         `Prise en charge: ${typePriseEnCharge}`,
         `ALD: ${situationALD}`, `Bon transport: ${bonTransport}`,
         formData.informations_supplementaires ? `Note: ${formData.informations_supplementaires}` : '',
@@ -301,7 +325,7 @@ export default function ReservationPage() {
       setSubmitSuccess(true);
       setFormData({ nom: '', prenom: '', telephone: '', email: '', adresse_depart: '', adresse_arrivee: '', date_rdv: '', heure_rdv: '', informations_supplementaires: '' });
       setDistance(null); setDurationMinutes(null); setCoordsDepart(null); setCoordsArrivee(null);
-      setFauteuilRoulant(null); setTypeTrajet(null);
+      setFauteuilRoulant(null); setTypeTrajet(null); setRecurring(false); setPrefillNotice('');
       setTypePriseEnCharge(null); setSituationALD(null); setBonTransport(null);
       setTimeout(() => setSubmitSuccess(false), 7000);
 
@@ -475,6 +499,8 @@ export default function ReservationPage() {
               </div>
             )}
 
+            {prefillNotice && <p className="reservation-prefill-notice" role="status"><CheckCircle size={20} aria-hidden="true" />{prefillNotice}</p>}
+
             {/* ══════════ FORM ══════════ */}
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" aria-labelledby="page-title">
 
@@ -602,6 +628,10 @@ export default function ReservationPage() {
                       label="Aller-retour" required />
                   </div>
                   <ErrorMsg msg={fieldErrors.type_trajet} />
+                  <label className="reservation-recurring-choice">
+                    <input type="checkbox" checked={recurring} onChange={event => setRecurring(event.target.checked)} />
+                    <span>Rendez-vous réguliers<small>Le planning des prochains trajets sera confirmé avec notre équipe.</small></span>
+                  </label>
                 </div>
               </SectionCard>
 

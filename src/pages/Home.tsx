@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import HomeCoverage from '../components/HomeCoverage';
+import HomeBookingForm from '../components/HomeBookingForm';
 import '../components/HomeCoverage.css';
 import '../components/HomeResponsive.css';
 import { generateJsonLD } from '../utils/seoData';
@@ -26,7 +27,7 @@ interface HomeProps {
 
 const hospitalSlides = [
   {
-    image: 'https://static.mediapart.fr/etmagine/article_google_discover/files/2026/02/19/260219-img-la-justice-confirme-l-exclusion-de-huit-mois-dune-infirmiere-qui-refuse-d-oter-son-calot.jpg',
+    image: '/images/hopital-pitie-salpetriere.webp',
     title: 'Hôpital Universitaire La Pitié-Salpêtrière',
     place: 'Paris 13e',
     alt: 'Entrée de l’Hôpital Universitaire La Pitié-Salpêtrière à Paris',
@@ -38,7 +39,7 @@ const hospitalSlides = [
     alt: 'Hôpital Gustave Roussy à Villejuif',
   },
   {
-    image: 'https://www.myhospitalnow.com/file_managament/storage/photo_gallery_files/1626_aleson6%40greendike.com/P_1626_1716296494_IMG_20210213_140431.jpg',
+    image: '/images/hopital-bichat.webp',
     title: 'Hôpital Bichat',
     place: 'Paris 18e',
     alt: 'Centre Hospitalier Universitaire Bichat à Paris',
@@ -56,26 +57,30 @@ const reassurance = [
 const services = [
   {
     title: 'Consultations médicales',
+    reservationService: 'consultation',
     text: 'Médecins spécialistes et généralistes',
-    image: 'https://www.lifelink-medical.com/storage/2026/04/zahnimplantate-mrt_2-1024x647.jpg',
+    image: '/images/consultations-medicales.webp',
     alt: 'Consultation médicale',
   },
   {
     title: 'Hospitalisations',
+    reservationService: 'hospitalisation',
     text: 'Entrées et sorties d’hôpital',
     image: '/images/hospitalisations-gustave-roussy.jpg',
     alt: 'Hôpital Gustave Roussy à Villejuif',
   },
   {
     title: 'Soins réguliers',
+    reservationService: 'soins-reguliers',
     text: 'Dialyse, chimiothérapie, radiothérapie…',
-    image: 'https://www.promedour.com/cdn/shop/files/Care.png?v=1772415090&width=1536',
+    image: '/images/soins-reguliers.webp',
     alt: 'Soins médicaux réguliers',
   },
   {
     title: 'Examens médicaux',
+    reservationService: 'examens',
     text: 'IRM, scanner, analyses…',
-    image: 'https://www.trinityhealthma.org/sites/default/files/cards/imaging-mri.jpg',
+    image: '/images/examens-medicaux.webp',
     alt: 'Examen médical',
   },
 ];
@@ -117,7 +122,7 @@ const Home: FC<HomeProps> = () => {
         <section className="exact-home-hero">
           <div className="exact-home-hero-photo" aria-hidden="true">
             <img
-              src="https://www.rideinbliss.com/sablony/rideinbliss3/imagesrib/2026/senior/senior-transportation-big.jpg"
+              src="/images/transport-medical-accompagnement.webp"
               alt=""
               loading="eager"
               fetchPriority="high"
@@ -157,21 +162,7 @@ const Home: FC<HomeProps> = () => {
           </div>
 
           <div className="exact-home-container exact-home-booking-wrap">
-            <div className="exact-home-booking-card">
-              <h2>Réservez votre transport médical</h2>
-              <div className="exact-home-tabs">
-                <span className="active">Trajet simple</span>
-                <span>Aller-retour</span>
-                <span>Rendez-vous réguliers</span>
-              </div>
-
-              <div className="exact-home-booking-grid">
-                <div><MapPin size={17} /><span><small>Adresse de départ</small>Votre adresse</span></div>
-                <div><MapPin size={17} /><span><small>Destination</small>Hôpital, clinique, cabinet…</span></div>
-                <div><CalendarDays size={17} /><span><small>Date du trajet</small>Choisir une date</span></div>
-                <Link to="/reservation-taxi-vsl">Réserver maintenant <ArrowRight size={17} /></Link>
-              </div>
-            </div>
+            <HomeBookingForm />
           </div>
         </section>
 
@@ -291,12 +282,14 @@ const Home: FC<HomeProps> = () => {
             <div className="exact-home-service-grid">
               {services.map((service) => (
                 <article key={service.title}>
-                  <img src={service.image} alt={service.alt} loading="lazy" decoding="async" />
-                  <div>
-                    <h3>{service.title}</h3>
-                    <p>{service.text}</p>
-                  </div>
-                  <span><ArrowRight size={15} /></span>
+                  <Link className="home-service-link" to={`/reservation-taxi-vsl?service=${service.reservationService}`} aria-label={`Réserver un transport — ${service.title}`}>
+                    <img src={service.image} alt={service.alt} loading="lazy" decoding="async" />
+                    <div>
+                      <h3>{service.title}</h3>
+                      <p>{service.text}</p>
+                    </div>
+                    <span className="home-service-arrow"><ArrowRight size={19} aria-hidden="true" /></span>
+                  </Link>
                 </article>
               ))}
             </div>
@@ -348,7 +341,7 @@ const Home: FC<HomeProps> = () => {
         <section className="exact-home-bottom-cta">
           <div className="exact-home-bottom-car">
             <img
-              src="https://www.ouistars.com/uploads/9745/Phoenix_09_Photorealistic_cinematic_hero_image_of_a_luxury_bla_2.jpg?locale=es"
+              src="/images/transport-medical-accompagnement.webp"
               alt=""
               loading="lazy"
               decoding="async"

@@ -1,0 +1,171 @@
+/* Readable public navigation; loaded after the legacy theme. */
+.exact-home-header .exact-home-topbar-inner { grid-template-columns: 1.8fr 1.1fr 1fr 1fr; gap: 18px; padding-block: 9px; }
+.exact-home-header .exact-home-topbar-inner span { font-size: 13px; line-height: 1.45; white-space: normal; }
+.exact-home-header .exact-home-topbar-inner svg { flex-shrink: 0; }
+.exact-home-header .exact-home-nav-inner { gap: 12px; }
+.exact-home-header .exact-home-desktop-nav { gap: 0; }
+.exact-home-header .exact-home-desktop-nav a { font-size: 14px; min-height: 48px; padding-inline: 7px; }
+.exact-home-header .exact-home-call,
+.exact-home-header .exact-home-reserve { font-size: 14px; min-height: 48px; padding-inline: 13px; white-space: nowrap; }
+.exact-home-header .exact-home-mobile-panel a { font-size: 16px; min-height: 48px; }
+.exact-home-header .exact-home-menu { width: 48px; height: 48px; }
+.exact-home-header a:focus-visible,
+.exact-home-header button:focus-visible { outline: 3px solid #a47429; outline-offset: 4px; }
+
+/* The booking card stays in flow so larger text never covers the hero. */
+.exact-home-page .exact-home-hero-inner { min-height: 0; padding-block: 48px 32px; }
+.exact-home-page .exact-home-hero-copy { padding: 0; width: 54%; }
+.exact-home-page .exact-home-hero-copy > p:not(.exact-home-eyebrow) { font-size: 16px !important; line-height: 1.65 !important; }
+.exact-home-page .exact-home-eyebrow,
+.exact-home-page .exact-home-section-kicker { font-size: 13px; line-height: 1.55; letter-spacing: .11em; }
+.exact-home-page .exact-home-hero-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; max-width: 520px; }
+.exact-home-page .exact-home-hero-benefits span { font-size: 14px; line-height: 1.45; }
+.exact-home-page .exact-home-script { bottom: 34px; }
+.exact-home-page .exact-home-booking-wrap { position: relative; left: auto; bottom: auto; transform: none; margin-top: 0; padding-bottom: 30px; }
+.exact-home-page .home-booking-form { padding: 25px; border-radius: 14px; }
+.exact-home-page .home-booking-form h2 { font-size: 26px; line-height: 1.2; }
+.home-booking-choices { display: flex; flex-wrap: wrap; gap: 6px; width: fit-content; max-width: 100%; margin: 20px 0; padding: 5px; border: 1px solid #dce6ec; border-radius: 12px; background: #f3f7f9; }
+.home-booking-choices label { position: relative; display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border-radius: 8px; cursor: pointer; color: #385466; font-size: 14px; font-weight: 700; line-height: 1.4; text-align: center; }
+.home-booking-choices label.is-selected { color: #fff; background: #08354e; }
+.home-booking-choices label:has(input:focus-visible) { outline: 3px solid #a47429; outline-offset: 3px; }
+.home-booking-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(170px, .65fr) auto; gap: 16px; align-items: start; }
+.home-booking-fields > div { min-width: 0; }
+.home-booking-fields label { display: flex; align-items: center; gap: 6px; min-height: 22px; margin-bottom: 7px; font-size: 14px; font-weight: 700; color: #345569; letter-spacing: 0; text-transform: none; }
+.home-booking-fields input:not([type=radio]) { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 52px; padding: 12px; border: 1px solid #b4c8d5; border-radius: 8px; background: #fff; color: #10364e; font-family: inherit; font-size: 16px; line-height: 1.5; }
+.home-booking-fields input::placeholder { color: #6c7c87; opacity: 1; }
+.home-booking-fields input:focus-visible { outline: 3px solid #a47429; outline-offset: 2px; }
+.home-booking-fields [role=status],
+.home-booking-fields [role=option] .text-xs { font-size: 14px; line-height: 1.45; }
+.home-booking-fields [role=option] .text-sm { font-size: 16px; }
+.home-booking-submit { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 52px; margin-top: 29px; padding: 12px 23px; border: 0; border-radius: 8px; background: #b78232; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; }
+.home-booking-submit:hover { background: #936723; }
+.home-booking-submit:focus-visible { outline: 3px solid #08354e; outline-offset: 3px; }
+.exact-home-page .home-booking-help { margin: 15px 0 0; color: #526875; font-size: 14px; line-height: 1.6; }
+.home-booking-error { margin-top: 12px; font-size: 14px; color: #a82f24; }
+
+.exact-home-page .exact-home-reassurance { padding: 22px 0; }
+.exact-home-page .exact-home-reassurance article { padding: 10px; min-height: 88px; }
+.exact-home-page .exact-home-reassurance strong,
+.exact-home-page .exact-home-reassurance small { font-size: 14px; line-height: 1.5; }
+.exact-home-page .exact-home-human { gap: 24px; padding: 55px 24px; }
+.exact-home-page .exact-home-human-copy { padding: 0 !important; }
+.exact-home-page .exact-home-human-copy > p:not(.exact-home-section-kicker) { font-size: 16px !important; line-height: 1.75 !important; }
+.exact-home-page .exact-home-human-list { gap: 14px 20px !important; }
+.exact-home-page .exact-home-human-list span { font-size: 14px !important; line-height: 1.5; align-items: flex-start; }
+.exact-home-page .exact-home-human-list svg { flex-shrink: 0; margin-top: 3px; }
+.exact-home-page .exact-home-dark-btn { min-height: 48px; max-width: 100%; padding: 12px 18px; font-size: 14px; text-align: center; }
+.exact-home-page .exact-home-cpam-card { width: 160px; padding: 20px 14px; }
+.exact-home-page .exact-home-cpam-card strong,
+.exact-home-page .exact-home-cpam-card span,
+.exact-home-page .exact-home-cpam-card small { font-size: 14px; line-height: 1.5; }
+.exact-home-page .exact-home-hospital-overlay h3 { font-size: 20px; line-height: 1.2; }
+.exact-home-page .exact-home-hospital-overlay span,
+.exact-home-page .exact-home-hospital-count { font-size: 14px; }
+.exact-home-page .exact-home-hospital-dots button { position: relative; width: 44px; height: 44px; background: transparent; }
+.exact-home-page .exact-home-hospital-dots button::after { content: ''; position: absolute; top: 18px; left: 18px; width: 8px; height: 8px; border-radius: 50%; background: #aebfc9; }
+.exact-home-page .exact-home-hospital-dots button.active::after { left: 12px; width: 20px; border-radius: 6px; background: #073455; }
+
+.exact-home-page .exact-home-services { padding: 45px 0 50px; }
+.exact-home-page .exact-home-section-title h2 { font-size: 34px; line-height: 1.2; }
+.exact-home-page .exact-home-section-title p { margin-top: 12px; font-size: 16px; line-height: 1.6; color: #526875; }
+.exact-home-page .exact-home-service-grid { margin-top: 25px; gap: 18px; }
+.exact-home-page .exact-home-service-grid article { overflow: visible; border-radius: 12px; }
+.home-service-link { position: relative; display: block; height: 100%; border-radius: inherit; color: inherit; text-decoration: none; }
+.home-service-link:focus-visible { outline: 3px solid #a47429; outline-offset: 4px; }
+.exact-home-page .exact-home-service-grid img { height: 160px; border-radius: 11px 11px 0 0; }
+.home-service-link > div { padding: 20px 46px 22px 18px; }
+.exact-home-page .exact-home-service-grid h3 { font-size: 18px; line-height: 1.35; }
+.exact-home-page .exact-home-service-grid p { margin-top: 8px; font-size: 14px; line-height: 1.6; color: #526875; }
+.home-service-arrow { position: absolute; right: 12px; bottom: 22px; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #d1dfe6; border-radius: 50%; color: #0d5897; }
+.home-service-link:hover .home-service-arrow { color: #fff; background: #0c3d57; border-color: #0c3d57; }
+
+.exact-home-page .exact-home-process-grid { padding-block: 28px; gap: 18px; }
+.exact-home-page .exact-home-process-intro h2 { font-size: 26px; line-height: 1.15; }
+.exact-home-page .exact-home-process-intro p { font-size: 14px; line-height: 1.5; margin-top: 10px; }
+.exact-home-page .exact-home-process-step { padding-inline: 8px; gap: 10px; }
+.exact-home-page .exact-home-process-step strong { font-size: 16px; line-height: 1.5; }
+.exact-home-page .exact-home-process-step small { font-size: 14px; line-height: 1.5; }
+.exact-home-page .home-coverage__description { font-size: 16px; line-height: 1.7; }
+.exact-home-page .home-coverage__eyebrow,
+.exact-home-page .home-coverage__map-heading,
+.exact-home-page .home-coverage__count,
+.exact-home-page .home-coverage__caption,
+.exact-home-page .home-coverage__instruction,
+.exact-home-page .home-coverage__link-code,
+.exact-home-page .home-coverage__link-copy > span,
+.exact-home-page .home-coverage__all { font-size: 14px; line-height: 1.5; }
+.exact-home-page .home-coverage__link-copy strong { font-size: 16px; }
+.exact-home-page .exact-home-reviews { padding: 40px 0; }
+.exact-home-page .exact-home-reviews h2 { font-size: 30px; }
+.exact-home-page .exact-home-review-grid { margin-top: 24px; }
+.exact-home-page .exact-home-review-grid article { padding: 24px 20px; }
+.exact-home-page .exact-home-review-grid p { font-size: 16px; line-height: 1.65; }
+.exact-home-page .exact-home-review-grid strong { font-size: 14px; margin-top: 9px; }
+.exact-home-page .exact-home-stars { font-size: 16px; }
+
+/* Photo and text occupy separate columns: no image overlaps the call to action. */
+.exact-home-page .exact-home-bottom-cta { display: grid; grid-template-columns: minmax(220px, 24%) minmax(0, 1fr); }
+.exact-home-page .exact-home-bottom-car { position: relative; width: auto; min-height: 220px; }
+.exact-home-page .exact-home-bottom-car img { position: absolute; inset: 0; object-position: 65% center; }
+.exact-home-page .exact-home-bottom-car::after { background: linear-gradient(90deg, transparent 65%, #062b49); }
+.exact-home-page .exact-home-bottom-inner { width: auto; margin: 0; padding: 30px; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; }
+.exact-home-page .exact-home-bottom-copy h2 { font-size: 28px; line-height: 1.2; }
+.exact-home-page .exact-home-bottom-copy p { margin-top: 12px; font-size: 16px; line-height: 1.6; }
+.exact-home-page .exact-home-bottom-actions { flex-direction: column; }
+.exact-home-page .exact-home-bottom-actions a { min-height: 48px; font-size: 14px; }
+.exact-home-page .exact-home-bottom-script { display: none; }
+
+.reservation-prefill-notice { display: flex; align-items: flex-start; gap: 10px; padding: 18px 20px; margin-bottom: 18px; background: #eaf4ee; border: 1px solid #b8d5c5; border-radius: 10px; color: #254e3b; font-size: 16px; line-height: 1.6; }
+.reservation-prefill-notice svg { flex-shrink: 0; margin-top: 3px; }
+.reservation-recurring-choice { display: flex; align-items: flex-start; gap: 12px; padding-top: 20px; margin-top: 20px; border-top: 1px solid #dce6ec; cursor: pointer; font-size: 16px; line-height: 1.5; }
+.reservation-recurring-choice input { width: 20px; height: 20px; margin-top: 3px; accent-color: #0b3b56; }
+.reservation-recurring-choice small { display: block; margin-top: 4px; color: #526875; font-size: 14px; }
+
+@media (min-width: 1200px) {
+  .exact-home-header .exact-home-logo { width: 210px !important; flex-basis: 210px !important; }
+  .exact-home-header .exact-home-logo img { max-width: 210px !important; }
+}
+@media (max-width: 1199px) {
+  .exact-home-header .exact-home-desktop-nav,
+  .exact-home-header .exact-home-nav-actions { display: none; }
+  .exact-home-header .exact-home-menu { display: inline-flex; }
+  .exact-home-header .exact-home-topbar-inner { grid-template-columns: 1.6fr 1fr; }
+  .exact-home-header .exact-home-topbar-inner span:nth-child(n+3) { display: none; }
+  .home-booking-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .exact-home-page .exact-home-human { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .exact-home-page .exact-home-cpam-card { display: none; }
+  .exact-home-page .exact-home-process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .exact-home-page .exact-home-bottom-inner { grid-template-columns: minmax(0, 1fr); }
+  .exact-home-page .exact-home-bottom-actions { flex-direction: row; justify-content: flex-start; flex-wrap: wrap; }
+}
+@media (max-width: 800px) {
+  .exact-home-page .exact-home-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .exact-home-page .exact-home-human { grid-template-columns: minmax(0, 1fr) !important; padding: 40px 18px !important; }
+  .exact-home-page .exact-home-human-copy { max-width: 620px; margin-inline: auto; }
+}
+@media (max-width: 680px) {
+  .exact-home-header .exact-home-topbar-inner { grid-template-columns: 1fr; }
+  .exact-home-header .exact-home-topbar-inner span { font-size: 12px; text-align: center; }
+  .exact-home-header .exact-home-topbar-inner span:nth-child(2) { display: none; }
+  .exact-home-page .exact-home-hero-inner { padding-block: 26px; }
+  .exact-home-page .exact-home-hero-copy { width: 100%; padding: 0; }
+  .exact-home-page .exact-home-eyebrow { font-size: 12px; }
+  .exact-home-page .exact-home-mobile-actions a { font-size: 14px; }
+  .exact-home-page .home-booking-form { padding: 20px 16px; }
+  .exact-home-page .home-booking-form h2 { font-size: 24px; }
+  .home-booking-choices { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .home-booking-choices label { padding: 10px 6px; }
+  .home-booking-choices label:last-child { grid-column: 1 / -1; }
+  .home-booking-fields { grid-template-columns: minmax(0, 1fr); }
+  .home-booking-submit { margin-top: 0; }
+  .exact-home-page .exact-home-reassurance article { padding-inline: 0; }
+  .exact-home-page .exact-home-service-grid { grid-template-columns: minmax(0, 1fr); }
+  .exact-home-page .exact-home-section-title h2 { font-size: 30px; }
+  .exact-home-page .exact-home-process-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .exact-home-page .exact-home-process-step { padding: 20px 0; }
+  .exact-home-page .exact-home-bottom-cta { grid-template-columns: minmax(0, 1fr); }
+  .exact-home-page .exact-home-bottom-car { display: block; min-height: 180px; }
+  .exact-home-page .exact-home-bottom-car::after { background: linear-gradient(180deg, transparent 65%, #062b49); }
+  .exact-home-page .exact-home-bottom-inner { padding: 24px 18px 32px; }
+  .exact-home-page .exact-home-bottom-actions { flex-direction: column; }
+}
