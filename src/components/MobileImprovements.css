@@ -61,9 +61,11 @@
   .exact-site-footer-contact a { align-items: center; min-height: 44px; font-size: 16px; line-height: 1.5; }
   .exact-site-footer-contact a[href^="tel:"] { font-size: 22px; font-weight: 700; color: #fff; }
   .exact-site-footer-contact .exact-site-footer-static { align-items: center; min-height: 36px; font-size: 14px; }
-  .exact-site-footer .exact-site-footer-brand { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px 16px; align-items: center; padding-block: 22px; border-top: 1px solid rgb(255 255 255 / 12%); }
-  .exact-site-footer .exact-site-footer-logo { width: 112px; margin: 0; border-radius: 7px; }
-  .exact-site-footer .exact-site-footer-brand h2 { font-size: 18px; line-height: 1.35; }
+  .exact-site-footer .exact-site-footer-brand { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; justify-items: start; padding-block: 22px; border-top: 1px solid rgb(255 255 255 / 12%); }
+  /* Override the old fixed logo dimensions so it always fits its own row. */
+  .exact-site-footer .exact-site-footer-logo { width: min(220px, 100%) !important; max-width: 100%; min-width: 0; min-height: 0 !important; margin: 0; padding: 8px 12px; box-sizing: border-box; border-radius: 7px; }
+  .exact-site-footer .exact-site-footer-logo .exact-site-footer-brand-image { width: 100% !important; height: auto !important; }
+  .exact-site-footer .exact-site-footer-brand h2 { min-width: 0; max-width: 100%; font-size: 18px; line-height: 1.35; overflow-wrap: break-word; }
   .exact-site-footer .exact-site-footer-brand p { grid-column: 1 / -1; max-width: none; margin: 0; font-size: 14px; line-height: 1.6; }
   .exact-site-footer-links { border-top: 1px solid rgb(255 255 255 / 12%); }
   .exact-site-footer-links summary { min-height: 58px; }
