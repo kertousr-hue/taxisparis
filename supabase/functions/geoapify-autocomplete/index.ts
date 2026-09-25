@@ -1,5 +1,11 @@
 const VALID_DEPARTMENTS = new Set(['75', '77', '78', '91', '92', '93', '94', '95', '45', '28', '60']);
 const IDF_DEPARTMENTS = new Set(['75', '77', '78', '91', '92', '93', '94', '95']);
+const MEDICAL_GENERIC_TOKENS = new Set([
+  'hopital', 'hospital', 'clinique', 'centre', 'medical', 'medicaux', 'sante', 'soins',
+  'chu', 'ch', 'ghu', 'maternite', 'polyclinique', 'cabinet', 'laboratoire',
+  'dialyse', 'radiotherapie', 'oncologie', 'imagerie', 'institut', 'fondation',
+  'de', 'du', 'des', 'la', 'le', 'les', 'd', 'l',
+]);
 const ALLOWED_ORIGINS = new Set([
   'https://www.taxisparis-conventionnes.fr',
   'https://taxisparis-conventionnes.fr',
@@ -41,9 +47,13 @@ function queryTokens(query: string): string[] {
     .filter(token => token.length >= 2 && !/^\d{5}$/.test(token));
 }
 
+function medicalSpecificTokens(query: string): string[] {
+  return queryTokens(query).filter(token => !MEDICAL_GENERIC_TOKENS.has(token));
+}
+
 function looksLikeMedicalPlace(query: string): boolean {
   const q = normalizeForSearch(query);
-  return /\b(hopital|clinique|centre medical|centre de sante|centre de soins|chu|ghu|maternite|polyclinique|dialyse|radiotherapie|oncologie|imagerie|cabinet medical|laboratoire medical)\b/.test(q);
+  return /\b(hopital|hospital|clinique|centre medical|centre de sante|centre de soins|chu|ghu|maternite|polyclinique|dialyse|radiotherapie|oncologie|imagerie|cabinet medical|laboratoire medical|institut|fondation)\b/.test(q);
 }
 
 function postalCodeOf(item: any): string {
@@ -124,18 +134,25 @@ function allowedResult(item: any): boolean {
   return VALID_DEPARTMENTS.has(postalCode.substring(0, 2));
 }
 
-function dedupeResults(items: any[]): any[] {
-  const seen = new Set<string>();
-  const out: any[] = [];
+function itemSearchText(item: any): string {
+  return normalizeForSearch([
+    item?.name,
+    item?.address_line1,
+    item?.housenumber,
+    item?.street,
+    postalCodeOf(item),
+    cityOf(item),
+    item?.formatted,
+    item?.address_line2,
+  ].filter(Boolean).join(' '));
+}
 
-  for (const item of items) {
-    const placeId = String(item?.place_id || '').trim();
-    if (!placeId || seen.has(placeId)) continue;
-    seen.add(placeId);
-    out.push(item);
-  }
-
-  return out;
+function medicalNameCoverage(item: any, query: string): number {
+  const tokens = medicalSpecificTokens(query);
+  if (!tokens.length) return 0;
+  const text = normalizeForSearch([item?.name, item?.address_line1, item?.formatted].filter(Boolean).join(' '));
+  const matched = tokens.filter(token => text.includes(token)).length;
+  return matched / tokens.length;
 }
 
 function scoreResult(item: any, query: string): number {
@@ -145,42 +162,38 @@ function scoreResult(item: any, query: string): number {
   const type = String(item?.result_type || '');
   const source = String(item?._source || 'autocomplete');
   const tokens = queryTokens(query);
+  const fullText = itemSearchText(item);
 
   let score = 0;
 
   if (IDF_DEPARTMENTS.has(department)) score += 100;
-  if (department === '75') score += 10;
 
   const queryPostalCode = query.match(/\b\d{5}\b/)?.[0] || '';
   if (queryPostalCode) {
-    score += postalCode === queryPostalCode ? 320 : -180;
-    if (source === 'structured') score += 120;
+    score += postalCode === queryPostalCode ? 420 : -220;
+    if (source === 'structured' && postalCode === queryPostalCode) score += 120;
   }
 
-  if (looksLikeMedicalPlace(query) && source === 'places') score += 150;
+  const medicalQuery = looksLikeMedicalPlace(query);
+  if (medicalQuery) {
+    const coverage = medicalNameCoverage(item, query);
+    if (source === 'places') score += 90 + coverage * 220;
+    if (coverage === 1) score += 150;
+    else if (medicalSpecificTokens(query).length > 0 && coverage === 0) score -= 120;
+  }
 
   const nameText = normalizeForSearch(item?.name || item?.address_line1 || '');
   const streetText = normalizeForSearch([item?.housenumber, item?.street].filter(Boolean).join(' '));
-  const fullText = normalizeForSearch([
-    item?.name,
-    item?.housenumber,
-    item?.street,
-    postalCode,
-    cityOf(item),
-    item?.formatted,
-    item?.address_line1,
-    item?.address_line2,
-  ].filter(Boolean).join(' '));
 
   let nameMatches = 0;
   let totalMatches = 0;
   for (const token of tokens) {
     if (nameText.includes(token)) {
-      score += 42;
+      score += 44;
       nameMatches += 1;
       totalMatches += 1;
     } else if (streetText.includes(token)) {
-      score += 22;
+      score += 24;
       totalMatches += 1;
     } else if (fullText.includes(token)) {
       score += 10;
@@ -188,22 +201,37 @@ function scoreResult(item: any, query: string): number {
     }
   }
 
-  if (tokens.length && nameMatches === tokens.length) score += 95;
+  if (tokens.length && nameMatches === tokens.length) score += 100;
   if (tokens.length && totalMatches === tokens.length) score += 45;
 
-  if (type === 'building') score += 50;
-  else if (type === 'amenity') score += 45;
-  else if (type === 'street') score += 22;
-  else if (type === 'postcode') score += 8;
-  else if (type === 'city') score += 4;
+  if (type === 'building') score += 55;
+  else if (type === 'amenity') score += 50;
+  else if (type === 'street') score += 24;
+  else if (type === 'postcode') score += 6;
+  else if (type === 'city') score += 2;
 
-  if (item?.housenumber) score += /\d/.test(query) ? 50 : 15;
+  if (item?.housenumber) score += /\d/.test(query) ? 55 : 15;
   if (rank?.match_type === 'full_match') score += 25;
   score += Number(rank?.confidence || 0) * 20;
   score += Number(rank?.confidence_building_level || 0) * 18;
   score += Number(rank?.confidence_street_level || 0) * 12;
 
   return score;
+}
+
+function dedupeByBestScore(items: any[], query: string): any[] {
+  const byPlaceId = new Map<string, any>();
+
+  for (const item of items) {
+    const placeId = String(item?.place_id || '').trim();
+    if (!placeId) continue;
+    const current = byPlaceId.get(placeId);
+    if (!current || scoreResult(item, query) > scoreResult(current, query)) {
+      byPlaceId.set(placeId, item);
+    }
+  }
+
+  return [...byPlaceId.values()];
 }
 
 function buildPreciseLabel(item: any, fallback: string): string {
@@ -226,6 +254,17 @@ function buildPreciseLabel(item: any, fallback: string): string {
     || fallback;
 }
 
+async function fetchJsonResults(url: URL, label: string): Promise<any[]> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    const detail = await response.text();
+    console.error(`[GEOAPIFY] ${label} failed`, response.status, detail.slice(0, 300));
+    return [];
+  }
+  const data = await response.json().catch(() => null);
+  return Array.isArray(data?.results) ? data.results : [];
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get('origin');
 
@@ -242,7 +281,7 @@ Deno.serve(async (req: Request) => {
   }
 
   const requestUrl = new URL(req.url);
-  const q = (requestUrl.searchParams.get('q') || '').trim();
+  const q = (requestUrl.searchParams.get('q') || '').replace(/\s+/g, ' ').trim();
   const requestedLimit = Number(requestUrl.searchParams.get('limit')) || 8;
   const limit = Math.min(Math.max(requestedLimit, 1), 10);
 
@@ -257,55 +296,22 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    // Base search for every street/address query.
+    // 1) Always run Address Autocomplete. A rectangle bias avoids over-favouring Paris centre.
     const autocompleteUrl = new URL('https://api.geoapify.com/v1/geocode/autocomplete');
     autocompleteUrl.searchParams.set('text', q);
     autocompleteUrl.searchParams.set('format', 'json');
     autocompleteUrl.searchParams.set('lang', 'fr');
     autocompleteUrl.searchParams.set('limit', '20');
     autocompleteUrl.searchParams.set('filter', 'countrycode:fr');
-    autocompleteUrl.searchParams.set('bias', 'proximity:2.3522,48.8566');
+    autocompleteUrl.searchParams.set('bias', 'rect:1.30,48.05,3.65,49.30');
     autocompleteUrl.searchParams.set('apiKey', apiKey);
 
-    const autocompletePromise = fetch(autocompleteUrl).then(async response => {
-      if (!response.ok) {
-        const detail = await response.text();
-        console.error('[GEOAPIFY] Autocomplete failed', response.status, detail.slice(0, 300));
-        return [];
-      }
-      const data = await response.json().catch(() => null);
-      return (Array.isArray(data?.results) ? data.results : [])
+    const autocompletePromise = fetchJsonResults(autocompleteUrl, 'Autocomplete')
+      .then(results => results
         .map((item: any) => ({ ...item, postcode: postalCodeOf(item), _source: 'autocomplete' }))
-        .filter(allowedResult);
-    });
+        .filter(allowedResult));
 
-    // Medical places: autocomplete + Places API.
-    const medicalPromise = looksLikeMedicalPlace(q)
-      ? (() => {
-          const placesUrl = new URL('https://api.geoapify.com/v2/places');
-          placesUrl.searchParams.set('categories', 'healthcare');
-          placesUrl.searchParams.set('name', q.replace(/\b\d{5}\b/g, ' ').replace(/\s+/g, ' ').trim());
-          placesUrl.searchParams.set('filter', 'rect:0.5,47.0,4.5,50.2');
-          placesUrl.searchParams.set('bias', 'rect:1.2,48.0,3.7,49.3');
-          placesUrl.searchParams.set('lang', 'fr');
-          placesUrl.searchParams.set('limit', '20');
-          placesUrl.searchParams.set('apiKey', apiKey);
-
-          return fetch(placesUrl).then(async response => {
-            if (!response.ok) {
-              const detail = await response.text();
-              console.error('[GEOAPIFY] Places failed', response.status, detail.slice(0, 300));
-              return [];
-            }
-            const data = await response.json().catch(() => null);
-            return (Array.isArray(data?.features) ? data.features : [])
-              .map(placeFeatureToResult)
-              .filter(allowedResult);
-          });
-        })()
-      : Promise.resolve([]);
-
-    // Any query containing a postcode also gets a structured geocoding request.
+    // 2) When a full postcode is present, also run structured geocoding.
     const structured = parseStructuredQuery(q);
     const structuredPromise = structured
       ? (() => {
@@ -314,36 +320,64 @@ Deno.serve(async (req: Request) => {
           structuredUrl.searchParams.set('lang', 'fr');
           structuredUrl.searchParams.set('limit', '20');
           structuredUrl.searchParams.set('filter', 'countrycode:fr');
+          structuredUrl.searchParams.set('bias', 'rect:1.30,48.05,3.65,49.30');
           structuredUrl.searchParams.set('apiKey', apiKey);
           for (const [key, value] of Object.entries(structured)) {
             if (value) structuredUrl.searchParams.set(key, String(value));
           }
 
-          return fetch(structuredUrl).then(async response => {
-            if (!response.ok) {
-              const detail = await response.text();
-              console.error('[GEOAPIFY] Structured geocoding failed', response.status, detail.slice(0, 300));
-              return [];
-            }
-            const data = await response.json().catch(() => null);
-            return (Array.isArray(data?.results) ? data.results : [])
+          return fetchJsonResults(structuredUrl, 'Structured geocoding')
+            .then(results => results
               .map((item: any) => ({ ...item, postcode: postalCodeOf(item), _source: 'structured' }))
-              .filter(allowedResult);
-          });
+              .filter(allowedResult));
         })()
       : Promise.resolve([]);
 
-    const [autocompleteResults, medicalResults, structuredResults] = await Promise.all([
+    const [autocompleteResults, structuredResults] = await Promise.all([
       autocompletePromise,
-      medicalPromise,
       structuredPromise,
     ]);
 
-    const merged = dedupeResults([
+    // Rank the geocoding candidates first. For a medical query this gives us a precise
+    // anchor, then Places searches healthcare POIs only around that candidate.
+    const preliminary = dedupeByBestScore([
       ...autocompleteResults,
-      ...medicalResults,
       ...structuredResults,
-    ]).sort((a, b) => scoreResult(b, q) - scoreResult(a, q));
+    ], q).sort((a, b) => scoreResult(b, q) - scoreResult(a, q));
+
+    const medicalQuery = looksLikeMedicalPlace(q) && q.length >= 5;
+    const anchor = medicalQuery
+      ? preliminary.find(item => Number.isFinite(Number(item?.lat)) && Number.isFinite(Number(item?.lon)))
+      : null;
+
+    let placesResults: any[] = [];
+    if (anchor) {
+      const anchorLon = Number(anchor.lon);
+      const anchorLat = Number(anchor.lat);
+      const placesUrl = new URL('https://api.geoapify.com/v2/places');
+      placesUrl.searchParams.set('categories', 'healthcare');
+      placesUrl.searchParams.set('filter', `circle:${anchorLon},${anchorLat},3500`);
+      placesUrl.searchParams.set('bias', `proximity:${anchorLon},${anchorLat}`);
+      placesUrl.searchParams.set('lang', 'fr');
+      placesUrl.searchParams.set('limit', '20');
+      placesUrl.searchParams.set('apiKey', apiKey);
+
+      const response = await fetch(placesUrl);
+      if (response.ok) {
+        const data = await response.json().catch(() => null);
+        placesResults = (Array.isArray(data?.features) ? data.features : [])
+          .map(placeFeatureToResult)
+          .filter(allowedResult);
+      } else {
+        const detail = await response.text();
+        console.error('[GEOAPIFY] Places failed', response.status, detail.slice(0, 300));
+      }
+    }
+
+    const merged = dedupeByBestScore([
+      ...preliminary,
+      ...placesResults,
+    ], q).sort((a, b) => scoreResult(b, q) - scoreResult(a, q));
 
     const items = merged.slice(0, limit).map((item: any) => {
       const label = buildPreciseLabel(item, q);
@@ -355,6 +389,7 @@ Deno.serve(async (req: Request) => {
         title: String(item?.name || item?.address_line1 || streetLine || label || q),
         resultType: String(item?.result_type || 'address'),
         source: String(item?._source || 'autocomplete'),
+        confidence: Number(item?.rank?.confidence || 0),
         address: {
           label,
           countryCode: String(item?.country_code || 'fr').toUpperCase(),
@@ -371,8 +406,8 @@ Deno.serve(async (req: Request) => {
       items,
       provider: 'geoapify',
       enrichment: {
-        places: looksLikeMedicalPlace(q),
         structured: Boolean(structured),
+        placesAroundMedicalCandidate: Boolean(anchor),
       },
     }, 200, origin);
   } catch (error) {
