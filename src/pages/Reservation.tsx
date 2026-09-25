@@ -188,6 +188,8 @@ export default function ReservationPage() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [coordsDepart, setCoordsDepart] = useState<{ lat: number; lng: number } | null>(null);
   const [coordsArrivee, setCoordsArrivee] = useState<{ lat: number; lng: number } | null>(null);
+  const [departPlaceId, setDepartPlaceId] = useState<string | null>(null);
+  const [arriveePlaceId, setArriveePlaceId] = useState<string | null>(null);
 
   const apiKey = import.meta.env.VITE_HERE_API_KEY;
 
@@ -200,6 +202,8 @@ export default function ReservationPage() {
     }));
     setCoordsDepart(prefill.departureCoordinates);
     setCoordsArrivee(prefill.destinationCoordinates);
+    setDepartPlaceId(prefill.departurePlaceId);
+    setArriveePlaceId(prefill.destinationPlaceId);
     setDistance(null);
     setDurationMinutes(null);
     setTypeTrajet(prefill.trip);
@@ -247,12 +251,12 @@ export default function ReservationPage() {
     const errs: FieldErrors = {};
     if (!formData.adresse_depart || formData.adresse_depart.trim().length < 5)
       errs.adresse_depart = 'Veuillez renseigner l\'adresse de départ';
-    else if (!coordsDepart)
-      errs.adresse_depart = 'Sélectionnez une adresse dans les suggestions';
+    else if (!coordsDepart || !departPlaceId)
+      errs.adresse_depart = 'Sélectionnez une adresse Geoapify dans les suggestions';
     if (!formData.adresse_arrivee || formData.adresse_arrivee.trim().length < 5)
       errs.adresse_arrivee = 'Veuillez renseigner l\'adresse d\'arrivée';
-    else if (!coordsArrivee)
-      errs.adresse_arrivee = 'Sélectionnez une adresse dans les suggestions';
+    else if (!coordsArrivee || !arriveePlaceId)
+      errs.adresse_arrivee = 'Sélectionnez une adresse Geoapify dans les suggestions';
     if (fauteuilRoulant === null) errs.fauteuil_roulant = 'Veuillez indiquer si le patient est en fauteuil roulant';
     if (!typeTrajet) errs.type_trajet = 'Veuillez choisir le type de trajet (aller simple ou aller-retour)';
 
@@ -299,6 +303,12 @@ export default function ReservationPage() {
         email: formData.email || '',
         adresse_depart: formData.adresse_depart,
         adresse_arrivee: formData.adresse_arrivee,
+        depart_lat: coordsDepart?.lat ?? null,
+        depart_lng: coordsDepart?.lng ?? null,
+        depart_place_id: departPlaceId,
+        destination_lat: coordsArrivee?.lat ?? null,
+        destination_lng: coordsArrivee?.lng ?? null,
+        destination_place_id: arriveePlaceId,
         distance_km: distance || null,
         duree_min: durationMinutes || null,
         date_rdv: formData.date_rdv,
@@ -325,6 +335,7 @@ export default function ReservationPage() {
       setSubmitSuccess(true);
       setFormData({ nom: '', prenom: '', telephone: '', email: '', adresse_depart: '', adresse_arrivee: '', date_rdv: '', heure_rdv: '', informations_supplementaires: '' });
       setDistance(null); setDurationMinutes(null); setCoordsDepart(null); setCoordsArrivee(null);
+      setDepartPlaceId(null); setArriveePlaceId(null);
       setFauteuilRoulant(null); setTypeTrajet(null); setRecurring(false); setPrefillNotice('');
       setTypePriseEnCharge(null); setSituationALD(null); setBonTransport(null);
       setTimeout(() => setSubmitSuccess(false), 7000);
@@ -533,9 +544,9 @@ export default function ReservationPage() {
                     <AutocompleteInput
                       label="Adresse de départ" value={formData.adresse_depart || ''}
                       placeholder="Ex : Hôpital Cochin, Paris" required apiKey={apiKey}
-                      onAddressSelect={(addr, lat, lng) => { setFormData(p => ({ ...p, adresse_depart: addr })); setCoordsDepart({ lat, lng }); clearErr('adresse_depart'); }}
-                      onInputChange={v => { setFormData(p => ({ ...p, adresse_depart: v })); setCoordsDepart(null); clearErr('adresse_depart'); }}
-                      isValidated={!!coordsDepart} hasError={!!fieldErrors.adresse_depart}
+                      onAddressSelect={(addr, lat, lng, placeId) => { setFormData(p => ({ ...p, adresse_depart: addr })); setCoordsDepart({ lat, lng }); setDepartPlaceId(placeId); clearErr('adresse_depart'); }}
+                      onInputChange={v => { setFormData(p => ({ ...p, adresse_depart: v })); setCoordsDepart(null); setDepartPlaceId(null); clearErr('adresse_depart'); }}
+                      isValidated={!!coordsDepart && !!departPlaceId} hasError={!!fieldErrors.adresse_depart}
                     />
                     <ErrorMsg msg={fieldErrors.adresse_depart} />
                   </div>
@@ -543,9 +554,9 @@ export default function ReservationPage() {
                     <AutocompleteInput
                       label="Adresse d'arrivée" value={formData.adresse_arrivee || ''}
                       placeholder="Ex : Hôpital Necker, Paris" required apiKey={apiKey}
-                      onAddressSelect={(addr, lat, lng) => { setFormData(p => ({ ...p, adresse_arrivee: addr })); setCoordsArrivee({ lat, lng }); clearErr('adresse_arrivee'); }}
-                      onInputChange={v => { setFormData(p => ({ ...p, adresse_arrivee: v })); setCoordsArrivee(null); clearErr('adresse_arrivee'); }}
-                      isValidated={!!coordsArrivee} hasError={!!fieldErrors.adresse_arrivee}
+                      onAddressSelect={(addr, lat, lng, placeId) => { setFormData(p => ({ ...p, adresse_arrivee: addr })); setCoordsArrivee({ lat, lng }); setArriveePlaceId(placeId); clearErr('adresse_arrivee'); }}
+                      onInputChange={v => { setFormData(p => ({ ...p, adresse_arrivee: v })); setCoordsArrivee(null); setArriveePlaceId(null); clearErr('adresse_arrivee'); }}
+                      isValidated={!!coordsArrivee && !!arriveePlaceId} hasError={!!fieldErrors.adresse_arrivee}
                     />
                     <ErrorMsg msg={fieldErrors.adresse_arrivee} />
                   </div>
