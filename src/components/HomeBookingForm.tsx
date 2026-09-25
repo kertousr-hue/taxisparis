@@ -18,6 +18,8 @@ export default function HomeBookingForm() {
   const [trip, setTrip] = useState<TripChoice>('aller_simple');
   const [departureCoordinates, setDepartureCoordinates] = useState<Coordinates | null>(null);
   const [destinationCoordinates, setDestinationCoordinates] = useState<Coordinates | null>(null);
+  const [departurePlaceId, setDeparturePlaceId] = useState<string | null>(null);
+  const [destinationPlaceId, setDestinationPlaceId] = useState<string | null>(null);
   const [error, setError] = useState('');
 
   function continueBooking(event: FormEvent<HTMLFormElement>) {
@@ -26,10 +28,15 @@ export default function HomeBookingForm() {
       setError('Indiquez une adresse de départ et une destination plus précises.');
       return;
     }
+    if (!departureCoordinates || !destinationCoordinates || !departurePlaceId || !destinationPlaceId) {
+      setError('Sélectionnez les deux adresses dans la liste Geoapify proposée.');
+      return;
+    }
     // History state keeps personal addresses out of URLs and analytics page views.
     navigate('/reservation-taxi-vsl', { state: { homeBooking: {
       departure: departure.trim(), destination: destination.trim(), date, trip,
       departureCoordinates, destinationCoordinates,
+      departurePlaceId, destinationPlaceId,
     } } });
   }
 
@@ -48,13 +55,13 @@ export default function HomeBookingForm() {
       </fieldset>
       <div className="home-booking-fields">
         <AutocompleteInput label="Adresse de départ" placeholder="Votre adresse de départ" required apiKey=""
-          value={departure} isValidated={Boolean(departureCoordinates)}
-          onInputChange={value => { setDeparture(value); setDepartureCoordinates(null); setError(''); }}
-          onAddressSelect={(value, lat, lng) => { setDeparture(value); setDepartureCoordinates({ lat, lng }); }} />
+          value={departure} isValidated={Boolean(departureCoordinates && departurePlaceId)}
+          onInputChange={value => { setDeparture(value); setDepartureCoordinates(null); setDeparturePlaceId(null); setError(''); }}
+          onAddressSelect={(value, lat, lng, placeId) => { setDeparture(value); setDepartureCoordinates({ lat, lng }); setDeparturePlaceId(placeId); }} />
         <AutocompleteInput label="Destination" placeholder="Hôpital, clinique, adresse…" required apiKey=""
-          value={destination} isValidated={Boolean(destinationCoordinates)}
-          onInputChange={value => { setDestination(value); setDestinationCoordinates(null); setError(''); }}
-          onAddressSelect={(value, lat, lng) => { setDestination(value); setDestinationCoordinates({ lat, lng }); }} />
+          value={destination} isValidated={Boolean(destinationCoordinates && destinationPlaceId)}
+          onInputChange={value => { setDestination(value); setDestinationCoordinates(null); setDestinationPlaceId(null); setError(''); }}
+          onAddressSelect={(value, lat, lng, placeId) => { setDestination(value); setDestinationCoordinates({ lat, lng }); setDestinationPlaceId(placeId); }} />
         <div className="home-booking-date">
           <label htmlFor="home-trip-date"><CalendarDays size={16} aria-hidden="true" />{trip === 'regulier' ? 'Premier trajet' : 'Date du trajet'} *</label>
           <input id="home-trip-date" name="date" type="date" value={date} min={localDate()} required onChange={event => setDate(event.target.value)} />
