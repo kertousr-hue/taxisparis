@@ -28,6 +28,12 @@ export interface Reservation {
   email: string;
   adresse_depart: string;
   adresse_arrivee: string;
+  depart_lat?: number | null;
+  depart_lng?: number | null;
+  depart_place_id?: string | null;
+  destination_lat?: number | null;
+  destination_lng?: number | null;
+  destination_place_id?: string | null;
   distance_km?: number;
   temps_trajet?: string;
   date_rdv: string;
