@@ -1,13 +1,17 @@
 export interface GeoapifyAutocompleteSuggestion {
   id: string;
+  placeId: string;
   title: string;
   address: {
     label: string;
     countryCode?: string;
     postalCode?: string;
     city?: string;
+    street?: string;
+    houseNumber?: string;
   };
   resultType: string;
+  source?: 'autocomplete' | 'places' | 'structured' | string;
   position: {
     lat: number;
     lng: number;
@@ -26,12 +30,12 @@ export async function fetchGeoapifyAutocomplete(
   }
 
   try {
-    const params = new URLSearchParams({ q: query, limit: '5' });
+    const params = new URLSearchParams({ q: query, limit: '8' });
     const response = await fetch(`${GEOAPIFY_AUTOCOMPLETE_URL}?${params.toString()}`);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Geoapify Supabase autocomplete error:', response.status, response.statusText, errorText);
+      console.error('Geoapify Supabase search error:', response.status, response.statusText, errorText);
       return [];
     }
 
@@ -50,8 +54,9 @@ export async function fetchGeoapifyAutocomplete(
         const postalCodeMatch = label.match(/\b(\d{5})\b/);
         const foundPostalCode = postalCode || (postalCodeMatch ? postalCodeMatch[1] : '');
         const hasPosition = Number.isFinite(item.position?.lat) && Number.isFinite(item.position?.lng);
+        const placeId = String(item.placeId || item.id || '').trim();
 
-        if (!/^\d{5}$/.test(foundPostalCode) || !hasPosition) return false;
+        if (!/^\d{5}$/.test(foundPostalCode) || !hasPosition || !placeId) return false;
 
         const department = foundPostalCode.substring(0, 2);
         return VALID_DEPARTMENTS.includes(department);
@@ -62,15 +67,19 @@ export async function fetchGeoapifyAutocomplete(
         const postalCode = item.address.postalCode || (postalCodeMatch ? postalCodeMatch[1] : '');
 
         return {
-          id: item.id,
+          id: String(item.id || item.placeId),
+          placeId: String(item.placeId || item.id),
           title: item.title,
           address: {
             label: item.address.label,
             countryCode: item.address.countryCode || 'FR',
             postalCode,
             city: item.address.city,
+            street: item.address.street,
+            houseNumber: item.address.houseNumber,
           },
           resultType: item.resultType,
+          source: item.source,
           position: {
             lat: item.position.lat,
             lng: item.position.lng,
@@ -78,7 +87,7 @@ export async function fetchGeoapifyAutocomplete(
         };
       });
   } catch (error) {
-    console.error('Error fetching Geoapify autocomplete from Supabase:', error);
+    console.error('Error fetching Geoapify search from Supabase:', error);
     return [];
   }
 }
