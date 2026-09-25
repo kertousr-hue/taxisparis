@@ -33,6 +33,8 @@ export default function AutocompleteInput({
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const requestIdRef = useRef(0);
+  const selectedValueRef = useRef<string | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,6 +48,7 @@ export default function AutocompleteInput({
   }, []);
 
   const fetchSuggestions = useCallback(async (query: string) => {
+    const requestId = ++requestIdRef.current;
     if (query.length < 3) {
       setSuggestions([]);
       setIsLoading(false);
@@ -55,36 +58,55 @@ export default function AutocompleteInput({
     setIsLoading(true);
     try {
       const results = await fetchGeoapifyAutocomplete(query);
+      if (requestId !== requestIdRef.current) return;
       setSuggestions(results);
     } catch (error) {
+      if (requestId !== requestIdRef.current) return;
       console.error('Error fetching suggestions:', error);
       setSuggestions([]);
     } finally {
-      setIsLoading(false);
+      if (requestId === requestIdRef.current) setIsLoading(false);
     }
   }, []);
 
   const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 300),
+    debounce(fetchSuggestions, 400),
     [fetchSuggestions]
   );
 
   useEffect(() => {
+    if (isValidated) {
+      selectedValueRef.current = value;
+      requestIdRef.current += 1;
+      setSuggestions([]);
+      setIsLoading(false);
+      return;
+    }
+
+    if (value === selectedValueRef.current) return;
+
     if (value.length >= 3) {
       debouncedFetchSuggestions(value);
     } else {
+      requestIdRef.current += 1;
       setSuggestions([]);
+      setIsLoading(false);
     }
-  }, [value, debouncedFetchSuggestions]);
+  }, [value, isValidated, debouncedFetchSuggestions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
+    selectedValueRef.current = null;
+    requestIdRef.current += 1;
     onInputChange(newValue);
     setShowSuggestions(true);
   };
 
   const handleSuggestionClick = (suggestion: GeoapifyAutocompleteSuggestion) => {
+    selectedValueRef.current = suggestion.address.label;
+    requestIdRef.current += 1;
     setShowSuggestions(false);
+    setIsLoading(false);
 
     // Geoapify fournit l'adresse et les coordonnées GPS.
     // HERE n'est jamais utilisé pour la recherche ou le géocodage des adresses.
