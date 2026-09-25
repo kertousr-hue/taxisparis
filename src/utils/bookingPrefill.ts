@@ -8,6 +8,8 @@ export interface HomeBookingDraft {
   trip: TripChoice;
   departureCoordinates: Coordinates | null;
   destinationCoordinates: Coordinates | null;
+  departurePlaceId: string | null;
+  destinationPlaceId: string | null;
 }
 
 export function localDate(date = new Date()): string {
@@ -50,6 +52,8 @@ export function reservationPrefill(state: unknown, search = '', today = localDat
     date: validDate ? date : '',
     departureCoordinates: departure ? validCoordinates(draft.departureCoordinates) : null,
     destinationCoordinates: destination ? validCoordinates(draft.destinationCoordinates) : null,
+    departurePlaceId: departure ? text(draft.departurePlaceId) || null : null,
+    destinationPlaceId: destination ? text(draft.destinationPlaceId) || null : null,
     trip: draft.trip === 'aller_simple' || draft.trip === 'aller_retour' ? draft.trip : null,
     recurring: draft.trip === 'regulier' || service === 'soins-reguliers',
     careType: service === 'consultation' ? 'consultation' : null,
