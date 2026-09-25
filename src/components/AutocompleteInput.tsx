@@ -12,7 +12,7 @@ interface AutocompleteInputProps {
   placeholder: string;
   required?: boolean;
   apiKey: string;
-  onAddressSelect: (address: string, lat: number, lng: number) => void;
+  onAddressSelect: (address: string, lat: number, lng: number, placeId: string) => void;
   onInputChange: (value: string) => void;
   isValidated: boolean;
   hasError?: boolean;
@@ -91,7 +91,8 @@ export default function AutocompleteInput({
     onAddressSelect(
       suggestion.address.label,
       suggestion.position.lat,
-      suggestion.position.lng
+      suggestion.position.lng,
+      suggestion.placeId
     );
     setSuggestions([]);
   };
