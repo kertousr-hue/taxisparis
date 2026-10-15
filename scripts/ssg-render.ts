@@ -270,8 +270,7 @@ function injectIntoTemplate(template: string, appHtml: string, helmet: any, rout
     scriptTags = helmetScript;
   }
 
-  const hasCanonical = linkTags.includes('rel="canonical"');
-  const canonicalTag = hasCanonical ? '' : `<link rel="canonical" href="${canonicalUrl}" />`;
+  // Toujours une seule URL canonique, identique à la route sans slash final.\n  linkTags = linkTags.replace(/<link\b(?=[^>]*\brel=[\\"']canonical[\\"'])[^>]*\/?>/gi, '');\n  const canonicalTag = `<link rel=\"canonical\" href=\"${canonicalUrl}\" />`;
 
   let html = template;
   const hasTitleTag = /<title[^>]*>[\s\S]*?<\/title>/i.test(html);
