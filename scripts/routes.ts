@@ -72,7 +72,6 @@ export function getAllRoutes(): RouteConfig[] {
 export function getRoutesForSitemap(): string {
   const routes = getAllRoutes();
   const baseUrl = 'https://www.taxisparis-conventionnes.fr';
-  const today = new Date().toISOString().split('T')[0];
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
@@ -81,7 +80,6 @@ export function getRoutesForSitemap(): string {
     const loc = route.path === '/' ? `${baseUrl}/` : `${baseUrl}${route.path}`;
     xml += '  <url>\n';
     xml += `    <loc>${loc}</loc>\n`;
-    xml += `    <lastmod>${today}</lastmod>\n`;
     xml += `    <changefreq>weekly</changefreq>\n`;
     xml += `    <priority>${route.priority.toFixed(1)}</priority>\n`;
     xml += '  </url>\n';
