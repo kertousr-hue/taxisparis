@@ -199,12 +199,12 @@ export default function CityPage() {
           </section>
 
           <section id="trajets" className="lp-section">
-            <div className="lp-section-heading"><p className="lp-eyebrow">Du domicile à vos soins</p><h2>Vos trajets depuis {city.name}.</h2><p>Quelques destinations hospitalières desservies au départ de votre ville.</p></div>
+            <div className="lp-section-heading"><p className="lp-eyebrow">Du domicile à vos soins</p><h2>Vos trajets depuis {city.name}.</h2><p>Exemples de destinations à préciser lors de la réservation, selon la disponibilité.</p></div>
             <div className="lp-trips">{frequentTrips.map((trip, index) => <article className="lp-trip" key={`${trip.to}-${index}`}><div className="lp-trip-path"><i aria-hidden="true" /><span><small>Départ</small><strong>{trip.from}</strong></span><i aria-hidden="true" /><span><small>Destination</small><strong>{trip.to}</strong></span></div><p>{trip.description}</p></article>)}</div>
             <div className="lp-care-note">Votre établissement ne figure pas dans cette liste ? Contactez-nous pour organiser un trajet adapté à votre rendez-vous et à votre prescription.</div>
           </section>
 
-          {hospitals.length > 0 && <section className="lp-section"><div className="lp-section-heading"><p className="lp-eyebrow">Vos établissements</p><h2>Les hôpitaux desservis<br />depuis {city.name}.</h2></div><ul className="lp-hospital-list">{hospitals.map((hospital) => <li key={hospital}><Building2 size={18} aria-hidden="true" /><span>{hospital}</span></li>)}</ul></section>}
+          {hospitals.length > 0 && <section className="lp-section"><div className="lp-section-heading"><p className="lp-eyebrow">Vos établissements</p><h2>Les établissements proposés<br />depuis {city.name}.</h2></div><ul className="lp-hospital-list">{hospitals.map((hospital) => <li key={hospital}><Building2 size={18} aria-hidden="true" /><span>{hospital}</span></li>)}</ul></section>}
 
           <section id="organisation" className="lp-section">
             <div className="lp-section-heading"><p className="lp-eyebrow">Un trajet bien préparé</p><h2>L’organisation de votre<br />transport {cityLocation}.</h2></div>
@@ -223,7 +223,7 @@ export default function CityPage() {
             <LocalParagraphs text={selectedBooking} />
             <ol className="lp-steps"><li><span>01</span><p>Communiquez votre adresse de départ, votre destination et l’horaire de votre rendez-vous.</p></li><li><span>02</span><p>Préparez votre prescription de transport et vos informations de prise en charge.</p></li><li><span>03</span><p>Confirmez les modalités et l’heure de départ avec notre équipe.</p></li></ol>
           </section>
-          <LocalFAQ title={`Vos questions à ${city.name}`} items={faq} />
+          <LocalFAQ title={`Vos questions ${cityLocation}`} items={faq} />
         </div>
         <LocalBookingAside locality={city.name} departmentName={department.name} departmentSlug={department.slug} />
       </div>
