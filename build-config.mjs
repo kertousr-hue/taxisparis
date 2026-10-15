@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const BASE_URL = 'https://www.taxisparis-conventionnes.fr';
-const TODAY = new Date().toISOString().split('T')[0];
 const OUTPUT_DIR = resolve(__dirname, 'dist-ssg');
 
 const citiesData = JSON.parse(
@@ -106,7 +105,6 @@ function buildSitemap() {
       const loc = `${BASE_URL}${normalizePath(u.path)}`;
       return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${TODAY}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority.toFixed(1)}</priority>
   </url>`;

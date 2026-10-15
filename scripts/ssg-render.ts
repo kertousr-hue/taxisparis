@@ -270,8 +270,9 @@ function injectIntoTemplate(template: string, appHtml: string, helmet: any, rout
     scriptTags = helmetScript;
   }
 
-  const hasCanonical = linkTags.includes('rel="canonical"');
-  const canonicalTag = hasCanonical ? '' : `<link rel="canonical" href="${canonicalUrl}" />`;
+  // Supprimer toute canonical émise par Helmet pour conserver l'URL de la route normalisée.
+  linkTags = linkTags.replace(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*\/?>/gi, '');
+  const canonicalTag = `<link rel="canonical" href="${canonicalUrl}" />`;
 
   let html = template;
   const hasTitleTag = /<title[^>]*>[\s\S]*?<\/title>/i.test(html);
