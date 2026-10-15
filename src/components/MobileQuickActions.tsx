@@ -9,7 +9,14 @@ export default function MobileQuickActions() {
         <Phone size={20} aria-hidden="true" /> Appeler
       </a>
       {pathname === '/reservation-taxi-vsl' ? (
-        <a className="mobile-quick-actions__reserve" href="#reservation-form">
+        <a
+          className="mobile-quick-actions__reserve"
+          href="/reservation-taxi-vsl"
+          onClick={(event) => {
+            event.preventDefault();
+            document.getElementById('reservation-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        >
           <CalendarDays size={20} aria-hidden="true" /> Réserver
         </a>
       ) : (

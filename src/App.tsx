@@ -62,13 +62,15 @@ function ScrollToTop() {
 
 function CanonicalPathRedirect() {
   const navigate = useNavigate();
-  const { pathname, search, hash } = useLocation();
+  const { pathname, search, hash, state } = useLocation();
 
   useEffect(() => {
-    if (pathname !== '/' && pathname.endsWith('/')) {
-      navigate(`${pathname.replace(/\/+$/g, '')}${search}${hash}`, { replace: true });
+    const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/g, '');
+    const removeReservationHash = normalizedPath === '/reservation-taxi-vsl' && hash === '#reservation-form';
+    if (normalizedPath !== pathname || removeReservationHash) {
+      navigate(`${normalizedPath}${search}${removeReservationHash ? '' : hash}`, { replace: true, state });
     }
-  }, [pathname, search, hash, navigate]);
+  }, [pathname, search, hash, state, navigate]);
 
   return null;
 }
