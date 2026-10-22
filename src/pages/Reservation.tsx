@@ -70,7 +70,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-type SituationALD = 'ald_exonerante' | 'cmu' | 'pas_ald';
+type SituationALD = 'ald_exonerante' | 'cmu';
 type BonTransport = 'deja_etabli' | 'a_etablir' | 'sans_bon';
 
 type FieldErrors = {
@@ -317,7 +317,7 @@ export default function ReservationPage() {
         nombre_bagages: 0,
         message: messageStr,
         type_trajet: 'vsl',
-        ald_cmu: situationALD !== 'pas_ald',
+        ald_cmu: Boolean(situationALD),
         prescription: bonTransport === 'deja_etabli',
         statut: 'pending',
       };
@@ -345,7 +345,7 @@ export default function ReservationPage() {
         telephone: formData.telephone, email: formData.email,
         adresse_depart: formData.adresse_depart, adresse_arrivee: formData.adresse_arrivee,
         date_rdv: formData.date_rdv, heure_rdv: formData.heure_rdv,
-        ald_cmu: situationALD !== 'pas_ald',
+        ald_cmu: Boolean(situationALD),
         prescription: bonTransport === 'deja_etabli',
         numero_vol: '', numero_train: '', nombre_passagers: 1, nombre_bagages: 0,
         distance_km: distance || 0, duree_min: durationMinutes || 0,
@@ -677,20 +677,7 @@ export default function ReservationPage() {
                   <RadioPill name="situation_ald" value="cmu" checked={situationALD === 'cmu'}
                     onChange={() => { setSituationALD('cmu'); clearErr('situation_ald'); }}
                     label="CMU / CSS" sublabel="Complémentaire santé solidaire" required />
-                  <RadioPill name="situation_ald" value="pas_ald" checked={situationALD === 'pas_ald'}
-                    onChange={() => { setSituationALD('pas_ald'); clearErr('situation_ald'); }}
-                    label="Pas d'ALD / CMU" sublabel="Sans dispositif particulier" required />
                 </div>
-                {situationALD === 'pas_ald' && (
-                  <div role="status" aria-live="polite" className="mt-3 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-900">
-                    <div className="flex items-start gap-2">
-                      <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-orange-500" />
-                      <p className="leading-relaxed">
-                        <strong>Avance des frais requise.</strong> Sans ALD ni CMU, vous devrez avancer <strong>45 %</strong> du montant du transport. La Sécurité sociale prend en charge <strong>55 %</strong>, et votre mutuelle peut rembourser les <strong>45 %</strong> restants selon votre contrat.
-                      </p>
-                    </div>
-                  </div>
-                )}
                 <ErrorMsg msg={fieldErrors.situation_ald} />
                 <p className="mt-3 text-xs text-gray-400 flex items-start gap-1.5">
                   <AlertCircle size={11} className="mt-0.5 flex-shrink-0" />
