@@ -683,7 +683,7 @@ export default function ReservationPage() {
                     <div className="flex items-start gap-2">
                       <AlertCircle size={17} className="mt-0.5 flex-shrink-0 text-amber-600" />
                       <p className="leading-relaxed">
-                        <strong>CMU-C / C2S :</strong> pour un taxi remboursé au titre d'une ALD, il faut une <strong>exonération ALD à 100 %</strong> et un bon de transport. La C2S seule ne suffit pas. Un transport lié à une hospitalisation peut aussi être remboursé sans ALD.
+                        Pour bénéficier du remboursement d'un taxi conventionné, la CMU-C / C2S seule ne suffit pas. Vous devez disposer d'une <strong>exonération à 100 %</strong> et d'un bon de transport.
                       </p>
                     </div>
                   </div>
