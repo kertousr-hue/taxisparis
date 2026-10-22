@@ -683,7 +683,7 @@ export default function ReservationPage() {
                     <div className="flex items-start gap-2">
                       <AlertCircle size={17} className="mt-0.5 flex-shrink-0 text-amber-600" />
                       <p className="leading-relaxed">
-                        <strong>Attention : la C2S seule ne garantit pas le remboursement d'un taxi conventionné.</strong> Pour un transport au titre d'une ALD, une <strong>ALD exonérante (exonération à 100 %)</strong> reconnue par la CPAM est nécessaire, ainsi qu'une prescription médicale adaptée. D'autres motifs, notamment une hospitalisation, peuvent ouvrir droit au remboursement sans ALD. Les droits sont vérifiés avant la prise en charge.
+                        <strong>La C2S seule ne garantit pas le remboursement du taxi.</strong> Pour un transport lié à une ALD, une <strong>exonération ALD à 100 %</strong> et une prescription adaptée sont nécessaires. D'autres motifs, comme l'hospitalisation, peuvent aussi être pris en charge.
                       </p>
                     </div>
                   </div>
