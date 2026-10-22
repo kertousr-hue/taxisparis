@@ -676,8 +676,18 @@ export default function ReservationPage() {
                     label="ALD exonérante" sublabel="Prise en charge à 100 %" required />
                   <RadioPill name="situation_ald" value="cmu" checked={situationALD === 'cmu'}
                     onChange={() => { setSituationALD('cmu'); clearErr('situation_ald'); }}
-                    label="CMU / CSS" sublabel="Complémentaire santé solidaire" required />
+                    label="CMU-C / C2S" sublabel="Complémentaire santé solidaire" required />
                 </div>
+                {situationALD === 'cmu' && (
+                  <div role="note" className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle size={17} className="mt-0.5 flex-shrink-0 text-amber-600" />
+                      <p className="leading-relaxed">
+                        <strong>Attention : la C2S seule ne garantit pas le remboursement d'un taxi conventionné.</strong> Pour un transport au titre d'une ALD, une <strong>ALD exonérante (exonération à 100 %)</strong> reconnue par la CPAM est nécessaire, ainsi qu'une prescription médicale adaptée. D'autres motifs, notamment une hospitalisation, peuvent ouvrir droit au remboursement sans ALD. Les droits sont vérifiés avant la prise en charge.
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <ErrorMsg msg={fieldErrors.situation_ald} />
                 <p className="mt-3 text-xs text-gray-400 flex items-start gap-1.5">
                   <AlertCircle size={11} className="mt-0.5 flex-shrink-0" />
