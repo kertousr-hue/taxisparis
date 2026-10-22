@@ -683,7 +683,7 @@ export default function ReservationPage() {
                     <div className="flex items-start gap-2">
                       <AlertCircle size={17} className="mt-0.5 flex-shrink-0 text-amber-600" />
                       <p className="leading-relaxed">
-                        <strong>La C2S seule ne garantit pas le remboursement du taxi.</strong> Pour un transport lié à une ALD, une <strong>exonération ALD à 100 %</strong> et une prescription adaptée sont nécessaires. D'autres motifs, comme l'hospitalisation, peuvent aussi être pris en charge.
+                        <strong>CMU-C / C2S :</strong> pour un taxi remboursé au titre d'une ALD, il faut une <strong>exonération ALD à 100 %</strong> et un bon de transport. La C2S seule ne suffit pas. Un transport lié à une hospitalisation peut aussi être remboursé sans ALD.
                       </p>
                     </div>
                   </div>
