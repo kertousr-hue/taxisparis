@@ -147,11 +147,26 @@ function itemSearchText(item: any): string {
   ].filter(Boolean).join(' '));
 }
 
+const COMMON_SEARCH_WORDS = new Set([
+  'de', 'du', 'des', 'la', 'le', 'les', 'aux', 'avec', 'dans', 'pour', 'sur', 'chez',
+  'rue', 'avenue', 'av', 'boulevard', 'bd', 'route', 'chemin', 'allee',
+  'impasse', 'quai', 'place', 'cours', 'passage', 'square', 'esplanade',
+]);
+
+function relevantTokens(query: string): string[] {
+  const raw = looksLikeMedicalPlace(query) ? medicalSpecificTokens(query) : queryTokens(query);
+  return raw.filter(token => token.length >= 3 && !COMMON_SEARCH_WORDS.has(token) && !/^\d+$/.test(token));
+}
+
+function matchesWord(text: string, token: string): boolean {
+  return text.split(/\s+/).some(word => word === token || word.startsWith(token));
+}
+
 function medicalNameCoverage(item: any, query: string): number {
   const tokens = medicalSpecificTokens(query);
   if (!tokens.length) return 0;
   const text = normalizeForSearch([item?.name, item?.address_line1, item?.formatted].filter(Boolean).join(' '));
-  const matched = tokens.filter(token => text.includes(token)).length;
+  const matched = tokens.filter(token => matchesWord(text, token)).length;
   return matched / tokens.length;
 }
 
@@ -161,61 +176,67 @@ function scoreResult(item: any, query: string): number {
   const department = postalCode.substring(0, 2);
   const type = String(item?.result_type || '');
   const source = String(item?._source || 'autocomplete');
-  const tokens = queryTokens(query);
-  const fullText = itemSearchText(item);
-
-  let score = 0;
-
-  if (IDF_DEPARTMENTS.has(department)) score += 100;
-
-  const queryPostalCode = query.match(/\b\d{5}\b/)?.[0] || '';
-  if (queryPostalCode) {
-    score += postalCode === queryPostalCode ? 420 : -220;
-    if (source === 'structured' && postalCode === queryPostalCode) score += 120;
-  }
-
-  const medicalQuery = looksLikeMedicalPlace(query);
-  if (medicalQuery) {
-    const coverage = medicalNameCoverage(item, query);
-    if (source === 'places') score += 90 + coverage * 220;
-    if (coverage === 1) score += 150;
-    else if (medicalSpecificTokens(query).length > 0 && coverage === 0) score -= 120;
-  }
-
+  const medical = looksLikeMedicalPlace(query);
+  const tokens = relevantTokens(query);
   const nameText = normalizeForSearch(item?.name || item?.address_line1 || '');
   const streetText = normalizeForSearch([item?.housenumber, item?.street].filter(Boolean).join(' '));
+  const fullText = itemSearchText(item);
+  let score = 0;
+  let matched = 0;
+  let matchedName = 0;
+  let matchedStreet = 0;
 
-  let nameMatches = 0;
-  let totalMatches = 0;
   for (const token of tokens) {
-    if (nameText.includes(token)) {
-      score += 44;
-      nameMatches += 1;
-      totalMatches += 1;
-    } else if (streetText.includes(token)) {
-      score += 24;
-      totalMatches += 1;
-    } else if (fullText.includes(token)) {
-      score += 10;
-      totalMatches += 1;
+    if (matchesWord(nameText, token)) {
+      matched++;
+      matchedName++;
+    } else if (matchesWord(streetText, token)) {
+      matched++;
+      matchedStreet++;
+    } else if (matchesWord(fullText, token)) {
+      matched++;
+    }
+  }
+  if (tokens.length) {
+    const coverage = matched / tokens.length;
+    score += coverage * 420;
+    if (matched === tokens.length) score += 180;
+    else score -= (1 - coverage) * 180;
+    if (medical) {
+      score += (matchedName / tokens.length) * 210;
+      if (matchedName === tokens.length) score += 160;
+      if (matchedName === 0) score -= 90;
+    } else if (matchedStreet > 0) {
+      score += (matchedStreet / tokens.length) * 115;
     }
   }
 
-  if (tokens.length && nameMatches === tokens.length) score += 100;
-  if (tokens.length && totalMatches === tokens.length) score += 45;
+  const postcodeFromQuery = query.match(/\b\d{5}\b/)?.[0] || '';
+  if (postcodeFromQuery) {
+    score += postcodeFromQuery === postalCode ? 440 : -440;
+    if (source === 'structured' && postcodeFromQuery === postalCode) score += 15;
+  }
+  const houseNumberFromQuery = query.match(/^\s*(\d{1,4}[a-z]?)(?=\s|,|$)/i)?.[1] || '';
+  if (houseNumberFromQuery) {
+    score += normalizeForSearch(item?.housenumber) === normalizeForSearch(houseNumberFromQuery) ? 340 : -280;
+  }
 
-  if (type === 'building') score += 55;
-  else if (type === 'amenity') score += 50;
-  else if (type === 'street') score += 24;
-  else if (type === 'postcode') score += 6;
-  else if (type === 'city') score += 2;
-
-  if (item?.housenumber) score += /\d/.test(query) ? 55 : 15;
-  if (rank?.match_type === 'full_match') score += 25;
-  score += Number(rank?.confidence || 0) * 20;
-  score += Number(rank?.confidence_building_level || 0) * 18;
-  score += Number(rank?.confidence_street_level || 0) * 12;
-
+  // Location and provider confidence are tie-breakers, not stronger than the requested name.
+  if (IDF_DEPARTMENTS.has(department)) score += 24;
+  if (department === '75') score += 3;
+  if (source === 'places' && medical) score += 12;
+  if (type === 'building') score += houseNumberFromQuery ? 22 : 6;
+  else if (type === 'amenity' && medical) score += 20;
+  else if (type === 'street' && !medical) score += 12;
+  else if (type === 'postcode' && postcodeFromQuery) score += 8;
+  else if (type === 'city' && tokens.length === 1) score += 5;
+  if (rank?.match_type === 'full_match') score += 12;
+  else if (rank?.match_type === 'match_by_building') score += 8;
+  else if (rank?.match_type === 'match_by_street') score += 5;
+  score += Number(rank?.confidence || 0) * 15;
+  score += Number(rank?.confidence_building_level || 0) * (houseNumberFromQuery ? 15 : 4);
+  score += Number(rank?.confidence_street_level || 0) * 7;
+  score += Number(rank?.confidence_city_level || 0) * 4;
   return score;
 }
 
@@ -254,15 +275,29 @@ function buildPreciseLabel(item: any, fallback: string): string {
     || fallback;
 }
 
-async function fetchJsonResults(url: URL, label: string): Promise<any[]> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    const detail = await response.text();
-    console.error(`[GEOAPIFY] ${label} failed`, response.status, detail.slice(0, 300));
+async function fetchWithDeadline(url: URL, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function fetchJsonResults(url: URL, label: string, timeoutMs = 3200): Promise<any[]> {
+  try {
+    const response = await fetchWithDeadline(url, timeoutMs);
+    if (!response.ok) {
+      console.warn('[GEOAPIFY] ' + label + ' failed', response.status);
+      return [];
+    }
+    const data = await response.json().catch(() => null);
+    return Array.isArray(data?.results) ? data.results : [];
+  } catch (error) {
+    console.warn('[GEOAPIFY] ' + label + ' timed out or failed', String(error));
     return [];
   }
-  const data = await response.json().catch(() => null);
-  return Array.isArray(data?.results) ? data.results : [];
 }
 
 Deno.serve(async (req: Request) => {
@@ -326,7 +361,7 @@ Deno.serve(async (req: Request) => {
             if (value) structuredUrl.searchParams.set(key, String(value));
           }
 
-          return fetchJsonResults(structuredUrl, 'Structured geocoding')
+          return fetchJsonResults(structuredUrl, 'Structured geocoding', 3800)
             .then(results => results
               .map((item: any) => ({ ...item, postcode: postalCodeOf(item), _source: 'structured' }))
               .filter(allowedResult));
@@ -346,7 +381,12 @@ Deno.serve(async (req: Request) => {
     ], q).sort((a, b) => scoreResult(b, q) - scoreResult(a, q));
 
     const medicalQuery = looksLikeMedicalPlace(q) && q.length >= 5;
-    const anchor = medicalQuery
+    const medicalTerms = medicalSpecificTokens(q).filter(token => token.length >= 3 && !COMMON_SEARCH_WORDS.has(token));
+    const bestMedicalName = normalizeForSearch(preliminary[0]?.name || preliminary[0]?.address_line1 || '');
+    // Return immediately when autocomplete already found the requested hospital.
+    const directMedicalMatch = medicalQuery && medicalTerms.length > 0
+      && medicalTerms.every(token => matchesWord(bestMedicalName, token));
+    const anchor = medicalQuery && !directMedicalMatch
       ? preliminary.find(item => Number.isFinite(Number(item?.lat)) && Number.isFinite(Number(item?.lon)))
       : null;
 
@@ -362,15 +402,18 @@ Deno.serve(async (req: Request) => {
       placesUrl.searchParams.set('limit', '20');
       placesUrl.searchParams.set('apiKey', apiKey);
 
-      const response = await fetch(placesUrl);
-      if (response.ok) {
-        const data = await response.json().catch(() => null);
-        placesResults = (Array.isArray(data?.features) ? data.features : [])
-          .map(placeFeatureToResult)
-          .filter(allowedResult);
-      } else {
-        const detail = await response.text();
-        console.error('[GEOAPIFY] Places failed', response.status, detail.slice(0, 300));
+      try {
+        const response = await fetchWithDeadline(placesUrl, 3800);
+        if (response.ok) {
+          const data = await response.json().catch(() => null);
+          placesResults = (Array.isArray(data?.features) ? data.features : [])
+            .map(placeFeatureToResult)
+            .filter(allowedResult);
+        } else {
+          console.warn('[GEOAPIFY] Places failed', response.status);
+        }
+      } catch (error) {
+        console.warn('[GEOAPIFY] Places timed out or failed', String(error));
       }
     }
 
