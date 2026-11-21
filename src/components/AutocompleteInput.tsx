@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CheckCircle, MapPin } from 'lucide-react';
 import {
   fetchGeoapifyAutocomplete,
-  debounce,
   type GeoapifyAutocompleteSuggestion,
 } from '../utils/geoapify/autocomplete';
 
@@ -31,9 +30,9 @@ export default function AutocompleteInput({
   const [suggestions, setSuggestions] = useState<GeoapifyAutocompleteSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchMessage, setSearchMessage] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const requestIdRef = useRef(0);
   const selectedValueRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -47,65 +46,63 @@ export default function AutocompleteInput({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const fetchSuggestions = useCallback(async (query: string) => {
-    const requestId = ++requestIdRef.current;
-    if (query.length < 3) {
-      setSuggestions([]);
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const results = await fetchGeoapifyAutocomplete(query);
-      if (requestId !== requestIdRef.current) return;
-      setSuggestions(results);
-    } catch (error) {
-      if (requestId !== requestIdRef.current) return;
-      console.error('Error fetching suggestions:', error);
-      setSuggestions([]);
-    } finally {
-      if (requestId === requestIdRef.current) setIsLoading(false);
-    }
-  }, []);
-
-  const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 400),
-    [fetchSuggestions]
-  );
-
   useEffect(() => {
     if (isValidated) {
       selectedValueRef.current = value;
-      requestIdRef.current += 1;
       setSuggestions([]);
       setIsLoading(false);
+      setSearchMessage('');
       return;
     }
 
     if (value === selectedValueRef.current) return;
-
-    if (value.length >= 3) {
-      debouncedFetchSuggestions(value);
-    } else {
-      requestIdRef.current += 1;
+    const query = value.trim();
+    if (query.length < 3) {
       setSuggestions([]);
       setIsLoading(false);
+      setSearchMessage('');
+      return;
     }
-  }, [value, isValidated, debouncedFetchSuggestions]);
+
+    const controller = new AbortController();
+    setSuggestions([]);
+    setIsLoading(true);
+    setSearchMessage('');
+    const debounceId = window.setTimeout(async () => {
+      try {
+        const results = await fetchGeoapifyAutocomplete(query, controller.signal);
+        if (controller.signal.aborted) return;
+        setSuggestions(results);
+        setSearchMessage(results.length ? '' : 'Aucune suggestion dans la zone desservie. Précisez la ville ou le code postal.');
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        setSuggestions([]);
+        setSearchMessage(error instanceof Error && error.message.startsWith('Recherche trop longue')
+          ? error.message
+          : 'Recherche momentanément indisponible. Réessayez.');
+      } finally {
+        if (!controller.signal.aborted) setIsLoading(false);
+      }
+    }, 300);
+
+    // A later keystroke cancels both the timer and the network request.
+    return () => {
+      window.clearTimeout(debounceId);
+      controller.abort();
+    };
+  }, [value, isValidated]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     selectedValueRef.current = null;
-    requestIdRef.current += 1;
     onInputChange(newValue);
     setShowSuggestions(true);
   };
 
   const handleSuggestionClick = (suggestion: GeoapifyAutocompleteSuggestion) => {
     selectedValueRef.current = suggestion.address.label;
-    requestIdRef.current += 1;
     setShowSuggestions(false);
+    setSearchMessage('');
     setIsLoading(false);
 
     // Geoapify fournit l'adresse et les coordonnées GPS.
@@ -190,15 +187,15 @@ export default function AutocompleteInput({
           ))}
         </ul>
       )}
-      {showSuggestions && isLoading && value.length >= 3 && (
+      {showSuggestions && isLoading && suggestions.length === 0 && value.length >= 3 && (
         <div role="status" aria-live="polite" className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-1.5 p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
           <div className="w-3.5 h-3.5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           Recherche en cours…
         </div>
       )}
-      {showSuggestions && !isLoading && suggestions.length === 0 && value.length >= 3 && (
-        <div className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-1.5 p-4 text-center text-sm text-gray-500">
-          Aucune suggestion dans la zone desservie
+      {showSuggestions && !isLoading && suggestions.length === 0 && value.length >= 3 && searchMessage && (
+        <div role="status" aria-live="polite" className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-1.5 p-4 text-center text-sm text-gray-500">
+          {searchMessage}
         </div>
       )}
     </div>
