@@ -26,7 +26,6 @@ const GEOAPIFY_AUTOCOMPLETE_URL =
 const CACHE_TTL_MS = 60_000;
 const CACHE_MAX_ENTRIES = 40;
 const resultCache = new Map<string, { expiresAt: number; items: GeoapifyAutocompleteSuggestion[] }>();
-const inflightRequests = new Map<string, Promise<GeoapifyAutocompleteSuggestion[]>>();
 
 function cacheKey(query: string): string {
   return query.trim().replace(/\s+/g, ' ').toLocaleLowerCase('fr');
@@ -88,47 +87,46 @@ function normalizeItems(data: any): GeoapifyAutocompleteSuggestion[] {
 }
 
 export async function fetchGeoapifyAutocomplete(
-  query: string
+  query: string,
+  signal?: AbortSignal,
 ): Promise<GeoapifyAutocompleteSuggestion[]> {
   const normalizedQuery = query.trim().replace(/\s+/g, ' ');
-  if (normalizedQuery.length < 3) {
-    return [];
-  }
+  if (normalizedQuery.length < 3 || signal?.aborted) return [];
 
   const key = cacheKey(normalizedQuery);
   const cached = resultCache.get(key);
-  if (cached && cached.expiresAt > Date.now()) {
-    return cached.items;
-  }
+  if (cached && cached.expiresAt > Date.now()) return cached.items;
   if (cached) resultCache.delete(key);
 
-  const inflight = inflightRequests.get(key);
-  if (inflight) return inflight;
+  const controller = new AbortController();
+  let timedOut = false;
+  const abortFromCaller = () => controller.abort();
+  signal?.addEventListener('abort', abortFromCaller, { once: true });
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, 7500);
 
-  const request = (async () => {
-    try {
-      const params = new URLSearchParams({ q: normalizedQuery, limit: '8' });
-      const response = await fetch(`${GEOAPIFY_AUTOCOMPLETE_URL}?${params.toString()}`);
+  try {
+    const params = new URLSearchParams({ q: normalizedQuery, limit: '8' });
+    const response = await fetch(
+      GEOAPIFY_AUTOCOMPLETE_URL + '?' + params.toString(),
+      { signal: controller.signal },
+    );
+    if (!response.ok) throw new Error('Geoapify returned HTTP ' + response.status);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Geoapify Supabase search error:', response.status, response.statusText, errorText);
-        return [];
-      }
-
-      const items = normalizeItems(await response.json());
-      putCache(key, items);
-      return items;
-    } catch (error) {
-      console.error('Error fetching Geoapify search from Supabase:', error);
-      return [];
-    } finally {
-      inflightRequests.delete(key);
-    }
-  })();
-
-  inflightRequests.set(key, request);
-  return request;
+    const items = normalizeItems(await response.json());
+    // Keep only successful, non-empty lookups in the short cache.
+    if (items.length > 0) putCache(key, items);
+    return items;
+  } catch (error) {
+    if (timedOut) throw new Error('Recherche trop longue. Réessayez ou précisez la ville.');
+    if (signal?.aborted) return [];
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+    signal?.removeEventListener('abort', abortFromCaller);
+  }
 }
 
 export function debounce<T extends (...args: any[]) => void>(
